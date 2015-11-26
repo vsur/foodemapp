@@ -10,3 +10,5 @@ sec/givexml.php
 .settings/org.eclipse.php.core.prefs
 
 .settings/org.eclipse.wst.common.project.facet.core.xml
+
+cake/webroot/js/empty
