@@ -16,11 +16,12 @@ module.exports = function(grunt) {
 		// Config autoprefixer
 		autoprefixer: {
 			options: {
-				browsers: ['last 2 versions', 'ie 8', 'ie 9'] 
+				browsers: ['last 2 version', 'ie 8', 'ie 9', 'Opera 12.1'] 
 			},
-			your_target: {
-				// Target-specific file lists and/or options go here.
-			},
+			main: {
+				src: 'css/*.css',
+				dest: 'prefixed/'
+			}
 		},
 
 		// Config sass
@@ -42,7 +43,21 @@ module.exports = function(grunt) {
 			},
 
 			// when this task is run, lint the Gruntfile and all js files in src
-			build: ['Gruntfile.js', 'javascripts/*.js']
+			build: {
+				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js'],
+				dest: 'js/'
+			}
+		},
+
+		concat: {
+			basic: {
+				src: ['javascripts/bootstrap.js', 'javascripts/fmapp_app.js'],
+				dest: 'js/boot_fmapp_app.js',
+			},
+			noBoot: {
+				src: ['javascripts/fmapp_app.js'],
+				dest: 'js/fmapp_app.js',
+			}
 		},
 
 		// Config watch
@@ -50,18 +65,18 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['**/*.js'],
-				tasks: ['jshint'],
+				tasks: ['jshint', 'concat:noBoot'],
 				options: {
 					spawn: false,
 				},
 			},
 			css: {
-		    files: '**/*.sass',
-		    tasks: ['sass'],
-		    options: {
-		      livereload: true,
-		    },
-		  },
+				files: '**/*.scss',
+				tasks: ['sass'],
+				options: {
+					livereload: true,
+				},
+			},
 		}
 
 	});
@@ -78,8 +93,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-html');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);
+	grunt.registerTask('doJS', ['jshint', 'concat:noBoot']);
+	grunt.registerTask('doBuild', ['sass', 'autoprefixer', 'jshint', 'concat:noBoot']);
 
 };
