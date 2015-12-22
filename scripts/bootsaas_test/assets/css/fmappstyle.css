@@ -6529,5 +6529,13 @@ input[type="checkbox"],
   color: inherit; }
 
 /* 
- * No Own Stuff
+ * Some Colors
  */
+body {
+  padding-top: 75px; }
+
+.navbar-default {
+  background: #7d003c;
+  border-color: #c2005d; }
+  .navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {
+    color: #fff; }

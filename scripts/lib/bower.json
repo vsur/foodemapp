@@ -1,0 +1,19 @@
+{
+  "name": "Polymer",
+  "homepage": "https://github.com/vsur/foodemapp",
+  "authors": [
+    "Veit <veit.stephan@ukr.de>"
+  ],
+  "description": "Polymer Lib for Foodmap",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "Polymer",
+    "Foodmap",
+    "Web"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.0"
+  }
+}
