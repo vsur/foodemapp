@@ -14,9 +14,15 @@
 
 <!-- 2. Use an HTML Import to bring in some elements. -->
 <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="bower_components/paper-material/paper-material.html">
 <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="bower_components/paper-item/paper-item.html">
+<link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
 
 <!-- 3. Use also HTML Import to bring in own elements. -->
 
@@ -33,7 +39,6 @@
 
 <!-- 4. Custom Style for Elements -->
 <?php include 'inc/polymer_styles.php'; ?>
-
 </head>
 
 <!-- <body class="fullbleed layout vertical" role="document"> -->
@@ -58,13 +63,40 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h1>Hier Polymer Menu Zeug</h1>
-				<paper-header-panel>
-					<paper-toolbar>
-						<paper-icon-button icon="menu" on-tap="menuAction"></paper-icon-button>
-						<div>Hello World!</div>
-						<paper-icon-button icon="more-vert" on-tap="moreAction"></paper-icon-button>
-					</paper-toolbar>
-				</paper-header-panel>
+				<paper-header-panel> <paper-toolbar id="polyBar"> <paper-icon-button
+					icon="menu" on-tap="menuAction"></paper-icon-button>
+				<div>Select place and check map</div>
+				</paper-toolbar> </paper-header-panel>
+			</div>
+		</div>
+		<!-- /.row -->
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Das Map-Form</h2>
+				<form is="iron-form" id="form" method="post" action="/form/handler">
+					<div class="row">
+						<div class="col-md-6">
+							<h3>Modus wählen</h3>
+							<paper-dropdown-menu id="mapChoiceDropdown" label="Choose Map Mode">
+								<paper-menu id="mapChoiceMenu" class="dropdown-content">
+									<paper-item id="placeMode">Via Place</paper-item>
+									<paper-item id="tudeMode">With Lati- and Longitude</paper-item>
+								</paper-menu>
+							</paper-dropdown-menu>
+						</div>
+						<div class="col-md-6">
+							<h3>Ort deklarieren</h3>
+							<div id="findByPlace">
+								<paper-input label="Ort"></paper-input>
+							</div>
+							<div id="findByTude	">
+								<paper-input label="Latitude"></paper-input>
+								<paper-input label="Longitude"></paper-input>
+							</div>
+						</div>
+					</div>
+					<!-- /.row -->
+				</form>
 			</div>
 		</div>
 		<!-- /.row -->
@@ -89,5 +121,19 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/fmapp_app.js"></script>
+	<script>
+	 Polymer({
+
+	      is: 'mapChoiceMenu',
+	      listeners: {
+	          'tap': 'regularTap',
+	        },
+
+	        regularTap: function(e) {
+	          alert("Thank you for tapping");
+	        }
+
+	    });
+	</script>
 </body>
 </html>
