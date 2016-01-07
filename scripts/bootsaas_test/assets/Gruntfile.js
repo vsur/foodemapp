@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 			},
 			main: {
 				src: 'css/*.css',
-				dest: 'prefixed/'
+				dest: 'prefixed/prefd.css'
 			}
 		},
 
