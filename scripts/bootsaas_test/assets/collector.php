@@ -124,7 +124,7 @@
 	<script>
 	 Polymer({
 
-	      is: 'mapChoiceMenu',
+	      is: 'tudeMode',
 	      listeners: {
 	          'tap': 'regularTap',
 	        },
@@ -133,7 +133,7 @@
 	          alert("Thank you for tapping");
 	        }
 
-	    });
+	    })
 	</script>
 </body>
 </html>
