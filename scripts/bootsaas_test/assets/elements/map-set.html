@@ -1,0 +1,62 @@
+<map-set id="map-set">
+	<template>
+		<h2>Das Map-Form</h2>
+		<form is="iron-form" id="form" method="post" action="/form/handler">
+			<div class="row">
+				<div class="col-md-6">
+					<h3>Modus wählen</h3>
+					<paper-dropdown-menu id="mapChoiceDropdown" label="Choose Map Mode">
+						<paper-menu id="mapChoiceMenu" class="dropdown-content">
+							<paper-item id="placeMode">Via Place</paper-item>
+							<paper-item id="tudeMode">With Lati- and Longitude</paper-item>
+						</paper-menu>
+						<script>
+							/*HTMLImports.whenReady(function () {
+								Polymer({
+						
+									is: 'mapChoiceMenu',
+						      listeners: {
+						          'tap': 'regularTap',
+						        },
+						
+						        regularTap: function(e) {
+						          alert("Thank you for tapping");
+						        }
+									
+								});
+						  });*/
+						</script>
+					</paper-dropdown-menu>
+				</div>
+				<div class="col-md-6">
+					<h3>Ort deklarieren</h3>
+					<div id="findByPlace">
+						<paper-input label="Ort"></paper-input>
+					</div>
+					<div id="findByTude	">
+						<paper-input label="Latitude"></paper-input>
+						<paper-input label="Longitude"></paper-input>
+					</div>
+				</div>
+			</div>
+			<!-- /.row -->
+		</form>
+	</template>
+
+	<script>
+		//element registration
+		Polymer({
+			is: "map-set",
+		
+			// add properties and methods on the element's prototype
+		
+			properties: {
+				// declare properties for the element's public API
+				standardPlace: {
+				type: String,
+					value: "Regensburg"
+				}
+			}
+		});
+	</script>
+</map-set>

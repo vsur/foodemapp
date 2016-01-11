@@ -63,40 +63,37 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h1>Hier Polymer Menu Zeug</h1>
-				<paper-header-panel> <paper-toolbar id="polyBar"> <paper-icon-button
-					icon="menu" on-tap="menuAction"></paper-icon-button>
-				<div>Select place and check map</div>
-				</paper-toolbar> </paper-header-panel>
+				<paper-header-panel>
+					<paper-toolbar id="polyBar">
+						<paper-icon-button icon="menu" onclick="menuAction"></paper-icon-button>
+						<div>Select place and check map</div>
+					</paper-toolbar>
+				</paper-header-panel>
 			</div>
 		</div>
 		<!-- /.row -->
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Das Map-Form</h2>
-				<form is="iron-form" id="form" method="post" action="/form/handler">
-					<div class="row">
-						<div class="col-md-6">
-							<h3>Modus wählen</h3>
-							<paper-dropdown-menu id="mapChoiceDropdown" label="Choose Map Mode">
-								<paper-menu id="mapChoiceMenu" class="dropdown-content">
-									<paper-item id="placeMode">Via Place</paper-item>
-									<paper-item id="tudeMode">With Lati- and Longitude</paper-item>
-								</paper-menu>
-							</paper-dropdown-menu>
-						</div>
-						<div class="col-md-6">
-							<h3>Ort deklarieren</h3>
-							<div id="findByPlace">
-								<paper-input label="Ort"></paper-input>
-							</div>
-							<div id="findByTude	">
-								<paper-input label="Latitude"></paper-input>
-								<paper-input label="Longitude"></paper-input>
-							</div>
-						</div>
-					</div>
-					<!-- /.row -->
-				</form>
+				<polymer-element name="my-menu">
+        <template>
+            <paper-menu icon="menu">
+                <paper-item on-tap="{{refresh}}">Refresh</paper-item>
+                <paper-item on-tap="{{help}}">Help</paper-item>
+                <paper-item on-tap="{{signOut}}">Sign out</paper-item>
+            </paper-menu>
+        </template>
+
+        <script>
+//             Polymer('my-menu', {
+//                 refresh: function () { console.log('Refresh'); },
+//                 help: function () { console.log('Help'); },
+//                 signOut: function () { console.log('Sign out'); }
+//             });
+        </script>
+    </polymer-element>
+
+    <my-menu></my-menu>
 			</div>
 		</div>
 		<!-- /.row -->
@@ -122,18 +119,26 @@
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/fmapp_app.js"></script>
 	<script>
-	 Polymer({
-
-	      is: 'tudeMode',
-	      listeners: {
-	          'tap': 'regularTap',
-	        },
-
-	        regularTap: function(e) {
-	          alert("Thank you for tapping");
-	        }
-
-	    })
+	/*alert("What TH F");
+	var mapCM = $("#mapChoiceMenu");
+	mapCM.click(function(e) {
+		alert("TYG");
+	});*/
+// 		mapCM.addEventListener('tap', function() { 
+// 			alert("Should work!");
+// 		});
+// 	document.addEventListener('WebComponentsReady', function() {
+    /*var mapMenu = document.querySelector('#mapChoiceMenu');
+    mapMenu.addEventListener('click', function() {
+      //greeting.textContent = 'Hello, ' + input.value;
+      console.log(this.$$('paper-item.iron-selected'));
+      alert("Nun auch mit Elements");
+    });*/
+// 		 Polymer('mapMenu', {
+// 			 showPlace: function () { console.log('Place'); },
+// 			 shoTude: function () { console.log('Tude'); }
+//    });
+//   });
 	</script>
 </body>
 </html>
