@@ -24,7 +24,8 @@
 <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="bower_components/paper-input/paper-input.html">
 
-<!-- 3. Use also HTML Import to bring in own elements. -->
+<!-- 3. Use an HTML Import to bring in own elements. -->
+<link rel="import" href="elements/map-set.html">
 
 <title>Start Template for Food Map App</title>
 
@@ -65,38 +66,17 @@
 				<h1>Hier Polymer Menu Zeug</h1>
 				<paper-header-panel>
 					<paper-toolbar id="polyBar">
-						<paper-icon-button icon="menu" onclick="menuAction"></paper-icon-button>
+						<paper-icon-button icon="menu" onclick="doSomething"></paper-icon-button>
 						<div>Select place and check map</div>
 					</paper-toolbar>
 				</paper-header-panel>
 			</div>
-		</div>
-		<!-- /.row -->
+		</div> <!-- /.row -->
 		<div class="row">
 			<div class="col-md-12">
-				<h2>Das Map-Form</h2>
-				<polymer-element name="my-menu">
-        <template>
-            <paper-menu icon="menu">
-                <paper-item on-tap="{{refresh}}">Refresh</paper-item>
-                <paper-item on-tap="{{help}}">Help</paper-item>
-                <paper-item on-tap="{{signOut}}">Sign out</paper-item>
-            </paper-menu>
-        </template>
-
-        <script>
-//             Polymer('my-menu', {
-//                 refresh: function () { console.log('Refresh'); },
-//                 help: function () { console.log('Help'); },
-//                 signOut: function () { console.log('Sign out'); }
-//             });
-        </script>
-    </polymer-element>
-
-    <my-menu></my-menu>
+				<map-set></map-set>
 			</div>
-		</div>
-		<!-- /.row -->
+		</div> <!-- /.row -->
 		<div class="row">
 			<div class="col-md-12">
 				<h1>Hier ein wenig Inhalt</h1>
@@ -112,33 +92,10 @@
 	</div>
 	<!-- /.container -->
 
-
 	<!-- No Bootstrap core JavaScript, cause Polymer shall be integrated
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/fmapp_app.js"></script>
-	<script>
-	/*alert("What TH F");
-	var mapCM = $("#mapChoiceMenu");
-	mapCM.click(function(e) {
-		alert("TYG");
-	});*/
-// 		mapCM.addEventListener('tap', function() { 
-// 			alert("Should work!");
-// 		});
-// 	document.addEventListener('WebComponentsReady', function() {
-    /*var mapMenu = document.querySelector('#mapChoiceMenu');
-    mapMenu.addEventListener('click', function() {
-      //greeting.textContent = 'Hello, ' + input.value;
-      console.log(this.$$('paper-item.iron-selected'));
-      alert("Nun auch mit Elements");
-    });*/
-// 		 Polymer('mapMenu', {
-// 			 showPlace: function () { console.log('Place'); },
-// 			 shoTude: function () { console.log('Tude'); }
-//    });
-//   });
-	</script>
 </body>
 </html>
