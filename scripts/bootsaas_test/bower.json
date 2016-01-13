@@ -30,7 +30,8 @@
     "Gemfile"
   ],
   "dependencies": {
-    "jquery": ">= 1.9.0"
+    "jquery": ">= 1.9.0",
+    "google-map": "GoogleWebComponents/google-map#~1.1.7"
   },
   "version": "3.3.6"
 }

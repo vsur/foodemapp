@@ -1,55 +1,111 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
 
 <dom-module id="map-set">
+	<style>
+		#placeSetting, #findByPlace, #findByTude {
+			display: none;
+		}
+		google-map {
+			height: 600px;
+		}
+	</style>
 	<template>
-		<h2>Das Map-Form</h2>
-		<form is="iron-form" id="form" method="post" action="/form/handler">
-			<div class="row">
-				<div class="col-md-6">
-					<h3>Modus wählen</h3>
-					<paper-dropdown-menu id="mapChoiceDropdown" label="Choose Map Mode">
-						<paper-menu id="mapChoiceMenu" class="dropdown-content">
-							<paper-item id="placeMode"on-up="placeTab">Via Place: {{standardPlace}}</paper-item>
-							<paper-item id="tudeMode" on-up="tudeTab">With Lati- and Longitude</paper-item>
-						</paper-menu>
-					</paper-dropdown-menu>
-				</div>
-				<div class="col-md-6">
-					<h3>Ort deklarieren</h3>
-					<div id="findByPlace">
-						<paper-input label="Ort" value="{{standardPlace::input}}" placeholder="Enter City …"></paper-input>
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Das Map-Form</h2>
+				<form is="iron-form" id="form" method="post" action="/form/handler">
+					<div class="row">
+						<div class="col-md-6">
+							<h3>Modus wählen</h3>
+							<paper-dropdown-menu id="mapChoiceDropdown" label="Choose Map Mode">
+								<paper-menu id="mapChoiceMenu" class="dropdown-content">
+									<paper-item id="placeMode"on-up="placeTab">Via Place: {{mapPlace}}</paper-item>
+									<paper-item id="tudeMode" on-up="tudeTab">With Lati- and Longitude</paper-item>
+								</paper-menu>
+							</paper-dropdown-menu>
+						</div>
+						<div id="placeSetting" class="col-md-6">
+							<h3>Ort deklarieren</h3>
+							<div id="findByPlace">
+								<paper-input label="Ort" value="{{mapPlace::input}}" placeholder="Enter City …"></paper-input>
+							</div>
+							<div id="findByTude">
+								<paper-input label="Latitude {{latiTude}}" placeholder="Latitude eingeben"></paper-input>
+								<paper-input label="Longitude {{longiTude}}" placeholder="Longitude eingeben"></paper-input>
+							</div>
+						</div>
 					</div>
-					<div id="findByTude	">
-						<paper-input label="Latitude"></paper-input>
-						<paper-input label="Longitude"></paper-input>
-					</div>
-				</div>
+					<!-- /.row -->
+				</form>
 			</div>
-			<!-- /.row -->
-		</form>
+		</div> <!-- /.row -->
+
+		<div class="row">
+			<div class="col-md-12">
+				<google-map latitude="{{latiTude}}" longitude="{{longiTude}}"></google-map>
+			</div>
+		</div> <!-- /.row -->
 	</template>
 
 	<script>
 		//element registration
 		Polymer({
 			is: "map-set",
+			behaviors: [Polymer.NeonAnimationRunnerBehavior],
 		
 			// add properties on the element's prototype
 			properties: {
 				// declare properties for the element's public API
-				standardPlace: {
+				mapPlace: {
 					type: String,
 					value: "Regensburg"
+				},
+				latiTude: {
+					type: String,
+					value: "49.019104"
+				},
+				longiTude: {
+					type: String,
+					value: "12.093555"
+				},
+				animationConfig: {
+					value: function() {
+						return {
+							'popup': {
+								name: 'scale-up-animation',
+								node: this.$.placeSetting
+							}
+						}
+					}
 				}
 			},
 
+			// add listeners on the  element's prototype
+			listeners: {
+				'neon-animation-finish': '_onNeonAnimationFinish'
+			}, 
+
 			// add methods on the element's prototype
 			placeTab: function(e) {
-				alert('Palce was tabbed!');
+				this.$.findByPlace.style.display = "inline-block";
+				this.$.findByTude.style.display = "none";
+				this.playAnimation('popup');
+				this.$.placeSetting.style.display = "inline-block";
 			},
 			tudeTab: function(e) {
-				alert('Tude was tabbed!');
-			}
+				this.$.findByTude.style.display = "inline-block";
+				this.$.findByPlace.style.display = "none";
+				this.playAnimation('popup');
+				this.$.placeSetting.style.display = "inline-block";
+			},
+			_onNeonAnimationFinish: function() {
+				console.log("Ani finished");
+			}	
 		});
 	</script>
 </dom-module>

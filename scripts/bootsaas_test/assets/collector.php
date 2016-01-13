@@ -72,11 +72,7 @@
 				</paper-header-panel>
 			</div>
 		</div> <!-- /.row -->
-		<div class="row">
-			<div class="col-md-12">
-				<map-set></map-set>
-			</div>
-		</div> <!-- /.row -->
+		<map-set></map-set>
 		<div class="row">
 			<div class="col-md-12">
 				<h1>Hier ein wenig Inhalt</h1>
