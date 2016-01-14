@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
 <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animation-runner-behavior.html">
@@ -13,12 +15,30 @@
 		google-map {
 			height: 600px;
 		}
+		paper-button.custom {
+			background-color: var(--default-primary-color);
+			color: white;
+    --paper-button-ink-color: var(--google-green-300);
+    /* These could also be individually defined for each of the
+      specific css classes, but we'll just do it once as an example */
+    --paper-button-flat-keyboard-focus: {
+      background-color: var(--google-green-300);
+      color: white !important;
+    };
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--google-green-300);
+      color: white !important;
+    };
+}
+  paper-button.custom:hover {
+    background-color: var(--light-primary-color);
+  }
 	</style>
 	<template>
 		<div class="row">
 			<div class="col-md-12">
 				<h2>Das Map-Form</h2>
-				<form is="iron-form" id="form" method="post" action="/form/handler">
+				 <form is="iron-form" id="formPost" method="post" action="/">
 					<div class="row">
 						<div class="col-md-6">
 							<h3>Modus wählen</h3>
@@ -38,10 +58,22 @@
 								<paper-input label="Latitude {{latiTude}}" placeholder="Latitude eingeben"></paper-input>
 								<paper-input label="Longitude {{longiTude}}" placeholder="Longitude eingeben"></paper-input>
 							</div>
+							<div class="pull-right">
+							<paper-button raised class="custom" onclick="submitHandler(event)">Suchen</paper-button>
+							</div>
 						</div>
 					</div>
 					<!-- /.row -->
 				</form>
+			</div>
+		</div> <!-- /.row -->
+
+		<div class="row">
+			<div class="col-md-12">
+				<h4>Submitted form data</h4>
+					<div class="horizontal-section wide">
+						<div id="output"></div>
+					</div>
 			</div>
 		</div> <!-- /.row -->
 
@@ -105,7 +137,35 @@
 			},
 			_onNeonAnimationFinish: function() {
 				console.log("Ani finished");
-			}	
+			}, 
+
+			ready: function(){
+				this.$.formPost.addEventListener('iron-form-submit', display);
+				function display(event) {
+// 					output.innerHTML = JSON.stringify(event.detail);
+					this.$$.output.innerHTML = "HELLO ";
+				}
+			}
+				
+			
 		});
+		
+		// Form Stuff
+		function submitHandler(event) {
+			document.getElementById('formPost').submit();
+// 			document.getElementById('output').innerHTML = JSON.stringify(event.detail);
+				console.log(event);
+			}
+		/*
+		function display(event) {
+		      var output = document.getElementById('output');
+		      output.innerHTML = JSON.stringify(event.detail);
+		}
+		function submitHandler(event) {
+			// Polymer.dom(event).localTarget.parentElement.submit();
+			document.getElementById('formPost').submit();
+			console.log(event.detail);
+		}
+		*/
 	</script>
 </dom-module>

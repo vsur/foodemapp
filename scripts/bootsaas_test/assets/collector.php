@@ -14,6 +14,7 @@
 
 <!-- 2. Use an HTML Import to bring in some elements. -->
 <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="bower_components/paper-button/paper-button.html">
 <link rel="import" href="bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="bower_components/paper-material/paper-material.html">
 <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
