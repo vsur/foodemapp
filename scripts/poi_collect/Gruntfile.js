@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 		// Config autoprefixer
 		autoprefixer: {
 			options: {
-				browsers: ['last 2 version', 'ie 8', 'ie 9', 'Opera 12.1'] 
+				browsers: ['last 2 version', 'ie 8', 'ie 9', 'Opera 12.1']
 			},
 			main: {
 				src: 'css/*.css',
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
 			// when this task is run, lint the Gruntfile and all js files in src
 			build: {
-				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js'],
+				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_data.js'],
 				dest: 'js/'
 			}
 		},
@@ -55,8 +55,8 @@ module.exports = function(grunt) {
 				dest: 'js/boot_fmapp_app.js',
 			},
 			noBoot: {
-				src: ['javascripts/fmapp_app.js'],
-				dest: 'js/fmapp_app.js',
+				src: ['javascripts/fmapp_data.js'],
+				dest: 'js/fmapp_data.js',
 			}
 		},
 
