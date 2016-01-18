@@ -1,0 +1,38 @@
+/* 
+ * Startfile for CSS in Food Map App
+ */
+
+// Import Bootswatch Wars
+@import "variables";
+
+// Import Bootstrap
+@import "bootstrap";
+
+// Import Bootswatch Theme
+@import "bootswatch";
+
+/*
+ * Some Colors
+ */
+
+$urcd-color: #7d003c;
+
+body {
+	padding-top: 75px;
+}
+
+.navbar-default {
+	background: $urcd-color;
+	border-color: lighten($urcd-color, 13.5%);
+	.navbar-brand, .navbar-nav > li > a {
+		color: #fff;
+	}
+}
+
+#polyBar {
+	border-radius: 15px;
+}
+
+#mapChoiceDropdown {
+	width: 100%;
+}
