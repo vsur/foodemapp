@@ -136,9 +136,10 @@
 
 
     echo $gSearchURL . "\n";
-    echo 'Asugabe für $info';
-// First integrate extension httpp or CuRL in MAMP
-    $response = http_get($gSearchURL, $info);
+    echo 'Asugabe für $info \n\n';
+    echo '<hr />';
+
+    $info = file_get_contents($gSearchURL);
     print_r($info);
 
     function forDebug($a) {
