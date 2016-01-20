@@ -1,6 +1,5 @@
 <?php 
     include '../../sec/givexml.php'; 
-    require_once '/inc/data.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
