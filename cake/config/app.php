@@ -1,5 +1,6 @@
 <?php
 include '../../sec/givexml.php';
+$secKeys = getSecVars('../../sec/');
 
 return [
     /**
