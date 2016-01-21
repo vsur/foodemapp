@@ -1,7 +1,7 @@
-<?php 
+<?php
     include '../../../sec/givexml.php';
     $secKeys = getSecVars('../../../sec/');
-    
+
     // Data Var
     $jsonR = '{
       "formatted_address" : "Regensburg, Deutschland",
@@ -125,27 +125,55 @@
                 ]
     }';
     $jRobj = json_decode($jsonR);
-    forDebug($secKeys->{'gSerAPI'});
+    forDebug($jRobj->{'types'});
+    $pois = array();
 
-    // String for request
-    $gSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" .
-                  $jRobj->{'geometry'}->{'location'}->{'lat'} . "," . $jRobj->{'geometry'}->{'location'}->{'lng'} .
-                  "&radius=1500" .
-                  "&types=" . $jRobj->{'types'}[35] .
-                  "&key=" . $secKeys->{'gSerAPI'};
+    for ($i = 0; $i < count($jRobj->{'types'}); $i++) {
+      // String for request
+      $gSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" .
+        $jRobj->{'geometry'}->{'location'}->{'lat'} . "," . $jRobj->{'geometry'}->{'location'}->{'lng'} .
+        "&radius=1500" .
+        "&types=" . $jRobj->{'types'}[$i] .
+        "&key=" . $secKeys->{'gSerAPI'};
+
+      $info = json_decode( file_get_contents($gSearchURL) );
+
+      foreach($info->results as $poi) {
+        $array =  (array) $poi;
+        array_push($pois, $poi);
+      }
+    }
 
 
     echo $gSearchURL . "\n";
-    echo 'Asugabe für $info \n\n';
-    echo '<hr />';
+    // $pois = array();
 
-    $info = file_get_contents($gSearchURL);
-    print_r($info);
+    // print_r ($info->results[0]);
+    // echo 'Ausgabe für $pois nach ' . "\n";
+    // echo '<hr />';
+    // echo "\n";
+    // echo '<hr />';
+    // print_r($info);
+    formatResult($pois);
 
+    forDebug($pois);
+
+    function formatResult($data) {
+      echo '<h1 style="font-weight: bold;">Datenausgabe</h1>';
+      foreach($data as $poi) {
+        echo "<p>";
+        echo "<b>" . $poi->name . "</b>, " . $poi->vicinity;
+        echo "<br />";
+        echo "place_id: " .$poi->place_id . ", lat: " .  $poi->geometry->location->lat . ", lng: " .  $poi->geometry->location->lat;
+        echo "<br />";
+        echo "types: " . implode(", ", $poi->types);
+        echo "</p>";
+      }
+    }
     function forDebug($a) {
         echo "<pre>";
         echo print_r($a);
-        echo "<pre>";
+        echo "</pre>";
     }
 
 ?>
