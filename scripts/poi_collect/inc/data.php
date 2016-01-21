@@ -128,6 +128,8 @@
     forDebug($jRobj->{'types'});
     $pois = array();
 
+	// Netx step get in a function
+	 
     for ($i = 0; $i < count($jRobj->{'types'}); $i++) {
       // String for request
       $gSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" .
