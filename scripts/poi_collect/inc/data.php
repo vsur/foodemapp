@@ -1,8 +1,8 @@
 <?php
-    include '../../../sec/givexml.php';
-    $secKeys = getSecVars('../../../sec/');
+  include '../../../sec/givexml.php';
+  $secKeys = getSecVars('../../../sec/');
 
-    // Data Var
+  // Data Var
     $jsonR = '{
       "formatted_address" : "Regensburg, Deutschland",
       "geometry" : {
@@ -50,20 +50,32 @@
                 "university"
                 ]
     }';
-    $jRobj = json_decode($jsonR);
-    // forDebug($jRobj->{'types'});
-    $pois = array();
-    $pids = array();
 
-	// Netx step get in a function
 
+  $jRobj = json_decode($jsonR);
+  // forDebug($jRobj->{'types'});
+  $pois = array();
+  $pids = array();
+  $gSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" .
+    $jRobj->{'geometry'}->{'location'}->{'lat'} . "," . $jRobj->{'geometry'}->{'location'}->{'lng'} .
+    "&radius=1500";
+  /*
+   *
+   *  Initiate Action Functions
+   *
+   */
+  function allTypesFirstPage($jRobj, $doDebug = null) {
+    global $pois;
+    global $pids;
+    global $gSearchURL;
     for ($i = 0; $i < count($jRobj->{'types'}); $i++) {
       // String for request
       $gSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" .
-        $jRobj->{'geometry'}->{'location'}->{'lat'} . "," . $jRobj->{'geometry'}->{'location'}->{'lng'} .
-        "&radius=1500" .
-        "&types=" . $jRobj->{'types'}[$i] .
-        "&key=" . $secKeys->{'gSerAPI'};
+      $jRobj->{'geometry'}->{'location'}->{'lat'} . "," . $jRobj->{'geometry'}->{'location'}->{'lng'} .
+      "&radius=1500" .
+      "&types=" . $jRobj->{'types'}[$i];
+      $gSearchURL = addAPIkey($gSearchURL);
+      // "&key=" . $secKeys->{'gSerAPI'};
 
       $info = json_decode( file_get_contents($gSearchURL) );
 
@@ -73,44 +85,67 @@
       }
     }
 
-    echo "<pre>";
+    echo "<h2>";
     echo "Anfrage Query " . $gSearchURL . "\n";
+    echo "</h2>";
+    echo "<h3>";
     echo "Einträge: <b>" . count($pois) . "</b>\n";
+    echo "</h3>";
     $fpois = array_filter($pois, "checkDuplicatePID");
+    echo "<h3>";
     echo "Gefilterte Einträge: <b>" . count($fpois) . "</b>\n";
-    echo "</pre>";
+    echo "</h3>";
 
-    //forDebug($pids);
     formatResult($fpois);
 
-    //forDebug($pois);
+    if($doDebug) {
+      forDebug($fpois);
+    }
+  }
 
-    function checkDuplicatePID($farray) {
-      global $pids;
-      if( !in_array($farray->place_id, $pids)) {
-        array_push($pids, $farray->place_id);
-        return true;
-      } else {
-        return false;
-      }
-    }
+  /*
+   *
+   *  Call functions
+   *
+   */
+   allTypesFirstPage($jRobj, true);
 
-    function formatResult($data) {
-      echo '<h1 style="font-weight: bold;">Datenausgabe</h1>';
-      foreach($data as $poi) {
-        echo "<p>";
-        echo "<b>" . $poi->name . "</b>, " . $poi->vicinity;
-        echo "<br />";
-        echo "place_id: " .$poi->place_id . ", lat: " .  $poi->geometry->location->lat . ", lng: " .  $poi->geometry->location->lat;
-        echo "<br />";
-        echo "types: " . implode(", ", $poi->types);
-        echo "</p>";
-      }
+  /*
+   *
+   *  Control functions
+   *
+   */
+  function checkDuplicatePID($farray) {
+    global $pids;
+    if( !in_array($farray->place_id, $pids)) {
+      array_push($pids, $farray->place_id);
+      return true;
+    } else {
+      return false;
     }
-    function forDebug($a) {
-        echo "<pre>";
-        echo print_r($a);
-        echo "</pre>";
+  }
+
+  function formatResult($data) {
+    echo '<h1 style="font-weight: bold;">Datenausgabe</h1>';
+    foreach($data as $poi) {
+      echo "<p>";
+      echo "<b>" . $poi->name . "</b>, " . $poi->vicinity;
+      echo "<br />";
+      echo "place_id: " .$poi->place_id . ", lat: " .  $poi->geometry->location->lat . ", lng: " .  $poi->geometry->location->lat;
+      echo "<br />";
+      echo "types: " . implode(", ", $poi->types);
+      echo "</p>";
     }
+  }
+  function addAPIkey($urlString) {
+    global $secKeys;
+    $urlString .= "&key=" . $secKeys->{'gSerAPI'};
+    return $urlString;
+  }
+  function forDebug($a) {
+      echo "<pre>";
+      echo print_r($a);
+      echo "</pre>";
+  }
 
 ?>
