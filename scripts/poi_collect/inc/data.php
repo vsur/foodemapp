@@ -26,6 +26,7 @@
       "place_id" : "ChIJIWdnpCHBn0cRPLc80Q0Fk6E",
       "types" : [
 
+
                 "bakery",
                 "bar",
                 "cafe",
@@ -59,12 +60,13 @@
   $gSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" .
     $jRobj->{'geometry'}->{'location'}->{'lat'} . "," . $jRobj->{'geometry'}->{'location'}->{'lng'} .
     "&radius=1500";
+
   /*
    *
    *  Initiate Action Functions
    *
    */
-  function allTypesFirstPage($jRobj, $doDebug = null) {
+  function nearbyAllTypesFirstPage($jRobj, $doDebug = null) {
     global $pois;
     global $pids;
     global $gSearchURL;
@@ -75,7 +77,6 @@
       "&radius=1500" .
       "&types=" . $jRobj->{'types'}[$i];
       $gSearchURL = addAPIkey($gSearchURL);
-      // "&key=" . $secKeys->{'gSerAPI'};
 
       $info = json_decode( file_get_contents($gSearchURL) );
 
@@ -103,12 +104,56 @@
     }
   }
 
+  function nearbyAllPagesOneType($jRobj, $typenr = 0, $doDebug = null) {
+    global $pois;
+    global $pids;
+    global $gSearchURL;
+    // String for request
+    $gSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" .
+    $jRobj->{'geometry'}->{'location'}->{'lat'} . "," . $jRobj->{'geometry'}->{'location'}->{'lng'} .
+    "&radius=1500" .
+    "&types=" . $jRobj->{'types'}[$typenr];
+    $gSearchURL = addAPIkey($gSearchURL);
+
+    $info = json_decode( file_get_contents($gSearchURL) );
+
+    foreach($info->results as $poi) {
+      $array =  (array) $poi;
+      array_push($pois, $poi);
+    }
+    if($info->next_page_token) {
+      callAddToken($info->next_page_token);
+      echo "<hr />";
+      echo "<hr />";
+    }
+
+    echo "<h2>";
+    echo "Anfrage Query " . $gSearchURL . "\n";
+    echo "</h2>";
+    echo "<h3>";
+    echo "Einträge: <b>" . count($pois) . "</b>\n";
+    echo "</h3>";
+    $fpois = array_filter($pois, "checkDuplicatePID");
+    echo "<h3>";
+    echo "Gefilterte Einträge: <b>" . count($fpois) . "</b>\n";
+    echo "</h3>";
+    
+    /*
+    formatResult($fpois);
+    */
+    if($doDebug) {
+      forDebug($fpois);
+    }
+  }
+
+
   /*
    *
    *  Call functions
    *
    */
-   allTypesFirstPage($jRobj, true);
+   // nearbyAllTypesFirstPage($jRobj, true);
+   nearbyAllPagesOneType($jRobj, 1);
 
   /*
    *
@@ -124,7 +169,44 @@
       return false;
     }
   }
+  function callAddToken($nextPageToken) {
+    global $pois;
+    // echo "<p><b>NP Token: " . $nextPageToken . "</b></p>";
+    $gAddSearchURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=" .
+      $nextPageToken;
+      $gAddSearchURL = addAPIkey($gAddSearchURL);
+    echo '<p><span style="color: orange">Page Token was True:</span> Next Token: ' . $nextPageToken . '</p>';
+    echo "<hr />";
+    print($gAddSearchURL);
+    echo "<hr />";
+    // Wait 1 second, because next page token must be valid at google first!
+    usleep(1000000);
+    $addInfo = json_decode( file_get_contents($gAddSearchURL) );
+    if($addInfo->status != "INVALID_REQUEST") {
+      foreach($addInfo->results as $poi) {
+        $array =  (array) $poi;
+        array_push($pois, $poi);
+      }
+    } else {
+      echo '<p><span style="color: orange">Next Page Token not valid yet, wait …</p>';
+      usleep(500000);
+      $addInfo = json_decode( file_get_contents($gAddSearchURL) );
+      foreach($addInfo->results as $poi) {
+        $array =  (array) $poi;
+        array_push($pois, $poi);
+      }
+    }
 
+    if(isset($addInfo->next_page_token)) {
+      $nextToken = $addInfo->next_page_token;
+      unset($GLOBALS['addInfo']);
+      echo '<p><span style="color: green">True Again</span>: Next Token: ' . $nextToken . '</p>';
+      callAddToken($nextToken);
+
+    } else {
+      echo '<p><span style="color: red">FALSE</span>: No Token!</p>';
+    }
+  }
   function formatResult($data) {
     echo '<h1 style="font-weight: bold;">Datenausgabe</h1>';
     foreach($data as $poi) {
