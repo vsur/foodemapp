@@ -5,7 +5,7 @@
   class googleData {
 
     // Data Var
-    private $jsonR = '{
+    public $jsonR = '{
         "formatted_address" : "Regensburg, Deutschland",
         "geometry" : {
            "location" : {
@@ -58,9 +58,9 @@
     public $jRobj;
     public $pois = array();
     public $pids = array();
-    public $gSearchURL = "";
-    function  __construct() { }
-      $jRobj = json_decode($jsonR);
+    public $gSearchURL = "kjsdbksdfkj";
+    function  __construct() {
+      $this->jRobj = json_decode($this->jsonR);
     }
   }
 
