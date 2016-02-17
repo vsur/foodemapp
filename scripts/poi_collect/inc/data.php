@@ -1,11 +1,11 @@
 <?php
-  include '../../../sec/givexml.php';
-  $secKeys = getSecVars('../../../sec/');
+//require_once '../../../sec/givexml.php';
+//$secKeys = getSecVars('../../../sec/');
 
   class googleData {
 
     // Data Var
-    public $jsonR = '{
+    private $jsonQueryData = '{
         "formatted_address" : "Regensburg, Deutschland",
         "geometry" : {
            "location" : {
@@ -55,12 +55,12 @@
       }';
 
     // forDebug($jRobj->{'types'});
-    public $jRobj;
+    public $phpQueryObj;
     public $pois = array();
     public $pids = array();
-    public $gSearchURL = "kjsdbksdfkj";
+    public $gSearchURL = "";
     function  __construct() {
-      $this->jRobj = json_decode($this->jsonR);
+      $this->phpQueryObj = json_decode($this->jsonQueryData);
     }
   }
 
