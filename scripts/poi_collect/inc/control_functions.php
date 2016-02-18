@@ -39,13 +39,28 @@
       echo '<h1 style="font-weight: bold;">Datenausgabe</h1>';
       foreach($data as $poi) {
         echo "<p>";
-        echo "<b>" . $poi->name . "</b>, " . $poi->vicinity;
+        if(isset($poi->name)) echo "<b>" . $poi->name . "</b>";
+        if(isset($poi->vicinity)) echo ", " . $poi->vicinity;
+        if( !( isset($poi->name) && isset($poi->vicinity) ) ) echo "<b><u>Kein Name und keine Adresse im Datensatz</u></b>";
         echo "<br />";
         echo "place_id: " .$poi->place_id . ", lat: " .  $poi->geometry->location->lat . ", lng: " .  $poi->geometry->location->lat;
         echo "<br />";
-        echo "types: " . implode(", ", $poi->types);
+        if( isset($poi->types) ) {
+          echo "types: " . implode(", ", $poi->types);
+        } else {
+           echo "<i>Keine Google-Types im Datensatz vorhanden</i>";
+        }
         echo "</p>";
       }
+    }
+
+    public static function pasteSpacer($spacerKey, $spacerRows = 10) {
+      $spacerString = "<p>";
+      for( $i = 0; $i < $spacerRows; $i++) {
+        $spacerString .= "$spacerKey<br />";
+      }
+      $spacerString .= "</p>";
+      return $spacerString;
     }
 
     public static function forDebug($dataToDebug, $name = null) {
