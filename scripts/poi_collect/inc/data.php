@@ -27,8 +27,6 @@
         "name" : "Regensburg",
         "place_id" : "ChIJIWdnpCHBn0cRPLc80Q0Fk6E",
         "types" : [
-
-
                   "bakery",
                   "bar",
                   "cafe",

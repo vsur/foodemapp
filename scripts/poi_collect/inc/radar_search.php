@@ -37,7 +37,7 @@
       ControlFunctions::forDebug($fpois, "Gefilterte Pois");
     }
 
-    function radarAllTypesConcat($queryData) {
+    function radarAllTypesIteration($queryData) {
 
       for ($i = 0; $i < count($queryData->{'types'}); $i++) {
         // String for request
@@ -55,7 +55,7 @@
         }
 
         echo ControlFunctions::tagIt("h2",
-          "<span style=\"font-family: monospace;\">radarAllTypesConcat()</span><br />" .
+          "<span style=\"font-family: monospace;\">radarAllTypesIteration()</span><br />" .
           "Radar Anfrage für  1. <span style=\"color: blue;\">" .  $queryData->{'types'}[$i] . "</span> Query " . $loopQuery
         );
         echo ControlFunctions::tagIt("h3",
@@ -83,7 +83,7 @@
       ControlFunctions::forDebug($fpois, "Gefilterte Pois");
     }
 
-    function radarConcatTypesInOne($queryData, $doDebug = null) {
+    public function radarConcatTypesInOne($queryData) {
       // String for request
       $this->gSearchURL .= $queryData->{'geometry'}->{'location'}->{'lat'} . "," . $queryData->{'geometry'}->{'location'}->{'lng'} .
       "&radius=1500" .
@@ -129,6 +129,9 @@
   $data = new googleData();
   $app = new RadarSearch();
 
-  $app->radarConcatTypesInOne($data->phpQueryObj);
+  $app->radarAllTypesIteration($data->phpQueryObj);
+
+  // TODO: radarwith Iteration over Same Types like Concat function
+  // Therefore take radarOneType and give array of type NR and iterate over it
 
 ?>
