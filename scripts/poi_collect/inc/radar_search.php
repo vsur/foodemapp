@@ -2,7 +2,7 @@
   require_once 'data.php';
   require_once 'control_functions.php';
 
-  class classTest {
+  class RadarSearch {
 
     public $pois = array();
     public $pids = array();
@@ -55,7 +55,8 @@
         }
 
         echo ControlFunctions::tagIt("h2",
-          "Radar Anfrage für  1. Seite <span style=\"color: blue;\">" .  $queryData->{'types'}[$i] . "</span> Query " . $loopQuery
+          "<span style=\"font-family: monospace;\">radarAllTypesConcat()</span><br />" .
+          "Radar Anfrage für  1. <span style=\"color: blue;\">" .  $queryData->{'types'}[$i] . "</span> Query " . $loopQuery
         );
         echo ControlFunctions::tagIt("h3",
           "Einträge: <b>" . count($info->results) . "</b>"
@@ -66,6 +67,7 @@
       }
 
       echo ControlFunctions::tagIt("h2",
+        "<span style=\"font-family: monospace;\">radarAllTypesConcat()</span><br />" .
         "Radar Anfrage für <span style=\"color: blue;\">All Types</span>-Query "
       );
       echo ControlFunctions::tagIt("h3",
@@ -100,8 +102,9 @@
       }
 
       echo ControlFunctions::tagIt("h2",
+        "<span style=\"font-family: monospace;\">radarConcatTypesInOne()</span><br />" .
         "Radar Anfrage für meherere Types in einer Anfrage: <span style=\"color: blue;\">" .
-        $queryData->{'types'}[0] . "|" .
+        $queryData->{'types'}[0] . ", " .
         $queryData->{'types'}[8] . ", " .
         $queryData->{'types'}[12] . ", " .
         $queryData->{'types'}[13] . ", " .
@@ -124,7 +127,7 @@
   }
 
   $data = new googleData();
-  $app = new classTest();
+  $app = new RadarSearch();
 
   $app->radarConcatTypesInOne($data->phpQueryObj);
 
