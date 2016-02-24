@@ -10,8 +10,9 @@
 
     public function radarOneType($queryData, $typenr = 0) {
       // String for request
-      $this->gSearchURL .= $queryData->{'geometry'}->{'location'}->{'lat'} . "," . $queryData->{'geometry'}->{'location'}->{'lng'} .
-      "&radius=1500" .
+      // $this->gSearchURL .= $queryData->{'geometry'}->{'location'}->{'lat'} . "," . $queryData->{'geometry'}->{'location'}->{'lng'} .
+      $this->gSearchURL .= "49.018386,12.095228" .
+      "&radius=200" .
       "&types=" . $queryData->{'types'}[$typenr];
       $this->gSearchURL = ControlFunctions::addAPIkey($this->gSearchURL);
 
@@ -43,7 +44,7 @@
         // String for request
         $loopQuery = $this->gSearchURL;
         $loopQuery .= $queryData->{'geometry'}->{'location'}->{'lat'} . "," . $queryData->{'geometry'}->{'location'}->{'lng'} .
-        "&radius=1500" .
+        "&radius=3000" .
         "&types=" . $queryData->{'types'}[$i];
         $loopQuery = ControlFunctions::addAPIkey($loopQuery);
 
@@ -129,9 +130,26 @@
   $data = new googleData();
   $app = new RadarSearch();
 
-  $app->radarAllTypesIteration($data->phpQueryObj);
+  $app->radarOneType($data->phpQueryObj, 16);
 
-  // TODO: radarwith Iteration over Same Types like Concat function
-  // Therefore take radarOneType and give array of type NR and iterate over it
+  // TODO: radar with Iteration over Details
+  // TODO: radar with 500 m matrix
+
+  /*
+   *
+   *  Notes
+   *
+   *  !!! Important !!! Do not mess around anymore with getting more data! Get your 900 or 500 in a Database and start you Prototype! 
+   *
+   *  Get more Results for types: restaurant, store, establishment, food
+   *  For inner circle Old Town RGB you get 199 food results by radius=500
+   *  https://maps.googleapis.com/maps/api/place/radarsearch/json?location=49.018386,12.095228&radius=500&types=food&key=AIzaSyBXpO58KiugJQ3rIwf8lbkNlz-Ar4l33wA
+   *
+   *  To get less than 60 (3 result pages for nearby query) you need to decreade the radius to 200
+   *  Query https://maps.googleapis.com/maps/api/place/radarsearch/json?location=49.018386,12.095228&radius=200&types=restaurant&key=AIzaSyBXpO58KiugJQ3rIwf8lbkNlz-Ar4l33wA
+   *
+   *  But on the other hand one has to start 675 queries to go over a matrix in a 6x6 km range other RGB in 400m (200m radius) steps to get it all
+   *  The Thing is, that it needs to be cleared up if a detail search gets more sinvul information than a neabry search
+   */
 
 ?>

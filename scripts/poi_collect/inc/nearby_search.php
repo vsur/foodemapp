@@ -63,7 +63,7 @@
       $this->gSearchURL = addAPIkey($this->gSearchURL);
 
       $info = json_decode( file_get_contents($this->gSearchURL) );
-
+      echo $this->gSearchURL;
       foreach($info->results as $poi) {
         array_push($this->pois, $poi);
       }
@@ -99,7 +99,7 @@
 
     }
 
-    public function nearbyAllTypesAllPage($queryData) {
+    public function nearbyAllTypesAllPages($queryData) {
 
       for ($i = 0; $i < count($queryData->{'types'}); $i++) {
         // String for request
@@ -202,6 +202,6 @@
   $data = new googleData();
   $app = new NearbySearch();
 
-  $app->nearbyAllTypesAllPage($data->phpQueryObj);
+  $app->nearbyAllTypesAllPages($data->phpQueryObj);
 
 ?>

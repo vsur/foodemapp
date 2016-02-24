@@ -1,0 +1,338 @@
+// https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=49.0134074,12.101631&radius=1500&types=food&key=AIzaSyBXpO58KiugJQ3rIwf8lbkNlz-Ar4l33wA
+  // nearbysearch, Wurstkuchl result
+  {
+    "geometry" : {
+      "location" : {
+         "lat" : 49.02093169999999,
+         "lng" : 12.0975734
+      }
+    },
+    "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+    "id" : "dbe68a293fbe8c02fd89c6ebd4e3b849f3eb7581",
+    "name" : "Historische Wurstküche",
+    "opening_hours" : {
+      "open_now" : true,
+      "weekday_text" : []
+    },
+    "photos" : [
+      {
+         "height" : 1536,
+         "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/114710219738175875885/photos\"\u003eSusanne Schweiger\u003c/a\u003e"
+         ],
+         "photo_reference" : "CmRdAAAAEK3vullp1w7dBtAGqcnpttx3nC5jL2OmrBNdbCyXB8eKuUd2m2-kY0zofJ0mrnMkmhO2MYDv0yUZz2m4LPJ3Jpi9g4BR6RXi3eLSEB_mkTa7AhOX-sfSQS8LWigE2RleEhDOcPYW1PRrY_lfdZ2YQZTiGhTNga7x5lEgkwf_HY0JX4acUUkpHw",
+         "width" : 2048
+      }
+    ],
+    "place_id" : "ChIJO5O-t6XBn0cRt8ZQVNgfTiM",
+    "rating" : 3.5,
+    "reference" : "CnRqAAAAFglX4XhcOdMAMXV2OAGAFEajvSh1deRHTf1rTX8c1WAoaSsvA4U5jMUkdsuyfFIVfqvoBzCjrIdGR_Sd_F3S3-nEEH6PeMiu2NplwH6W78IhQn3BL8jjmWrMX1c6hjL6CT1y8jHPPcFJFZh96UvNEBIQa8HV1sthG0pIg_drzX89hRoUwBrZh2v1CvY2w5hTJRLUysEFJrM",
+    "scope" : "GOOGLE",
+    "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+    "vicinity" : "Thundorferstraße 3, Regensburg"
+  }
+
+// https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJO5O-t6XBn0cRt8ZQVNgfTiM&key=AIzaSyBXpO58KiugJQ3rIwf8lbkNlz-Ar4l33wA
+  // detail API search, Wurstkuchl
+  {
+    "html_attributions" : [],
+    "result" : {
+      "address_components" : [
+         {
+            "long_name" : "3",
+            "short_name" : "3",
+            "types" : [ "street_number" ]
+         },
+         {
+            "long_name" : "Thundorferstraße",
+            "short_name" : "Thundorferstraße",
+            "types" : [ "route" ]
+         },
+         {
+            "long_name" : "Innenstadt",
+            "short_name" : "Innenstadt",
+            "types" : [ "sublocality_level_1", "sublocality", "political" ]
+         },
+         {
+            "long_name" : "Regensburg",
+            "short_name" : "Regensburg",
+            "types" : [ "locality", "political" ]
+         },
+         {
+            "long_name" : "Deutschland",
+            "short_name" : "DE",
+            "types" : [ "country", "political" ]
+         },
+         {
+            "long_name" : "93047",
+            "short_name" : "93047",
+            "types" : [ "postal_code" ]
+         }
+      ],
+      "adr_address" : "\u003cspan class=\"street-address\"\u003eThundorferstraße 3\u003c/span\u003e, \u003cspan class=\"postal-code\"\u003eD-93047\u003c/span\u003e \u003cspan class=\"locality\"\u003eRegensburg\u003c/span\u003e, \u003cspan class=\"country-name\"\u003eDeutschland\u003c/span\u003e",
+      "formatted_address" : "Thundorferstraße 3, 93047 Regensburg, Deutschland",
+      "formatted_phone_number" : "0941 466210",
+      "geometry" : {
+         "location" : {
+            "lat" : 49.02093169999999,
+            "lng" : 12.0975734
+         }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+      "id" : "dbe68a293fbe8c02fd89c6ebd4e3b849f3eb7581",
+      "international_phone_number" : "+49 941 466210",
+      "name" : "Historische Wurstküche",
+      "opening_hours" : {
+         "open_now" : true,
+         "periods" : [
+            {
+               "close" : {
+                  "day" : 0,
+                  "time" : "1700"
+               },
+               "open" : {
+                  "day" : 0,
+                  "time" : "0800"
+               }
+            },
+            {
+               "close" : {
+                  "day" : 1,
+                  "time" : "1700"
+               },
+               "open" : {
+                  "day" : 1,
+                  "time" : "0800"
+               }
+            },
+            {
+               "close" : {
+                  "day" : 2,
+                  "time" : "1700"
+               },
+               "open" : {
+                  "day" : 2,
+                  "time" : "0800"
+               }
+            },
+            {
+               "close" : {
+                  "day" : 3,
+                  "time" : "1700"
+               },
+               "open" : {
+                  "day" : 3,
+                  "time" : "0800"
+               }
+            },
+            {
+               "close" : {
+                  "day" : 4,
+                  "time" : "1700"
+               },
+               "open" : {
+                  "day" : 4,
+                  "time" : "0800"
+               }
+            },
+            {
+               "close" : {
+                  "day" : 5,
+                  "time" : "1700"
+               },
+               "open" : {
+                  "day" : 5,
+                  "time" : "0800"
+               }
+            },
+            {
+               "close" : {
+                  "day" : 6,
+                  "time" : "1700"
+               },
+               "open" : {
+                  "day" : 6,
+                  "time" : "0800"
+               }
+            }
+         ],
+         "weekday_text" : [
+            "Montag: 08:00–17:00 Uhr",
+            "Dienstag: 08:00–17:00 Uhr",
+            "Mittwoch: 08:00–17:00 Uhr",
+            "Donnerstag: 08:00–17:00 Uhr",
+            "Freitag: 08:00–17:00 Uhr",
+            "Samstag: 08:00–17:00 Uhr",
+            "Sonntag: 08:00–17:00 Uhr"
+         ]
+      },
+      "photos" : [
+         {
+            "height" : 1536,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/114710219738175875885/photos\"\u003eSusanne Schweiger\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAArAGidp_Sj5AmnqWbdKyAp2Xbd0XPuHCVYOazFreEWetwtxDWVVgsGrx4E6ZhQMIOPTIizTxHxfEJcagmmnIPCjK_YzYctJOjm-sXEXAAH64xkT9F3XzaLvVhfwY_QTLnEhCJ4NWZo_zOrcpgyisdFkrtGhQ5f8_RZESX36102jQZTuIKMNidDQ",
+            "width" : 2048
+         },
+         {
+            "height" : 1124,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/104881211418441267546/photos\"\u003enorifumi iimura\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAxK0lAHEd7spy7xAUvF6orXChz60khSaikO8kGmNVqvPzhlUsrA3oGPtAhwnTmpRDMmPqrbxK8NM-2QFNuszm0JkPS9wFPBaT-AMwnO377SncQCwDKL9XGO6hjenAteGLEhCdWYB9Nq5ZNLnElR0MjeMCGhR5dW8wtXN_zo-x1kWwQf4WIaYLTw",
+            "width" : 2000
+         },
+         {
+            "height" : 612,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/104554771219073725082/photos\"\u003eReinhard Sengstacke\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAtlIzU8Jqbc57Ew7RLizwn-rE_3tId87BzhyK4bduEhm8zt6zKWfqERaz_6CgzBzMcdXlE5dAff1LKYgqIOHwrY_oRJrWC1QAgD92DemnHfpVV5enidDqpoPRPHofH3oaEhAlMwZ_psRK9ER2R6uD2vxBGhScghWKUO3Yi5jDW64FvpWOVAbvog",
+            "width" : 816
+         },
+         {
+            "height" : 1224,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/104881211418441267546/photos\"\u003enorifumi iimura\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAphUCGE0V9M1F9OrdJXEPHWEM_CjZfw_wHwFHHTiNvatZKUZlbHXoyJo9O5Jabjiv7Q4hslwdUsKYhEvx3buujlC-URgh7q9-7m3YwHcSoZvJPLnVPzihqZkdzQGsROaTEhDGPFVLW5s34TJprGWCCFyQGhQe8V7LCKX2RQNt6Itr-9TlKNymTA",
+            "width" : 1632
+         },
+         {
+            "height" : 1124,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/104881211418441267546/photos\"\u003enorifumi iimura\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAQMqFqoUckY586XkGkvDtE_bJ_kk-IpEn1-uItuWmKv8cpxdJootGvK93duftWFhodyQlsYBRIdKPrt7Pjuul9_NLggEYgyt9bm_Npnt5oR5jVymhBjdNp4kiYhi4f4dIEhCQvn30-0w6CshLKj7XFMGfGhRJtORPucePZpUX_PtE9gTwQAr9_w",
+            "width" : 2000
+         },
+         {
+            "height" : 1536,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/102381417658683572677/photos\"\u003eElias Stadler\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAACrBwAwSnucPktpzQkMVD6pBrhyGopX22SFj2k0UJ_GA_L8K1u2ahuMdhlYfzwSWKvMQ8PkLcDPuIdKRZo_c5eLrPygt2NlZeFl1spV1ag5LWtzF2gk-0DvD-5xWyegHUEhAmHdwlEEZ0qQ54Pi-BUlhGGhRuyG0G1zD2ecSXNxXfsdiwYGHK0w",
+            "width" : 2048
+         },
+         {
+            "height" : 1536,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/102381417658683572677/photos\"\u003eElias Stadler\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAUY2iQMlTvbQSO-KDNGqD8kDIUWJsXDyUldyb6yxZWKtV1wj67j9QTIfYmgRX-cgmhSrMtI-59YSRfbAgNq9_cjF1JHH53RJZ3wtk4zrEnZ1VEmVnroWzitzJO7uXOlgHEhCL9eOHnn_rIlaxigIMOuUnGhQDcfgJmGyVEE2YmaznbQBZaW-OtQ",
+            "width" : 2048
+         },
+         {
+            "height" : 4928,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/111564607110437859482/photos\"\u003eMike Brown\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAaGBQm6wGXC1bIr-aj-uLof1yrL_Z9gmRQe86moQsJhW_fsqpmVpikKoTR29079bZIvgFwWaqjxrM4GvV5ZPepFcdz8r4q2rtKdv4PhhyRHII9f5xaMrVjITBBcAeewBUEhBlKoFyGU5Bds84AoCV-Bv9GhT6fiYmkN6OLFeguJu20kl34hXWxA",
+            "width" : 3264
+         },
+         {
+            "height" : 1536,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/102381417658683572677/photos\"\u003eElias Stadler\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAATOYOXjwWH7vge8-hBBtTWc5jmME9NfJ_yNb51ovC7jFGKE4kp-iiEsuXgl2rRgkdWZ62RduE0hkDJPVGSmrpN15_u9jp19pvQU3pnkvWTWGHGcDFRR6uz0eRcaLOCdc1EhBkeVJmZXJhfNr78RevLX7KGhSCvQS9i_oxNf2qibF65daQymdwoA",
+            "width" : 2048
+         },
+         {
+            "height" : 1536,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/102381417658683572677/photos\"\u003eElias Stadler\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAA-BWf1JNb6jdD-v_KKY04Omp1kOHJ1q4ZcGMeE697A__kFgM-U39ExkJrvG37DvcX2lHgHOiRW2O4wGqO3XC67ZBqVSfLFaI63IEYW-1acz-JSkcrD8BG0TqwjHiodMpKEhBGlBwSz53LnT5W-Ca00FZBGhR5j-162HXGN41JyPpa-ThsGbK5pA",
+            "width" : 2048
+         }
+      ],
+      "place_id" : "ChIJO5O-t6XBn0cRt8ZQVNgfTiM",
+      "rating" : 3.5,
+      "reference" : "CnRqAAAAKDEHDq5TxxiVVIEmDQT-okmdrfQVjr-o0bvrFEp0rKiDcciXYlcQ2vjlWlFB1pnK6e8BhS2AXZiKUJsiDi9FIDy8VqHtYcaiit2-ChBUL1HWg1dF2pztEzT3lJqGIt_p9zPs7skt3N5jlCq2XAAgORIQLvR435-o-GsQRAm_ii8KYRoUoPs8C7UmWtEpgidisJt9fTsSpFk",
+      "reviews" : [
+         {
+            "aspects" : [
+               {
+                  "rating" : 3,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Viola Hill",
+            "author_url" : "https://plus.google.com/103799279093620312892",
+            "language" : "de",
+            "profile_photo_url" : "//lh6.googleusercontent.com/-UH9uTFynB64/AAAAAAAAAAI/AAAAAAAAALA/-4MBm04LFic/photo.jpg",
+            "rating" : 5,
+            "text" : "Bedenken wir das dieses Wurstrezept schon über 800 Jahre alt ist und die  Küche seit Entstehung durch ein und die selbe Familie geführt wird. Kann ich nur sagen sehr lecker. Wir kommen gern wieder. Schade das die Leute bei Traditionen immer auf den Cent schauen und moppern aber Geld für Zigaretten und Alkohol immer parat haben.  Glühwein für 5 euro ist für sie ok aber mal 2.50 für eine Wurst im Brötchen mit Senf und kraut zu viel ist.",
+            "time" : 1449574535
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 3,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "David Freese",
+            "author_url" : "https://plus.google.com/104948122864549276166",
+            "language" : "de",
+            "profile_photo_url" : "//lh4.googleusercontent.com/-CJJ34cjT-rI/AAAAAAAAAAI/AAAAAAAAG9o/nwxKGI2IAn4/photo.jpg",
+            "rating" : 5,
+            "text" : "Teuer aber lecker ",
+            "time" : 1448810426
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 3,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Thomas Fuchs",
+            "author_url" : "https://plus.google.com/100246156246577812722",
+            "language" : "de",
+            "rating" : 5,
+            "text" : "Unbedingt immer ein Bratwurst-Kipferl mitnehmen wenn man in der Nähe ist. Für mich als Einheimischer auch ein Muss - trotz  der vielen Turisten. ",
+            "time" : 1452342875
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 2,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Claus Albers",
+            "author_url" : "https://plus.google.com/101391749461763131660",
+            "language" : "de",
+            "profile_photo_url" : "//lh4.googleusercontent.com/-vpQXn9aKidY/AAAAAAAAAAI/AAAAAAAAXGU/FpDgBJU90Ck/photo.jpg",
+            "rating" : 4,
+            "text" : "Saugute Bratwürstl! Preise etwas teurer als in normalen Wirtshäusern. Mit der Schärfe der Bedienungen muss man teilweise zurecht kommen, aber das gehört fast zum Programm.",
+            "time" : 1451179151
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 0,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Vera Schwartz",
+            "author_url" : "https://plus.google.com/106505090011102337385",
+            "language" : "de",
+            "rating" : 1,
+            "text" : "Ripp-off. 6 kleine Rostbratwürste mit einem Häufchen Sauerkraut (beides durchschnittlich) für 9 Euro! Getränk extra.  3 Personen = 40€. \nKann jede Wurstbude genauso gut. \nUnd dafür sitzt man mit anderen Leuten auf aug Holzbänken draußen.\nMuss man nicht hin! ",
+            "time" : 1439815419
+         }
+      ],
+      "scope" : "GOOGLE",
+      "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+      "url" : "https://maps.google.com/?cid=2544005853498885815",
+      "user_ratings_total" : 91,
+      "utc_offset" : 60,
+      "vicinity" : "Thundorferstraße 3, Regensburg",
+      "website" : "http://www.wurstkuchl.de/"
+    },
+    "status" : "OK"
+  }
