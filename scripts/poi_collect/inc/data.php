@@ -1,6 +1,4 @@
 <?php
-//require_once '../../../sec/givexml.php';
-//$secKeys = getSecVars('../../../sec/');
 
   class googleData {
 
