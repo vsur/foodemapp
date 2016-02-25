@@ -1,6 +1,6 @@
 <?php
-include '../../sec/givexml.php';
-$secKeys = getSecVars('../../sec/');
+// include '../../sec/givexml.php';
+// $secKeys = getSecVars('../../sec/');
 
 return [
     /**
@@ -65,7 +65,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => $secKeys->cakeVars->{'secSalt'},
+        'salt' => '55a5518644e6451d12154f5451b4c54686846c454ff45e54d4541f54a4211b21',
     ],
 
     /**
@@ -218,9 +218,9 @@ return [
              * the following line and set the port accordingly
              */
             'port' => 8889,
-            'username' => $secKeys->cakeVars->{'dbUsr'},
-            'password' => $secKeys->cakeVars->{'dbPw'},
-            'database' => $secKeys->cakeVars->{'dbCake'},
+            'username' => 'root',
+            'password' => 'root',
+            'database' => 'fm_Cake',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
