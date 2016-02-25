@@ -1,6 +1,7 @@
 <?php
   require_once 'data.php';
   require_once 'control_functions.php';
+  require_once 'data_base.php';
 
   class NearbySearch {
     public $pois = array();
@@ -201,7 +202,20 @@
 
   $data = new googleData();
   $app = new NearbySearch();
-
-  $app->nearbyAllTypesAllPages($data->phpQueryObj);
+  $db = new DataBase();
+  $sql = "SELECT name, description, counter FROM scenarios";
+  $db->connect();
+  try {
+			$db->connect();
+			$db->connection->query($sql)->fetchAll();
+      foreach ($db->connection->query($sql) as $row) {
+        echo $row['name']." <hr /> ".$row['description']."<br />";
+        echo "Counter: ".$row['counter']."<hr /><hr />";
+      }
+		} catch (\PDOException $e) {
+			// error_log( 'Database Error: ' . $e->getMessage());
+			echo 'Database Error: ' . $e->getMessage();
+		}
+  //$app->nearbyAllTypesAllPages($data->phpQueryObj);
 
 ?>
