@@ -203,19 +203,33 @@
   $data = new googleData();
   $app = new NearbySearch();
   $db = new DataBase();
-  $sql = "SELECT name, description, counter FROM scenarios";
-  $db->connect();
+
+  // Get Data
   try {
-			$db->connect();
-			$db->connection->query($sql)->fetchAll();
-      foreach ($db->connection->query($sql) as $row) {
-        echo $row['name']." <hr /> ".$row['description']."<br />";
-        echo "Counter: ".$row['counter']."<hr /><hr />";
-      }
-		} catch (\PDOException $e) {
-			// error_log( 'Database Error: ' . $e->getMessage());
-			echo 'Database Error: ' . $e->getMessage();
-		}
+    $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
+    $sql = "SELECT name, description, counter FROM scenarios";
+    $rows = $db->fire($sql);
+    ControlFunctions::forDebug($rows, "Datenabnkausgabe");
+  } catch(Exception $e) {
+    echo ControlFunctions::tagIt("h4",
+      $e->getMessage()
+    );
+  }
+
+  // Paste Data
+  $now = date("Y-m-d H:i:s");
+  try {
+    $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
+    $sql = "INSERT INTO tags (title, created, modified) VALUES (:title, :tstamp, :tstamp)";
+    $para = array(
+        'title'  => "Geiler Tag",
+        'tstamp' => $now
+    );
+    $rows = $db->fire($sql, $para);
+  } catch(Exception $e) {
+    die('Fehler bei .... Fehler: ' . $e->getMessage());
+  }
+
   //$app->nearbyAllTypesAllPages($data->phpQueryObj);
 
 ?>
