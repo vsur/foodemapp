@@ -10,7 +10,8 @@
 
     public function dataTypes3Pages($queryData) {
 
-      for ($i = 0; $i < count($queryData->{'types'}); $i++) {
+      // for ($i = 0; $i < count($queryData->{'types'}); $i++) {
+      for ($i = 0; $i < 1; $i++) {
         // String for request
         $loopQuery = $this->gSearchURL;
         $loopQuery .= $queryData->{'geometry'}->{'location'}->{'lat'} . "," . $queryData->{'geometry'}->{'location'}->{'lng'} .
@@ -24,48 +25,25 @@
           // $array =  (array) $poi;
           array_push($this->pois, $poi);
         }
-        echo ControlFunctions::tagIt("h4",
-          "<span style=\"font-family: monospace;\">Erste Suchergebnisseite <span style=\"color: green;\">gespeichert</span></span>"
-        );
+
         // Check if result contains next_page_token and try to get additional data
+        /*
         if( isset($info->next_page_token) ) {
-          echo ControlFunctions::tagIt("h4",
-            "<span style=\"font-family: monospace;\"><span style=\"color: orange;\">Next Page Token gefunden</span></span>"
-          );
           $this->callAddToken($info->next_page_token);
         } else {
           echo ControlFunctions::tagIt("h4",
             "<p><span style=\"color: orange\">Just one result page</span>: No Next Page Token found at all!</p>"
           );
         }
-
-        echo ControlFunctions::tagIt("h2",
-          "<span style=\"font-family: monospace;\">nearbyAllTypesAllPage()</span><br />" .
-          "Nearby Anfrage für 1. Seite <span style=\"color: blue;\">" .  $queryData->{'types'}[$i] . "</span> Query " . $loopQuery
-        );
-        echo ControlFunctions::tagIt("h3",
-          "Einträge: <b>" . count($info->results) . "</b>"
-        );
-
-        echo ControlFunctions::pasteSpacer("###  Next ###");
-
+        */
       }
 
-      echo ControlFunctions::tagIt("h2",
-        "<span style=\"font-family: monospace;\">nearbyAllTypesFirstPage()</span><br />" .
-        "Nearby Anfrage für <span style=\"color: blue;\">First Page – All Types</span>-Query "
-      );
-      echo ControlFunctions::tagIt("h3",
-        "Einträge: <b>" . count($this->pois) . "</b>"
-      );
       $fpois = ControlFunctions::checkDuplicatePID($this->pois);
       echo ControlFunctions::tagIt("h3",
         "Gefilterte Einträge: <b>" . count($fpois) . "</b>"
       );
 
-      ControlFunctions::formatResultArray($fpois);
-
-      ControlFunctions::forDebug($fpois, "Gefilterte Pois");
+      $this->saveToDB($fpois);
 
     }
 
@@ -106,12 +84,72 @@
       }
     }
 
+    public function saveToDB($filterdQueryData) {
+      global $secKeys;
+      ControlFunctions::forDebug($filterdQueryData, "Gefilterte Pois");
+      for ($i = 0; $i < 5; $i++) {
+        $now = date("Y-m-d H:i:s");
+        try {
+          DataBase::connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
+          $sql = "INSERT INTO pois (created, modified, name, lat, lng, google_place, icon, rating, vicinity) VALUES (:tstamp, :tstamp, :name, :lat, :lng, :google_place, :icon, :rating, :vicinity)";
+          $para = array(
+            'tstamp'        =>       $now,
+            'name'          =>       $filterdQueryData[$i]->name,
+            'lat'           =>       $filterdQueryData[$i]->geometry->location->lat,
+            'lng'           =>       $filterdQueryData[$i]->geometry->location->lng,
+            'google_place'  =>       $filterdQueryData[$i]->place_id,
+            'icon'          =>       $filterdQueryData[$i]->icon,
+            'rating'        =>       (isset($filterdQueryData[$i]->rating)) ? $filterdQueryData[$i]->rating : null,
+            'vicinity'      =>       $filterdQueryData[$i]->vicinity
+          );
+          DataBase::fire($sql, $para);
+          $lastPoisId = DataBase::lastInsertId();
+          echo ControlFunctions::tagIt("h1",
+            "Letzter Eintrag: " . $lastPoisId
+          );
+          foreach ($filterdQueryData[$i]->types as $tag) {
+            $tagId = null;
+            // Check if tag is already present
+            $sql = "SELECT EXISTS(SELECT 1 FROM tags WHERE title LIKE '%" . $tag . "%')";
+            $rows = DataBase::fire($sql);
+            $tagPresent = ( current(current($rows)) == "1") ? true : false;
+            ControlFunctions::forDebug($rows, "Ausgabe für Tag $tag");
+            echo ($tagPresent) ? "Wert für $tag ist: vorhanden" : "Wert für $tag ist: Nicht existent!";
+            if($tagPresent) {
+              $sql = "SELECT id FROM tags WHERE title LIKE '%" . $tag . "%'";
+              $rows = DataBase::fire($sql);
+              $tagPresentId = current(current($rows));
+              ControlFunctions::forDebug($rows, "Ausgabe für Tag $tag, tag ID: ");
+              echo ControlFunctions::tagIt("h1",
+                "$tag ID: $tagPresentId"
+              );
+              // Insert JOIN Table info
+              // Can also be done ater Setting new tag if $tagPresent is false
+              $sql = "INSERT INTO pois_tags (pois_id, tags_id) VALUES (:pois_id, :tags_id)";
+              $para = array(
+                'pois_id'  => $lastPoisId,
+                'tags_id' => $tagPresentId
+              );;
+              DataBase::fire($sql, $para);
+              echo ControlFunctions::tagIt("h1",
+                "Letzter Eintrag: " . DataBase::lastInsertId()
+              );
+            }
+          }
+          DataBase::close();
+        } catch(Exception $e) {
+          die('Fehler bei .... Fehler: ' . $e->getMessage());
+        }
+
+      }
+    }
+
   }
 
   $data = new googleData();
   $app = new SaveData();
   $db = new DataBase();
-
+/*
   // Get Data
   try {
     $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
@@ -140,6 +178,7 @@
   } catch(Exception $e) {
     die('Fehler bei .... Fehler: ' . $e->getMessage());
   }
+*/
   /*
    *
    *
@@ -150,6 +189,6 @@
    *
    *
    */
-  // $app->nearbyAllTypesAllPages($data->phpQueryObj);
+  $app->dataTypes3Pages($data->phpQueryObj);
 
 ?>

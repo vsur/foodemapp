@@ -24,6 +24,7 @@
     public static function connect($host, $username, $password, $database=null) {
       try {
         $database = ($database) ? ';dbname=' . $database : '';
+        $database .= ';charset=UTF8';
         self::$pdo = new PDO('mysql:host=' . $host . $database, $username, $password);
         return;
        } catch (PDOException $e) {
