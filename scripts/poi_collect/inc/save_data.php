@@ -10,8 +10,8 @@
 
     public function dataTypes3Pages($queryData) {
 
-      // for ($i = 0; $i < count($queryData->{'types'}); $i++) {
-      for ($i = 0; $i < 1; $i++) {
+      for ($i = 0; $i < count($queryData->{'types'}); $i++) {
+      // for ($i = 0; $i < 1; $i++) {
         // String for request
         $loopQuery = $this->gSearchURL;
         $loopQuery .= $queryData->{'geometry'}->{'location'}->{'lat'} . "," . $queryData->{'geometry'}->{'location'}->{'lng'} .
@@ -27,7 +27,7 @@
         }
 
         // Check if result contains next_page_token and try to get additional data
-        /*
+
         if( isset($info->next_page_token) ) {
           $this->callAddToken($info->next_page_token);
         } else {
@@ -35,7 +35,7 @@
             "<p><span style=\"color: orange\">Just one result page</span>: No Next Page Token found at all!</p>"
           );
         }
-        */
+
       }
 
       $fpois = ControlFunctions::checkDuplicatePID($this->pois);
@@ -87,7 +87,8 @@
     public function saveToDB($filterdQueryData) {
       global $secKeys;
       ControlFunctions::forDebug($filterdQueryData, "Gefilterte Pois");
-      for ($i = 0; $i < 5; $i++) {
+      // for ($i = 0; $i < 5; $i++) {
+      for ($i = 0; $i < count($filterdQueryData); $i++) {
         $now = date("Y-m-d H:i:s");
         try {
           DataBase::connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
@@ -118,23 +119,32 @@
             if($tagPresent) {
               $sql = "SELECT id FROM tags WHERE title LIKE '%" . $tag . "%'";
               $rows = DataBase::fire($sql);
-              $tagPresentId = current(current($rows));
+              $tagId = current(current($rows));
               ControlFunctions::forDebug($rows, "Ausgabe für Tag $tag, tag ID: ");
               echo ControlFunctions::tagIt("h1",
-                "$tag ID: $tagPresentId"
+                "$tag ID: $tagId"
               );
-              // Insert JOIN Table info
-              // Can also be done ater Setting new tag if $tagPresent is false
-              $sql = "INSERT INTO pois_tags (pois_id, tags_id) VALUES (:pois_id, :tags_id)";
+            } else {
+              // Paste Tag
+              $sql = "INSERT INTO tags (title, created, modified) VALUES (:title, :tstamp, :tstamp)";
               $para = array(
-                'pois_id'  => $lastPoisId,
-                'tags_id' => $tagPresentId
-              );;
-              DataBase::fire($sql, $para);
-              echo ControlFunctions::tagIt("h1",
-                "Letzter Eintrag: " . DataBase::lastInsertId()
+                'title'  => $tag,
+                'tstamp' => $now
               );
+              DataBase::fire($sql, $para);
+              // Save ID
+              $tagId = DataBase::lastInsertId();
             }
+            // Paste Relation
+            $sql = "INSERT INTO pois_tags (pois_id, tags_id) VALUES (:pois_id, :tags_id)";
+            $para = array(
+              'pois_id'  => $lastPoisId,
+              'tags_id' => $tagId
+            );
+            DataBase::fire($sql, $para);
+            echo ControlFunctions::tagIt("h1",
+            "Letzter Eintrag: " . DataBase::lastInsertId()
+          );
           }
           DataBase::close();
         } catch(Exception $e) {
@@ -149,46 +159,7 @@
   $data = new googleData();
   $app = new SaveData();
   $db = new DataBase();
-/*
-  // Get Data
-  try {
-    $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
-    $sql = "SELECT name, description, counter FROM scenarios";
-    $rows = $db->fire($sql);
-    //ControlFunctions::forDebug($rows, "Datenabnkausgabe");
-  } catch(Exception $e) {
-    echo ControlFunctions::tagIt("h4",
-      $e->getMessage()
-    );
-  }
 
-  // Paste Data
-  $now = date("Y-m-d H:i:s");
-  try {
-    $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
-    $sql = "INSERT INTO tags (title, created, modified) VALUES (:title, :tstamp, :tstamp)";
-    $para = array(
-        'title'  => "Tag vom $now",
-        'tstamp' => $now
-    );
-    $db->fire($sql, $para);
-    echo ControlFunctions::tagIt("h1",
-      "Letzter Eintrag: " . $db->lastInsertId()
-    );
-  } catch(Exception $e) {
-    die('Fehler bei .... Fehler: ' . $e->getMessage());
-  }
-*/
-  /*
-   *
-   *
-   * Next Steps:
-   * 1. create Save Array inn = 3 loop
-   * 2. Save Data in Tags
-   * 3. Increase Loop
-   *
-   *
-   */
   $app->dataTypes3Pages($data->phpQueryObj);
 
 ?>
