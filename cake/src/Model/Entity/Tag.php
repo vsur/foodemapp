@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property \App\Model\Entity\Pois[] $pois
+ * @property \App\Model\Entity\PoisTag[] $pois_tags
  */
 class Tag extends Entity
 {

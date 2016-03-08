@@ -4,19 +4,14 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Scenario Entity.
+ * PoisTag Entity.
  *
- * @property int $id
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
- * @property string $name
- * @property string $description
- * @property string $thumbnail
- * @property int $counter
- * @property \App\Model\Entity\Component[] $components
- * @property \App\Model\Entity\ComponentsScenario[] $components_scenarios
+ * @property int $poi_id
+ * @property int $tag_id
+ * @property \App\Model\Entity\Pois $pois
+ * @property \App\Model\Entity\Tag $tag
  */
-class Scenario extends Entity
+class PoisTag extends Entity
 {
 
     /**
@@ -31,5 +26,7 @@ class Scenario extends Entity
     protected $_accessible = [
         '*' => true,
         'id' => false,
+        'pois_id' => false,
+        'tags_id' => false,
     ];
 }

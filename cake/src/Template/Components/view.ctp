@@ -37,7 +37,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th><?= __('Id') ?></th>
-                <th><?= __('Create') ?></th>
+                <th><?= __('Created') ?></th>
                 <th><?= __('Modified') ?></th>
                 <th><?= __('Name') ?></th>
                 <th><?= __('Lat') ?></th>
@@ -61,7 +61,7 @@
             <?php foreach ($component->pois as $pois): ?>
             <tr>
                 <td><?= h($pois->id) ?></td>
-                <td><?= h($pois->create) ?></td>
+                <td><?= h($pois->created) ?></td>
                 <td><?= h($pois->modified) ?></td>
                 <td><?= h($pois->name) ?></td>
                 <td><?= h($pois->lat) ?></td>

@@ -13,9 +13,8 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('components_id') ?></th>
-                <th><?= $this->Paginator->sort('pois_id') ?></th>
+                <th><?= $this->Paginator->sort('component_id') ?></th>
+                <th><?= $this->Paginator->sort('poi_id') ?></th>
                 <th><?= $this->Paginator->sort('created') ?></th>
                 <th><?= $this->Paginator->sort('modiefied') ?></th>
                 <th><?= $this->Paginator->sort('stage') ?></th>
@@ -25,9 +24,8 @@
         <tbody>
             <?php foreach ($componentsPois as $componentsPois): ?>
             <tr>
-                <td><?= $this->Number->format($componentsPois->id) ?></td>
-                <td><?= $componentsPois->has('component') ? $this->Html->link($componentsPois->component->name, ['controller' => 'Components', 'action' => 'view', $componentsPois->component->id]) : '' ?></td>
-                <td><?= $componentsPois->has('pois') ? $this->Html->link($componentsPois->pois->name, ['controller' => 'Pois', 'action' => 'view', $componentsPois->pois->id]) : '' ?></td>
+                <td><?= $this->Number->format($componentsPois->component_id) ?></td>
+                <td><?= $this->Number->format($componentsPois->poi_id) ?></td>
                 <td><?= h($componentsPois->created) ?></td>
                 <td><?= h($componentsPois->modiefied) ?></td>
                 <td><?= $this->Number->format($componentsPois->stage) ?></td>

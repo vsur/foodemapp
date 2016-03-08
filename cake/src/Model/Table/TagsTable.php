@@ -51,8 +51,8 @@ class TagsTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('title')
-            ->add('title', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->requirePresence('title', 'create')
+            ->notEmpty('title');
 
         return $validator;
     }

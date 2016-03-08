@@ -19,7 +19,6 @@
     <fieldset>
         <legend><?= __('Edit Pois') ?></legend>
         <?php
-            echo $this->Form->input('create');
             echo $this->Form->input('name');
             echo $this->Form->input('lat');
             echo $this->Form->input('lng');

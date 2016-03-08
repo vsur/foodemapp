@@ -4,19 +4,14 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Scenario Entity.
+ * ComponentsScenario Entity.
  *
- * @property int $id
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
- * @property string $name
- * @property string $description
- * @property string $thumbnail
- * @property int $counter
- * @property \App\Model\Entity\Component[] $components
- * @property \App\Model\Entity\ComponentsScenario[] $components_scenarios
+ * @property int $component_id
+ * @property int $scenario_id
+ * @property \App\Model\Entity\Component $component
+ * @property \App\Model\Entity\Scenario $scenario
  */
-class Scenario extends Entity
+class ComponentsScenario extends Entity
 {
 
     /**
@@ -31,5 +26,7 @@ class Scenario extends Entity
     protected $_accessible = [
         '*' => true,
         'id' => false,
+        'components_id' => false,
+        'scenarios_id' => false,
     ];
 }

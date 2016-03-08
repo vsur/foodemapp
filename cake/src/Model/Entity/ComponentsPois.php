@@ -6,14 +6,13 @@ use Cake\ORM\Entity;
 /**
  * ComponentsPois Entity.
  *
- * @property int $id
- * @property int $components_id
- * @property \App\Model\Entity\Component $component
- * @property int $pois_id
- * @property \App\Model\Entity\Pois $pois
+ * @property int $component_id
+ * @property int $poi_id
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modiefied
  * @property float $stage
+ * @property \App\Model\Entity\Component $component
+ * @property \App\Model\Entity\Pois $pois
  */
 class ComponentsPois extends Entity
 {

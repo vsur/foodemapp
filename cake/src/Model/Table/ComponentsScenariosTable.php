@@ -1,19 +1,19 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\ComponentsPois;
+use App\Model\Entity\ComponentsScenario;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * ComponentsPois Model
+ * ComponentsScenarios Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Components
- * @property \Cake\ORM\Association\BelongsTo $Pois
+ * @property \Cake\ORM\Association\BelongsTo $Scenarios
  */
-class ComponentsPoisTable extends Table
+class ComponentsScenariosTable extends Table
 {
 
     /**
@@ -26,40 +26,18 @@ class ComponentsPoisTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('components_pois');
+        $this->table('components_scenarios');
         $this->displayField('id');
-        $this->primaryKey(['id', 'components_id', 'pois_id']);
-
-        $this->addBehavior('Timestamp');
+        $this->primaryKey(['id', 'components_id', 'scenarios_id']);
 
         $this->belongsTo('Components', [
             'foreignKey' => 'component_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Pois', [
-            'foreignKey' => 'poi_id',
+        $this->belongsTo('Scenarios', [
+            'foreignKey' => 'scenario_id',
             'joinType' => 'INNER'
         ]);
-    }
-
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('modiefied', 'valid', ['rule' => 'datetime'])
-            ->requirePresence('modiefied', 'create')
-            ->notEmpty('modiefied');
-
-        $validator
-            ->add('stage', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('stage');
-
-        return $validator;
     }
 
     /**
@@ -72,7 +50,7 @@ class ComponentsPoisTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['component_id'], 'Components'));
-        $rules->add($rules->existsIn(['poi_id'], 'Pois'));
+        $rules->add($rules->existsIn(['scenario_id'], 'Scenarios'));
         return $rules;
     }
 }

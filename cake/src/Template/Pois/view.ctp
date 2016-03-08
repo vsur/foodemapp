@@ -83,8 +83,8 @@
             <td><?= $this->Number->format($pois->reviews) ?></td>
         </tr>
         <tr>
-            <th><?= __('Create') ?></th>
-            <td><?= h($pois->create) ?></td>
+            <th><?= __('Created') ?></th>
+            <td><?= h($pois->created) ?></td>
         </tr>
         <tr>
             <th><?= __('Modified') ?></th>

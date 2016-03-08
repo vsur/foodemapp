@@ -15,16 +15,12 @@
     <h3><?= h($componentsPois->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th><?= __('Component') ?></th>
-            <td><?= $componentsPois->has('component') ? $this->Html->link($componentsPois->component->name, ['controller' => 'Components', 'action' => 'view', $componentsPois->component->id]) : '' ?></td>
+            <th><?= __('Component Id') ?></th>
+            <td><?= $this->Number->format($componentsPois->component_id) ?></td>
         </tr>
         <tr>
-            <th><?= __('Pois') ?></th>
-            <td><?= $componentsPois->has('pois') ? $this->Html->link($componentsPois->pois->name, ['controller' => 'Pois', 'action' => 'view', $componentsPois->pois->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th><?= __('Id') ?></th>
-            <td><?= $this->Number->format($componentsPois->id) ?></td>
+            <th><?= __('Poi Id') ?></th>
+            <td><?= $this->Number->format($componentsPois->poi_id) ?></td>
         </tr>
         <tr>
             <th><?= __('Stage') ?></th>

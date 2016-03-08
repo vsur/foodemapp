@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Pois Entity.
  *
  * @property int $id
- * @property \Cake\I18n\Time $create
+ * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property string $name
  * @property float $lat
@@ -28,6 +28,8 @@ use Cake\ORM\Entity;
  * @property int $reviews
  * @property \App\Model\Entity\Component[] $components
  * @property \App\Model\Entity\Tag[] $tags
+ * @property \App\Model\Entity\ComponentsPois[] $components_pois
+ * @property \App\Model\Entity\PoisTag[] $pois_tags
  */
 class Pois extends Entity
 {

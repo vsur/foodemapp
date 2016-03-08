@@ -14,12 +14,12 @@
         <thead>
             <tr>
                 <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('create') ?></th>
+                <th><?= $this->Paginator->sort('created') ?></th>
                 <th><?= $this->Paginator->sort('modified') ?></th>
                 <th><?= $this->Paginator->sort('name') ?></th>
                 <th><?= $this->Paginator->sort('lat') ?></th>
                 <th><?= $this->Paginator->sort('lng') ?></th>
-                <th><?= $this->Paginator->sort('google_place') ?></th>
+                <th><?= $this->Paginator->sort('google_place', 'GPID') ?></th>
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -27,12 +27,12 @@
             <?php foreach ($pois as $pois): ?>
             <tr>
                 <td><?= $this->Number->format($pois->id) ?></td>
-                <td><?= h($pois->create) ?></td>
+                <td><?= h($pois->created) ?></td>
                 <td><?= h($pois->modified) ?></td>
                 <td><?= h($pois->name) ?></td>
                 <td><?= $this->Number->format($pois->lat) ?></td>
                 <td><?= $this->Number->format($pois->lng) ?></td>
-                <td><?= h($pois->google_place) ?></td>
+                <td><abbr title="<?= h($pois->google_place) ?>">G-Place ID</td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $pois->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $pois->id]) ?>

@@ -13,6 +13,8 @@
     <fieldset>
         <legend><?= __('Add Components Pois') ?></legend>
         <?php
+            echo $this->Form->input('component_id');
+            echo $this->Form->input('poi_id');
             echo $this->Form->input('modiefied');
             echo $this->Form->input('stage');
         ?>

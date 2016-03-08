@@ -17,7 +17,7 @@ class ComponentsFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'name' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -39,8 +39,8 @@ class ComponentsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'created' => '2016-02-25 10:08:15',
-            'modified' => '2016-02-25 10:08:15',
+            'created' => '2016-03-08 14:54:51',
+            'modified' => '2016-03-08 14:54:51',
             'name' => 'Lorem ipsum dolor sit amet'
         ],
     ];
