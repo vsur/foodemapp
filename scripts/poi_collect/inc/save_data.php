@@ -136,10 +136,10 @@
               $tagId = DataBase::lastInsertId();
             }
             // Paste Relation
-            $sql = "INSERT INTO pois_tags (pois_id, tags_id) VALUES (:pois_id, :tags_id)";
+            $sql = "INSERT INTO pois_tags (poi_id, tag_id) VALUES (:poi_id, :tag_id)";
             $para = array(
-              'pois_id'  => $lastPoisId,
-              'tags_id' => $tagId
+              'poi_id'  => $lastPoisId,
+              'tag_id' => $tagId
             );
             DataBase::fire($sql, $para);
             echo ControlFunctions::tagIt("h1",
