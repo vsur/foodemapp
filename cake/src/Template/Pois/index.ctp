@@ -21,15 +21,15 @@
                 <th><?= $this->Paginator->sort('icon') ?></th>
                 <th><?= $this->Paginator->sort('rating') ?></th>
                 <th><?= $this->Paginator->sort('vicinity') ?></th>
-                <th><?= $this->Paginator->sort('formatted_phone_number') ?></th>
-                <th><?= $this->Paginator->sort('mail') ?></th>
-                <th><?= $this->Paginator->sort('website') ?></th>
-                <th><?= $this->Paginator->sort('social') ?></th>
-                <th><?= $this->Paginator->sort('user_ratings_total') ?></th>
-                <th><?= $this->Paginator->sort('opening_hours') ?></th>
-                <th><?= $this->Paginator->sort('weekday_text') ?></th>
-                <th><?= $this->Paginator->sort('photos') ?></th>
-                <th><?= $this->Paginator->sort('reviews') ?></th>
+                <!-- <th><?= $this->Paginator->sort('formatted_phone_number') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('mail') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('website') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('social') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('user_ratings_total') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('opening_hours') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('weekday_text') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('photos') ?></th> -->
+                <!-- <th><?= $this->Paginator->sort('reviews') ?></th> -->
                 <th class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -42,19 +42,19 @@
                 <td><?= h($pois->name) ?></td>
                 <td><?= $this->Number->format($pois->lat) ?></td>
                 <td><?= $this->Number->format($pois->lng) ?></td>
-                <td><?= h($pois->google_place) ?></td>
-                <td><?= h($pois->icon) ?></td>
+                <td><abbr title="<?= h($pois->google_place) ?>">GP_ID</abbr></td>
+                <td><img src="<?= h($pois->icon) ?>" alt="<?= h($pois->name) ?> Icon" width="24px" /></td>
                 <td><?= $this->Number->format($pois->rating) ?></td>
                 <td><?= h($pois->vicinity) ?></td>
-                <td><?= h($pois->formatted_phone_number) ?></td>
-                <td><?= h($pois->mail) ?></td>
-                <td><?= h($pois->website) ?></td>
-                <td><?= h($pois->social) ?></td>
-                <td><?= $this->Number->format($pois->user_ratings_total) ?></td>
-                <td><?= h($pois->opening_hours) ?></td>
-                <td><?= h($pois->weekday_text) ?></td>
-                <td><?= $this->Number->format($pois->photos) ?></td>
-                <td><?= $this->Number->format($pois->reviews) ?></td>
+                <!-- <td><?= h($pois->formatted_phone_number) ?></td> -->
+                <!-- <td><?= h($pois->mail) ?></td> -->
+                <!-- <td><?= h($pois->website) ?></td> -->
+                <!-- <td><?= h($pois->social) ?></td> -->
+                <!-- <td><?= $this->Number->format($pois->user_ratings_total) ?></td> -->
+                <!-- <td><?= h($pois->opening_hours) ?></td> -->
+                <!-- <td><?= h($pois->weekday_text) ?></td> -->
+                <!-- <td><?= $this->Number->format($pois->photos) ?></td> -->
+                <!-- <td><?= $this->Number->format($pois->reviews) ?></td> -->
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $pois->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $pois->id]) ?>

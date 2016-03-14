@@ -34,7 +34,7 @@ class ComponentsController extends AppController
     public function view($id = null)
     {
         $component = $this->Components->get($id, [
-            'contain' => ['Scenarios', 'Stages']
+            'contain' => ['Pois', 'Scenarios', 'Stages']
         ]);
 
         $this->set('component', $component);

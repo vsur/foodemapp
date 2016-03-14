@@ -40,6 +40,11 @@ class ComponentsTable extends Table
             'targetForeignKey' => 'scenario_id',
             'joinTable' => 'components_scenarios'
         ]);
+        $this->belongsToMany('Pois', [
+            'foreignKey' => 'component_id',
+            'targetForeignKey' => 'poi_id',
+            'joinTable' => 'stages'
+        ]);
     }
 
     /**
