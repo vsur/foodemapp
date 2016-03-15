@@ -94,6 +94,35 @@
         <?= $this->Text->autoParagraph(h($pois->description)); ?>
     </div>
     <div class="related">
+        <h4><?= __('Related Components') ?></h4>
+        <?php if (!empty($pois->components)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th><?= __('Id') ?></th>
+                <th><?= __('Created') ?></th>
+                <th><?= __('Modified') ?></th>
+                <th><?= __('Name') ?></th>
+                <th><?= __('Rating') ?></th>
+                <th class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($pois->components as $components): ?>
+            <tr>
+                <td><?= h($components->id) ?></td>
+                <td><?= h($components->created) ?></td>
+                <td><?= h($components->modified) ?></td>
+                <td><?= h($components->name) ?></td>
+                <td><?= h($components->_joinData->rating) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Components', 'action' => 'view', $components->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Components', 'action' => 'edit', $components->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Components', 'action' => 'delete', $components->id], ['confirm' => __('Are you sure you want to delete # {0}?', $components->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+    </div>
+    <div class="related">
         <h4><?= __('Related Tags') ?></h4>
         <?php if (!empty($pois->tags)): ?>
         <table cellpadding="0" cellspacing="0">
