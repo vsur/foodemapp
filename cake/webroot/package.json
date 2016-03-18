@@ -1,0 +1,23 @@
+{
+  "name": "G-Place API Data Collector",
+  "version": "1.0.1",
+  "description": "Get Data for DB with Bottstrap SASS and JS",
+  "keywords": [
+    "Bootstrap",
+    "Sass",
+    "Bootswatch",
+    "JS",
+    "Goolge Places API"
+  ],
+  "author": "VSur",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^3.0.3",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jshint": "^0.12.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-html": "^5.0.1",
+    "grunt-sass": "^1.1.0",
+    "jshint-stylish": "^2.1.0"
+  }
+}

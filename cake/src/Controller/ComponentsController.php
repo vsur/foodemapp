@@ -25,6 +25,24 @@ class ComponentsController extends AppController
     }
 
     /**
+     * FMapp Step 2 method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function choose()
+    {
+        $this->viewBuilder()->layout('Foodmapp');
+
+        $components = $this->Components->find('all', [
+            'contain' => ['Pois', 'Stages']
+        ]);
+
+        $this->set(compact('components'));
+        $this->set('_serialize', ['components']);
+    }
+
+
+    /**
      * View method
      *
      * @param string|null $id Component id.

@@ -1,5 +1,5 @@
-<?php 
-    include '../../sec/givexml.php'; 
+<?php
+    include '../../sec/givexml.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
