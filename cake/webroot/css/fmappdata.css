@@ -6539,3 +6539,6 @@ body {
   border-color: #c2005d; }
   .navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {
     color: #fff; }
+
+.components.choose {
+  padding-bottom: 2em; }
