@@ -1,15 +1,39 @@
+<?php
+  $componentsNames = array();
+  foreach ($components as $component) {
+    array_push($componentsNames, $component->name);
+  }
+?>
 <?php $this->assign('title', 'Auswahl'); ?>
 <div class="row">
-  <div class="col-md-12">
-    <form class="form-inline">
-      <div class="form-group">
-        <label for="componentInput"><?= __('Kategorie') ?></label>
-        <input type="text" class="form-control" id="componentInput" placeholder="Essen">
-        <button type="button" class="btn btn-default"><?= __('Auswählen') ?></button>
-      </div>
-    </form>
+  <div class="col-md-2">
+    <div class="form-group">
+      <label for="componentInput"><?= __('Kategorie') ?></label>
+      <input style="width: 100%;" type="text" class="awesomplete" id="componentInput" placeholder="Essen">
+    </div>
+    <button style="width: 100%;" type="button" class="btn btn-default" onclick="addComponent()"><?= __('Auswählen') ?></button>
+  </div>
+
+  <div class="col-md-4">
+    <div id="componentChoice">
+      <label class="text-success" for="componentChoice"><?= __('Ihre Auswahl an Kategorien') ?></label>
+
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div id="componentOutput">
+      
+    </div>
   </div>
 </div> <!-- /.row -->
+
+<script type="text/javascript">
+var componentsNames = <?= '["' . implode('", "', $componentsNames) . '"]' ?>;
+var input = document.getElementById("componentInput");
+var awesomplete = new Awesomplete(input);
+awesomplete.list = componentsNames;
+</script>
 
 <div class="row">
   <div class="col-md-2">

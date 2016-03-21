@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
 			// when this task is run, lint the Gruntfile and all js files in src
 			build: {
-				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_data.js'],
+				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js'],
 				dest: 'js/'
 			}
 		},
@@ -55,8 +55,8 @@ module.exports = function(grunt) {
 				dest: 'js/boot_fmapp_app.js',
 			},
 			noBoot: {
-				src: ['javascripts/fmapp_data.js'],
-				dest: 'js/fmapp_data.js',
+				src: ['javascripts/fmapp_app.js'],
+				dest: 'js/fmapp_app.js',
 			}
 		},
 

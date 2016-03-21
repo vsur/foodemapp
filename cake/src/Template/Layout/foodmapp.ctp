@@ -41,7 +41,8 @@ $cakeDescription = 'Food_M_App';
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-    <!-- Some JS at the end of the document-->
+    <!-- Some JS at the end of the document but awesomplete-->
+    <?= $this->Html->script('awesomplete.min.js') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -79,7 +80,7 @@ $cakeDescription = 'Food_M_App';
   <!-- Placed at the end of the document so the pages load faster -->
   <?= $this->Html->script('jquery-2.1.4.min.js') ?>
   <?= $this->Html->script('bootstrap.js') ?>
-  <?= $this->Html->script('awesomplete.min.js') ?>
+
   <?= $this->Html->script('fmapp_app.js') ?>
   <!--
   <script src="js/jquery-2.1.4.min.js"></script>
