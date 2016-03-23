@@ -6543,5 +6543,38 @@ body {
 .components.choose {
   padding-bottom: 2em; }
 
-#alertBox {
-  display: none; }
+input#componentInput::-webkit-input-placeholder {
+  transition: color 0.5s ease-in-out; }
+
+input#componentInput:-moz-placeholder {
+  transition: color 0.5s ease-in-out; }
+
+input#componentInput::-moz-placeholder {
+  transition: color 0.5s ease-in-out; }
+
+input#componentInput:-ms-input-placeholder {
+  transition: color 0.5s ease-in-out; }
+
+input#componentInput.noChoice::-webkit-input-placeholder {
+  color: #e51c23; }
+
+input#componentInput.noChoice:-moz-placeholder {
+  color: #e51c23; }
+
+input#componentInput.noChoice::-moz-placeholder {
+  color: #e51c23; }
+
+input#componentInput.noChoice:-ms-input-placeholder {
+  color: #e51c23; }
+
+input#componentInput.chosen::-webkit-input-placeholder {
+  color: white; }
+
+input#componentInput.chosen:-moz-placeholder {
+  color: white; }
+
+input#componentInput.chosen::-moz-placeholder {
+  color: white; }
+
+input#componentInput.chosen:-ms-input-placeholder {
+  color: white; }

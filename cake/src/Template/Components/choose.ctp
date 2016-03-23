@@ -11,7 +11,7 @@
       <label for="componentInput"><?= __('Kategorie') ?></label>
       <input style="width: 100%;" type="text" class="awesomplete" id="componentInput" placeholder="Essen">
     </div>
-    <button style="width: 100%;" type="button" class="btn btn-default" onclick="addComponent()"><?= __('Auswählen') ?></button>
+    <button id="chooseAction" style="width: 100%;" type="button" class="btn btn-default" onclick="fmApp.checkInput()"><?= __('Auswählen') ?></button>
   </div>
 
   <div class="col-md-4">
@@ -23,15 +23,20 @@
 
   <div class="col-md-6">
     <div id="componentOutput">
-      
+
     </div>
   </div>
 </div> <!-- /.row -->
 
 <script type="text/javascript">
+var components = <?= json_encode($components) ?>;
 var componentsNames = <?= '["' . implode('", "', $componentsNames) . '"]' ?>;
 var input = document.getElementById("componentInput");
-var awesomplete = new Awesomplete(input);
+var awesomplete = new Awesomplete(input, {
+  minChars: 1,
+  autoFirst: true,
+  maxItems: 10
+});
 awesomplete.list = componentsNames;
 </script>
 

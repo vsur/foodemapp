@@ -32,7 +32,41 @@ body {
 .components.choose {
 	padding-bottom: 2em;
 }
-
-#alertBox {
-	display: none;
+input#componentInput::-webkit-input-placeholder {
+	transition: color 0.5s ease-in-out;
+}
+input#componentInput:-moz-placeholder {
+	transition: color 0.5s ease-in-out;
+}
+input#componentInput::-moz-placeholder {
+	transition: color 0.5s ease-in-out;
+}
+input#componentInput:-ms-input-placeholder {
+  transition: color 0.5s ease-in-out;
+}
+// Placeholder Error Color
+input#componentInput.noChoice::-webkit-input-placeholder {
+	color: $brand-danger;
+}
+input#componentInput.noChoice:-moz-placeholder {
+	color: $brand-danger;
+}
+input#componentInput.noChoice::-moz-placeholder {
+	color: $brand-danger;
+}
+input#componentInput.noChoice:-ms-input-placeholder {
+	color: $brand-danger;
+}
+// Shortly Fade Placeholder by setting its color to white
+input#componentInput.chosen::-webkit-input-placeholder {
+	color: white;
+}
+input#componentInput.chosen:-moz-placeholder {
+	color: white;
+}
+input#componentInput.chosen::-moz-placeholder {
+	color: white;
+}
+input#componentInput.chosen:-ms-input-placeholder {
+	color: white;
 }

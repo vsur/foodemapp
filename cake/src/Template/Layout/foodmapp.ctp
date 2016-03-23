@@ -80,8 +80,12 @@ $cakeDescription = 'Food_M_App';
   <!-- Placed at the end of the document so the pages load faster -->
   <?= $this->Html->script('jquery-2.1.4.min.js') ?>
   <?= $this->Html->script('bootstrap.js') ?>
+  <?= $this->Html->script('d3.min.js') ?>
+  <?= $this->Html->script('liquidFillGauge.js') ?>
 
   <?= $this->Html->script('fmapp_app.js') ?>
+
+  <?= $this->Html->script('componentGauge.js') ?>
   <!--
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/bootstrap.js"></script>
