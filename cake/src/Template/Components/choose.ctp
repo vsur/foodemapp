@@ -28,6 +28,12 @@
   </div>
 </div> <!-- /.row -->
 
+<div class="row">
+  <div class="col-md-6 col-md-offset-6">
+    <button id="showAction" style="width: 100%;" type="button" class="btn btn-default"><?= __('Zeig mir was zu meiner Auswahl passt') ?></button>
+  </div>
+</div> <!-- /.row -->
+
 <script type="text/javascript">
 var components = <?= json_encode($components) ?>;
 var componentsNames = <?= '["' . implode('", "', $componentsNames) . '"]' ?>;

@@ -6544,6 +6544,7 @@ body {
   padding-bottom: 2em; }
 
 .gaugeValue {
+  margin-right: 15px;
   cursor: row-resize; }
 
 input#componentInput::-webkit-input-placeholder {

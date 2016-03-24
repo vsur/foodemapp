@@ -34,7 +34,8 @@ var fmApp = {
       {
         'componentName': chosenComponent,
         'config': {},
-        'gauge':  {}
+        'gauge':  {},
+        'weight': 0.0
       }
     );
     this.currentComponent = '<p id="' + chosenComponent + '">' + chosenComponent + ' <a title="Diese Katrgorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
@@ -62,7 +63,8 @@ var fmApp = {
       yPos = d3.mouse(this)[1];
       var objHeight = d3Obj.attr('height');
       var newGaugeValue = (objHeight - yPos) / objHeight * 100;
-      gaugeObj.gauge.update(newGaugeValue);
+      gaugeObj.weight = newGaugeValue;
+      gaugeObj.gauge.update(gaugeObj.weight);
     });
     // TODO: Set right width for all gauges when addin new
   },
@@ -76,9 +78,6 @@ var fmApp = {
     console.log(this.chosenSelection);
 
   },
-  moveGauge: function() {
-    console.log(d3.mouse(this));
-  },
   updateGauge: function(clickedGauge) {
     var j;
     for(var i = 0; i < this.chosenSelection.length; i++) {
@@ -86,6 +85,15 @@ var fmApp = {
     }
     var gaugeObj = this.chosenSelection[j];
     gaugeObj.gauge.update(50);
+  },
+  comparePois: function() {
+    alert("Nun wird was passieren");
+    var paramString = "?";
+    for(var i = 0; i < this.chosenSelection.length; i++) {
+      paramString += this.chosenSelection[i].componentName + "=" + this.chosenSelection[i].weight;
+      paramString += i < (this.chosenSelection.length - 1) ? "&" : "";
+    }
+    window.location = '../pois/compare/' + paramString;
   },
   /*
    * There are three diferent alert state by Bootstrap
@@ -111,7 +119,6 @@ var fmApp = {
 };
 
 $( document ).ready(function() {
-  console.log(components);
   // Function for selection
   window.addEventListener("awesomplete-select", function(e){
     // User types somethin and a select is made.
@@ -124,4 +131,8 @@ $( document ).ready(function() {
     // This is fired after the selection is applied
     fmApp.addComponent();
   }, false);
+  // Handler for compare button
+  $("#showAction").click(function() {
+    fmApp.comparePois();
+  });
 });
