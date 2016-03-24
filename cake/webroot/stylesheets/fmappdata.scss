@@ -32,6 +32,11 @@ body {
 .components.choose {
 	padding-bottom: 2em;
 }
+
+.gaugeValue {
+	cursor: row-resize;
+}
+
 input#componentInput::-webkit-input-placeholder {
 	transition: color 0.5s ease-in-out;
 }

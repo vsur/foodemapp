@@ -2,7 +2,6 @@
  * This is fmapp data script
  */
 
-
 var fmApp = {
   init: function(params) {
      // ...do something
@@ -46,10 +45,10 @@ var fmApp = {
       fmApp.deleteComponent(componentToDelete);
     });
     // Base for Gauge <svg id="fillgauge1" width="25%" height="250" onclick="gauge1.update(NewValue());"></svg>
-    var newGauge = '<svg id="' + chosenComponent + 'Gauge" ' +
+    var newGaugeSize = 250/3;
+    var newGauge = '<svg id="' + chosenComponent + 'Gauge" class="gaugeValue"' +
       // Höhe stimmt noch nicht und muss auch nach Paste angepasst werden.
-      'width="' + 100/this.chosenSelection.length + '%" height="250" ' +
-      'onclick="' + chosenComponent + 'Gauge.update(NewValue());"></svg>';
+      'width="' + newGaugeSize + '" height="' + newGaugeSize + '"></svg>';
     $("#componentOutput").append(newGauge);
     var gaugeObj = this.chosenSelection[this.chosenSelection.length -1];
     gaugeObj.config = liquidFillGaugeDefaultSettings();
@@ -58,7 +57,14 @@ var fmApp = {
     gaugeObj.config.waveTextColor = "#c2005d";
     gaugeObj.config.waveColor = "#7d003c";
     gaugeObj.gauge = loadLiquidFillGauge(chosenComponent + "Gauge", 100, gaugeObj.config);
-    // var gauge1 = loadLiquidFillGauge(chosenComponent + "Gauge", 55);
+    var d3Obj = d3.select("svg#" + chosenComponent + "Gauge");
+    d3Obj.on('click', function () {
+      yPos = d3.mouse(this)[1];
+      var objHeight = d3Obj.attr('height');
+      var newGaugeValue = (objHeight - yPos) / objHeight * 100;
+      gaugeObj.gauge.update(newGaugeValue);
+    });
+    // TODO: Set right width for all gauges when addin new
   },
   deleteComponent: function(delName) {
     $("#" + delName ).remove();
@@ -69,6 +75,17 @@ var fmApp = {
     console.log("Noch Einträge:  " + this.chosenSelection.length);
     console.log(this.chosenSelection);
 
+  },
+  moveGauge: function() {
+    console.log(d3.mouse(this));
+  },
+  updateGauge: function(clickedGauge) {
+    var j;
+    for(var i = 0; i < this.chosenSelection.length; i++) {
+      j = this.chosenSelection[i].componentName == clickedGauge ? i : undefined;
+    }
+    var gaugeObj = this.chosenSelection[j];
+    gaugeObj.gauge.update(50);
   },
   /*
    * There are three diferent alert state by Bootstrap
