@@ -5,6 +5,9 @@
   }
 ?>
 <?php $this->assign('title', 'Auswahl'); ?>
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+↓↓↓ Step 2  Block ↓↓↓
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <div class="row">
   <div class="col-md-2">
     <div class="form-group">
@@ -33,6 +36,9 @@
     <button id="showAction" style="width: 100%;" type="button" class="btn btn-default"><?= __('Zeig mir was zu meiner Auswahl passt') ?></button>
   </div>
 </div> <!-- /.row -->
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+↑↑↑ Step 2  Block ↑↑↑
+↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
 <script type="text/javascript">
 var components = <?= json_encode($components) ?>;
@@ -46,6 +52,9 @@ var awesomplete = new Awesomplete(input, {
 awesomplete.list = componentsNames;
 </script>
 
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+↓↓↓↓ Cake  Block ↓↓↓↓
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <div class="row">
   <div class="col-md-2">
     <h3><?= __('Actions') ?></h3>
@@ -91,3 +100,6 @@ awesomplete.list = componentsNames;
     </div>
   </div>
 </div> <!-- /.row -->
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+↑↑↑↑ Cake  Block ↑↑↑↑
+↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

@@ -31,6 +31,10 @@ class PoisTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('Stages', [
+            'foreignKey' => 'poi_id'
+        ]);
+
         $this->belongsToMany('Components', [
             'foreignKey' => 'poi_id',
             'targetForeignKey' => 'component_id',

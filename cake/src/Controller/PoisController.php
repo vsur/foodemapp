@@ -25,6 +25,62 @@ class PoisController extends AppController
     }
 
     /**
+     * FMapp Step 3 method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function matches() {
+      if( $this->request->is('get') ) {
+        debug($this->request->query);
+        $arrRes = (array)$this->request->query;
+        debug($_GET);
+      }
+      $queryCondition =  array();
+      $this->viewBuilder()->layout('Foodmapp');
+      /*
+
+GROSSE NOTIZ
+
+Also CONTAIN Wirks sich nur auf hinzuzufügenden Associations aus!!!
+Heißt filtere ich die Cotains, dann werden eben nur passende Components oder Stages hinzugefüft!
+
+Ich Will uneingeschränkte Cotains haben!!!
+
+Heißt ich muss über Matchiing gehen!
+
+Sprich hier http://book.cakephp.org/3.0/en/orm/query-builder.html#filtering-by-associated-data
+
+      */
+      // $pois = $this->Pois->find('all', [
+      //     'contain' => ['Components', 'Stages']
+      // ]);
+      // Restict Contain
+      $pois = $this->Pois->find()
+        ->contain([
+          'Components' => function ($q) {
+            return $q
+              ->where(['Components.name' => 'Bier']);
+          }
+        // ])
+        // ->contain([
+        //   'Stages' => function ($q) {
+        //     return $q
+        //       ->where(['Stages.rating >' => 5.0]);
+        //   }
+        ]);
+
+      // where([
+      //         'author_id' => 3,
+      //         'OR' => [['view_count' => 2], ['view_count' => 3]],
+      //     ]);
+
+      // debug($query->toArray());
+
+      $this->set(compact('pois'));
+      $this->set('_serialize', ['pois']);
+    }
+
+    /**
      * View method
      *
      * @param string|null $id Pois id.

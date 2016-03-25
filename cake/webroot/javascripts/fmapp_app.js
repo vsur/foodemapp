@@ -93,7 +93,7 @@ var fmApp = {
       paramString += this.chosenSelection[i].componentName + "=" + this.chosenSelection[i].weight;
       paramString += i < (this.chosenSelection.length - 1) ? "&" : "";
     }
-    window.location = '../pois/compare/' + paramString;
+    window.location = '../pois/matches/' + paramString;
   },
   /*
    * There are three diferent alert state by Bootstrap
