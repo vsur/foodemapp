@@ -51,12 +51,12 @@ class StagesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
+            // ->integer('id')
             ->allowEmpty('id', 'create');
 
         $validator
-            ->numeric('rating')
-            ->requirePresence('rating', 'create')
+            // ->numeric('rating')
+            // ->requirePresence('rating', 'create')
             ->notEmpty('rating');
 
         return $validator;
