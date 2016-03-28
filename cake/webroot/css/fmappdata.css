@@ -6582,3 +6582,33 @@ input#componentInput.chosen::-moz-placeholder {
 
 input#componentInput.chosen:-ms-input-placeholder {
   color: white; }
+
+.arc {
+  stroke: #fff; }
+
+.arc text {
+  font: 12px;
+  text-anchor: middle;
+  stroke: none; }
+
+.arc path {
+  overflow: visible; }
+
+.legend {
+  font-size: 12px; }
+
+rect {
+  stroke-width: 2; }
+
+div.bar {
+  font: 12px;
+  background-color: #7d003c;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: #c2005d;
+  overflow: visible; }
+
+div.bar > div {
+  display: block;
+  white-space: nowrap; }

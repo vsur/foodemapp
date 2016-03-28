@@ -29,7 +29,7 @@ class PoisController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function matches() {
+    public function matchesPie() {
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {
@@ -48,55 +48,105 @@ class PoisController extends AppController
 
       $this->viewBuilder()->layout('Foodmapp');
 
-      /*
+      $pois = $this->Pois->find('all', [
+        'contain' => ['Components', 'Stages']
+      ]);
+      // debug($searchParams);
+      // Check if script was callen with any params and try to get associoated data
+      if($searchParams[0] != 'findAll') {
+        $pois->matching('Components.Stages', function ($q) use ($searchParams){
+          /*
+              HIER GING MAL WAS; Aber FALSCH!
+              Deswegen jetzt halt einfach mit OR
+          */
+          for($i = 0; $i < count($searchParams); $i++ ) {
+            if($i == 0) {
+              $q->where([
+                'Stages.rating >' => $searchParams[$i]['rating'],
+                'Components.name' => $searchParams[$i]['name']
+              ]);
+            } else {
+              $q->orWhere([
+                'Stages.rating >' => $searchParams[$i]['rating'],
+                'Components.name' => $searchParams[$i]['name']
+              ]);
+            }
+          }
+          // debug($q);
+          return $q;
+        })
+        ->limit(20)
+        ->distinct(['Pois.id'])
+        ;
+      }
 
-GROSSE NOTIZ
+      $this->set(compact('pois'));
+      $this->set('_serialize', ['pois']);
+    }
 
-Das Match über Ands ist Ergebnislos, weil wahrscheinlich Logisch falsch!
-Es kann wohl keine POIS mit AND der Stage A und gelichzeitig der Stage B geben.
-Sondern es gibt vielleicht Stages, die die Kriterien Erfüllen und dann wiederum einem POI zu geordnet sind.
-Sprich Abfrage mit AND bzw OR Verknüpfung auf Stages.
-Oder einfach noch mal nachschauen.
+    /**
+     * FMapp Step 3 method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function matchesBar() {
+      $searchParams = [];
+      // Check if the query array containing possible params is not empty
+      if( !(empty($this->request->query)) ) {
+        // Loop thru params and make them accessable
+        foreach ($this->request->query as $key => $value) {
+          $arr = [
+            'name' => $key,
+            'rating' => $value/10
+          ];
+          array_push($searchParams, $arr);
+        }
+      } else {
+        // If query array is empty set var for fetching all data later
+        array_push($searchParams, 'findAll');
+      }
 
-      */
-      // $pois = $this->Pois->find('all', [
-      //     'contain' => ['Components', 'Stages']
-      // ]);
-      // Restict Contain
+      $this->viewBuilder()->layout('Foodmapp');
 
       $pois = $this->Pois->find('all', [
         'contain' => ['Components', 'Stages']
       ]);
-      debug($searchParams);
+      // debug($searchParams);
       // Check if script was callen with any params and try to get associoated data
       if($searchParams[0] != 'findAll') {
-        $pois->matching('Stages.Components', function ($q) use ($searchParams){
-          // for($i = 0; $i < count($searchParams); $i++ ) {
-          //   if($i == 0) {
-          //     $q->where([
-          //       'Stages.rating >' => $searchParams[$i]['rating'],
-          //       'Components.name' => $searchParams[$i]['name']
-          //     ]);
-          //   } else {
-          //     $q->andWhere([
-          //       'Stages.rating >' => $searchParams[$i]['rating'],
-          //       'Components.name' => $searchParams[$i]['name']
-          //     ]);
-          //   }
-          // }
-          $q->where([
-              'AND' => [ [ 'Stages.rating >' => $searchParams[0]['rating'] ], [ 'Components.name' => $searchParams[0]['name'] ] ],
-            ])
-          ;
-          $q->andWhere([
-              'AND' => [ [ 'Stages.rating >' => $searchParams[1]['rating'] ], [ 'Components.name' => $searchParams[1]['name'] ] ],
-            ])
-          ;
-          debug($q);
+        $pois->matching('Components.Stages', function ($q) use ($searchParams){
+          /*
+              HIER GING MAL WAS; Aber FALSCH!
+              Deswegen jetzt halt einfach mit OR
+          */
+
+          // VORsicht immer noch falsche Verschachtelung der Statements!
+
+          /*
+            V
+            O
+            R
+            S
+            I
+            C
+            H
+            T
+          */
+          for($i = 0; $i < count($searchParams); $i++ ) {
+            if($i == 0) {
+              $q->where([
+                'Stages.rating >' => $searchParams[$i]['rating'],
+                'Components.name' => $searchParams[$i]['name']
+              ]);
+            } else {
+              $q->orWhere([
+                'Stages.rating >' => $searchParams[$i]['rating'],
+                'Components.name' => $searchParams[$i]['name']
+              ]);
+            }
+          }
+          // debug($q);
           return $q;
-          // return $q;
-          // ->where(['Stages.rating >' => 6.2])
-          // ->where(['Components.name' => 'Bier']);
         })
         ->limit(20)
         ->distinct(['Pois.id'])

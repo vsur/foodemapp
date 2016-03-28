@@ -93,7 +93,7 @@ var fmApp = {
       paramString += this.chosenSelection[i].componentName + "=" + this.chosenSelection[i].weight;
       paramString += i < (this.chosenSelection.length - 1) ? "&" : "";
     }
-    window.location = '../pois/matches/' + paramString;
+    window.location = '../pois/matchesPie/' + paramString;
   },
   /*
    * There are three diferent alert state by Bootstrap
@@ -134,5 +134,8 @@ $( document ).ready(function() {
   // Handler for compare button
   $("#showAction").click(function() {
     fmApp.comparePois();
+  });
+  $("#showBars").click(function() {
+    window.location = '../matchesBar/' + window.location.search;
   });
 });

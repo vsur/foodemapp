@@ -41,8 +41,10 @@ $cakeDescription = 'Food_M_App';
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-    <!-- Some JS at the end of the document but awesomplete-->
+    <!-- Some JS at the end of the document but awesomplete and d3-->
     <?= $this->Html->script('awesomplete.min.js') ?>
+    <?= $this->Html->script('d3.min.js') ?>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -80,12 +82,11 @@ $cakeDescription = 'Food_M_App';
   <!-- Placed at the end of the document so the pages load faster -->
   <?= $this->Html->script('jquery-2.1.4.min.js') ?>
   <?= $this->Html->script('bootstrap.js') ?>
-  <?= $this->Html->script('d3.min.js') ?>
+
   <?= $this->Html->script('liquidFillGauge.js') ?>
 
   <?= $this->Html->script('fmapp_app.js') ?>
 
-  <?= $this->Html->script('componentGauge.js') ?>
   <!--
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/bootstrap.js"></script>

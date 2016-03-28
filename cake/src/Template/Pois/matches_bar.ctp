@@ -1,42 +1,57 @@
+<script type="text/javascript">
+  var pois = <?= json_encode($pois) ?>;
+  console.log(pois);
+</script>
+
+<?= $this->Html->script('barChart.js') ?>
+
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-↓↓↓ Step 2  Block ↓↓↓
+↓↓↓ Step 3  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
-<div class="row">
-  <div class="col-md-2">
-    <div class="form-group">
-      <label for="componentInput"><?= __('Kategorie') ?></label>
-      <input style="width: 100%;" type="text" class="awesomplete" id="componentInput" placeholder="Essen">
+<?php foreach ($pois as $poi): ?>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="poi_<?= h($poi->google_place)?>_Info">
+        <h3 class="text-center"><?= h($poi->name) ?></h3>
+        <dl class="dl-horizontal">
+          <dt>Name</dt>
+          <dd><img src="<?= h($poi->icon) ?>" alt="<?= h($poi->name) ?> Icon" width="24px" /><?= h($poi->name)?></dd>
+          <dt>Adresse</dt>
+          <dd><?= h($poi->vicinity) ?></dd>
+          <dt>GMapp Link</dt>
+          <?php
+            $gMapString = "https://www.google.de/maps/place/";
+            $gMapString .= str_replace(' ', '+', trim( str_replace(',', '', h($poi->vicinity) )));
+            $gMapString .= "/@" . h($poi->lat) . "," . h($poi->lng);
+          ?>
+          <dd>
+            <a href="<?= $gMapString ?>" titel="Google Maps Link für <?= h($poi->name) ?>" target="_blank">
+              <img src="http://mt.google.com/vt/icon?color=ff004C13&amp;name=icons/spotlight/spotlight-waypoint-b.png" height="18px"> <?= h($poi->name) ?> auf der Karte anzeigen
+            </a>
+          </dd>
+          <dt>Google Places ID</dt>
+          <dd><?= h($poi->google_place) ?></dd>
+        </dl>
+      </div>
     </div>
-    <button id="chooseAction" style="width: 100%;" type="button" class="btn btn-default" onclick="fmApp.checkInput()"><?= __('Auswählen') ?></button>
-  </div>
-
-  <div class="col-md-4">
-    <div id="componentChoice">
-      <label class="text-success" for="componentChoice"><?= __('Ihre Auswahl an Kategorien') ?></label>
-
+    <div class="col-md-6">
+      <div id="poi_<?= h($poi->google_place)?>_BarChart">
+      </div>
     </div>
-  </div>
-
-  <div class="col-md-6">
-    <div id="componentOutput">
-
-    </div>
-  </div>
-</div> <!-- /.row -->
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-6">
-    <button id="showAction" style="width: 100%;" type="button" class="btn btn-default"><?= __('Zeig mir was zu meiner Auswahl passt') ?></button>
-  </div>
-</div> <!-- /.row -->
+  </div> <!-- /.row -->
+  <script type="text/javascript">
+    drawBar(<?= json_encode($poi) ?>);
+  </script>
+<?php endforeach; ?>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-↑↑↑ Step 2  Block ↑↑↑
+↑↑↑ Step 3  Block ↑↑↑
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓↓ Cake  Block ↓↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<!--
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -94,6 +109,7 @@
         <p><?= $this->Paginator->counter() ?></p>
     </div>
 </div>
+-->
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Cake  Block ↑↑↑↑
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
