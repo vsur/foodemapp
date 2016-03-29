@@ -68,10 +68,10 @@ $cakeDescription = 'Food_M_App';
         <li class="active"><a href="#">Komponenten</a></li>
       </ul>
     </div>
-    <!--/.nav-collapse -->
+    <!-- /.nav-collapse -->
   </div>
   </nav>
-  <?= $this->Flash->render() ?>
+
   <div class="container" role="main">
     <?= $this->fetch('content') ?>
   </div> <!-- /.container -->

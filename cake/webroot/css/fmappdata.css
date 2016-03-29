@@ -6612,3 +6612,18 @@ div.bar {
 div.bar > div {
   display: block;
   white-space: nowrap; }
+
+div.bar:first-child {
+  margin-top: 23px; }
+
+div.bar:last-child {
+  margin-bottom: 28px; }
+
+.node {
+  border: solid 1px white;
+  font: 10px sans-serif;
+  color: #000;
+  line-height: 12px;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px; }

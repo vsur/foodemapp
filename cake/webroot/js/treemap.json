@@ -1,0 +1,251 @@
+{
+    "name": "TreemapMatches",
+    "children": [
+        {
+            "name": "Gäubodenbäcker Hahn GmbH",
+            "children": [
+                {
+                    "name": "Regional",
+                    "rating": 6.4
+                },
+                {
+                    "name": "Nachhaltig",
+                    "rating": 3.9
+                },
+                {
+                    "name": "Servicequalität",
+                    "rating": 9.1
+                }
+            ]
+        },
+        {
+            "name": "Weber",
+            "children": [
+                {
+                    "name": "Hausmannskost",
+                    "rating": 6
+                },
+                {
+                    "name": "Beilagen",
+                    "rating": 7.9
+                },
+                {
+                    "name": "Servicequalität",
+                    "rating": 0
+                },
+                {
+                    "name": "Vollwert",
+                    "rating": 3.7
+                }
+            ]
+        },
+        {
+            "name": "J. Schwarzer",
+            "children": [
+                {
+                    "name": "Bier",
+                    "rating": 6.8
+                },
+                {
+                    "name": "Candy",
+                    "rating": 3.3
+                },
+                {
+                    "name": "Wok",
+                    "rating": 6.9
+                },
+                {
+                    "name": "Gratiniertes",
+                    "rating": 2.8
+                },
+                {
+                    "name": "Hausmannskost",
+                    "rating": 7.7
+                },
+                {
+                    "name": "Schokolade Spezialitäten",
+                    "rating": 4.3
+                },
+                {
+                    "name": "Fruchtsäfte",
+                    "rating": 0.9
+                }
+            ]
+        },
+        {
+            "name": "Schifferl",
+            "children": [
+                {
+                    "name": "Pasta",
+                    "rating": 7.4
+                },
+                {
+                    "name": "Gratiniertes",
+                    "rating": 7.6
+                },
+                {
+                    "name": "Tarte",
+                    "rating": 3.1
+                },
+                {
+                    "name": "Vegan",
+                    "rating": 0.6
+                },
+                {
+                    "name": "Schokolade Spezialitäten",
+                    "rating": 5.6
+                },
+                {
+                    "name": "Weinauswahl",
+                    "rating": 2.6
+                },
+                {
+                    "name": "Freundlichkeit",
+                    "rating": 0.9
+                }
+            ]
+        },
+        {
+            "name": "BackWerk Regensburg",
+            "children": [
+                {
+                    "name": "Servicequalität",
+                    "rating": 5.5
+                },
+                {
+                    "name": "Familien geeignet",
+                    "rating": 2.1
+                },
+                {
+                    "name": "Candy",
+                    "rating": 7
+                },
+                {
+                    "name": "Schokolade Spezialitäten",
+                    "rating": 2.9
+                },
+                {
+                    "name": "Flexibilität",
+                    "rating": 9
+                },
+                {
+                    "name": "Kuchen",
+                    "rating": 8.9
+                }
+            ]
+        },
+        {
+            "name": "Bachmeier GmbH",
+            "children": [
+                {
+                    "name": "Menüs",
+                    "rating": 9.8
+                },
+                {
+                    "name": "Shake",
+                    "rating": 1.6
+                },
+                {
+                    "name": "Portionsgröße",
+                    "rating": 4.9
+                }
+            ]
+        },
+        {
+            "name": "Cupcakery Regensburg",
+            "children": [
+                {
+                    "name": "Menüs",
+                    "rating": 8.1
+                },
+                {
+                    "name": "cross-cooking",
+                    "rating": 8.5
+                },
+                {
+                    "name": "Preis / Leistung",
+                    "rating": 7
+                },
+                {
+                    "name": "Edel",
+                    "rating": 9.9
+                },
+                {
+                    "name": "Fingerfood",
+                    "rating": 7.8
+                },
+                {
+                    "name": "Saisonal",
+                    "rating": 5.9
+                },
+                {
+                    "name": "Zubereitungsdauer",
+                    "rating": 9.2
+                },
+                {
+                    "name": "Hinweise zur Gesunden Ernährung",
+                    "rating": 2
+                }
+            ]
+        },
+        {
+            "name": "Backstube Wünsche GmbH",
+            "children": [
+                {
+                    "name": "Portionsgröße",
+                    "rating": 4.9
+                },
+                {
+                    "name": "Kennzeichnung",
+                    "rating": 6
+                },
+                {
+                    "name": "Freundlichkeit",
+                    "rating": 4.8
+                },
+                {
+                    "name": "Lage",
+                    "rating": 3.5
+                },
+                {
+                    "name": "Bier",
+                    "rating": 0.1
+                }
+            ]
+        },
+        {
+            "name": "Schifferl",
+            "children": [
+                {
+                    "name": "Kalorienmenge",
+                    "rating": 5.1
+                },
+                {
+                    "name": "Getränkevielfalt",
+                    "rating": 9.6
+                },
+                {
+                    "name": "Familien geeignet",
+                    "rating": 5.7
+                },
+                {
+                    "name": "Menüs",
+                    "rating": 0.3
+                },
+                {
+                    "name": "Fingerfood",
+                    "rating": 4.9
+                }
+            ]
+        },
+        {
+            "name": "Bäckerei Schifferl GmbH",
+            "children": [
+                {
+                    "name": "Flambieren",
+                    "rating": 2.6
+                }
+            ]
+        }
+    ]
+}

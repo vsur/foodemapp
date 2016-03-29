@@ -1,26 +1,68 @@
-<?=
-  $this->element('navbar',
-  [
-    "step" => "Anzeige der Treffer",
-    "vizElement" => "POIs als Balkendiagramme"
-  ]);
+<?php
+// /*  $this->element('navbar',
+//   [
+//     "step" => "Anzeige der Treffer",
+//     "vizElement" => "POIs als Treemap"
+//   ]);
+//   */
 ?>
 <?= $this->Flash->render() ?>
 
 <script type="text/javascript">
   var pois = <?= json_encode($pois) ?>;
   console.log(pois);
+  var treemapData = {
+    "name": "TreemapMatches",
+    "children": []
+  };
+  // for (var i = 0; i < pois.length; i++) {
+  for (var i in pois) {
+    var childComponents = [];
+    console.log(pois[i]);
+
+    for (var j in pois[i].components) {
+      childComponents.push(
+        {
+          "name": pois[i].components[j].name,
+          "rating": pois[i].components[j]._joinData.rating
+        }
+      );
+    }
+    treemapData.children.push(
+      {
+        "name": pois[i].name,
+        "children": childComponents
+      }
+    );
+  }
+  console.log(JSON.stringify(treemapData, null, 4));
 </script>
 
-<?= $this->Html->script('barChart.js') ?>
 
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 3  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<div class="row">
+  <div class="col-md-12">
+    <h1>Hier steht das Treemap</h1>
+    <div id="poisTreemap">
+    </div>
+  </div>
+</div> <!-- /.row -->
+<?= $this->Html->script('treemapChart.js') ?>
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+↑↑↑ Step 3  Block ↑↑↑
+↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
+<?php $showRow = 3; ?>
 <?php foreach ($pois as $poi): ?>
-  <div class="row">
-    <div class="col-md-6">
+    <?php
+      if( ($showRow % 3) == 0) {
+        echo '<div class="row">';
+      }
+    ?>
+    <div class="col-md-4">
       <div id="poi_<?= h($poi->google_place)?>_Info">
         <h3 class="text-center"><?= h($poi->name) ?></h3>
         <dl class="dl-horizontal">
@@ -44,18 +86,14 @@
         </dl>
       </div>
     </div>
-    <div class="col-md-6">
-      <div id="poi_<?= h($poi->google_place)?>_BarChart">
-      </div>
-    </div>
-  </div> <!-- /.row -->
-  <script type="text/javascript">
-    drawBar(<?= json_encode($poi) ?>);
-  </script>
+    <?php
+      if( ($showRow % 3) == 2) {
+        echo '</div> <!-- /.row -->';
+      }
+      $showRow++;
+    ?>
 <?php endforeach; ?>
-<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-↑↑↑ Step 3  Block ↑↑↑
-↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓↓ Cake  Block ↓↓↓↓

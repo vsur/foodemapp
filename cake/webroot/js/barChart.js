@@ -12,9 +12,13 @@
     for (var component in dataset) {
       data.push(dataset[component]._joinData.rating);
     }
+
+    var maxWidth = d3.select('#poi_' + poiData.google_place + '_BarChart').style("width").replace("px", "");
+
     var rating = d3.scale.linear()
     .domain([0, d3.max(data)])
-    .range([0, 300]);
+    .range([0, maxWidth]);
+
 
     d3.select('#poi_' + poiData.google_place + '_BarChart')
       .selectAll("div")

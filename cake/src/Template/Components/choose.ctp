@@ -1,3 +1,12 @@
+<?=
+  $this->element('navbar',
+  [
+    "step" => "Anzeige der Kategorien",
+    "vizElement" => "Komponenten"
+  ]);
+?>
+<?= $this->Flash->render() ?>
+
 <?php
   $componentsNames = array();
   foreach ($components as $component) {

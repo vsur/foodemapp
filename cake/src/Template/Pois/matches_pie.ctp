@@ -1,3 +1,12 @@
+<?=
+  $this->element('navbar',
+  [
+    "step" => "Anzeige der Treffer",
+    "vizElement" => "POIs als Tortendiagramme"
+  ]);
+?>
+<?= $this->Flash->render() ?>
+
 <script type="text/javascript">
   var pois = <?= json_encode($pois) ?>;
   console.log(pois);

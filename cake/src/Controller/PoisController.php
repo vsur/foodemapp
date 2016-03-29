@@ -158,6 +158,79 @@ class PoisController extends AppController
     }
 
     /**
+     * FMapp Step 3 method
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function matchesTreemap() {
+      $searchParams = [];
+      // Check if the query array containing possible params is not empty
+      if( !(empty($this->request->query)) ) {
+        // Loop thru params and make them accessable
+        foreach ($this->request->query as $key => $value) {
+          $arr = [
+            'name' => $key,
+            'rating' => $value/10
+          ];
+          array_push($searchParams, $arr);
+        }
+      } else {
+        // If query array is empty set var for fetching all data later
+        array_push($searchParams, 'findAll');
+      }
+
+      $this->viewBuilder()->layout('Foodmapp');
+
+      $pois = $this->Pois->find('all', [
+        'contain' => ['Components', 'Stages']
+      ]);
+      // debug($searchParams);
+      // Check if script was callen with any params and try to get associoated data
+      if($searchParams[0] != 'findAll') {
+        $pois->matching('Components.Stages', function ($q) use ($searchParams){
+          /*
+              HIER GING MAL WAS; Aber FALSCH!
+              Deswegen jetzt halt einfach mit OR
+          */
+
+          // VORsicht immer noch falsche Verschachtelung der Statements!
+
+          /*
+            V
+            O
+            R
+            S
+            I
+            C
+            H
+            T
+          */
+          for($i = 0; $i < count($searchParams); $i++ ) {
+            if($i == 0) {
+              $q->where([
+                'Stages.rating >' => $searchParams[$i]['rating'],
+                'Components.name' => $searchParams[$i]['name']
+              ]);
+            } else {
+              $q->orWhere([
+                'Stages.rating >' => $searchParams[$i]['rating'],
+                'Components.name' => $searchParams[$i]['name']
+              ]);
+            }
+          }
+          // debug($q);
+          return $q;
+        })
+        ->limit(10)
+        ->distinct(['Pois.id'])
+        ;
+      }
+
+      $this->set(compact('pois'));
+      $this->set('_serialize', ['pois']);
+    }
+
+    /**
      * View method
      *
      * @param string|null $id Pois id.
