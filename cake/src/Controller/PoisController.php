@@ -182,28 +182,15 @@ class PoisController extends AppController
       $this->viewBuilder()->layout('Foodmapp');
 
       $pois = $this->Pois->find('all', [
-        'contain' => ['Components', 'Stages']
+        'contain' => ['Components']
       ]);
       // debug($searchParams);
       // Check if script was callen with any params and try to get associoated data
       if($searchParams[0] != 'findAll') {
-        $pois->matching('Components.Stages', function ($q) use ($searchParams){
+        $pois->matching('Stages.Components', function ($q) use ($searchParams){
           /*
               HIER GING MAL WAS; Aber FALSCH!
               Deswegen jetzt halt einfach mit OR
-          */
-
-          // VORsicht immer noch falsche Verschachtelung der Statements!
-
-          /*
-            V
-            O
-            R
-            S
-            I
-            C
-            H
-            T
           */
           for($i = 0; $i < count($searchParams); $i++ ) {
             if($i == 0) {
@@ -221,7 +208,7 @@ class PoisController extends AppController
           // debug($q);
           return $q;
         })
-        ->limit(10)
+        ->limit(3)
         ->distinct(['Pois.id'])
         ;
       }

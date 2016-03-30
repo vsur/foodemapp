@@ -1,10 +1,15 @@
 <?=
   $this->element('navbar',
   [
-    "step" => "Anzeige der Kategorien",
-    "vizElement" => "Komponenten"
+    "step" => "Auswahl der Kategorien",
+    "vizElement" => "<li class=\"active\"><a href=\"#\">Komponenten</a></li>"
   ]);
 ?>
+
+<!-- ↑↑↑↑↑↑↑↑↑
+↑↑↑ Navbar ↑↑↑
+↑↑↑↑↑↑↑↑↑↑ -->
+
 <?= $this->Flash->render() ?>
 
 <?php
@@ -13,6 +18,9 @@
     array_push($componentsNames, $component->name);
   }
 ?>
+
+<div class="container" role="main">
+
 <?php $this->assign('title', 'Auswahl'); ?>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 2  Block ↓↓↓
@@ -112,3 +120,5 @@ awesomplete.list = componentsNames;
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Cake  Block ↑↑↑↑
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
+</div> <!-- /.container -->

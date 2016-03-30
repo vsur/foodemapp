@@ -1,10 +1,18 @@
 <?=
   $this->element('navbar',
   [
-    "step" => "Anzeige der Treffer",
-    "vizElement" => "POIs als Balkendiagramme"
+    "step" => "Trefferanzeige",
+    "vizElement" => '<li>' . $this->Html->link(__('‹ Komponenten'), ['controller' => 'Components', 'action' => 'choose', '_full' => true]) . "</li>\n" .
+                    '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Scheibendiagramme">‹ Scheiben</a>' . "</li>\n" .
+                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n" .
+                    '<li><a href="../matchesTreemap/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Treemapgrafik">Treemap ›</a>' . "</li>\n"
   ]);
 ?>
+
+<!-- ↑↑↑↑↑↑↑↑↑
+↑↑↑ Navbar ↑↑↑
+↑↑↑↑↑↑↑↑↑↑ -->
+
 <?= $this->Flash->render() ?>
 
 <script type="text/javascript">
@@ -15,6 +23,9 @@
 <?= $this->Html->script('barChart.js') ?>
 
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
+
+<div class="container" role="main">
+
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 3  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
@@ -122,3 +133,5 @@
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Cake  Block ↑↑↑↑
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
+</div> <!-- /.container -->

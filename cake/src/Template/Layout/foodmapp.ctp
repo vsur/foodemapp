@@ -51,7 +51,7 @@ $cakeDescription = 'Food_M_App';
 </head>
 <body role="document">
   <!-- Fixed navbar -->
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <!-- <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed"
@@ -67,10 +67,10 @@ $cakeDescription = 'Food_M_App';
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Komponenten</a></li>
       </ul>
-    </div>
+    </div> -->
     <!-- /.nav-collapse -->
-  </div>
-  </nav>
+  <!-- </div>
+  </nav> -->
 
   <div class="container" role="main">
     <?= $this->fetch('content') ?>

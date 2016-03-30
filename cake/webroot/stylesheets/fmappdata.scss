@@ -28,6 +28,12 @@ body {
 		color: #fff;
 	}
 }
+.navbar-brand {
+		cursor: default;
+}
+.navbar-brand:hover, .navbar-brand:focus {
+		color: #fff !important;
+}
 
 .components.choose {
 	padding-bottom: 2em;

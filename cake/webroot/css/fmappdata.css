@@ -6540,6 +6540,12 @@ body {
   .navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {
     color: #fff; }
 
+.navbar-brand {
+  cursor: default; }
+
+.navbar-brand:hover, .navbar-brand:focus {
+  color: #fff !important; }
+
 .components.choose {
   padding-bottom: 2em; }
 
