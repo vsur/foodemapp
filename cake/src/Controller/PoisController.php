@@ -48,29 +48,59 @@ class PoisController extends AppController
 
       $this->viewBuilder()->layout('Foodmapp');
 
+      $this->loadModel('Components');
+
+      $machtingComponentNames = $this->Components->find('all');
+      for($i = 0; $i < count($searchParams); $i++ ) {
+        $machtingComponentNames->orWhere([
+          'Components.name' => $searchParams[$i]['name']
+        ]);
+      }
+
+      foreach ($machtingComponentNames as $matchingComponent) {
+        for ($i = 0; $i < count($searchParams); $i++) {
+          if( $searchParams[$i]['name'] == $matchingComponent->name) {
+            $searchParams[$i]['id'] =  $matchingComponent->id;
+          }
+        }
+      }
+
+
+
       $pois = $this->Pois->find('all', [
         'contain' => ['Components', 'Stages']
       ]);
-      // debug($searchParams);
+      //
       // Check if script was callen with any params and try to get associoated data
       if($searchParams[0] != 'findAll') {
-        $pois->matching('Components.Stages', function ($q) use ($searchParams){
+        $pois->matching('Stages', function ($q) use ($searchParams){
           /*
               HIER GING MAL WAS; Aber FALSCH!
               Deswegen jetzt halt einfach mit OR
           */
           for($i = 0; $i < count($searchParams); $i++ ) {
-            if($i == 0) {
-              $q->where([
-                'Stages.rating >' => $searchParams[$i]['rating'],
-                'Components.name' => $searchParams[$i]['name']
+              /*
+               *
+               *  Hier umschalten
+               *
+               */
+              $q->andWhere([
+                'AND' => [
+                  ['Stages.rating >' => $searchParams[$i]['rating']],
+                  ['Stages.component_id' => $searchParams[$i]['id']]
+                ]
               ]);
-            } else {
+
+               /*
+               *
               $q->orWhere([
-                'Stages.rating >' => $searchParams[$i]['rating'],
-                'Components.name' => $searchParams[$i]['name']
+                'AND' => [
+                  ['Stages.rating >' => $searchParams[$i]['rating']],
+                  ['Stages.component_id' => $searchParams[$i]['id']]
+                ]
               ]);
-            }
+              /*
+               */
           }
           // debug($q);
           return $q;
@@ -108,42 +138,59 @@ class PoisController extends AppController
 
       $this->viewBuilder()->layout('Foodmapp');
 
+      $this->loadModel('Components');
+
+      $machtingComponentNames = $this->Components->find('all');
+      for($i = 0; $i < count($searchParams); $i++ ) {
+        $machtingComponentNames->orWhere([
+          'Components.name' => $searchParams[$i]['name']
+        ]);
+      }
+
+      foreach ($machtingComponentNames as $matchingComponent) {
+        for ($i = 0; $i < count($searchParams); $i++) {
+          if( $searchParams[$i]['name'] == $matchingComponent->name) {
+            $searchParams[$i]['id'] =  $matchingComponent->id;
+          }
+        }
+      }
+
+
+
       $pois = $this->Pois->find('all', [
         'contain' => ['Components', 'Stages']
       ]);
-      // debug($searchParams);
+      //
       // Check if script was callen with any params and try to get associoated data
       if($searchParams[0] != 'findAll') {
-        $pois->matching('Components.Stages', function ($q) use ($searchParams){
+        $pois->matching('Stages', function ($q) use ($searchParams){
           /*
               HIER GING MAL WAS; Aber FALSCH!
               Deswegen jetzt halt einfach mit OR
           */
-
-          // VORsicht immer noch falsche Verschachtelung der Statements!
-
-          /*
-            V
-            O
-            R
-            S
-            I
-            C
-            H
-            T
-          */
           for($i = 0; $i < count($searchParams); $i++ ) {
-            if($i == 0) {
-              $q->where([
-                'Stages.rating >' => $searchParams[$i]['rating'],
-                'Components.name' => $searchParams[$i]['name']
+              /*
+               *
+               *  Hier umschalten
+               *
+
+              $q->andWhere([
+                'AND' => [
+                  ['Stages.rating >' => $searchParams[$i]['rating']],
+                  ['Stages.component_id' => $searchParams[$i]['id']]
+                ]
               ]);
-            } else {
+
+               *
+               */
               $q->orWhere([
-                'Stages.rating >' => $searchParams[$i]['rating'],
-                'Components.name' => $searchParams[$i]['name']
+                'AND' => [
+                  ['Stages.rating >' => $searchParams[$i]['rating']],
+                  ['Stages.component_id' => $searchParams[$i]['id']]
+                ]
               ]);
-            }
+              /*
+               */
           }
           // debug($q);
           return $q;
@@ -181,34 +228,64 @@ class PoisController extends AppController
 
       $this->viewBuilder()->layout('Foodmapp');
 
+      $this->loadModel('Components');
+
+      $machtingComponentNames = $this->Components->find('all');
+      for($i = 0; $i < count($searchParams); $i++ ) {
+        $machtingComponentNames->orWhere([
+          'Components.name' => $searchParams[$i]['name']
+        ]);
+      }
+
+      foreach ($machtingComponentNames as $matchingComponent) {
+        for ($i = 0; $i < count($searchParams); $i++) {
+          if( $searchParams[$i]['name'] == $matchingComponent->name) {
+            $searchParams[$i]['id'] =  $matchingComponent->id;
+          }
+        }
+      }
+
+
+
       $pois = $this->Pois->find('all', [
-        'contain' => ['Components']
+        'contain' => ['Components', 'Stages']
       ]);
-      // debug($searchParams);
+      //
       // Check if script was callen with any params and try to get associoated data
       if($searchParams[0] != 'findAll') {
-        $pois->matching('Components.Stages', function ($q) use ($searchParams){
+        $pois->matching('Stages', function ($q) use ($searchParams){
           /*
               HIER GING MAL WAS; Aber FALSCH!
               Deswegen jetzt halt einfach mit OR
           */
           for($i = 0; $i < count($searchParams); $i++ ) {
-            if($i == 0) {
-              $q->where([
-                'Stages.rating >' => $searchParams[$i]['rating'],
-                'Components.name' => $searchParams[$i]['name']
+              /*
+               *
+               *  Hier umschalten
+               *
+
+              $q->andWhere([
+                'AND' => [
+                  ['Stages.rating >' => $searchParams[$i]['rating']],
+                  ['Stages.component_id' => $searchParams[$i]['id']]
+                ]
               ]);
-            } else {
+
+               *
+               */
               $q->orWhere([
-                'Stages.rating >' => $searchParams[$i]['rating'],
-                'Components.name' => $searchParams[$i]['name']
+                'AND' => [
+                  ['Stages.rating >' => $searchParams[$i]['rating']],
+                  ['Stages.component_id' => $searchParams[$i]['id']]
+                ]
               ]);
-            }
+              /*
+               */
           }
           // debug($q);
           return $q;
         })
-        ->limit(3)
+        ->limit(5)
         ->distinct(['Pois.id'])
         ;
       }

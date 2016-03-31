@@ -29,6 +29,11 @@
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 3  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<div class="row">
+  <div class="col-md-12">
+    <h1><em>Aktuell SELECT OR Verknüpfung</em></h1>
+  </div>
+</div>
 <?php foreach ($pois as $poi): ?>
   <div class="row">
     <div class="col-md-6">

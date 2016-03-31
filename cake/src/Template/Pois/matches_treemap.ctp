@@ -58,6 +58,12 @@
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <div class="row">
   <div class="col-md-12">
+    <h1><em>Aktuell SELECT OR Verknüpfung</em></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
     <h1>Hier steht das Treemap</h1>
     <div id="poisTreemap">
     </div>

@@ -25,10 +25,9 @@
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 
 <div class="container" role="main">
-
 <div class="row">
   <div class="col-md-12">
-    <button id="showBars" type="button" class="btn btn-default"><?= __('Zeige Balkendiagramme') ?></button>
+    <h1><em>Aktuell SELECT AND Verknüpfung</em></h1>
   </div>
 </div>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
