@@ -18,7 +18,42 @@
 
 <script type="text/javascript">
   var pois = <?= json_encode($pois) ?>;
-  var compSum = [];
+  var componentsList = [];
+  var poiComponentMatrix = [];
+  console.log(pois);
+  for (var i in pois) {
+    var poisComponent = pois[i].components;
+    for (var j in poisComponent) {
+      if (componentsList.indexOf(poisComponent[j].name) < 0) {
+        componentsList.push(poisComponent[j].name);
+      }
+    }
+  }
+  // Vorsicht hier stimmt Logik nicht!
+  for (var recentComponent in poisComponent) {
+    for (var i in pois) {
+      var poisComponent = pois[i].components;
+      for (var j in poisComponent) {
+        for (var k in componentsList) {
+          if(poisComponent[j].name = componentsList[j]) {
+            poiComponentMatrix.push([
+              pois[i].name, componentsList[j], poisComponent[j]._joinData.rating
+            ])
+          } else {
+            poiComponentMatrix.push([
+              pois[i].name, componentsList[j], 0
+            ])
+          }
+        }
+      }
+    }
+  }
+  console.log("Ausgabe der Enthaltenen Componenten");
+  console.log(componentsList);
+  console.log("Ausgabe der poiComponentMatrix");
+  console.log(poiComponentMatrix);
+  // for (var i = 0; i < pois.lenght; i++) {
+  // }
 
   // TODO
 
@@ -26,7 +61,6 @@
   // Dann werde in Raster ausgeben.
   // Dann mit Stift und Zettel mal Matrix zeichnen.
 
-  console.log(pois);
   var matrix = [
   [12000, 10000, 8916, 2868],
   [ 1951, 10048, 2060, 6171],

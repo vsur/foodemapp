@@ -5,7 +5,8 @@
     "vizElement" => '<li>' . $this->Html->link(__('‹ Komponenten'), ['controller' => 'Components', 'action' => 'choose', '_full' => true]) . "</li>\n" .
                     '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Scheibendiagramme">‹ Scheiben</a>' . "</li>\n" .
                     '<li><a href="../matchesBar/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Balkendiagramme">‹ Balken</a>' . "</li>\n" .
-                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n"
+                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n" .
+                    '<li><a href="../matchesChord/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Chord-Diagramm-Visualisierung">Chord-Diagramm ›</a>' . "</li>\n"
   ]);
 ?>
 
