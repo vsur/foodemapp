@@ -22,51 +22,97 @@
   var poiComponentMatrix = [];
   console.log(pois);
   for (var i in pois) {
-    var poisComponent = pois[i].components;
-    for (var j in poisComponent) {
-      if (componentsList.indexOf(poisComponent[j].name) < 0) {
-        componentsList.push(poisComponent[j].name);
+    var poisComponents = pois[i].components;
+    for (var j in poisComponents) {
+      if (componentsList.indexOf(poisComponents[j].name) < 0) {
+        componentsList.push(poisComponents[j].name);
       }
     }
   }
   // Vorsicht hier stimmt Logik nicht!
-  for (var recentComponent in poisComponent) {
-    for (var i in pois) {
-      var poisComponent = pois[i].components;
-      for (var j in poisComponent) {
-        for (var k in componentsList) {
-          if(poisComponent[j].name = componentsList[j]) {
-            poiComponentMatrix.push([
-              pois[i].name, componentsList[j], poisComponent[j]._joinData.rating
-            ])
-          } else {
-            poiComponentMatrix.push([
-              pois[i].name, componentsList[j], 0
-            ])
-          }
+  // Iterate over all POIs again
+  for (var i in pois) {
+    var recentPoisMatrixEntries = [];
+    var poisComponents = pois[i].components;
+    // Iterate over all items of componentsList
+    // To get any kind of matrix similar to this
+    /*
+    poi_1, componentslist_1, rating if exist in poi_1
+    poi_2, componentsList_2, rating if exist in poi_2
+    poi_3, componentsList_3, rating if exist in poi_3
+    */
+    for (var j in componentsList) {
+      // Check if recent componentsList entry is present in any pois component
+      // Iterate over Compents and save indexOf
+      var presentComponent = null;
+      for (var k in poisComponents) {
+        if (componentsList[j] == poisComponents[k].name) {
+          presentComponent = poisComponents[k];
         }
       }
+      if (presentComponent != null) {
+        // console.log("Aktueller Component " + componentsList[j] + " in " + pois[i].name + " enthalten." );
+        recentPoisMatrixEntries.push([
+          pois[i].name, componentsList[j], presentComponent._joinData.rating
+        ]);
+      } else {
+        recentPoisMatrixEntries.push([
+          pois[i].name, componentsList[j], 0.0
+        ]);
+      }
     }
+    poiComponentMatrix.push([
+      pois[i].name, recentPoisMatrixEntries
+    ]);
   }
-  console.log("Ausgabe der Enthaltenen Componenten");
-  console.log(componentsList);
-  console.log("Ausgabe der poiComponentMatrix");
   console.log(poiComponentMatrix);
-  // for (var i = 0; i < pois.lenght; i++) {
-  // }
-
   // TODO
-
-  // Jetzt mal alle Componenten zählen
-  // Dann werde in Raster ausgeben.
-  // Dann mit Stift und Zettel mal Matrix zeichnen.
-
+  // Nun ein o0-Array für alle Pois bauen
+  // Dann ein 0-Array für alle Components bauen und dann über der poiComponentMatrix iterrieren und alles befüllen
+  var helpMatrix = [];
+  var poisNames = [];
+  var poisFillArray = [];
+  for (var i = 0; i < pois.length; i++) {
+    poisNames.push(pois[i].name);
+    poisFillArray.push(0.0);
+  }
+  helpMatrix.push(poisNames, poisFillArray);
+  console.log(helpMatrix);
+  var componentsFillArray = []
+  for (var i = 0; i < componentsList.length; i++) {
+    componentsFillArray.push(0.0);
+  }
+  helpMatrix = [];
+  helpMatrix.push(componentsList, componentsFillArray);
+  console.log(helpMatrix);
   var matrix = [
-  [12000, 10000, 8916, 2868],
-  [ 1951, 10048, 2060, 6171],
-  [ 8010, 16145, 8090, 8045],
-  [ 1013,   990,  940, 6907]
-];
+    [12000, 10000, 8916, 2868],
+    [ 1951, 10048, 2060, 6171],
+    [ 8010, 16145, 8090, 8045],
+    [ 1013,   990,  940, 6907]
+  ];
+  helpMatrix = [];
+  // Create all rows for pois
+  poiComponentMatrix.forEach(function(poiArray) {
+    var recentPoiRow = [];
+    var componentRows = poiArray[1];
+    poisFillArray.forEach(function(i) {
+      recentPoiRow.push(i);
+    });
+    componentRows.forEach(function(singleRow) {
+      recentPoiRow.push(singleRow[2]);
+    });
+    helpMatrix.push(recentPoiRow);
+  });
+  // Create rows for components
+  componentsList.forEach(function(i) {
+    var recentComponentRow = [];
+    recentComponentRow = poisFillArray.concat(componentsFillArray);
+    helpMatrix.push(recentComponentRow)
+  });
+  console.log(helpMatrix);
+  matrix = helpMatrix;
+
 </script>
 
 
