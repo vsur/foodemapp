@@ -1,5 +1,5 @@
 /*
- * Data script for Treemap Viz
+ * Data script for Chord Diagramm Viz
  */
 var maxWidth = +d3.select("#poisChord").style("width").replace("px", "");
 d3.select("#poisTreemap").style("position", "relative").style("padding-top", "");

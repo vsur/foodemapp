@@ -6,8 +6,8 @@
                     '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Scheibendiagramme">‹ Scheiben</a>' . "</li>\n" .
                     '<li><a href="../matchesBar/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Balkendiagramme">‹ Balken</a>' . "</li>\n" .
                     '<li><a href="../matchesTreemap/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Treemapvisualisierung">‹ Treemap</a>' . "</li>\n" .
-                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n" .
-                    '<li><a href="../matchesSunburst/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Sunburst-Diagramm-Visualisierung">Sunburst-Diagramm ›</a>' . "</li>\n"
+                    '<li><a href="../matchesChord/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Chord-Diagramm-Visualisierung">‹ Chord-Diagramm</a>' . "</li>\n" .
+                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n"
   ]);
 ?>
 
@@ -19,101 +19,32 @@
 
 <script type="text/javascript">
   var pois = <?= json_encode($pois) ?>;
-  var componentsList = [];
-  var poiComponentMatrix = [];
   console.log(pois);
+  var sunburstData = {
+    "name": "TreemapMatches",
+    "children": []
+  };
+  // for (var i = 0; i < pois.length; i++) {
   for (var i in pois) {
-    var poisComponents = pois[i].components;
-    for (var j in poisComponents) {
-      if (componentsList.indexOf(poisComponents[j].name) < 0) {
-        componentsList.push(poisComponents[j].name);
-      }
-    }
-  }
-  // Vorsicht hier stimmt Logik nicht!
-  // Iterate over all POIs again
-  for (var i in pois) {
-    var recentPoisMatrixEntries = [];
-    var poisComponents = pois[i].components;
-    // Iterate over all items of componentsList
-    // To get any kind of matrix similar to this
-    /*
-    poi_1, componentslist_1, rating if exist in poi_1
-    poi_2, componentsList_2, rating if exist in poi_2
-    poi_3, componentsList_3, rating if exist in poi_3
-    */
-    for (var j in componentsList) {
-      // Check if recent componentsList entry is present in any pois component
-      // Iterate over Compents and save indexOf
-      var presentComponent = null;
-      for (var k in poisComponents) {
-        if (componentsList[j] == poisComponents[k].name) {
-          presentComponent = poisComponents[k];
-        }
-      }
-      if (presentComponent != null) {
-        // console.log("Aktueller Component " + componentsList[j] + " in " + pois[i].name + " enthalten." );
-        recentPoisMatrixEntries.push([
-          pois[i].name, componentsList[j], presentComponent._joinData.rating
-        ]);
-      } else {
-        recentPoisMatrixEntries.push([
-          pois[i].name, componentsList[j], 0.0
-        ]);
-      }
-    }
-    poiComponentMatrix.push([
-      pois[i].name, recentPoisMatrixEntries
-    ]);
-  }
-  console.log(poiComponentMatrix);
-  // TODO
-  // Nun ein o0-Array für alle Pois bauen
-  // Dann ein 0-Array für alle Components bauen und dann über der poiComponentMatrix iterrieren und alles befüllen
-  var helpMatrix = [];
-  var poisNames = [];
-  var poisFillArray = [];
-  for (var i = 0; i < pois.length; i++) {
-    poisNames.push(pois[i].name);
-    poisFillArray.push(0.0);
-  }
-  helpMatrix.push(poisNames, poisFillArray);
-  console.log(helpMatrix);
-  var componentsFillArray = []
-  for (var i = 0; i < componentsList.length; i++) {
-    componentsFillArray.push(0.0);
-  }
-  helpMatrix = [];
-  helpMatrix.push(componentsList, componentsFillArray);
-  console.log(helpMatrix);
-  var matrix = [
-    [12000, 10000, 8916, 2868],
-    [ 1951, 10048, 2060, 6171],
-    [ 8010, 16145, 8090, 8045],
-    [ 1013,   990,  940, 6907]
-  ];
-  helpMatrix = [];
-  // Create all rows for pois
-  poiComponentMatrix.forEach(function(poiArray) {
-    var recentPoiRow = [];
-    var componentRows = poiArray[1];
-    poisFillArray.forEach(function(i) {
-      recentPoiRow.push(i);
-    });
-    componentRows.forEach(function(singleRow) {
-      recentPoiRow.push(singleRow[2]);
-    });
-    helpMatrix.push(recentPoiRow);
-  });
-  // Create rows for components
-  componentsList.forEach(function(i) {
-    var recentComponentRow = [];
-    recentComponentRow = poisFillArray.concat(componentsFillArray);
-    helpMatrix.push(recentComponentRow)
-  });
-  console.log(helpMatrix);
-  matrix = helpMatrix;
+    var childComponents = [];
+    console.log(pois[i]);
 
+    for (var j in pois[i].components) {
+      childComponents.push(
+        {
+          "name": pois[i].components[j].name,
+          "rating": pois[i].components[j]._joinData.rating
+        }
+      );
+    }
+    sunburstData.children.push(
+      {
+        "name": pois[i].name,
+        "children": childComponents
+      }
+    );
+  }
+console.log(JSON.stringify(sunburstData, null, 4));
 </script>
 
 
@@ -135,12 +66,12 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h1>Hier steht das Chord-Diagramm</h1>
-    <div id="poisChord">
+    <h1>Hier steht das Sunburst-Diagramm</h1>
+    <div id="poisSunburst">
     </div>
   </div>
 </div> <!-- /.row -->
-<?= $this->Html->script('chordChart.js') ?>
+<?= $this->Html->script('sunburstChart.js') ?>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑ Step 3  Block ↑↑↑
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->

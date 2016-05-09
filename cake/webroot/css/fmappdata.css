@@ -6638,3 +6638,8 @@ div.bar:last-child {
   fill-opacity: .67;
   stroke: #000;
   stroke-width: .5px; }
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px; }
