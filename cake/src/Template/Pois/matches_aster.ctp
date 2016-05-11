@@ -3,8 +3,8 @@
   [
     "step" => "Trefferanzeige",
     "vizElement" => '<li>' . $this->Html->link(__('‹ Komponenten'), ['controller' => 'Components', 'action' => 'choose', '_full' => true]) . "</li>\n" .
-                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n" .
-                    '<li><a href="../matchesAster/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Asterdiagramme">Aster-Plots ›</a>' . "</li>\n" .
+                    '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Diskusdiagramme">‹ Diskus</a>' . "</li>\n" .
+                    "<li class=\"active\"><a href=\"#\">Aster-Plots</a></li>\n" .
                     '<li><a href="../matchesBar/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Balkendiagramme">Balken ›</a>' . "</li>\n" .
                     '<li><a href="../matchesTreemap/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Treemapgrafik">Treemap ›</a>' . "</li>\n"
   ]);
@@ -21,7 +21,7 @@
   console.log(pois);
 </script>
 
-<?= $this->Html->script('pieChart.js') ?>
+<?= $this->Html->script('asterChart.js') ?>
 
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 
