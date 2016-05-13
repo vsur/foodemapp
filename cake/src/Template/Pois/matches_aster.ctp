@@ -63,12 +63,12 @@
     </div>
     <div class="col-md-6">
 
-      <div id="poi_<?= h($poi->google_place)?>_PieChart">
+      <div id="poi_<?= h($poi->google_place)?>_AsterChart">
       </div>
     </div>
   </div> <!-- /.row -->
   <script type="text/javascript">
-    drawPie(<?= json_encode($poi) ?>);
+    drawAster(<?= json_encode($poi)?>, "#poi_<?= h($poi->google_place)?>_AsterChart");
   </script>
 <?php endforeach; ?>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
