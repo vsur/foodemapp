@@ -6616,7 +6616,7 @@ rect {
   fill: orange; }
 
 .solidArc:hover {
-  fill: orangered; }
+  fill: #c2005d; }
 
 .solidArc {
   -moz-transition: all 0.3s;
@@ -6628,9 +6628,7 @@ rect {
   display: none; }
 
 .aster-score {
-  line-height: 1;
-  font-weight: bold;
-  font-size: 500%; }
+  line-height: 1; }
 
 /*
  * Kann Evtl Weg

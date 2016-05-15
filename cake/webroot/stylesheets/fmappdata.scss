@@ -116,7 +116,7 @@ rect {
 }
 
 .solidArc:hover {
-  fill: orangered ;
+  fill: lighten($urcd-color, 13.5%) ;
 }
 
 .solidArc {
@@ -132,8 +132,8 @@ rect {
 
 .aster-score {
   line-height: 1;
-  font-weight: bold;
-  font-size: 500%;
+  // font-weight: bold;
+  // font-size: 1.2em;
 }
 /*
  * Kann Evtl Weg
