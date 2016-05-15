@@ -3,10 +3,12 @@
   [
     "step" => "Trefferanzeige",
     "vizElement" => '<li>' . $this->Html->link(__('‹ Komponenten'), ['controller' => 'Components', 'action' => 'choose', '_full' => true]) . "</li>\n" .
-                    '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Diskusdiagramme">‹ Diskus</a>' . "</li>\n" .
+                    '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Donutdiagramme">‹ Donut</a>' . "</li>\n" .
                     "<li class=\"active\"><a href=\"#\">Aster-Plots</a></li>\n" .
                     '<li><a href="../matchesBar/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Balkendiagramme">Balken ›</a>' . "</li>\n" .
-                    '<li><a href="../matchesTreemap/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Treemapgrafik">Treemap ›</a>' . "</li>\n"
+                    '<li><a href="../matchesTreemap/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Treemapvisualisierung">Treemap ›</a>' . "</li>\n" .
+                    '<li><a href="../matchesChord/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Chord-Diagramm-Visualisierung">Chord-Diagramm ›</a>' . "</li>\n" .
+                    '<li><a href="../matchesSunburst/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Sunburst-Diagramm-Visualisierung">Sunburst-Diagramm ›</a>' . "</li>\n"
   ]);
 ?>
 
