@@ -34,6 +34,9 @@ $cakeDescription = 'Food_M_App';
     <?= $this->Html->css('awesomplete.css') ?>
     <!-- Bootstrap core CSS -->
     <?= $this->Html->css('fmappdata.css') ?>
+    <!-- Leaflet CSS -->
+    <?= $this->Html->css('http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css') ?>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
