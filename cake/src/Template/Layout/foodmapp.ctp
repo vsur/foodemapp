@@ -36,7 +36,6 @@ $cakeDescription = 'Food_M_App';
     <?= $this->Html->css('fmappdata.css') ?>
     <!-- Leaflet CSS -->
     <?= $this->Html->css('http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css') ?>
-     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -46,7 +45,10 @@ $cakeDescription = 'Food_M_App';
 
     <!-- Some JS at the end of the document but awesomplete and d3-->
     <?= $this->Html->script('awesomplete.min.js') ?>
+    <?= $this->Html->script('jquery-2.1.4.min.js') ?>
     <?= $this->Html->script('d3.min.js') ?>
+    <?= $this->Html->script('http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js') ?>
+    <?= $this->Html->script('leaflet-providers.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -83,7 +85,6 @@ $cakeDescription = 'Food_M_App';
   <!-- No Bootstrap core JavaScript, cause Polymer shall be integrated
     ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <?= $this->Html->script('jquery-2.1.4.min.js') ?>
   <?= $this->Html->script('bootstrap.js') ?>
 
   <?= $this->Html->script('liquidFillGauge.js') ?>

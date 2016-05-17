@@ -17,41 +17,14 @@
 ↑↑↑↑↑↑↑↑↑↑ -->
 
 <?= $this->Flash->render() ?>
-<!-- Leaflet integration -->
- <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
 <script type="text/javascript">
   var pois = <?= json_encode($pois) ?>;
   console.log(pois);
-  var treemapData = {
-    "name": "TreemapMatches",
-    "children": []
-  };
-  // for (var i = 0; i < pois.length; i++) {
-  for (var i in pois) {
-    var childComponents = [];
-    console.log(pois[i]);
-
-    for (var j in pois[i].components) {
-      childComponents.push(
-        {
-          "name": pois[i].components[j].name,
-          "rating": pois[i].components[j]._joinData.rating
-        }
-      );
-    }
-    treemapData.children.push(
-      {
-        "name": pois[i].name,
-        "children": childComponents
-      }
-    );
-  }
-  console.log(JSON.stringify(treemapData, null, 4));
 </script>
 
 
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
-
 <div class="container" role="main">
 
 
@@ -68,12 +41,11 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h1>Hier steht das Treemap</h1>
-    <div id="poisTreemap">
-    </div>
+    <h1>Hier steht die Karte</h1>
+      <div id="poisMap"></div>
   </div>
 </div> <!-- /.row -->
-<?= $this->Html->script('treemapChart.js') ?>
+<?= $this->Html->script('mapview.js') ?>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑ Step 3  Block ↑↑↑
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
