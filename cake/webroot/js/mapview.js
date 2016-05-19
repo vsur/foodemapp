@@ -20,7 +20,8 @@ pois.forEach(function(poi, i) {
 
     var circle = L.circle([poi.lat, poi.lng], 100, {
         color: '#c2005d',
-        fillColor: '#7d003c',
+        // fillColor: '#7d003c',
+        fillColor: '#ffffff',
         fillOpacity: 0.75
     }).addTo(mymap);
     var recentIcon = L.icon({
