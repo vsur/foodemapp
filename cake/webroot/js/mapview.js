@@ -22,7 +22,7 @@ pois.forEach(function(poi, i) {
         color: '#c2005d',
         // fillColor: '#7d003c',
         fillColor: '#ffffff',
-        fillOpacity: 0.75
+        fillOpacity: 0.1
     }).addTo(mymap);
     var recentIcon = L.icon({
         iconUrl: poi.icon,
@@ -31,6 +31,7 @@ pois.forEach(function(poi, i) {
         // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
     var marker = L.marker([poi.lat, poi.lng], {icon: recentIcon}).addTo(mymap);
+    // var marker = L.marker([poi.lat, poi.lng] ).addTo(mymap);
 });
 
 /*

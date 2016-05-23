@@ -42,7 +42,7 @@ function drawAster(poiData, chartID) {
 
   var color = d3.scale.category10();
 
-  var width = 50,
+  var width = 100,
     // height = 500 - margin.top - margin.bottom;
     height = width/2,
     radius = Math.min(width, height) / 2,
@@ -63,7 +63,7 @@ function drawAster(poiData, chartID) {
     .innerRadius(innerRadius)
     .outerRadius(radius);
 
-  var asterPlot = g.append("svg")
+  var asterPlot = g.append("g")
     .attr("id", chartID)
     .attr("width", width)
     .attr("height", height)
@@ -102,48 +102,46 @@ function drawAster(poiData, chartID) {
     .attr("dy", ".35em")
     .attr("text-anchor", "middle") // text-align: right
     .text(poiData.name);
-
 }
 
 
-/*var markerDiagram = g.selectAll("circle")
+var markerDiagram = g.selectAll("circle")
   .data(pois)
   .enter().append("circle")
   .style("stroke", "black")
   .style("opacity", .6)
   .style("fill", "red")
-  .attr("r", 20);*/
+  .attr("r", 20);
 
-var asterPlotDiagramms = g.selectAll("svg.asterDiagram");
+var asterPlotDiagramms = g.selectAll(".asterDiagram").data(pois);
 
 mymap.on("viewreset", update);
 update();
 
 function update() {
+  console.log(markerDiagram);
+  console.log(g.selectAll(".asterDiagram"));
   // For Circles
-  /*markerDiagram.attr("transform",
+  markerDiagram.attr("transform",
   function(d) {
+    console.log(d);
     return "translate("+
       mymap.latLngToLayerPoint(d.LatLng).x +","+
       mymap.latLngToLayerPoint(d.LatLng).y +")";
     }
-  );*/
+  );
   // Hier Doppelung Fehler in Daten!
-  asterPlotDiagramms.forEach(function(aster, i) {
-    console.log(aster);
-    /*
-    aster.attr("transform",
-      function(d) {
-        console.log(d.LatLng);
-        return "translate("+
-        mymap.latLngToLayerPoint(d.LatLng).x +","+
-        mymap.latLngToLayerPoint(d.LatLng).y +")";
-      }
-    );*/
-  });
-
+  asterPlotDiagramms.attr("transform",
+    function(d) {
+      console.log(mymap.latLngToLayerPoint(d.LatLng));
+      return "translate("+
+      mymap.latLngToLayerPoint(d.LatLng).x +","+
+      mymap.latLngToLayerPoint(d.LatLng).y +")";
+    }
+  );
 }
 
+// d3.select("#asterChIJu1C7JabBn0cRy0aiZidiv44").attr("transform", "translate(150,150)");
 /*
   NEXT TODO
 
