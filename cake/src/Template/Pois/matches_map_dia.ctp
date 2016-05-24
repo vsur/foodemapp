@@ -41,7 +41,21 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h1>Hier steht die Karte</h1>
+    <h1>Visualisierung wählen</h1>
+    <div class="form-group">
+      <!-- Standard button -->
+      <button id="vizPins" type="button" class="btn btn-default vizControl">Pins</button>
+
+      <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+      <button id="vizMarker" type="button" class="btn btn-primary vizControl">Marker</button>
+
+      <!-- Indicates a successful or positive action -->
+      <button id="vizShapes" type="button" class="btn btn-success vizControl">Shape</button>
+
+      <!-- Contextual button for informational alert messages -->
+      <button id="vizAsterPlots" type="button" class="btn btn-info vizControl">Asterplot</button>
+
+    </div>
       <div id="poisMap"></div>
   </div>
 </div> <!-- /.row -->

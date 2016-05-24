@@ -22,7 +22,7 @@ pois.forEach(function(poi, i) {
         color: '#c2005d',
         // fillColor: '#7d003c',
         fillColor: '#ffffff',
-        fillOpacity: 0.1
+        fillOpacity: 0.75
     }).addTo(mymap);
     var recentIcon = L.icon({
         iconUrl: poi.icon,
