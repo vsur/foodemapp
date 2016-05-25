@@ -6,9 +6,10 @@
                     '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Donutdiagramme">‹ Donut</a>' . "</li>\n" .
                     '<li><a href="../matchesAster/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Aster-Plot-Diagramme">‹ Aster</a>' . "</li>\n" .
                     '<li><a href="../matchesBar/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Balkendiagramme">‹ Balken</a>' . "</li>\n" .
-                    "<li class=\"active\"><a href=\"#\">Treemap</a></li>\n" .
-                    '<li><a href="../matchesChord/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Chord-Diagramm-Visualisierung">Chord-Diagramm ›</a>' . "</li>\n" .
-                    '<li><a href="../matchesSunburst/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Sunburst-Diagramm-Visualisierung">Sunburst-Diagramm ›</a>' . "</li>\n"
+                    '<li><a href="../matchesTreemap/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Treemapvisualisierung">‹ Treemap</a>' . "</li>\n" .
+                    '<li><a href="../matchesChord/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Chord-Diagramm-Visualisierung">‹ Chord-Diagramm</a>' . "</li>\n" .
+                    '<li><a href="../matchesSunburst/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Sunburst-Diagramm-Visualisierung">‹ Sunburst-Diagramm</a>' . "</li>\n" .
+                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n"
   ]);
 ?>
 

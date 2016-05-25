@@ -8,7 +8,8 @@
                     '<li><a href="../matchesBar/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Balkendiagramme">‹ Balken</a>' . "</li>\n" .
                     '<li><a href="../matchesTreemap/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Treemapvisualisierung">‹ Treemap</a>' . "</li>\n" .
                     '<li><a href="../matchesChord/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Chord-Diagramm-Visualisierung">‹ Chord-Diagramm</a>' . "</li>\n" .
-                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n"
+                    "<li class=\"active\"><a href=\"#\">POIs</a></li>\n" .
+                    '<li><a href="../matchesMapDia/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Karte">Kartenansicht ›</a>' . "</li>\n"
   ]);
 ?>
 
