@@ -87,7 +87,6 @@ var fmApp = {
     gaugeObj.gauge.update(50);
   },
   comparePois: function() {
-    alert("Nun wird was passieren");
     var paramString = "?";
     for(var i = 0; i < this.chosenSelection.length; i++) {
       paramString += this.chosenSelection[i].componentName + "=" + this.chosenSelection[i].weight;

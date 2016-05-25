@@ -72,7 +72,7 @@ awesomplete.list = componentsNames;
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓↓ Cake  Block ↓↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
-<div class="row">
+<div id="cakeBlock" class="row">
   <div class="col-md-2">
     <h3><?= __('Actions') ?></h3>
     <nav id="actions-sidebar">
