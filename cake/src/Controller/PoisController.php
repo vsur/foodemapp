@@ -149,7 +149,7 @@ class PoisController extends AppController
           }
         }
       }
-
+      // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
       $pois = $this->Pois->find('all', [
         'contain' => [
           'Components' => [
@@ -171,7 +171,7 @@ class PoisController extends AppController
                *
                *  Hier umschalten
                *
-               */
+               *
               $q->andWhere([
                 'AND' => [
                   ['Stages.rating >' => $searchParams[$i]['rating']],
@@ -179,8 +179,8 @@ class PoisController extends AppController
                 ]
               ]);
 
-               /*
                *
+               */
               $q->orWhere([
                 'AND' => [
                   ['Stages.rating >' => $searchParams[$i]['rating']],
@@ -199,26 +199,37 @@ class PoisController extends AppController
       }
       // Try to get $searchParams Components as First ones in result
       debug($searchParams[0]);
+      // Walk throu all $pois
       foreach ($pois as $poiIndex => $poi) {
-        // debug($poi->components);
-        foreach ($poi->components as $componentsIndex => $component) {
-          if($component->name == $searchParams[0]['name']) {
-            debug("Der Muss raus bei component key " . $componentsIndex);
-            $chosenComponent = $component;
-            debug($poi->components);
-            debug("VIA UNSET");
-            unset($poi->components[$componentsIndex]);
-            array_unshift($poi->components, $chosenComponent);
-            debug($poi->components);
+        debug($poi->components);
+        // Iterate over searchParams
+        foreach ($searchParams as $searchParamIndex => $singleChoosenComponent) {
+          // Walk throu all components of a poi to place matching components at the beginning
+          foreach ($poi->components as $componentsIndex => $component) {
+            debug($component->name);
+            // Check if a searchParam machtes the recent component
+            if($component->name == $singleChoosenComponent['name']) {
+              debug($component->name . " paaaast, der Muss raus bei component key " . $componentsIndex);
+              $matchingComponent = $component;
+              debug("Now UNSET");
+              unset($poi->components[$componentsIndex]);
+              array_unshift($poi->components, $matchingComponent);
+            }
           }
-          debug($component->name);
+          // End of $poi->components foreach
         }
-        // Ende der $pois-foreach
+        debug($poi->components);
+        // End of $poi foreach
       }
       // ✓ Find Index
       // ✓ Lösche aus Array und speicher zwischen
       // ✓ PAcke an den Anfang
-      // Mache es iterierbar
+      // ✓ Mache es iterierbar
+
+      // TODO
+      // • Umschalter für AND und OR als Parameter
+      // • Farbe
+      // • Dann die Drei Alternartiven Mehr ausschlachten
 
       $this->set(compact('pois'));
       $this->set('_serialize', ['pois']);
