@@ -114,7 +114,7 @@ class PoisController extends AppController
       $this->set('_serialize', ['pois']);
     }
 
-    public function matchesAster() {
+    public function matchesAster($selectOperator = "OR") {
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {
@@ -150,13 +150,16 @@ class PoisController extends AppController
         }
       }
 
-
-
       $pois = $this->Pois->find('all', [
-        'contain' => ['Components', 'Stages']
+        'contain' => [
+          'Components' => [
+            'sort' => ['Stages.rating' => 'DESC' ]
+          ],
+          'Stages'
+        ]
       ]);
-      //
-      // Check if script was callen with any params and try to get associoated data
+
+      // Check if script was called with any params and try to get associoated data
       if($searchParams[0] != 'findAll') {
         $pois->matching('Stages', function ($q) use ($searchParams){
           /*
@@ -194,6 +197,28 @@ class PoisController extends AppController
         ->distinct(['Pois.id'])
         ;
       }
+      // Try to get $searchParams Components as First ones in result
+      debug($searchParams[0]);
+      foreach ($pois as $poiIndex => $poi) {
+        // debug($poi->components);
+        foreach ($poi->components as $componentsIndex => $component) {
+          if($component->name == $searchParams[0]['name']) {
+            debug("Der Muss raus bei component key " . $componentsIndex);
+            $chosenComponent = $component;
+            debug($poi->components);
+            debug("VIA UNSET");
+            unset($poi->components[$componentsIndex]);
+            array_unshift($poi->components, $chosenComponent);
+            debug($poi->components);
+          }
+          debug($component->name);
+        }
+        // Ende der $pois-foreach
+      }
+      // ✓ Find Index
+      // ✓ Lösche aus Array und speicher zwischen
+      // ✓ PAcke an den Anfang
+      // Mache es iterierbar
 
       $this->set(compact('pois'));
       $this->set('_serialize', ['pois']);

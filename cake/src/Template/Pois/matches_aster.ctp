@@ -16,7 +16,6 @@
 <!-- ↑↑↑↑↑↑↑↑↑
 ↑↑↑ Navbar ↑↑↑
 ↑↑↑↑↑↑↑↑↑↑ -->
-
 <?= $this->Flash->render() ?>
 
 <script type="text/javascript">
