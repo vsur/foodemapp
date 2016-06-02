@@ -29,8 +29,30 @@
 
 <div class="container" role="main">
 <div class="row">
-  <div class="col-md-12">
-    <h1><em>Aktuell SELECT AND Verknüpfung</em></h1>
+  <div class="col-md-4">
+    <a href="#" class="btn btn-default disabled"  style="width:100%;" role="button">SQL-Select-Operator wählen <span class="hidden-md">(Standard = OR) →</span></a>
+  </div>
+  <div class="col-md-4">
+    <?=
+      $this->Html->link(
+      'OR',
+      // Create Link
+      [
+        'controller' => 'Components',
+        // TODO Naming Conventions????
+        'action' => 'matchesAster',
+        "OR?" . $_SERVER['QUERY_STRING']
+      ],
+      // Attributes
+      [
+        'class' => 'btn btn-success', 'style' => 'width:100%;'
+      ]
+    );
+    ?>
+    <button type="button" class="btn btn-success" style="width:100%;"><a>OR</a></button>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-warning" style="width:100%;">AND</button>
   </div>
 </div>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓

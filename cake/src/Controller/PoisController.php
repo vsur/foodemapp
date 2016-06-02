@@ -115,6 +115,7 @@ class PoisController extends AppController
     }
 
     public function matchesAster($selectOperator = "OR") {
+      debug($selectOperator);
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {
@@ -134,7 +135,7 @@ class PoisController extends AppController
       $this->viewBuilder()->layout('Foodmapp');
 
       $this->loadModel('Components');
-
+      // TODO Hier auch nach Finad ALl oder bene keine Sear PArams abfragen
       $machtingComponentNames = $this->Components->find('all');
       for($i = 0; $i < count($searchParams); $i++ ) {
         $machtingComponentNames->orWhere([
@@ -160,66 +161,50 @@ class PoisController extends AppController
       ]);
 
       // Check if script was called with any params and try to get associoated data
+      // TODO hier stimmt was nicht mit dem ELSE Zweig!
       if($searchParams[0] != 'findAll') {
         $pois->matching('Stages', function ($q) use ($searchParams){
-          /*
-              HIER GING MAL WAS; Aber FALSCH!
-              Deswegen jetzt halt einfach mit OR
-          */
+          // Iterate over $searchParams
           for($i = 0; $i < count($searchParams); $i++ ) {
-              /*
-               *
-               *  Hier umschalten
-               *
-               *
-              $q->andWhere([
-                'AND' => [
-                  ['Stages.rating >' => $searchParams[$i]['rating']],
-                  ['Stages.component_id' => $searchParams[$i]['id']]
-                ]
-              ]);
-
-               *
-               */
-              $q->orWhere([
-                'AND' => [
-                  ['Stages.rating >' => $searchParams[$i]['rating']],
-                  ['Stages.component_id' => $searchParams[$i]['id']]
-                ]
-              ]);
-              /*
-               */
+            // Check $selectOperator and fire AND or OR
+            switch ($i) {
+                case "OR":
+                  $q->orWhere([
+                    'AND' => [
+                      ['Stages.rating >' => $searchParams[$i]['rating']],
+                      ['Stages.component_id' => $searchParams[$i]['id']]
+                    ]
+                  ]);
+                case "AND":
+                  $q->andWhere([
+                    'AND' => [
+                      ['Stages.rating >' => $searchParams[$i]['rating']],
+                      ['Stages.component_id' => $searchParams[$i]['id']]
+                    ]
+                  ]);
+            }
           }
-          // debug($q);
           return $q;
         })
         ->limit(20)
         ->distinct(['Pois.id'])
         ;
-      }
-      // Try to get $searchParams Components as First ones in result
-      debug($searchParams[0]);
-      // Walk throu all $pois
-      foreach ($pois as $poiIndex => $poi) {
-        debug($poi->components);
-        // Iterate over searchParams
-        foreach ($searchParams as $searchParamIndex => $singleChoosenComponent) {
-          // Walk throu all components of a poi to place matching components at the beginning
-          foreach ($poi->components as $componentsIndex => $component) {
-            debug($component->name);
-            // Check if a searchParam machtes the recent component
-            if($component->name == $singleChoosenComponent['name']) {
-              debug($component->name . " paaaast, der Muss raus bei component key " . $componentsIndex);
-              $matchingComponent = $component;
-              debug("Now UNSET");
-              unset($poi->components[$componentsIndex]);
-              array_unshift($poi->components, $matchingComponent);
+        // Try to get $searchParams Components as First ones in result
+        // Walk throu all $pois
+        foreach ($pois as $poiIndex => $poi) {
+          // Iterate over searchParams
+          foreach ($searchParams as $searchParamIndex => $singleChoosenComponent) {
+            // Walk throu all components of a poi to place matching components at the beginning
+            foreach ($poi->components as $componentsIndex => $component) {
+              // Check if a searchParam machtes the recent component
+              if($component->name == $singleChoosenComponent['name']) {
+                $matchingComponent = $component;
+                unset($poi->components[$componentsIndex]);
+                array_unshift($poi->components, $matchingComponent);
+              }
             }
           }
-          // End of $poi->components foreach
         }
-        debug($poi->components);
-        // End of $poi foreach
       }
       // ✓ Find Index
       // ✓ Lösche aus Array und speicher zwischen
