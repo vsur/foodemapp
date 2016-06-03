@@ -114,8 +114,10 @@ class PoisController extends AppController
       $this->set('_serialize', ['pois']);
     }
 
-    public function matchesAster($selectOperator = "OR") {
-      debug($selectOperator);
+    // public function matchesAster($selectOperator = "OR", $sorting = "Rating") {
+    public function matchesAster($sorting = "Rating") {
+      $selectOperator = "OR";
+      debug($this->request->pass);
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {
@@ -150,32 +152,59 @@ class PoisController extends AppController
           }
         }
       }
+
+      // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
+      switch ($sorting) {
+        case 'Rating':
+          $sortingOption = [
+            'sort' => ['Stages.rating' => 'DESC' ]
+          ];
+          break;
+
+        case 'AlphaASC':
+          $sortingOption = [
+            'sort' => ['Components.name' => 'ASC']
+          ];
+          break;
+
+        case 'AlphaDESC':
+          $sortingOption = [
+            'sort' => ['Components.name' => 'DESC']
+          ];
+          break;
+
+      }
       // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
       $pois = $this->Pois->find('all', [
         'contain' => [
-          'Components' => [
-            'sort' => ['Stages.rating' => 'DESC' ]
-          ],
+          'Components' => $sortingOption,
           'Stages'
         ]
       ]);
 
       // Check if script was called with any params and try to get associoated data
-      // TODO hier stimmt was nicht mit dem ELSE Zweig!
+      // TODO hier stimmt einfach immner noch nix mit der SELECT Abfrage!
+
+      //////////////////////
+      // DAHER IGNORIERN! //
+      //////////////////////
+
       if($searchParams[0] != 'findAll') {
-        $pois->matching('Stages', function ($q) use ($searchParams){
+
+        $pois->matching('Stages', function ($q) use ($searchParams, $selectOperator){
+
           // Iterate over $searchParams
           for($i = 0; $i < count($searchParams); $i++ ) {
             // Check $selectOperator and fire AND or OR
-            switch ($i) {
-                case "OR":
+            switch ($selectOperator) {
+                case 'OR':
                   $q->orWhere([
                     'AND' => [
                       ['Stages.rating >' => $searchParams[$i]['rating']],
                       ['Stages.component_id' => $searchParams[$i]['id']]
                     ]
                   ]);
-                case "AND":
+                case 'AND':
                   $q->andWhere([
                     'AND' => [
                       ['Stages.rating >' => $searchParams[$i]['rating']],
@@ -189,8 +218,8 @@ class PoisController extends AppController
         ->limit(20)
         ->distinct(['Pois.id'])
         ;
-        // Try to get $searchParams Components as First ones in result
-        // Walk throu all $pois
+        // Try to get $searchParams Components as frist components in result
+        // Walk throu all $pois if sorting is set by Rating
         foreach ($pois as $poiIndex => $poi) {
           // Iterate over searchParams
           foreach ($searchParams as $searchParamIndex => $singleChoosenComponent) {
@@ -204,7 +233,7 @@ class PoisController extends AppController
               }
             }
           }
-        }
+        } // End frist foreach loop
       }
       // ✓ Find Index
       // ✓ Lösche aus Array und speicher zwischen

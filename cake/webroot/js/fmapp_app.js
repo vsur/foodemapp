@@ -62,7 +62,7 @@ var fmApp = {
     d3Obj.on('click', function () {
       yPos = d3.mouse(this)[1];
       var objHeight = d3Obj.attr('height');
-      var newGaugeValue = (objHeight - yPos) / objHeight * 100;
+      var newGaugeValue = Math.round( (objHeight - yPos) / objHeight * 100 );
       gaugeObj.weight = newGaugeValue;
       gaugeObj.gauge.update(gaugeObj.weight);
     });

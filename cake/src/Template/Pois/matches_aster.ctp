@@ -28,6 +28,84 @@
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 
 <div class="container" role="main">
+
+<!-- ///////////////////////////
+// Sortierungs-Block //
+/////////////////////////// -->
+<div class="row">
+  <div class="col-md-3">
+    <p><a href="#" class="btn btn-default disabled"  style="width:100%;" role="button">Sortierung<span class="hidden-md">(Standard = Rating) →</span></a><p>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'Rating',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesAster',
+          // "OR",
+          "Rating",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(1, $this->request->pass)) ) ? true : $this->request->pass[1] == "Rating" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'A-Z',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesAster',
+          // "OR",
+          "AlphaASC",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(1, $this->request->pass)) ) ? false : $this->request->pass[1] == "AlphaASC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'Z-A',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesAster',
+          // "OR",
+          "AlphaDESC",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(1, $this->request->pass)) ) ? false : $this->request->pass[1] == "AlphaDESC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+  </div>
+</div>
+<!-- ///////////////////////////
+// Select-Operator-Block //
+///////////////////////////
+
+/////////////////////////////////
+// Funktioniert noch gar nicht //
+///////////////////////////////// -->
+
+<!--
 <div class="row">
   <div class="col-md-4">
     <a href="#" class="btn btn-default disabled"  style="width:100%;" role="button">SQL-Select-Operator wählen <span class="hidden-md">(Standard = OR) →</span></a>
@@ -35,26 +113,43 @@
   <div class="col-md-4">
     <?=
       $this->Html->link(
-      'OR',
-      // Create Link
-      [
-        'controller' => 'Components',
-        // TODO Naming Conventions????
-        'action' => 'matchesAster',
-        "OR?" . $_SERVER['QUERY_STRING']
-      ],
-      // Attributes
-      [
-        'class' => 'btn btn-success', 'style' => 'width:100%;'
-      ]
-    );
+        'OR',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesAster',
+          "OR",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( (empty($this->request->pass)) ? true : $this->request->pass[0] == "OR" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
     ?>
-    <button type="button" class="btn btn-success" style="width:100%;"><a>OR</a></button>
   </div>
   <div class="col-md-4">
-    <button type="button" class="btn btn-warning" style="width:100%;">AND</button>
+    <?=
+      $this->Html->link(
+        'AND',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesAster',
+          "AND",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( (empty($this->request->pass)) ? false : $this->request->pass[0] == "AND" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
   </div>
 </div>
+-->
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 3  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
