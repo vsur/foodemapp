@@ -18,9 +18,11 @@ var chord = d3.layout.chord()
     .sortSubgroups(d3.descending)
     .matrix(matrix);
 
-var fill = d3.scale.ordinal()
-    .domain(d3.range(4))
-    .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
+var fill = d3.scale.category10();
+
+// var fill = d3.scale.ordinal()
+//     .domain(d3.range(4))
+//     .range(["#000000", "#FFDD89", "#957244", "#F26223"]);
 
 var svg = d3.select("#poisChord").append("svg")
     .attr("width", width)
@@ -30,7 +32,7 @@ var svg = d3.select("#poisChord").append("svg")
 
 svg.append("g").selectAll("path")
     .data(chord.groups)
-  .enter().append("path")
+    .enter().append("path")
     .style("fill", function(d) { return fill(d.index); })
     .style("stroke", function(d) { return fill(d.index); })
     .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
@@ -39,9 +41,9 @@ svg.append("g").selectAll("path")
 
 var ticks = svg.append("g").selectAll("g")
     .data(chord.groups)
-  .enter().append("g").selectAll("g")
+    .enter().append("g").selectAll("g")
     .data(groupTicks)
-  .enter().append("g")
+    .enter().append("g")
     .attr("transform", function(d) {
       return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
           + "translate(" + outerRadius + ",0)";
@@ -63,9 +65,9 @@ ticks.append("text")
 
 svg.append("g")
     .attr("class", "chord")
-  .selectAll("path")
+    .selectAll("path")
     .data(chord.chords)
-  .enter().append("path")
+    .enter().append("path")
     .attr("d", d3.svg.chord().radius(innerRadius))
     .style("fill", function(d) { return fill(d.target.index); })
     .style("opacity", 1);
@@ -73,10 +75,13 @@ svg.append("g")
 // Returns an array of tick angles and labels, given a group.
 function groupTicks(d) {
   var k = (d.endAngle - d.startAngle) / d.value;
+  console.log(d);
   return d3.range(0, d.value, 1000).map(function(v, i) {
     return {
       angle: v * k + d.startAngle,
-      label: i % 5 ? null : v / 1000 + "k"
+      // TODO: Label noch besser ausrichten
+      label: poiComponentMatrix[d.index][0]
+      // label: i % 5 ? null : v / 1000 + "k"
     };
   });
 }
