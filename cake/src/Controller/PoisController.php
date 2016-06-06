@@ -344,7 +344,7 @@ class PoisController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function matchesTreemap() {
+    public function matchesTreemap($sorting = "Rating") {
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {
@@ -421,6 +421,27 @@ class PoisController extends AppController
         ->limit(5)
         ->distinct(['Pois.id'])
         ;
+        // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
+        switch ($sorting) {
+          case 'Rating':
+            $sortingOption = [
+              'sort' => ['Stages.rating' => 'DESC' ]
+            ];
+            break;
+
+          case 'AlphaASC':
+            $sortingOption = [
+              'sort' => ['Components.name' => 'ASC']
+            ];
+            break;
+
+          case 'AlphaDESC':
+            $sortingOption = [
+              'sort' => ['Components.name' => 'DESC']
+            ];
+            break;
+
+        }
       }
 
       $this->set(compact('pois'));
