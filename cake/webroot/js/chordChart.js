@@ -74,13 +74,23 @@ svg.append("g")
 
 // Returns an array of tick angles and labels, given a group.
 function groupTicks(d) {
+  // console.log("Var k:");
   var k = (d.endAngle - d.startAngle) / d.value;
-  console.log(d);
+  // console.log(k);
+  // console.log("Für d.endAngle = " + d.endAngle  + " - d.startAngle = " + d.startAngle + " / d.value = " + d.value);
+  // console.log("Objekt D:");
+  // console.log(d);
   return d3.range(0, d.value, 1000).map(function(v, i) {
+    // console.log("V ist : ");
+    // console.log(v);
+    // console.log("i ist : ");
+    // console.log(i);
+    // console.log(poiComponentMatrix[d.index][0]);
     return {
       angle: v * k + d.startAngle,
       // TODO: Label noch besser ausrichten
-      label: poiComponentMatrix[d.index][0]
+      label: (d.index < pois.length) ? poiComponentMatrix[d.index][0] : componentsList[d.index - pois.length]
+      // label: (d.index < pois.length) ? poiComponentMatrix[d.index][0] : poiComponentMatrix[d.index][1][d.index - pois.length][2]
       // label: i % 5 ? null : v / 1000 + "k"
     };
   });

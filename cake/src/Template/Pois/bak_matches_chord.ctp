@@ -68,7 +68,7 @@
       pois[i].name, recentPoisMatrixEntries
     ]);
   }
-  // console.log(poiComponentMatrix);
+  console.log(poiComponentMatrix);
   // TODO
   // Nun ein o0-Array für alle Pois bauen
   // Dann ein 0-Array für alle Components bauen und dann über der poiComponentMatrix iterrieren und alles befüllen
@@ -80,14 +80,14 @@
     poisFillArray.push(0.0);
   }
   helpMatrix.push(poisNames, poisFillArray);
-  // console.log(helpMatrix);
+  console.log(helpMatrix);
   var componentsFillArray = []
   for (var i = 0; i < componentsList.length; i++) {
     componentsFillArray.push(0.0);
   }
   helpMatrix = [];
   helpMatrix.push(componentsList, componentsFillArray);
-  // console.log(helpMatrix);
+  console.log(helpMatrix);
   var matrix = [
     [12000, 10000, 8916, 2868],
     [ 1951, 10048, 2060, 6171],
@@ -108,18 +108,9 @@
     helpMatrix.push(recentPoiRow);
   });
   // Create rows for components
-  componentsList.forEach(function(componentName, i) {
-    var poiComponentMatrixComponentsIndex = i + poisFillArray.length;
-    // console.log(poiComponentMatrixComponentsIndex);
-    // console.log(poiComponentMatrix);
-    var poiValueArray = [];
-    poiComponentMatrix.forEach(function(poiArray, j) {
-      poiValueArray.push(poiArray[1][i][2]);
-    });
-    console.log(poiValueArray);
+  componentsList.forEach(function(i) {
     var recentComponentRow = [];
-    // recentComponentRow = poisFillArray.concat(componentsFillArray);
-    recentComponentRow = poiValueArray.concat(componentsFillArray);
+    recentComponentRow = poisFillArray.concat(componentsFillArray);
     helpMatrix.push(recentComponentRow)
   });
   console.log(helpMatrix);

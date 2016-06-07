@@ -670,7 +670,7 @@ class PoisController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function matchesChord() {
+    public function matchesChord($sorting = "Rating") {
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {
@@ -706,8 +706,33 @@ class PoisController extends AppController
         }
       }
 
+      // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
+      switch ($sorting) {
+        case 'Rating':
+          $sortingOption = [
+            'sort' => ['Stages.rating' => 'DESC' ]
+          ];
+          break;
+
+        case 'AlphaASC':
+          $sortingOption = [
+            'sort' => ['Components.name' => 'ASC']
+          ];
+          break;
+
+        case 'AlphaDESC':
+          $sortingOption = [
+            'sort' => ['Components.name' => 'DESC']
+          ];
+          break;
+
+      }
+      // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
       $pois = $this->Pois->find('all', [
-        'contain' => ['Components', 'Stages']
+        'contain' => [
+          'Components' => $sortingOption,
+          'Stages'
+        ]
       ]);
       //
       // Check if script was callen with any params and try to get associoated data
@@ -747,6 +772,22 @@ class PoisController extends AppController
         ->limit(5)
         ->distinct(['Pois.id'])
         ;
+        // Try to get $searchParams Components as frist components in result
+        // Walk throu all $pois if sorting is set by Rating
+        foreach ($pois as $poiIndex => $poi) {
+          // Iterate over searchParams
+          foreach ($searchParams as $searchParamIndex => $singleChoosenComponent) {
+            // Walk throu all components of a poi to place matching components at the beginning
+            foreach ($poi->components as $componentsIndex => $component) {
+              // Check if a searchParam machtes the recent component
+              if($component->name == $singleChoosenComponent['name']) {
+                $matchingComponent = $component;
+                unset($poi->components[$componentsIndex]);
+                array_unshift($poi->components, $matchingComponent);
+              }
+            }
+          }
+        } // End frist foreach loop
       }
 
       $this->set(compact('pois'));
