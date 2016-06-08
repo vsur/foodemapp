@@ -35,7 +35,24 @@ var path = svg.datum(sunburstData).selectAll("path")
     .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
     .attr("d", arc)
     .style("stroke", "#fff")
-    .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+    .style("fill", function(d) {
+      console.log("d");
+      console.log(d);
+      if(d.depth == 1) {
+        return "#7d003c";
+      } else if (d.depth == 2) {
+        var colorComponents = d3.scale.category10();
+        var componentNAmes = [];
+        d.parent.children.forEach(function(childComponent) {
+          componentNAmes.push(childComponent.name);
+        });
+        console.log(componentNAmes);
+        colorComponents.domain(componentNAmes);
+        console.log(colorComponents.domain());
+        return colorComponents(d.name);
+        // return color((d.children ? d : d.parent).name);
+      }
+    })
     .style("fill-rule", "evenodd")
     .each(stash);
 

@@ -23,13 +23,13 @@
   var pois = <?= json_encode($pois) ?>;
   console.log(pois);
   var sunburstData = {
-    "name": "TreemapMatches",
+    "name": "SunburstMatches",
     "children": []
   };
   // for (var i = 0; i < pois.length; i++) {
   for (var i in pois) {
     var childComponents = [];
-    console.log(pois[i]);
+    // console.log(pois[i]);
 
     for (var j in pois[i].components) {
       childComponents.push(
@@ -46,7 +46,7 @@
       }
     );
   }
-console.log(JSON.stringify(sunburstData, null, 4));
+// console.log(JSON.stringify(sunburstData, null, 4));
 </script>
 
 
