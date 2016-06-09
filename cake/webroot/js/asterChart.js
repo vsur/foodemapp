@@ -78,7 +78,8 @@ function drawAster(poiData, chartID) {
   .enter().append("path")
   // Hellere Farbe hinten einbauen
   .attr("fill", function(d, i) {
-    return color.range()[i];
+    return "none";
+    // return color.range()[i];
   })
   .attr("stroke", "gray")
   .attr("class", "outlineArc")
@@ -88,7 +89,8 @@ function drawAster(poiData, chartID) {
     .data(pie(dataset))
     .enter().append("path")
     .attr("fill", function(d) {
-      return d3.rgb(color(d.data.name + " " + d.data._joinData.rating * 10 + "%")).brighter().toString();
+      return color(d.data.name + " " + d.data._joinData.rating * 10 + "%");
+      // return d3.rgb(color(d.data.name + " " + d.data._joinData.rating * 10 + "%")).brighter().toString();
     })
     .attr("class", "solidArc")
     .attr("stroke", "gray")

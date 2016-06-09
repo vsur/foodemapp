@@ -159,7 +159,7 @@ class PoisController extends AppController
     // public function matchesAster($selectOperator = "OR", $sorting = "Rating") {
     public function matchesAster($sorting = "Rating") {
       $selectOperator = "OR";
-      debug($this->request->pass);
+      // debug($this->request->pass);
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {

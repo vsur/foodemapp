@@ -50,7 +50,7 @@
         ],
         // Optoins array
         [
-          'class' => ( ( !(array_key_exists(1, $this->request->pass)) ) ? true : $this->request->pass[1] == "Rating" ) ? 'btn btn-success' : 'btn btn-warning',
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? true : $this->request->pass[0] == "Rating" ) ? 'btn btn-success' : 'btn btn-warning',
           'style' => 'width:100%;'
         ]
       );
@@ -70,7 +70,7 @@
         ],
         // Optoins array
         [
-          'class' => ( ( !(array_key_exists(1, $this->request->pass)) ) ? false : $this->request->pass[1] == "AlphaASC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaASC" ) ? 'btn btn-success' : 'btn btn-warning',
           'style' => 'width:100%;'
         ]
       );
@@ -90,7 +90,7 @@
         ],
         // Optoins array
         [
-          'class' => ( ( !(array_key_exists(1, $this->request->pass)) ) ? false : $this->request->pass[1] == "AlphaDESC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaDESC" ) ? 'btn btn-success' : 'btn btn-warning',
           'style' => 'width:100%;'
         ]
       );
@@ -150,6 +150,12 @@
   </div>
 </div>
 -->
+
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="text-center">Asterplotvisualisierung</h1>
+  </div>
+</div>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 3  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
