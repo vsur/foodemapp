@@ -137,4 +137,10 @@ $( document ).ready(function() {
   $("#showBars").click(function() {
     window.location = '../matchesBar/' + window.location.search;
   });
+
+  $(".addFromList").click(function() {
+    // alert( $(this).attr("name") );
+    $("#componentInput").val($(this).attr("name"));
+    fmApp.addComponent();
+  });
 });

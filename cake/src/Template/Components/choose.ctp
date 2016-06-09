@@ -74,6 +74,8 @@ awesomplete.list = componentsNames;
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <div id="cakeBlock" class="row">
   <div class="col-md-2">
+
+    <!--
     <h3><?= __('Actions') ?></h3>
     <nav id="actions-sidebar">
         <ul class="nav nav-pills nav-stacked">
@@ -84,31 +86,33 @@ awesomplete.list = componentsNames;
             <li><?= $this->Html->link(__('New Scenario'), ['controller' => 'Scenarios', 'action' => 'add']) ?></li>
         </ul>
     </nav>
+    -->
   </div>
   <div class="col-md-10">
     <div class="components choose content">
-        <h3><?= __('Components') ?></h3>
+      <div id="showAllComponents">
+        <h3>Alle Komponenten <span id="compnentListDisplayState">einblenden</span><h3>
+      </div>
         <table class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th><?= __('Name') ?></th>
+                    <th><?= __('Erstellungsdatum')  ?></th>
+                    <th class="actions"><?= __('Wählen') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($components as $component): ?>
                 <tr>
-                    <td><?= $this->Number->format($component->id) ?></td>
-                    <td><?= h($component->created) ?></td>
-                    <td><?= h($component->modified) ?></td>
                     <td><?= h($component->name) ?></td>
+                    <td><?= h($component->modified) ?></td>
                     <td class="actions">
+                        <a href="#" class="addFromList" name="<?= h($component->name) ?>">Komponent auswählen</a>
+                        <!--
                         <?= $this->Html->link(__('View'), ['action' => 'view', $component->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $component->id]) ?>
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $component->id], ['confirm' => __('Are you sure you want to delete # {0}?', $component->id)]) ?>
+                        -->
                     </td>
                 </tr>
                 <?php endforeach; ?>

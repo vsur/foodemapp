@@ -34,7 +34,8 @@ class ComponentsController extends AppController
         $this->viewBuilder()->layout('Foodmapp');
 
         $components = $this->Components->find('all', [
-            'contain' => ['Pois', 'Stages']
+            'contain' => ['Pois', 'Stages'],
+            'order' => ['Components.name' => 'ASC']
         ]);
 
         $this->set(compact('components'));

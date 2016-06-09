@@ -95,7 +95,7 @@ var fmApp = {
     window.location = '../pois/matchesPie/' + paramString;
   },
   /*
-   * There are three diferent alert state by Bootstrap
+   * There are three different alert state by Bootstrap
    * sucess | info | warning | danger
    */
   alertMessage: function(alertText, alertState) {
@@ -136,5 +136,11 @@ $( document ).ready(function() {
   });
   $("#showBars").click(function() {
     window.location = '../matchesBar/' + window.location.search;
+  });
+
+  $(".addFromList").click(function() {
+    // alert( $(this).attr("name") );
+    $("#componentInput").val($(this).attr("name"));
+    fmApp.addComponent();
   });
 });
