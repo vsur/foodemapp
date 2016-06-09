@@ -216,6 +216,28 @@ form {
   right: 10px;
   top: 10px;
 }
+text {
+  font: 10px sans-serif;
+}
+#explanation {
+  position: absolute;
+	width: 10%;
+	margin: auto;
+	// height: 120;
+  top: 50%;
+  left: 45%;
+  text-align: center;
+  color: #666;
+  z-index: -1;
+	text-overflow: ellipsis;
+	/* Required for text-overflow to do anything */
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#percentage {
+  font-size: 2.5em;
+}
 // Map with Leaflet
 #poisMap {
 	position: relative;

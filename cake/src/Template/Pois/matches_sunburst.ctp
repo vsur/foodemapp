@@ -35,7 +35,12 @@
       childComponents.push(
         {
           "name": pois[i].components[j].name,
-          "rating": pois[i].components[j]._joinData.rating
+          "children": [
+            {
+              "name": pois[i].components[j].name,
+              "rating": pois[i].components[j]._joinData.rating
+            }
+          ]
         }
       );
     }
@@ -46,7 +51,7 @@
       }
     );
   }
-// console.log(JSON.stringify(sunburstData, null, 4));
+console.log(JSON.stringify(sunburstData, null, 4));
 </script>
 
 
@@ -70,6 +75,10 @@
   <div class="col-md-12">
     <h1>Hier steht das Sunburst-Diagramm</h1>
     <div id="poisSunburst">
+      <div id="explanation" style="">
+        <span id="percentage" style="text-overflow: ellipsis;"></span><br>
+        <span id="nameAttribute">Sunburst Diagramm</span>
+      </div>
     </div>
   </div>
 </div> <!-- /.row -->
