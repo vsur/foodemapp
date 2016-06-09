@@ -31,7 +31,7 @@
 <div class="container" role="main">
 <div class="row">
   <div class="col-md-12">
-    <h1><em>Aktuell SELECT AND Verknüpfung</em></h1>
+    <h1 class="text-center">Donutdiagrammvisualisierung</h1>
   </div>
 </div>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
