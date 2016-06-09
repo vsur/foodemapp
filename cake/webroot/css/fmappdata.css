@@ -6665,12 +6665,12 @@ rect {
  */
 div.bar {
   font: 12px;
-  background-color: #7d003c;
   text-align: right;
   padding: 3px;
+  padding-right: 15px;
   margin: 1px;
-  color: #c2005d;
-  overflow: visible; }
+  overflow: visible;
+  text-shadow: 1px 1px #CCC; }
 
 div.bar > div {
   display: block;

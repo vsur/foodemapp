@@ -174,12 +174,14 @@ rect {
 // Bar Chart
 div.bar {
   font: 12px;
-  background-color: $urcd-color;
+  // background-color: $urcd-color;
   text-align: right;
   padding: 3px;
+	padding-right: 15px;
   margin: 1px;
-  color: #c2005d;
+  // color: #c2005d;
 	overflow: visible;
+	text-shadow: 1px 1px #CCC;
 }
 div.bar > div {
 	display: block;

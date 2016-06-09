@@ -26,9 +26,10 @@
       .enter()
       .append("div").attr("class", "bar")
       .style("width", function(d) { return rating(d) + "px"; })
+      .style("background-color", function(d, i) { return color(dataset[i].name); })
       .append("div").text(function(d, i) {
         return dataset[i].name + " " + d*10.0 + "%";
-      })
+      }).style("color", "#444")
       ;
 
 /*
