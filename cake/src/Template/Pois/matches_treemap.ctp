@@ -62,13 +62,13 @@
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <div class="row">
   <div class="col-md-12">
-    <h1><em>Aktuell SELECT OR Verknüpfung</em></h1>
+    <p><a href="#" class="btn btn-default disabled"  style="width:100%;" role="button">❌ Keine Sortierung<span class="hidden-md"> da Sorting durch Visualiserung bestimmt</span></a><p>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <h1>Hier steht das Treemap</h1>
+    <h1 class="text-center">Treemapvisualisierung</h1>
     <div id="poisTreemap">
     </div>
   </div>
