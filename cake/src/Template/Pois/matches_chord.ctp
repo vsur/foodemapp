@@ -134,74 +134,74 @@
 
 
 
-  <!-- ///////////////////////////
-  // Sortierungs-Block //
-  /////////////////////////// -->
-  <div class="row">
-    <div class="col-md-3">
-      <p><a href="#" class="btn btn-default disabled"  style="width:100%;" role="button">Sortierung<span class="hidden-md">(Standard = Rating) →</span></a><p>
-      </div>
-    <div class="col-md-3">
-      <?=
-        $this->Html->link(
-          'Rating',
-          // Create Link
-          [
-            'controller' => 'Pois',
-            'action' => 'matchesChord',
-            // "OR",
-            "Rating",
-            "?" => $this->request->query
-          ],
-          // Optoins array
-          [
-            'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? true : $this->request->pass[0] == "Rating" ) ? 'btn btn-success' : 'btn btn-warning',
-            'style' => 'width:100%;'
-          ]
-        );
-      ?>
-      </div>
-    <div class="col-md-3">
-      <?=
-        $this->Html->link(
-          'A-Z',
-          // Create Link
-          [
-            'controller' => 'Pois',
-            'action' => 'matchesChord',
-            // "OR",
-            "AlphaASC",
-            "?" => $this->request->query
-          ],
-          // Optoins array
-          [
-            'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaASC" ) ? 'btn btn-success' : 'btn btn-warning',
-            'style' => 'width:100%;'
-          ]
-        );
-      ?>
-      </div>
-    <div class="col-md-3">
-      <?=
-        $this->Html->link(
-          'Z-A',
-          // Create Link
-          [
-            'controller' => 'Pois',
-            'action' => 'matchesChord',
-            // "OR",
-            "AlphaDESC",
-            "?" => $this->request->query
-          ],
-          // Optoins array
-          [
-            'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaDESC" ) ? 'btn btn-success' : 'btn btn-warning',
-            'style' => 'width:100%;'
-          ]
-        );
-      ?>
+<!-- ///////////////////////////
+// Sortierungs-Block //
+/////////////////////////// -->
+<div class="row">
+  <div class="col-md-3">
+    <p><a href="#" class="btn btn-default disabled"  style="width:100%;" role="button">Sortierung<span class="hidden-md">(Standard = Rating) →</span></a><p>
     </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'Rating',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesChord',
+          // "OR",
+          "Rating",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? true : $this->request->pass[0] == "Rating" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'A-Z',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesChord',
+          // "OR",
+          "AlphaASC",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaASC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'Z-A',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesChord',
+          // "OR",
+          "AlphaDESC",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaDESC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
   </div>
+</div>
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 3  Block ↓↓↓

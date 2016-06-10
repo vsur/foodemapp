@@ -36,14 +36,15 @@
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <div class="row">
   <div class="col-md-12">
-    <h1><em>Aktuell SELECT OR Verknüpfung</em></h1>
+    <h1 class="text-center">Kombinations- und Vergleichsivisualisierung</h1>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <h1>Visualisierung wählen</h1>
-    <div class="form-group">
+    <div class="form-group text-center">
+      <!-- Info, no button -->
+      <button type="button" class="btn btn-default vizControl disabled">Visualisierung wählen →</button>
       <!-- Standard button -->
       <button id="vizPins" type="button" class="btn btn-default vizControl">Pins</button>
 
