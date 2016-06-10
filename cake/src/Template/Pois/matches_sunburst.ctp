@@ -59,21 +59,83 @@ console.log(JSON.stringify(sunburstData, null, 4));
 
 <div class="container" role="main">
 
-
+<!-- ///////////////////////////
+// Sortierungs-Block //
+/////////////////////////// -->
+<div class="row">
+  <div class="col-md-3">
+    <p><a href="#" class="btn btn-default disabled"  style="width:100%;" role="button">Sortierung<span class="hidden-md">(Standard = Rating) →</span></a><p>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'Rating',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesSunburst',
+          // "OR",
+          "Rating",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? true : $this->request->pass[0] == "Rating" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'A-Z',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesSunburst',
+          // "OR",
+          "AlphaASC",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaASC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+    </div>
+  <div class="col-md-3">
+    <?=
+      $this->Html->link(
+        'Z-A',
+        // Create Link
+        [
+          'controller' => 'Pois',
+          'action' => 'matchesSunburst',
+          // "OR",
+          "AlphaDESC",
+          "?" => $this->request->query
+        ],
+        // Optoins array
+        [
+          'class' => ( ( !(array_key_exists(0, $this->request->pass)) ) ? false : $this->request->pass[0] == "AlphaDESC" ) ? 'btn btn-success' : 'btn btn-warning',
+          'style' => 'width:100%;'
+        ]
+      );
+    ?>
+  </div>
+</div>
 
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 3  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
-<div class="row">
-  <div class="col-md-12">
-    <h1><em>Aktuell SELECT OR Verknüpfung</em></h1>
-  </div>
-</div>
 
 <div class="row">
   <div class="col-md-12">
-    <h1>Hier steht das Sunburst-Diagramm</h1>
+    <h1 class="text-center">Sunburstvisualisierung</h1>
     <div id="poisSunburst">
       <div id="explanation" style="">
         <span id="percentage" style="text-overflow: ellipsis;"></span><br>
