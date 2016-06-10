@@ -8,7 +8,7 @@ var margin = {top: 40, right: 10, bottom: 10, left: 10},
     width = maxWidth,
     // height = 500 - margin.top - margin.bottom;
     height = maxWidth/2,
-    innerRadius = Math.min(width, height) * .41,
+    innerRadius = Math.min(width, height) * .375,
     outerRadius = innerRadius * 1.1;
 
 var color = d3.scale.category10();
