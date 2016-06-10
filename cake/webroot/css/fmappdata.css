@@ -6589,6 +6589,9 @@ input#componentInput.chosen::-moz-placeholder {
 input#componentInput.chosen:-ms-input-placeholder {
   color: white; }
 
+#componentsListView {
+  display: none; }
+
 .arc {
   stroke: #fff; }
 

@@ -83,6 +83,10 @@ input#componentInput.chosen:-ms-input-placeholder {
 	color: white;
 }
 
+#componentsListView {
+	display: none;
+}
+
 // Pie Chart CSS
 .arc {
 	stroke: #fff;

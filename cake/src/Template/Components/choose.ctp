@@ -20,7 +20,11 @@
 ?>
 
 <div class="container" role="main">
-
+  <div class="row">
+  <div class="col-md-12">
+    <?= $this->Html->image('wordcloud.png', ['alt' => 'Wordcloud von Themenfeldern dieser Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+  </div>
+</div>
 <?php $this->assign('title', 'Auswahl'); ?>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 2  Block ↓↓↓
@@ -73,9 +77,9 @@ awesomplete.list = componentsNames;
 ↓↓↓↓ Cake  Block ↓↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <div id="cakeBlock" class="row">
+  <!--
   <div class="col-md-2">
 
-    <!--
     <h3><?= __('Actions') ?></h3>
     <nav id="actions-sidebar">
         <ul class="nav nav-pills nav-stacked">
@@ -86,14 +90,14 @@ awesomplete.list = componentsNames;
             <li><?= $this->Html->link(__('New Scenario'), ['controller' => 'Scenarios', 'action' => 'add']) ?></li>
         </ul>
     </nav>
-    -->
   </div>
-  <div class="col-md-10">
+  -->
+  <div class="col-md-12">
     <div class="components choose content">
       <div id="showAllComponents">
-        <h3>Alle Komponenten <span id="compnentListDisplayState">einblenden</span><h3>
+        <h3>Alle Komponenten <span id="compnentListDisplayState">einblenden ↓</span><h3>
       </div>
-        <table class="table" cellpadding="0" cellspacing="0">
+        <table id="componentsListView" class="table" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
                     <th><?= __('Name') ?></th>
@@ -126,3 +130,20 @@ awesomplete.list = componentsNames;
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
 </div> <!-- /.container -->
+<script>
+  // var listDisplayState = true;
+  // $( document ).ready(function() {
+  //   $("#showAllComponents").css("cursor", "pointer").click(function(){
+  //     $("#componentsListView").fadeToggle(1500, function(){
+  //       $("#compnentListDisplayState").fadeOut(500, function(){
+  //         if(listDisplayState) {
+  //           $(this).text("ausblenden ↑").fadeIn(500);
+  //         } else {
+  //           $(this).text("einblenden ↓").fadeIn(500);
+  //         }
+  //         listDisplayState = !listDisplayState;
+  //       });
+  //     });
+  //   });
+  // });
+</script>

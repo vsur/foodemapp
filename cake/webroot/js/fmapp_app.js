@@ -143,4 +143,19 @@ $( document ).ready(function() {
     $("#componentInput").val($(this).attr("name"));
     fmApp.addComponent();
   });
+  var listDisplayState = true;
+  $( document ).ready(function() {
+    $("#showAllComponents").css("cursor", "pointer").click(function(){
+      $("#componentsListView").fadeToggle(1500, function(){
+        $("#compnentListDisplayState").fadeOut(500, function(){
+          if(listDisplayState) {
+            $(this).text("ausblenden ↑").fadeIn(500);
+          } else {
+            $(this).text("einblenden ↓").fadeIn(500);
+          }
+          listDisplayState = !listDisplayState;
+        });
+      });
+    });
+  });
 });
