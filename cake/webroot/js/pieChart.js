@@ -49,7 +49,7 @@
     g.append('path')
       .attr('d', arc)
       .attr('fill', function(d, i) {
-        return color(d.data.name + " " + d.data._joinData.rating + "%");
+        return color(d.data.name + " " + d.data._joinData.rating * 10 + "%");
       });
     g.append("text")
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })

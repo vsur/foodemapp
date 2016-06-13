@@ -6724,3 +6724,9 @@ form {
 #poisMap {
   position: relative;
   width: 100%; }
+
+@media (max-width: 991px) {
+  h1 {
+    font-size: 12px; }
+  .navbar-brand {
+    font-size: 15px; } }
