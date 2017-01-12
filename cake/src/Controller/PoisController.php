@@ -30,6 +30,11 @@ class PoisController extends AppController
      * @return \Cake\Network\Response|null
      */
     public function matchesPie($sorting = "Rating") {
+      $selectOperator = "AND";
+      $this->viewBuilder()->layout('Foodmapp');
+
+      // START Auslagern?
+      // Hole IDs zu Componenten
       $searchParams = [];
       // Check if the query array containing possible params is not empty
       if( !(empty($this->request->query)) ) {
@@ -46,10 +51,8 @@ class PoisController extends AppController
         array_push($searchParams, 'findAll');
       }
 
-      $this->viewBuilder()->layout('Foodmapp');
 
       $this->loadModel('Components');
-
       $machtingComponentNames = $this->Components->find('all');
       for($i = 0; $i < count($searchParams); $i++ ) {
         $machtingComponentNames->orWhere([
@@ -65,8 +68,10 @@ class PoisController extends AppController
         }
       }
 
+      // ENDE AUSLAGERN HOLE IDS zu Componenten
 
 
+      // START AUSLAGERN SORTING
       // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
       switch ($sorting) {
         case 'Rating':
@@ -88,6 +93,9 @@ class PoisController extends AppController
           break;
 
       }
+      // ENDE SORTING OPTONS
+
+
       // Sort components by rating maybe Components.name => 'ASC' is better, because results are more or less constistent
       $pois = $this->Pois->find('all', [
         'contain' => [
@@ -97,43 +105,62 @@ class PoisController extends AppController
       ]);
 
       //
-      // Check if script was callen with any params and try to get associoated data
       if($searchParams[0] != 'findAll') {
-        $pois->matching('Stages', function ($q) use ($searchParams){
-          /*
-              HIER GING MAL WAS; Aber FALSCH!
-              Deswegen jetzt halt einfach mit OR
-          */
-          for($i = 0; $i < count($searchParams); $i++ ) {
-              /*
-               *
-               *  Hier umschalten
-               *
-               *
-              $q->andWhere([
-                'AND' => [
-                  ['Stages.rating >' => $searchParams[$i]['rating']],
-                  ['Stages.component_id' => $searchParams[$i]['id']]
-                ]
-              ]);
 
-               /*
-               */
-              $q->orWhere([
-                'AND' => [
-                  ['Stages.rating >' => $searchParams[$i]['rating']],
-                  ['Stages.component_id' => $searchParams[$i]['id']]
-                ]
-              ]);
-              /*
-               */
+        $pois->matching('Stages', function ($q) use ($searchParams, $selectOperator){
+          // Iterate over $searchParams
+          for($i = 0; $i < count($searchParams); $i++ ) {
+            $q->orWhere([
+              'AND' => [
+                ['Stages.rating >' => $searchParams[$i]['rating']],
+                ['Stages.component_id' => $searchParams[$i]['id']]
+              ]
+            ]);
           }
-          // debug($q);
           return $q;
         })
         ->limit(20)
         ->distinct(['Pois.id'])
         ;
+
+        if($selectOperator == "AND") {
+          $foundResults = array();
+          foreach($pois as $poiIndex => $poi) {
+            $contain = array();
+            foreach($searchParams as $searchParam) {
+              foreach($poi->components as $component) {
+                if($component['id'] == $searchParam['id']) {
+                  if($component->_joinData->rating >= $searchParam['rating']){
+                    $contain[] = $searchParam['id'];
+                  }
+                }
+              }
+            }
+            if(count($contain) == count($searchParams)) {
+              $foundResults[] = $poi;
+            }
+          }
+          $pois = $foundResults;
+        }
+
+        // Normalize the Components
+        $normalizedComponents = [];
+        // Find overall Componentset in all Pois
+        foreach($pois as $poiIndex => $poi) {
+          foreach ($poi->components as $component) {
+            $cleanedComponentData = (object) array();
+            $cleanedComponentData->id = $component->id;
+            $cleanedComponentData->name = $component->name;
+            if(!in_array($cleanedComponentData, $normalizedComponents)) {
+              array_push($normalizedComponents, $cleanedComponentData);
+            }
+          }
+        }
+        // 2. Iteriere über alle Pois
+        // 3. Schaue ob aktuellen allComponet is in poi component array_push
+        // Ja gut, NEIN => fürge hinzu mit JoinDatat ratin = 0
+        // 4. Sortiere Pois Components nach Name/Rating usw.
+
         // Try to get $searchParams Components as frist components in result
         // Walk throu all $pois if sorting is set by Rating
         foreach ($pois as $poiIndex => $poi) {
@@ -260,6 +287,25 @@ class PoisController extends AppController
         ->limit(20)
         ->distinct(['Pois.id'])
         ;
+
+        //pr($pois);
+        $foundResults = array();
+        foreach($pois as $poiIndex => $poi) {
+          $contain = array();
+          foreach($searchParams as $searchParam) {
+            foreach($poi->components as $component) {
+              if($component['id'] == $searchParam['id']) {
+                $contain[] = $searchParam['id'];
+              }
+            }
+          }
+          if(count($contain) == count($searchParams)) {
+            $foundResults[] = $poi;
+          }
+        }
+
+        // pr($foundResults);
+
         // Try to get $searchParams Components as frist components in result
         // Walk throu all $pois if sorting is set by Rating
         foreach ($pois as $poiIndex => $poi) {
@@ -276,7 +322,11 @@ class PoisController extends AppController
             }
           }
         } // End frist foreach loop
+
+        $pois = $foundResults;
+
       }
+
       // ✓ Find Index
       // ✓ Lösche aus Array und speicher zwischen
       // ✓ PAcke an den Anfang
