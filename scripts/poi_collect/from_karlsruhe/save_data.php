@@ -27,24 +27,30 @@
         // Check if line has needed category
         foreach ($currentCategories as $category) {
           if(in_array($category, $data->acceptedBinaryCategories)) {
-            if(!in_array($currentObjectLine->business_id, $this->pids)) {
-              array_push($this->pids, $currentObjectLine->business_id);
-              $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id] = $currentObjectLine;
-            }
-            $currentPoiNameId = $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id];
-            if(!isset($currentPoiNameId->foundBinaryCategories)) {
-              $currentPoiNameId->foundBinaryCategories = [];
-            }
+            // Check if poi exits and create it if neccessary
+            $this->poiInstanceCheck($currentObjectLine);
+
+            // Check if category allready exits and create it if neccessary
+            $this->poiInstanceCheck($currentObjectLine);
+
+            // Add category if it doesn't exist already
             if(!in_array($category, $currentPoiNameId->foundBinaryCategories)) {
               array_push($currentPoiNameId->foundBinaryCategories, $category);
             }
           }
         }
 
-        /*
-          NEXT Check attributes
-          check Atts that are Cats in faact
-        */
+        $currentAttributes = $currentObjectLine->attributes;
+        // Check attributes of line
+        foreach ($currentAttributes as $attrName => $attribute)  {
+          // Check if attribute is binary category
+          if(in_array((string)$attrName, $data->binaryAttributes)) {
+            /*
+            Hier Weiter.
+            Irgendwie wird die Suche nicht richtig ausgeführt.
+            */
+          }
+        }
 
         $lines++;
       }
@@ -53,6 +59,18 @@
       echo $cfunc->tagIt("p", "<strong>Alle Daten durchlaufen, " . $lines . " geprüft, " . count($this->pois) . " gefunden Orte gefunden</strong>");
     }
 
+    private function poiInstanceCheck($currentObjectLine) {
+      if(!in_array($currentObjectLine->business_id, $this->pids)) {
+        array_push($this->pids, $currentObjectLine->business_id);
+        $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id] = $currentObjectLine;
+      }
+    }
+    private function poisCategoriesInstanceCheck($currentObjectLine) {
+      $currentPoiNameId = $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id];
+      if(!isset($currentPoiNameId->foundBinaryCategories)) {
+        $currentPoiNameId->foundBinaryCategories = [];
+      }
+    }
 
     public function saveToDB($filterdYelpData) {
       global $secKeys;
