@@ -3,7 +3,6 @@
   class yelpData {
 
     public $acceptedBinaryCategories = array();
-    public $acceptedAttributesAsBinarayCategories = array();
     public $acceptedNominalCategories = array();
     public $acceptedOrdinalCategories = array();
 
@@ -99,10 +98,6 @@
         "Austrian",
         "Tex-Mex"
       ];
-      foreach ($binaries as $category) {
-        array_push($this->acceptedBinaryCategories, $category);
-      }
-      sort($this->acceptedBinaryCategories);
 
       $binaryAttributes = [
         "Accepts Credit Cards",
@@ -122,10 +117,15 @@
         "Caters",
         "By Appointment Only",
       ];
-      foreach ($binaryAttributes as $category) {
-        array_push($this->acceptedAttributesAsBinarayCategories, $category);
+
+      // Combine identifiedBinaryCategories and identifiedAttributesForBinarayCategories in one array
+      foreach ($binaries as $category) {
+        array_push($this->acceptedBinaryCategories, $category);
       }
-      sort($this->acceptedAttributesForBinarayCategories);
+      foreach ($binaryAttributes as $category) {
+        array_push($this->acceptedBinaryCategories, $category);
+      }
+      sort($this->acceptedBinaryCategories);
 
       $nominals = [
         "Good For",
@@ -159,7 +159,7 @@
     }
 
     /* Control functions */
-    public static function getHanlde($pathToFile) {
+    public static function getHandle($pathToFile) {
       $handle = fopen($pathToFile . ".json", "r");
       if($handle) {
        return $handle;

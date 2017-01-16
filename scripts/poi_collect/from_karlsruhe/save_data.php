@@ -15,7 +15,7 @@
       global $data;
       global $cfunc;
       // Handle Öffnen
-      $handle = $data->getHanlde($fileToItterateOver);
+      $handle = $data->getHandle($fileToItterateOver);
       $lines = 0;
       while (($line = fgets($handle)) !== false) {
         $currentObjectLine = json_decode($line);
@@ -30,8 +30,9 @@
             // Check if poi exits and create it if neccessary
             $this->poiInstanceCheck($currentObjectLine);
 
+            $currentPoiNameId = $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id];
             // Check if category allready exits and create it if neccessary
-            $this->poiInstanceCheck($currentObjectLine);
+            $this->poisCategoriesInstanceCheck($currentPoiNameId);
 
             // Add category if it doesn't exist already
             if(!in_array($category, $currentPoiNameId->foundBinaryCategories)) {
@@ -44,11 +45,18 @@
         // Check attributes of line
         foreach ($currentAttributes as $attrName => $attribute)  {
           // Check if attribute is binary category
-          if(in_array((string)$attrName, $data->binaryAttributes)) {
-            /*
-            Hier Weiter.
-            Irgendwie wird die Suche nicht richtig ausgeführt.
-            */
+          if(in_array($attrName, $data->acceptedBinaryCategories)) {
+            // Check if poi exits and create it if neccessary
+            $this->poiInstanceCheck($currentObjectLine);
+
+            $currentPoiNameId = $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id];
+            // Check if category allready exits and create it if neccessary
+            $this->poisCategoriesInstanceCheck($currentPoiNameId);
+
+            // Add Attribute to categories if it doesn't exist already
+            if(!in_array($attrName, $currentPoiNameId->foundBinaryCategories)) {
+              array_push($currentPoiNameId->foundBinaryCategories, $category);
+            }
           }
         }
 
@@ -65,8 +73,7 @@
         $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id] = $currentObjectLine;
       }
     }
-    private function poisCategoriesInstanceCheck($currentObjectLine) {
-      $currentPoiNameId = $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id];
+    private function poisCategoriesInstanceCheck($currentPoiNameId) {
       if(!isset($currentPoiNameId->foundBinaryCategories)) {
         $currentPoiNameId->foundBinaryCategories = [];
       }
@@ -74,12 +81,30 @@
 
     public function saveToDB($filterdYelpData) {
       global $secKeys;
-      global $cfunc;
+      global $db;
+      global $data;
       global $cfunc;
       echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Daten " . date("\a\m d.m.Y \u\m H:i:s"));
-      die();
+
       try {
         $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
+        foreach ($data->acceptedBinaryCategories as $categoryToSave) {
+          $now = date("Y-m-d H:i:s");
+          $sql = "INSERT INTO binary_components (created, modified, name) VALUES (:tstamp, :tstamp, :name)";
+          $para = array(
+            'tstamp'        =>       $now,
+            'name'          =>       $categoryToSave
+          );
+          $db->fire($sql, $para);
+        }
+        /*
+         * HIER WEITER
+         * 1. Nominals Eintragen
+         * 2. Ordinals Eintragen
+         * 3. Pois und Werte aus Categroeien Speicherung
+         * 4. Um Ordinals und Nominals erweitern
+         */
+
         /*
           * Save all accepted binary categories
           * and accepted attributes as binaray categories at once
@@ -94,6 +119,7 @@
         die('Fehler bei Anlegen des Settings: ' . $e->getMessage());
       }
 
+      die("Hier erst mal Stop.");
       // for ($i = 0; $i < 5; $i++) {
       for ($i = 0; $i < count($filterdYelpData); $i++) {
         $now = date("Y-m-d H:i:s");
