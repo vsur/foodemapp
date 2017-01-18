@@ -62,7 +62,6 @@
 
         $lines++;
       }
-      // Über hanlde interieren
       fclose($handle);
       echo $cfunc->tagIt("p", "<strong>Alle Daten durchlaufen, " . $lines . " geprüft, " . count($this->pois) . " gefunden Orte gefunden</strong>");
     }
@@ -79,15 +78,17 @@
       }
     }
 
-    public function saveToDB($filterdYelpData) {
+    public function saveCategoriesToDB() {
       global $secKeys;
       global $db;
       global $data;
       global $cfunc;
-      echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Daten " . date("\a\m d.m.Y \u\m H:i:s"));
+
+      echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Kategorie-Daten " . date("\a\m d.m.Y \u\m H:i:s"));
 
       try {
         $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
+        // Add binary categories to db
         foreach ($data->acceptedBinaryCategories as $categoryToSave) {
           $now = date("Y-m-d H:i:s");
           $sql = "INSERT INTO binary_components (created, modified, name) VALUES (:tstamp, :tstamp, :name)";
@@ -97,47 +98,62 @@
           );
           $db->fire($sql, $para);
         }
-        /*
-         * HIER WEITER
-         * 1. Nominals Eintragen
-         * 2. Ordinals Eintragen
-         * 3. Pois und Werte aus Categroeien Speicherung
-         * 4. Um Ordinals und Nominals erweitern
-         */
+        // Add nominal categories to db
+        foreach ($data->acceptedNominalCategories as $nominalToSave) {
+          $now = date("Y-m-d H:i:s");
+          $sql = "INSERT INTO nominal_components (created, modified, name) VALUES (:tstamp, :tstamp, :name)";
+          $para = array(
+            'tstamp'        =>       $now,
+            'name'          =>       $nominalToSave
+          );
+          $db->fire($sql, $para);
+        }
+        // Add ordinal categories to db
+        foreach ($data->acceptedOrdinalCategories as $ordinalToSave) {
+          $now = date("Y-m-d H:i:s");
+          $sql = "INSERT INTO ordinal_components (created, modified, name) VALUES (:tstamp, :tstamp, :name)";
+          $para = array(
+            'tstamp'        =>       $now,
+            'name'          =>       $ordinalToSave
+          );
+          $db->fire($sql, $para);
+        }
 
-        /*
-          * Save all accepted binary categories
-          * and accepted attributes as binaray categories at once
-          * as they are already infied during data analysis
-        */
-
-        // Save all accepted nominal categories
-        // Save all accepted ordinal categories
         $db->close();
         echo $cfunc->tagIt("p", "<strong>Eintragen des Kategoriesettings erfolgreich abgeschlossen " . date("\a\m d.m.Y \u\m H:i:s"));
       } catch(Exception $e) {
         die('Fehler bei Anlegen des Settings: ' . $e->getMessage());
       }
+    }
 
-      die("Hier erst mal Stop.");
+    public function saveDataToDB($filterdYelpData) {
+      global $secKeys;
+      global $db;
+      global $data;
+      global $cfunc;
+
+      echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Daten " . date("\a\m d.m.Y \u\m H:i:s"));
+
       // for ($i = 0; $i < 5; $i++) {
-      for ($i = 0; $i < count($filterdYelpData); $i++) {
+      for ($i = 0; $i < count($pois); $i++) {
         $now = date("Y-m-d H:i:s");
+        echo $cfunc->forDebug($pois[$i], "Ein Eintrag");
+        die("Hier erst mal Stop.");
         try {
-          DataBase::connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
+          $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
           $sql = "INSERT INTO ypois (created, modified, name, lat, lng, google_place, icon, rating, vicinity) VALUES (:tstamp, :tstamp, :name, :lat, :lng, :google_place, :icon, :rating, :vicinity)";
           $para = array(
             'tstamp'        =>       $now,
-            'name'          =>       $filterdYelpData[$i]->name,
-            'lat'           =>       $filterdYelpData[$i]->geometry->location->lat,
-            'lng'           =>       $filterdYelpData[$i]->geometry->location->lng,
-            'google_place'  =>       $filterdYelpData[$i]->place_id,
-            'icon'          =>       $filterdYelpData[$i]->icon,
-            'rating'        =>       (isset($filterdYelpData[$i]->rating)) ? $filterdYelpData[$i]->rating : null,
-            'vicinity'      =>       $filterdYelpData[$i]->vicinity
+            'name'          =>       $pois[$i]->name,
+            'lat'           =>       $pois[$i]->geometry->location->lat,
+            'lng'           =>       $pois[$i]->geometry->location->lng,
+            'google_place'  =>       $pois[$i]->place_id,
+            'icon'          =>       $pois[$i]->icon,
+            'rating'        =>       (isset($pois[$i]->rating)) ? $pois[$i]->rating : null,
+            'vicinity'      =>       $pois[$i]->vicinity
           );
-          DataBase::fire($sql, $para);
-          $lastPoisId = DataBase::lastInsertId();
+          $db->fire($sql, $para);
+          $lastPoisId = $db->lastInsertId();
           echo ControlFunctions::tagIt("h1",
             "Letzter Eintrag: " . $lastPoisId
           );
@@ -145,13 +161,13 @@
             $tagId = null;
             // Check if tag is already present
             $sql = "SELECT EXISTS(SELECT 1 FROM tags WHERE title LIKE '%" . $tag . "%')";
-            $rows = DataBase::fire($sql);
+            $rows = $db->fire($sql);
             $tagPresent = ( current(current($rows)) == "1") ? true : false;
             ControlFunctions::forDebug($rows, "Ausgabe für Tag $tag");
             echo ($tagPresent) ? "Wert für $tag ist: vorhanden" : "Wert für $tag ist: Nicht existent!";
             if($tagPresent) {
               $sql = "SELECT id FROM tags WHERE title LIKE '%" . $tag . "%'";
-              $rows = DataBase::fire($sql);
+              $rows = $db->fire($sql);
               $tagId = current(current($rows));
               ControlFunctions::forDebug($rows, "Ausgabe für Tag $tag, tag ID: ");
               echo ControlFunctions::tagIt("h1",
@@ -164,9 +180,9 @@
                 'title'  => $tag,
                 'tstamp' => $now
               );
-              DataBase::fire($sql, $para);
+              $db->fire($sql, $para);
               // Save ID
-              $tagId = DataBase::lastInsertId();
+              $tagId = $db->lastInsertId();
             }
             // Paste Relation
             $sql = "INSERT INTO pois_tags (poi_id, tag_id) VALUES (:poi_id, :tag_id)";
@@ -174,12 +190,12 @@
               'poi_id'  => $lastPoisId,
               'tag_id' => $tagId
             );
-            DataBase::fire($sql, $para);
+            $db->fire($sql, $para);
             echo ControlFunctions::tagIt("h1",
-            "Letzter Eintrag: " . DataBase::lastInsertId()
+            "Letzter Eintrag: " . $db->lastInsertId()
           );
           }
-          DataBase::close();
+          $db->close();
         } catch(Exception $e) {
           die('Fehler bei Datenspeicherung Fehler: ' . $e->getMessage());
         }
@@ -192,7 +208,8 @@
   $app = new SaveData();
 
   $app->getYelpData("../data/yelp_karlsruhe_businesses");
-  $app->saveToDB($app->pois);
+  // $app->saveCategoriesToDB();
+  $app->saveDataToDB($app->pois);
 
 
 ?>
