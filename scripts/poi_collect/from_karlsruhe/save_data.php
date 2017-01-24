@@ -21,9 +21,11 @@
         $currentObjectLine = json_decode($line);
         $currentCategories = $currentObjectLine->categories;
         // Test
+        /*
         if($lines == 500) {
           $cfunc->forDebug($currentObjectLine, "Aktueller Zeile 500");
         }
+        */
         // Check if line has needed category
         foreach ($currentCategories as $category) {
           if(in_array($category, $data->acceptedBinaryCategories)) {
@@ -59,7 +61,11 @@
             }
           }
         }
-
+        /*
+        Next Things
+        baue $acceptedNominalCategories
+        dann speichern
+        */
         $lines++;
       }
       fclose($handle);
@@ -84,7 +90,7 @@
       global $data;
       global $cfunc;
 
-      echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Kategorie-Daten " . date("\a\m d.m.Y \u\m H:i:s"));
+      echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Kategorie-Daten " . date("\a\m d.m.Y \u\m H:i:s") . "</strong>");
 
       try {
         $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
@@ -120,10 +126,30 @@
         }
 
         $db->close();
-        echo $cfunc->tagIt("p", "<strong>Eintragen des Kategoriesettings erfolgreich abgeschlossen " . date("\a\m d.m.Y \u\m H:i:s"));
+        echo $cfunc->tagIt("p", "<strong>Eintragen des Kategoriesettings erfolgreich abgeschlossen " . date("\a\m d.m.Y \u\m H:i:s") . "</strong>");
       } catch(Exception $e) {
         die('Fehler bei Anlegen des Settings: ' . $e->getMessage());
       }
+    }
+
+    public function clearDB($tablesToClear) {
+      global $secKeys;
+      global $db;
+      global $data;
+      global $cfunc;
+      echo $cfunc->tagIt("p", "<strong>Starte Leeren der Datenbank " . date("\a\m d.m.Y \u\m H:i:s") . "</strong>");
+      foreach ($tablesToClear as $table) {
+        try {
+          $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
+          $sql = "TRUNCATE " . $table;
+          $db->fire($sql);
+          echo $cfunc->tagIt("p", "Leeren der Tabelle  <strong>" . $table . "</strong> erfolgreich");
+          $db->close();
+        } catch(Exception $e) {
+          die('Fehler beim Löschen der Tabelle ' . $table . ':' . $e->getMessage());
+        }
+      }
+      echo $cfunc->tagIt("p", "<strong>Leeren der Datenbank " . date("\a\m d.m.Y \u\m H:i:s") . " beendet</strong>");
     }
 
     public function saveDataToDB($filterdYelpData) {
@@ -132,11 +158,10 @@
       global $data;
       global $cfunc;
 
-      echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Daten " . date("\a\m d.m.Y \u\m H:i:s"));
+      echo $cfunc->tagIt("p", "<strong>Starte Speicherung der Daten " . date("\a\m d.m.Y \u\m H:i:s") . "</strong>");
       // for ($i = 0; $i < 5; $i++) {
       foreach ($this->pois as $singlePoi) {
         $now = date("Y-m-d H:i:s");
-        echo $cfunc->forDebug($singlePoi, "Ein Eintrag");
         try {
           $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
           $sql = "INSERT INTO ypois (created, modified, name, lat, lng, business_id, city, state, full_address, stars, review_count) VALUES (:tstamp, :tstamp, :name, :lat, :lng, :business_id, :city, :state, :full_address, :stars, :review_count)";
@@ -156,69 +181,24 @@
           $db->fire($sql, $para);
           $lastPoisId = $db->lastInsertId();
           // Save binary categories
-          for ($i=0; $i < $singlePoi->foundBinaryCategories; $i++) {
+          for ($i=0; $i < count($singlePoi->foundBinaryCategories); $i++) {
             // Find binary_components_id
             $sql = "SELECT `id` FROM binary_components WHERE `name` LIKE '" . $singlePoi->foundBinaryCategories[$i] . "'";
             $rows = $db->fire($sql);
             $sql = "INSERT INTO binary_components_ypois (binary_components_id, ypois_id, created, modified) VALUES (:binary_components_id, :ypois_id, :tstamp, :tstamp)";
-            echo $cfunc->forDebug($singlePoi->foundBinaryCategories[$i], "ID von $singlePoi->foundBinaryCategories[$i]");
-            echo $cfunc->forDebug($row, "ID von row");
             $para = array(
               'binary_components_id'  => $rows[0]['id'],
               'ypois_id' => $lastPoisId,
               'tstamp' => $now
             );
-            /*
-            HIER WEITER
-            Fehler bei Datenspeicherung Fehler: (SQLSTATE: 23000) eMessage: Column 'binary_components_id' cannot be null (eCode: 1048)query: INSERT INTO binary_components_ypois (binary_components_id, ypois_id, created, modified) VALUES (:binary_components_id, :ypois_id, :tstamp, :tstamp) para: :binary_components_id => ; :ypois_id => 10; :tstamp => 2017-01-23 18:31:30
-            */
             $db->fire($sql, $para);
-          }
-          die("So mal schauen!");
-          foreach ($filterdYelpData[$i]->types as $tag) {
-            $tagId = null;
-            // Check if tag is already present
-            $sql = "SELECT EXISTS(SELECT 1 FROM tags WHERE title LIKE '%" . $tag . "%')";
-            $rows = $db->fire($sql);
-            $tagPresent = ( current(current($rows)) == "1") ? true : false;
-            ControlFunctions::forDebug($rows, "Ausgabe für Tag $tag");
-            echo ($tagPresent) ? "Wert für $tag ist: vorhanden" : "Wert für $tag ist: Nicht existent!";
-            if($tagPresent) {
-              $sql = "SELECT id FROM tags WHERE title LIKE '%" . $tag . "%'";
-              $rows = $db->fire($sql);
-              $tagId = current(current($rows));
-              ControlFunctions::forDebug($rows, "Ausgabe für Tag $tag, tag ID: ");
-              echo ControlFunctions::tagIt("h1",
-                "$tag ID: $tagId"
-              );
-            } else {
-              // Paste Tag
-              $sql = "INSERT INTO tags (title, created, modified) VALUES (:title, :tstamp, :tstamp)";
-              $para = array(
-                'title'  => $tag,
-                'tstamp' => $now
-              );
-              $db->fire($sql, $para);
-              // Save ID
-              $tagId = $db->lastInsertId();
-            }
-            // Paste Relation
-            $sql = "INSERT INTO pois_tags (poi_id, tag_id) VALUES (:poi_id, :tag_id)";
-            $para = array(
-              'poi_id'  => $lastPoisId,
-              'tag_id' => $tagId
-            );
-            $db->fire($sql, $para);
-            echo ControlFunctions::tagIt("h1",
-            "Letzter Eintrag: " . $db->lastInsertId()
-          );
           }
           $db->close();
         } catch(Exception $e) {
           die('Fehler bei Datenspeicherung Fehler: ' . $e->getMessage());
         }
-
       }
+      echo $cfunc->tagIt("p", "Eintragen der <strong>ypois-, binary_components-</strong>Daten erfolgreich abgeschlossen " . date("\a\m d.m.Y \u\m H:i:s") );
     }
 
   }
@@ -227,6 +207,10 @@
 
   $app->getYelpData("../data/yelp_karlsruhe_businesses");
   // $app->saveCategoriesToDB();
+  $app->clearDB([
+      'ypois',
+      'binary_components_ypois'
+  ]);
   $app->saveDataToDB($app->pois);
 
 
