@@ -128,21 +128,81 @@
       sort($this->acceptedBinaryCategories);
 
       $nominals = [
-        "Good For",
-        "Ambience",
-        "Attire",
-        "Smoking",
-        "Wi-Fi",
-        "Music",
-        "BYOB/Corkage",
-        "Ages Allowed",
-        "Dietary Restrictions"
+        "Good For" => [
+          "dessert",
+          "latenight",
+          "lunch",
+          "dinner",
+          "breakfast",
+          "brunch"
+        ],
+        "Ambience" => [
+          "romantic",
+          "intimate",
+          "classy",
+          "hipster",
+          "divey",
+          "touristy",
+          "trendy",
+          "upscale",
+          "casual"
+        ],
+        "Attire" => [
+          "dressy",
+          "casual",
+          "formal"
+        ],
+        "Smoking" => [
+          "yes",
+          "outdoor",
+          "no"
+        ],
+        "Wi-Fi" => [
+          "no",
+          "free",
+          "paid"
+        ],
+        "Music" => [
+          "dj",
+          "background_music",
+          "karaoke",
+          "live",
+          "video",
+          "jukebox"
+        ],
+        "BYOB/Corkage" => [
+          "yes_free",
+          "no",
+          "yes_corkage"
+        ],
+        "Ages Allowed" => [
+          "21plus",
+          "18plus",
+          "allages",
+          "19plus"
+        ],
+        "Dietary Restrictions" => [
+          "dairy-free",
+          "gluten-free",
+          "vegan",
+          "kosher",
+          "halal",
+          "soy-free".
+          "vegetarian"
+        ]
       ];
       // Attribute Value are simply safed in db
-      foreach ($nominals as $category) {
-        array_push($this->acceptedNominalCategories, $category);
+      ControlFunctions::forDebug($nominals, "Nominals");
+      ControlFunctions::forDebug($this->acceptedNominalCategories, "accepted before");
+      foreach ($nominals as $nominalsValues) {
+        ControlFunctions::forDebug($nominalsValues, "Single");
+        sort($nominalsValues);
+        ControlFunctions::forDebug($nominalsValues, "Single after");
       }
-      sort($this->acceptedNominalCategories);
+      $this->acceptedNominalCategories = $nominals;
+      ControlFunctions::forDebug($this->acceptedNominalCategories, "accepted before sort");
+      asort($this->acceptedNominalCategories);
+      ControlFunctions::forDebug($this->acceptedNominalCategories, "accepted after sort");
 
       $ordinals = [
         "Price Range",

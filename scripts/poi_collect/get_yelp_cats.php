@@ -57,8 +57,8 @@
 
     <?php
     $foundData = [];
-    /* $handle = fopen("data/yelp_academic_dataset_business.json", "r"); */
-    $handle = fopen("data/yelp_karlsruhe_businesses.json", "r");
+    $handle = fopen("data/yelp_academic_dataset_business.json", "r");
+    // $handle = fopen("data/yelp_karlsruhe_businesses.json", "r");
     // $handle = fopen("data/yelp_karlsruhe_businesses_Restaurants.json", "r");
     // $handle = fopen("data/yelp_karlsruhe_businesses_Shopping.json", "r");
     // $handle = fopen("data/yelp_karlsruhe_businesses_Nightlife.json", "r");
