@@ -106,19 +106,29 @@
           );
           $db->fire($sql, $para);
         }
-        // Add nominal categories and attributes to db
 
-        $cfunc->forDebug($data->acceptedNominalCategories, "all data Attrs");
+        // Add nominal categories and attributes to db
         foreach ($data->acceptedNominalCategories as $nominalToSave => $nominalAttributes) {
           $now = date("Y-m-d H:i:s");
           $sql = "INSERT INTO nominal_components (created, modified, name) VALUES (:tstamp, :tstamp, :name)";
-          $cfunc->forDebug($nominalAttributes, "nominalAttributes");
-          $cfunc->forDebug($nominalToSave, "Nominal key");
           $para = array(
             'tstamp'        =>       $now,
             'name'          =>       $nominalToSave
           );
+          // Save nominal category in db
           $db->fire($sql, $para);
+          $lastNominalId = $db->lastInsertId();
+          // Get attributes ready
+          foreach ($nominalAttributes as $nominalAttrValue) {
+            $sql = "INSERT INTO nominal_attributes (created, modified, nominal_component_id, name) VALUES (:tstamp, :tstamp, :nominal_component_id, :name)";
+            $para = array(
+              'tstamp'                =>       $now,
+              'nominal_component_id'  =>       $lastNominalId,
+              'name'                  =>       $nominalAttrValue
+            );
+            // Save nominals attribute in db
+            $db->fire($sql, $para);
+          }
         }
         // Add ordinal categories to db
         foreach ($data->acceptedOrdinalCategories as $ordinalToSave) {
@@ -189,40 +199,53 @@
 
           // Save binary categories
           for ($i=0; $i < count($singlePoi->foundBinaryCategories); $i++) {
-            // Find binary_components_id
+            // Find binary_component_id
             $sql = "SELECT `id` FROM binary_components WHERE `name` LIKE '" . $singlePoi->foundBinaryCategories[$i] . "'";
             $rows = $db->fire($sql);
-            $sql = "INSERT INTO binary_components_ypois (binary_components_id, ypois_id, created, modified) VALUES (:binary_components_id, :ypois_id, :tstamp, :tstamp)";
+            $sql = "INSERT INTO binary_components_ypois (binary_component_id, ypois_id, created, modified) VALUES (:binary_component_id, :ypois_id, :tstamp, :tstamp)";
             $para = array(
-              'binary_components_id'  => $rows[0]['id'],
+              'binary_component_id'  => $rows[0]['id'],
               'ypois_id' => $lastPoisId,
               'tstamp' => $now
             );
             $db->fire($sql, $para);
           }
           // Save nominal categories
-          echo $cfunc->forDebug($singlePoi->attributes, "Attribute");
           foreach ($singlePoi->attributes as $attrName => $attribute)  {
-            if(is_object($attribute)) {
-              $cfunc->tagIt("p", "$attrName wäre dann ein Objekt");
-            } else {
-              if(in_array($attrName, $data->acceptedNominalCategories)) {
+            if(array_key_exists($attrName, $data->acceptedNominalCategories)) {
+              // Get nominal_components id
+              $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $attrName . "'";
+              $rows = $db->fire($sql);
+              $lastNominalId = $rows[0]['id'];
+              $cfunc->forDebug($lastNominalId, "$attrName ID in Nominals?");
+
+              if(is_object($attribute)) {
+                $cfunc->forDebug("JESS", "$attrName Objekt?");
                 // Save data entry in nominal_attributes
 
-                // Get nominal_components id
-                $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $attrName . "'";
-                $rows = $db->fire($sql);
 
-                $sql = "INSERT INTO nominal_attributes (nominal_component_id, ypois_id, name, created, modified) VALUES (:nominal_component_id, :ypois_id, :name, :tstamp, :tstamp)";
-                $para = array(
-                  'nominal_component_id'  => $rows[0]['id'],
-                  'ypois_id' => $lastPoisId,
-                  'name' => $attribute,
-                  'tstamp' => $now
-                );
-                $db->fire($sql, $para);
               }
             }
+            // if(is_object($attribute)) {
+            //   $cfunc->tagIt("p", "$attrName wäre dann ein Objekt");
+            // } else {
+            //   if(in_array($attrName, $data->acceptedNominalCategories)) {
+            //     // Save data entry in nominal_attributes
+            //
+            //     // Get nominal_components id
+            //     $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $attrName . "'";
+            //     $rows = $db->fire($sql);
+            //
+            //     $sql = "INSERT INTO nominal_attributes (nominal_component_id, ypois_id, name, created, modified) VALUES (:nominal_component_id, :ypois_id, :name, :tstamp, :tstamp)";
+            //     $para = array(
+            //       'nominal_component_id'  => $rows[0]['id'],
+            //       'ypois_id' => $lastPoisId,
+            //       'name' => $attribute,
+            //       'tstamp' => $now
+            //     );
+            //     $db->fire($sql, $para);
+            //   }
+            // }
           }
           $db->close();
         } catch(Exception $e) {
@@ -237,6 +260,7 @@
   $app = new SaveData();
 
   $app->getYelpData("../data/yelp_karlsruhe_businesses");
+  /*
   $app->clearDB([
     'binary_components',
     'nominal_attributes',
@@ -245,14 +269,13 @@
     'ordinal_components'
   ]);
   $app->saveCategoriesToDB();
-  /*
-  $app->clearDB([
-      'ypois',
-      'binary_components_ypois',
-      'nominal_attributes'
-  ]);
-  $app->saveDataToDB($app->pois);
   */
 
+  $app->clearDB([
+      'ypois',
+      'binary_components_ypois'
+
+  ]);
+  $app->saveDataToDB($app->pois);
 
 ?>

@@ -192,17 +192,12 @@
         ]
       ];
       // Attribute Value are simply safed in db
-      ControlFunctions::forDebug($nominals, "Nominals");
-      ControlFunctions::forDebug($this->acceptedNominalCategories, "accepted before");
-      foreach ($nominals as $nominalsValues) {
-        ControlFunctions::forDebug($nominalsValues, "Single");
+      foreach ($nominals as $nominal => $nominalsValues) {
         sort($nominalsValues);
-        ControlFunctions::forDebug($nominalsValues, "Single after");
+        $nominals[$nominal] = $nominalsValues;
       }
       $this->acceptedNominalCategories = $nominals;
-      ControlFunctions::forDebug($this->acceptedNominalCategories, "accepted before sort");
       asort($this->acceptedNominalCategories);
-      ControlFunctions::forDebug($this->acceptedNominalCategories, "accepted after sort");
 
       $ordinals = [
         "Price Range",
