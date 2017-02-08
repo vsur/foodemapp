@@ -211,19 +211,26 @@
             $db->fire($sql, $para);
           }
           // Save nominal categories
-          foreach ($singlePoi->attributes as $attrName => $attribute)  {
-            if(array_key_exists($attrName, $data->acceptedNominalCategories)) {
+          foreach ($singlePoi->attributes as $nominalName => $attributes)  {
+            if (array_key_exists($nominalName, $data->acceptedNominalCategories)) {
               // Get nominal_components id
-              $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $attrName . "'";
+              $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $nominalName . "'";
               $rows = $db->fire($sql);
               $lastNominalId = $rows[0]['id'];
-              $cfunc->forDebug($lastNominalId, "$attrName ID in Nominals?");
 
-              if(is_object($attribute)) {
-                $cfunc->forDebug("JESS", "$attrName Objekt?");
-                // Save data entry in nominal_attributes
-
-
+              if (is_object($attributes)) {
+                foreach ($attributes as $attrName => $attrValue){
+                  if ($attrValue == true){
+                    $cfunc->forDebug($attrValue, "Für $singlePoi->name und Nominal $nominalName Objekt für Attribute $attrName");
+                    /*
+                     * WIE WEITER
+                     * Erst mal in binary_components_ypois den Eintrag für ypois_id in Singular ändern
+                     * Dann im Script anpassen
+                     * Neuer Eintrag in nominal_attributes für ypoi_id
+                     * Das das Speichern via SQL und FIRE
+                     */
+                  }
+                }
               }
             }
             // if(is_object($attribute)) {
