@@ -210,31 +210,24 @@
               $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $nominalName . "'";
               $rows = $db->fire($sql);
               $lastNominalId = $rows[0]['id'];
-              $cfunc->forDebug($rows, "Für $ rows");
-              $cfunc->forDebug($lastNominalId, "Für $ lastNominalId");
 
               if (is_object($attributes)) {
                 foreach ($attributes as $attrName => $attrValue){
                   if ($attrValue == true){
-                    $cfunc->forDebug($attrValue, "Für $singlePoi->name und Nominal $nominalName Objekt für Attribute $attrName");
-                    /*
-                    $sql = "INSERT INTO nominal_attributes (nominal_component_id, ypoi_id, name, created, modified) VALUES (:nominal_component_id, :ypoi_id, :name, :tstamp, :tstamp)";
+                    // Get nominal_attributes id
+                    $sql = "SELECT `id` FROM nominal_attributes WHERE `nominal_component_id` = " . $lastNominalId . " AND `name` LIKE '" . $attrName . "'";
+                    $rows = $db->fire($sql);
+                    $lastNominalAttrId = $rows[0]['id'];
+                    
+                    // Save Join Entry in nominal_attributes_ypois
+                    $sql = "INSERT INTO nominal_attributes_ypois (nominal_attribute_id, ypoi_id, created, modified) VALUES (:nominal_attribute_id, :ypoi_id, :tstamp, :tstamp)";
                     $para = array(
-                      'nominal_component_id'  => $lastNominalId,
+                      'nominal_attribute_id'  => $lastNominalAttrId,
                       'ypoi_id' => $lastPoisId,
                       'name' => $attrName,
                       'tstamp' => $now
                     );
                     $db->fire($sql, $para);
-                    */
-                    /*
-                     * WIE WEITER
-                     * Also Klar braucht es nominal Attrs da die einen Iconpath haben!
-                     * Danach erst braucht es noch ne JoinTabelle
-                     * Du Trottel!
-                     * Hier dann erst mal noch passenden attr Holen
-                     * also ID und dann in Join Tabelle speichen!
-                     */
                   }
                 }
               }
@@ -255,6 +248,7 @@
   $app->getYelpData("../data/yelp_karlsruhe_businesses");
   /*
   $app->clearDB([
+  	
     'binary_components',
     'nominal_attributes',
     'nominal_components',
@@ -265,7 +259,8 @@
   */
   $app->clearDB([
       'ypois',
-      'binary_components_ypois'
+      'binary_components_ypois',
+      'nominal_attributes_ypois'
 
   ]);
   $app->saveDataToDB($app->pois);
