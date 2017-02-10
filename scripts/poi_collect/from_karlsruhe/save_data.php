@@ -203,6 +203,7 @@
             );
             $db->fire($sql, $para);
           }
+          
           // Save nominal categories
           foreach ($singlePoi->attributes as $nominalName => $attributes)  {
             if (array_key_exists($nominalName, $data->acceptedNominalCategories)) {
@@ -232,6 +233,14 @@
                 }
               }
             }
+            
+	          // Save ordinal categories
+	          /* 
+	           * array_key_exists($nominalName, $data->acceptedOrdinalCategories
+	           * Ordinal-Werte Speichern und Übersetzen
+	           * Übertzungen für andere Tabellen (Felder) einbauen
+	           * Dann Speicherung der Ordinalen Werte
+	           */
           }
           $db->close();
         } catch(Exception $e) {
