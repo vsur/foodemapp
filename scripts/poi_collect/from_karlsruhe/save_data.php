@@ -61,13 +61,6 @@
             }
           }
         }
-
-        // Check if line has needed nominal category
-        /*
-        Next Things
-        baue $acceptedNominalCategories
-        dann speichern
-        */
         $lines++;
       }
       fclose($handle);
@@ -202,10 +195,10 @@
             // Find binary_component_id
             $sql = "SELECT `id` FROM binary_components WHERE `name` LIKE '" . $singlePoi->foundBinaryCategories[$i] . "'";
             $rows = $db->fire($sql);
-            $sql = "INSERT INTO binary_components_ypois (binary_component_id, ypois_id, created, modified) VALUES (:binary_component_id, :ypois_id, :tstamp, :tstamp)";
+            $sql = "INSERT INTO binary_components_ypois (binary_component_id, ypoi_id, created, modified) VALUES (:binary_component_id, :ypoi_id, :tstamp, :tstamp)";
             $para = array(
               'binary_component_id'  => $rows[0]['id'],
-              'ypois_id' => $lastPoisId,
+              'ypoi_id' => $lastPoisId,
               'tstamp' => $now
             );
             $db->fire($sql, $para);
@@ -217,42 +210,35 @@
               $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $nominalName . "'";
               $rows = $db->fire($sql);
               $lastNominalId = $rows[0]['id'];
+              $cfunc->forDebug($rows, "Für $ rows");
+              $cfunc->forDebug($lastNominalId, "Für $ lastNominalId");
 
               if (is_object($attributes)) {
                 foreach ($attributes as $attrName => $attrValue){
                   if ($attrValue == true){
                     $cfunc->forDebug($attrValue, "Für $singlePoi->name und Nominal $nominalName Objekt für Attribute $attrName");
                     /*
+                    $sql = "INSERT INTO nominal_attributes (nominal_component_id, ypoi_id, name, created, modified) VALUES (:nominal_component_id, :ypoi_id, :name, :tstamp, :tstamp)";
+                    $para = array(
+                      'nominal_component_id'  => $lastNominalId,
+                      'ypoi_id' => $lastPoisId,
+                      'name' => $attrName,
+                      'tstamp' => $now
+                    );
+                    $db->fire($sql, $para);
+                    */
+                    /*
                      * WIE WEITER
-                     * Erst mal in binary_components_ypois den Eintrag für ypois_id in Singular ändern
-                     * Dann im Script anpassen
-                     * Neuer Eintrag in nominal_attributes für ypoi_id
-                     * Das das Speichern via SQL und FIRE
+                     * Also Klar braucht es nominal Attrs da die einen Iconpath haben!
+                     * Danach erst braucht es noch ne JoinTabelle
+                     * Du Trottel!
+                     * Hier dann erst mal noch passenden attr Holen
+                     * also ID und dann in Join Tabelle speichen!
                      */
                   }
                 }
               }
             }
-            // if(is_object($attribute)) {
-            //   $cfunc->tagIt("p", "$attrName wäre dann ein Objekt");
-            // } else {
-            //   if(in_array($attrName, $data->acceptedNominalCategories)) {
-            //     // Save data entry in nominal_attributes
-            //
-            //     // Get nominal_components id
-            //     $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $attrName . "'";
-            //     $rows = $db->fire($sql);
-            //
-            //     $sql = "INSERT INTO nominal_attributes (nominal_component_id, ypois_id, name, created, modified) VALUES (:nominal_component_id, :ypois_id, :name, :tstamp, :tstamp)";
-            //     $para = array(
-            //       'nominal_component_id'  => $rows[0]['id'],
-            //       'ypois_id' => $lastPoisId,
-            //       'name' => $attribute,
-            //       'tstamp' => $now
-            //     );
-            //     $db->fire($sql, $para);
-            //   }
-            // }
           }
           $db->close();
         } catch(Exception $e) {
@@ -272,17 +258,17 @@
     'binary_components',
     'nominal_attributes',
     'nominal_components',
-    'ordinal_attributes',
-    'ordinal_components'
+    'ordinal_components',
+    'ordinal_values'
   ]);
   $app->saveCategoriesToDB();
   */
-
   $app->clearDB([
       'ypois',
       'binary_components_ypois'
 
   ]);
   $app->saveDataToDB($app->pois);
+
 
 ?>
