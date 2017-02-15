@@ -111,7 +111,7 @@
           // Save nominal category in db
           $db->fire($sql, $para);
           $lastNominalId = $db->lastInsertId();
-          // Get attributes ready
+          // Get nominal attributes ready
           foreach ($nominalAttributes as $nominalAttrValue) {
             $sql = "INSERT INTO nominal_attributes (created, modified, nominal_component_id, name) VALUES (:tstamp, :tstamp, :nominal_component_id, :name)";
             $para = array(
@@ -124,14 +124,31 @@
           }
         }
         // Add ordinal categories to db
-        foreach ($data->acceptedOrdinalCategories as $ordinalToSave) {
-          $now = date("Y-m-d H:i:s");
-          $sql = "INSERT INTO ordinal_components (created, modified, name) VALUES (:tstamp, :tstamp, :name)";
-          $para = array(
-            'tstamp'        =>       $now,
-            'name'          =>       $ordinalToSave
-          );
-          $db->fire($sql, $para);
+        foreach ($data->acceptedOrdinalCategories as $ordinalToSave => $ordinalAttributes) {
+          if ($ordinalToSave != "Distance") {
+            $now = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO ordinal_components (created, modified, name) VALUES (:tstamp, :tstamp, :name)";
+            $para = array(
+              'tstamp'        =>       $now,
+              'name'          =>       $ordinalToSave
+            );
+            // Save ordinal category in db
+            $db->fire($sql, $para);
+            $lastOrdinalId = $db->lastInsertId();
+            // Get nominal attributes ready
+            foreach ($ordinalAttributes as $ordinalAttrName => $ordinalAttrValue) {
+              $sql = "INSERT INTO ordinal_attributes (created, modified, ordinal_component_id, name, display_name, meter) VALUES (:tstamp, :tstamp, :ordinal_component_id, :name, :display_name, :meter)";
+              $para = array(
+                  'tstamp'                =>       $now,
+                  'ordinal_component_id'  =>       $lastOrdinalId,
+                  'name'                  =>       $ordinalAttrName,
+                  'display_name'          =>       $ordinalAttrValue["display_name"],
+                  'meter'                 =>       $ordinalAttrValue["meter"]
+              );
+              // Save ordinal attribute in db
+              $db->fire($sql, $para);
+            }
+          }
         }
 
         $db->close();
@@ -234,16 +251,20 @@
               }
             }
             
-	          // Save ordinal categories
+          	// Save ordinal categories
+            if (array_key_exists($nominalName, $data->acceptedNominalCategories)) {
+						$cfunc->forDebug("Nu müsste die Ordinal gepseichert werden! DB shcon importiert?");      	     	
+            
 	          /* 
-	           * array_key_exists($nominalName, $data->acceptedOrdinalCategories
+	           * 
 	           * Ordinal-Werte Speichern und Übersetzen
 	           * Übertzungen für andere Tabellen (Felder) einbauen
 	           * Dann Speicherung der Ordinalen Werte
 	           */
+            }
           }
           $db->close();
-        } catch(Exception $e) {
+        } catch (Exception $e) {
           die('Fehler bei Datenspeicherung Fehler: ' . $e->getMessage());
         }
       }
@@ -262,15 +283,15 @@
     'nominal_attributes',
     'nominal_components',
     'ordinal_components',
-    'ordinal_values'
+    'ordinal_attributes'
   ]);
   $app->saveCategoriesToDB();
   */
   $app->clearDB([
       'ypois',
       'binary_components_ypois',
-      'nominal_attributes_ypois'
-
+      'nominal_attributes_ypois',
+      'ordinal_attributes_ypois'
   ]);
   $app->saveDataToDB($app->pois);
 

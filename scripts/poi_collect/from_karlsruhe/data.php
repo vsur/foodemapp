@@ -200,17 +200,30 @@
       asort($this->acceptedNominalCategories);
 
       $ordinals = [
-        "Price Range",
-        "Parking",
-        "Noise Level",
-        "Distance"
+        "Price Range" => [
+        		"1" => ["display_name" => "Günstig", "meter" => 1],
+        		"2" => ["display_name" => "Durschnittlich", "meter" => 2],
+        		"3" => ["display_name" => "Gehobene Preisklasse", "meter" => 3],
+        		"4" => ["display_name" => "Teuer", "meter" => 4]
+        ],
+        "Parking" => [
+        		"street" => ["display_name" => "Auf der Straße", "meter" => 1],
+        		"validated" => ["display_name" => "Parktiketentwertung", "meter" => 2],
+        		"lot" => ["display_name" => "Parkplatz", "meter" => 3],
+        		"garage" => ["display_name" => "Garage", "meter" => 4],
+        		"valet" => ["display_name" => "Parkdienst", "meter" => 5]
+        ],
+        "Noise Level" => [
+        		"quiet" => ["display_name" => "Leise", "meter" => 1],
+        		"average" => ["display_name" => "Durchschnittlich", "meter" => 2],
+        		"loud" => ["display_name" => "Laut", "meter" => 3],
+        		"very_loud" => ["display_name" => "Durchschnittlich", "meter" => 4]
+        ],
+        "Distance" => []
       ];
       // Attribute Value are simply safed in db
-      foreach ($ordinals as $category) {
-        array_push($this->acceptedOrdinalCategories, $category);
-      }
-      sort($this->acceptedOrdinalCategories);
-
+      krsort($ordinals);
+      $this->acceptedOrdinalCategories = $ordinals;
     }
 
     /* Control functions */
