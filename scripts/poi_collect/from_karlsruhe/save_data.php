@@ -222,10 +222,10 @@
           }
           
           // Save nominal categories
-          foreach ($singlePoi->attributes as $nominalName => $attributes)  {
-            if (array_key_exists($nominalName, $data->acceptedNominalCategories)) {
+          foreach ($singlePoi->attributes as $attributesName => $attributes)  {
+            if (array_key_exists($attributesName, $data->acceptedNominalCategories)) {
               // Get nominal_components id
-              $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $nominalName . "'";
+              $sql = "SELECT `id` FROM nominal_components WHERE `name` LIKE '" . $attributesName . "'";
               $rows = $db->fire($sql);
               $lastNominalId = $rows[0]['id'];
 
@@ -252,15 +252,54 @@
             }
             
           	// Save ordinal categories
-            if (array_key_exists($nominalName, $data->acceptedNominalCategories)) {
-						$cfunc->forDebug("Nu müsste die Ordinal gepseichert werden! DB shcon importiert?");      	     	
-            
-	          /* 
-	           * 
-	           * Ordinal-Werte Speichern und Übersetzen
-	           * Übertzungen für andere Tabellen (Felder) einbauen
-	           * Dann Speicherung der Ordinalen Werte
-	           */
+            if (array_key_exists($attributesName, $data->acceptedOrdinalCategories)) {
+  						// Get ordinal_components id
+  						$sql = "SELECT `id` FROM ordinal_components WHERE `name` LIKE '" . $attributesName . "'";
+  						$rows = $db->fire($sql);
+  						$lastOrdinalId = $rows[0]['id'];
+  						
+  						/* 
+  						 * Get ordinal_attributes id and save join entry in ordinal_attributes_ypois
+  						 */
+  						// For objects-attributes that have more than one value
+  						if (is_object($attributes)) {
+  						  foreach ($attributes as $attrName => $attrValue){
+  						    if ($attrValue == true) {
+                    // Get ordinal_attributes id for attrValues attrName
+  						      $sql = "SELECT `id` FROM ordinal_attributes WHERE `ordinal_component_id` = " . $lastOrdinalId . " AND `name` LIKE '" . $attrName . "'";
+  						      $rows = $db->fire($sql);
+  						      $lastOrdinalAttrId = $rows[0]['id'];
+  						      
+  						      // Save Join Entry in ordinal_attributes_ypois for objects attrs
+  						      $sql = "INSERT INTO ordinal_attributes_ypois (ordinal_attribute_id, ypoi_id, created, modified) VALUES (:ordinal_attribute_id, :ypoi_id, :tstamp, :tstamp)";
+  						      $para = array(
+  						          'ordinal_attribute_id'  => $lastOrdinalAttrId,
+  						          'ypoi_id' => $lastPoisId,
+  						          'name' => $attrName,
+  						          'tstamp' => $now
+  						      );
+  						      $db->fire($sql, $para);
+  						    }
+  						  }
+  						} else {
+  						  // Same for non object-attributes with single value
+  						  $attributesName = $attributes;
+
+                // Get ordinal_attributes id for attrValues attrName
+  						  $sql = "SELECT `id` FROM ordinal_attributes WHERE `ordinal_component_id` = " . $lastOrdinalId . " AND `name` LIKE '" . $attributesName . "'";
+  						  $rows = $db->fire($sql);
+  						  $lastOrdinalAttrId = $rows[0]['id'];
+  						  
+  						  // Save Join Entry in ordinal_attributes_ypois for objects attrs
+  						  $sql = "INSERT INTO ordinal_attributes_ypois (ordinal_attribute_id, ypoi_id, created, modified) VALUES (:ordinal_attribute_id, :ypoi_id, :tstamp, :tstamp)";
+  						  $para = array(
+  						      'ordinal_attribute_id'  => $lastOrdinalAttrId,
+  						      'ypoi_id' => $lastPoisId,
+  						      'name' => $attrName,
+  						      'tstamp' => $now
+  						  );
+  						  $db->fire($sql, $para);
+  						}
             }
           }
           $db->close();
