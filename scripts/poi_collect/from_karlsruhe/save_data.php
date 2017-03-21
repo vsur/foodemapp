@@ -190,13 +190,13 @@
         $now = date("Y-m-d H:i:s");
         try {
           $db->connect('localhost', $secKeys->cakeVars->{'dbUsr'}, $secKeys->cakeVars->{'dbPw'}, $secKeys->cakeVars->{'dbCake'});
-          $sql = "INSERT INTO ypois (created, modified, name, lat, lng, business_id, city, state, full_address, stars, review_count) VALUES (:tstamp, :tstamp, :name, :lat, :lng, :business_id, :city, :state, :full_address, :stars, :review_count)";
+          $sql = "INSERT INTO ypois (created, modified, name, lat, lng, businessid, city, state, full_address, stars, review_count) VALUES (:tstamp, :tstamp, :name, :lat, :lng, :businessid, :city, :state, :full_address, :stars, :review_count)";
           $para = array(
             'tstamp'        =>       $now,
             'name'          =>       $singlePoi->name,
             'lat'           =>       $singlePoi->latitude,
             'lng'           =>       $singlePoi->longitude,
-            'business_id'   =>       $singlePoi->business_id,
+            'businessid'   =>       $singlePoi->business_id,
             'city'          =>       $singlePoi->city,
             'state'         =>       $singlePoi->state,
             // 'state'        =>       (isset($singlePoi->rating)) ? $singlePoi->rating : null,
@@ -220,7 +220,7 @@
             );
             $db->fire($sql, $para);
           }
-          
+
           // Save nominal categories
           foreach ($singlePoi->attributes as $attributesName => $attributes)  {
             if (array_key_exists($attributesName, $data->acceptedNominalCategories)) {
@@ -236,7 +236,7 @@
                     $sql = "SELECT `id` FROM nominal_attributes WHERE `nominal_component_id` = " . $lastNominalId . " AND `name` LIKE '" . $attrName . "'";
                     $rows = $db->fire($sql);
                     $lastNominalAttrId = $rows[0]['id'];
-                    
+
                     // Save Join Entry in nominal_attributes_ypois
                     $sql = "INSERT INTO nominal_attributes_ypois (nominal_attribute_id, ypoi_id, created, modified) VALUES (:nominal_attribute_id, :ypoi_id, :tstamp, :tstamp)";
                     $para = array(
@@ -250,15 +250,15 @@
                 }
               }
             }
-            
+
           	// Save ordinal categories
             if (array_key_exists($attributesName, $data->acceptedOrdinalCategories)) {
   						// Get ordinal_components id
   						$sql = "SELECT `id` FROM ordinal_components WHERE `name` LIKE '" . $attributesName . "'";
   						$rows = $db->fire($sql);
   						$lastOrdinalId = $rows[0]['id'];
-  						
-  						/* 
+
+  						/*
   						 * Get ordinal_attributes id and save join entry in ordinal_attributes_ypois
   						 */
   						// For objects-attributes that have more than one value
@@ -269,7 +269,7 @@
   						      $sql = "SELECT `id` FROM ordinal_attributes WHERE `ordinal_component_id` = " . $lastOrdinalId . " AND `name` LIKE '" . $attrName . "'";
   						      $rows = $db->fire($sql);
   						      $lastOrdinalAttrId = $rows[0]['id'];
-  						      
+
   						      // Save Join Entry in ordinal_attributes_ypois for objects attrs
   						      $sql = "INSERT INTO ordinal_attributes_ypois (ordinal_attribute_id, ypoi_id, created, modified) VALUES (:ordinal_attribute_id, :ypoi_id, :tstamp, :tstamp)";
   						      $para = array(
@@ -289,7 +289,7 @@
   						  $sql = "SELECT `id` FROM ordinal_attributes WHERE `ordinal_component_id` = " . $lastOrdinalId . " AND `name` LIKE '" . $attributesName . "'";
   						  $rows = $db->fire($sql);
   						  $lastOrdinalAttrId = $rows[0]['id'];
-  						  
+
   						  // Save Join Entry in ordinal_attributes_ypois for objects attrs
   						  $sql = "INSERT INTO ordinal_attributes_ypois (ordinal_attribute_id, ypoi_id, created, modified) VALUES (:ordinal_attribute_id, :ypoi_id, :tstamp, :tstamp)";
   						  $para = array(
@@ -317,7 +317,7 @@
   $app->getYelpData("../data/yelp_karlsruhe_businesses");
   /*
   $app->clearDB([
-  	
+
     'binary_components',
     'nominal_attributes',
     'nominal_components',
