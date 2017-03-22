@@ -62,8 +62,8 @@ class YpoisFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'created' => '2017-03-21 20:57:07',
-            'modified' => '2017-03-21 20:57:07',
+            'created' => '2017-03-22 08:50:22',
+            'modified' => '2017-03-22 08:50:22',
             'name' => 'Lorem ipsum dolor sit amet',
             'lat' => 1,
             'lng' => 1,
