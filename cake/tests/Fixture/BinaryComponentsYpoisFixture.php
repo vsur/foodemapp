@@ -42,8 +42,8 @@ class BinaryComponentsYpoisFixture extends TestFixture
             'id' => 1,
             'binary_component_id' => 1,
             'ypoi_id' => 1,
-            'created' => '2017-03-24 13:36:57',
-            'modified' => '2017-03-24 13:36:57'
+            'created' => '2017-03-30 15:24:37',
+            'modified' => '2017-03-30 15:24:37'
         ],
     ];
 }

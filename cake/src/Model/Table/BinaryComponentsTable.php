@@ -42,7 +42,7 @@ class BinaryComponentsTable extends Table
 
         $this->belongsToMany('Ypois', [
             'foreignKey' => 'binary_component_id',
-            'targetForeignKey' => 'ypois_id',
+            'targetForeignKey' => 'ypoi_id',
             'joinTable' => 'binary_components_ypois'
         ]);
     }

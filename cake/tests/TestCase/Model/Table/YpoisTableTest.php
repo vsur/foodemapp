@@ -28,8 +28,10 @@ class YpoisTableTest extends TestCase
         'app.binary_components',
         'app.binary_components_ypois',
         'app.nominal_attributes',
+        'app.nominal_components',
         'app.nominal_attributes_ypois',
         'app.ordinal_attributes',
+        'app.ordinal_components',
         'app.ordinal_attributes_ypois'
     ];
 

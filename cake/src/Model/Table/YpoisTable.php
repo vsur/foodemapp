@@ -43,17 +43,17 @@ class YpoisTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsToMany('BinaryComponents', [
-            'foreignKey' => 'ypois_id',
+            'foreignKey' => 'ypoi_id',
             'targetForeignKey' => 'binary_component_id',
             'joinTable' => 'binary_components_ypois'
         ]);
         $this->belongsToMany('NominalAttributes', [
-            'foreignKey' => 'ypois_id',
+            'foreignKey' => 'ypoi_id',
             'targetForeignKey' => 'nominal_attribute_id',
             'joinTable' => 'nominal_attributes_ypois'
         ]);
         $this->belongsToMany('OrdinalAttributes', [
-            'foreignKey' => 'ypois_id',
+            'foreignKey' => 'ypoi_id',
             'targetForeignKey' => 'ordinal_attribute_id',
             'joinTable' => 'ordinal_attributes_ypois'
         ]);

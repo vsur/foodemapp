@@ -42,12 +42,10 @@ class BinaryComponentsYpoisTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('BinaryComponents', [
-            'foreignKey' => 'binary_component_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'binary_component_id'
         ]);
         $this->belongsTo('Ypois', [
-            'foreignKey' => 'ypoi_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'ypoi_id'
         ]);
     }
 

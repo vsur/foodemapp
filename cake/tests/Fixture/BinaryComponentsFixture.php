@@ -43,8 +43,8 @@ class BinaryComponentsFixture extends TestFixture
             'id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'display_name' => 'Lorem ipsum dolor sit amet',
-            'created' => '2017-03-24 13:36:46',
-            'modified' => '2017-03-24 13:36:46'
+            'created' => '2017-03-30 15:24:20',
+            'modified' => '2017-03-30 15:24:20'
         ],
     ];
 }
