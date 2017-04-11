@@ -161,7 +161,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Nominal Component Id') ?></th>
+                <th scope="col"><?= __('Nominal Component Name') ?></th>
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Display Name') ?></th>
                 <th scope="col"><?= __('Icon Path') ?></th>
@@ -172,7 +172,7 @@
             <?php foreach ($ypois->nominal_attributes as $nominalAttributes): ?>
             <tr>
                 <td><?= h($nominalAttributes->id) ?></td>
-                <td><?= h($nominalAttributes->nominal_component_id) ?></td>
+                <td><?= h( $nominalAttributes->has('nominal_component') ? $nominalAttributes->nominal_component['name'] : '' ) ?></td>
                 <td><?= h($nominalAttributes->name) ?></td>
                 <td><?= h($nominalAttributes->display_name) ?></td>
                 <td><?= h($nominalAttributes->icon_path) ?></td>
@@ -205,7 +205,7 @@
             <?php foreach ($ypois->ordinal_attributes as $ordinalAttributes): ?>
             <tr>
                 <td><?= h($ordinalAttributes->id) ?></td>
-                <td><?= h($ordinalAttributes->ordinal_component['name']) ?></td>
+                <td><?= h( $ordinalAttributes->has('ordinal_component') ? $ordinalAttributes->ordinal_component['name'] : '' ) ?></td>
                 <td><?= h($ordinalAttributes->name) ?></td>
                 <td><?= h($ordinalAttributes->display_name) ?></td>
                 <td><?= h($ordinalAttributes->meter) ?></td>

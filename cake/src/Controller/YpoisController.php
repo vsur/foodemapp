@@ -34,7 +34,7 @@ class YpoisController extends AppController
     public function view($id = null)
     {
         $ypois = $this->Ypois->get($id, [
-            'contain' => ['BinaryComponents', 'NominalAttributes', 'OrdinalAttributes.OrdinalComponents']
+            'contain' => ['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']
         ]);
 
         $this->set('ypois', $ypois);
