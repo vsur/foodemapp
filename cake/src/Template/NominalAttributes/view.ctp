@@ -17,7 +17,7 @@
     </ul>
 </nav>
 <div class="nominalAttributes view large-9 medium-8 columns content">
-    <h3><?= h($nominalAttribute->name) ?></h3>
+    <h3><?= $nominalAttribute->has('nominal_component') ? $nominalAttribute->nominal_component->name . ': ' : '' ?><?= h($nominalAttribute->name) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Nominal Component') ?></th>
