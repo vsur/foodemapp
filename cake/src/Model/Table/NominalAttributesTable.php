@@ -47,7 +47,7 @@ class NominalAttributesTable extends Table
         ]);
         $this->belongsToMany('Ypois', [
             'foreignKey' => 'nominal_attribute_id',
-            'targetForeignKey' => 'ypois_id',
+            'targetForeignKey' => 'ypoi_id',
             'joinTable' => 'nominal_attributes_ypois'
         ]);
     }
