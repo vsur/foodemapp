@@ -194,7 +194,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Ordinal Component Id') ?></th>
+                <th scope="col"><?= __('Ordinal Component Name') ?></th>
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Display Name') ?></th>
                 <th scope="col"><?= __('Meter') ?></th>
@@ -205,7 +205,7 @@
             <?php foreach ($ypois->ordinal_attributes as $ordinalAttributes): ?>
             <tr>
                 <td><?= h($ordinalAttributes->id) ?></td>
-                <td><?= h($ordinalAttributes->ordinal_component_id) ?></td>
+                <td><?= h($ordinalAttributes->ordinal_component['name']) ?></td>
                 <td><?= h($ordinalAttributes->name) ?></td>
                 <td><?= h($ordinalAttributes->display_name) ?></td>
                 <td><?= h($ordinalAttributes->meter) ?></td>
