@@ -47,7 +47,7 @@ class OrdinalAttributesTable extends Table
         ]);
         $this->belongsToMany('Ypois', [
             'foreignKey' => 'ordinal_attribute_id',
-            'targetForeignKey' => 'ypois_id',
+            'targetForeignKey' => 'ypoi_id',
             'joinTable' => 'ordinal_attributes_ypois'
         ]);
     }

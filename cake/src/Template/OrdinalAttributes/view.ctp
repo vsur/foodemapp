@@ -17,7 +17,7 @@
     </ul>
 </nav>
 <div class="ordinalAttributes view large-9 medium-8 columns content">
-    <h3><?= h($ordinalAttribute->name) ?></h3>
+    <h3><?= $ordinalAttribute->has('ordinal_component') ? $ordinalAttribute->ordinal_component->name . ': ' : ''?> <?= h($ordinalAttribute->display_name) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Ordinal Component') ?></th>
