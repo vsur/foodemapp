@@ -1,0 +1,10 @@
+Problem: 
+
+Datenlage ist Scheiße!
+
+1. Die es gibt Binaries die False sind und trotzdem auftauchen. 
+1.1. Checken ob das nur bei Binary Attrs passiert oder auch bei den Categorie Binaries.
+2. Bei den Nominal werden nur Attrs > id 18 gesetzt.
+2. Warum???
+
+Das muss gelöst werden!
