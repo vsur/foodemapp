@@ -48,16 +48,19 @@
         foreach ($currentAttributes as $attrName => $attribute)  {
           // Check if attribute is binary category
           if(in_array($attrName, $data->acceptedBinaryCategories)) {
-            // Check if poi exits and create it if neccessary
-            $this->poiInstanceCheck($currentObjectLine);
+            $cfunc->forDebug($currentObjectLine);
+            if($attribute) {
+              // Check if poi exits and create it if neccessary
+              $this->poiInstanceCheck($currentObjectLine);
 
-            $currentPoiNameId = $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id];
-            // Check if category allready exits and create it if neccessary
-            $this->poisCategoriesInstanceCheck($currentPoiNameId);
+              $currentPoiNameId = $this->pois[$currentObjectLine->name . "_" . $currentObjectLine->business_id];
+              // Check if category allready exits and create it if neccessary
+              $this->poisCategoriesInstanceCheck($currentPoiNameId);
 
-            // Add Attribute to categories if it doesn't exist already
-            if(!in_array($attrName, $currentPoiNameId->foundBinaryCategories)) {
-              array_push($currentPoiNameId->foundBinaryCategories, $attrName);
+              // Add Attribute to categories if it doesn't exist already
+              if(!in_array($attrName, $currentPoiNameId->foundBinaryCategories)) {
+                array_push($currentPoiNameId->foundBinaryCategories, $attrName);
+              }
             }
           }
         }
@@ -332,6 +335,7 @@
       'nominal_attributes_ypois',
       'ordinal_attributes_ypois'
   ]);
+  $cfunc->forDebug($app->pois);
   $app->saveDataToDB($app->pois);
 
 
