@@ -48,8 +48,8 @@
         foreach ($currentAttributes as $attrName => $attribute)  {
           // Check if attribute is binary category
           if(in_array($attrName, $data->acceptedBinaryCategories)) {
-            $cfunc->forDebug($currentObjectLine);
-            if($attribute) {
+            // Check if current attr is really set TRUE, otherwise do not copy data to foundBinaryCategories
+            if($attribute == TRUE) {
               // Check if poi exits and create it if neccessary
               $this->poiInstanceCheck($currentObjectLine);
 

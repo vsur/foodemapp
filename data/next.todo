@@ -7,19 +7,10 @@ Datenlage ist Scheiße!
 2. Bei den Nominal werden nur Attrs > id 18 gesetzt.
 2. Warum???
 
-Das muss gelöst werden!
+Also in der Tat war bei den Binaries, bzw. bei den Binaries, die aus den Attrs kamen ein Fehler. Die wurden immer transformiert, egal ob True oder false.
+Jetzt werden die Attribute die eigentlich Binaries sind nur transformiert, wenn der Value tatsächlich TRUE ist.
 
-Also binaries scheinen gut rein zugehen.
+Aber weiterhin werden die Nominalen Nur Für Attribute mit der ID >= 17 gesetzt. Das sind die, die auch ein Object Sind.
+Die Anderen Attribute sind Strings aus den anderen Nominalen.
 
-Die Attr Binaries sind wohl immer True => anschauen, ändern.
-
-Dann Stand der nominals YPOIS ID 312 bei Attr->Parking weiter schauen.
-
-Ergebnis nur falsche False Attr Binaries
-
-durch http://www.freeformatter.com/json-formatter.html#ad-output
-
-HINWEIS:
-
-Beim Zusetzen von Attrie = True verändert sich der Inhalt zu einer YPOI ID!
-Außerdem liegt es schlicht an dem Problemn, dass das json_decode aus true ein 1 macht! Noch mal prüfen!
+=>>> Also mal schauen, warum bei den Nominanel keine Attrs mit Strings gesetzt werden.
