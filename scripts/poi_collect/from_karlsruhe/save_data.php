@@ -232,6 +232,7 @@
               $rows = $db->fire($sql);
               $lastNominalId = $rows[0]['id'];
 
+              // Check if aatribute is an Object
               if (is_object($attributes)) {
                 foreach ($attributes as $attrName => $attrValue){
                   if ($attrValue == true){
@@ -251,7 +252,27 @@
                     $db->fire($sql, $para);
                   }
                 }
+              } else { // Current Attribute found in acceptedNominalCategories seems to be no object, probably string
+                // Having only a string not an object the var $attrName needs to be reinstantiated
+                $attrName = $attributes;
+                // Get nominal_attributes id
+                $sql = "SELECT `id` FROM nominal_attributes WHERE `nominal_component_id` = " . $lastNominalId . " AND `name` LIKE '" . $attrName . "'";
+                $rows = $db->fire($sql);
+                $lastNominalAttrId = $rows[0]['id'];
+
+                // Save Join Entry in nominal_attributes_ypois
+                $sql = "INSERT INTO nominal_attributes_ypois (nominal_attribute_id, ypoi_id, created, modified) VALUES (:nominal_attribute_id, :ypoi_id, :tstamp, :tstamp)";
+                $para = array(
+                  'nominal_attribute_id'  => $lastNominalAttrId,
+                  'ypoi_id' => $lastPoisId,
+                  'name' => $attrName,
+                  'tstamp' => $now
+                );
+                $db->fire($sql, $para);
+                // print_r("$attributesName als " . gettype($attributesName) . " => $attributes als " .  gettype($attributes) . " nicht gespeichert <br>");
+                // print_r( gettype($attributes) . " nicht gespeichert <br>");
               }
+
             }
 
           	// Save ordinal categories
@@ -335,7 +356,7 @@
       'nominal_attributes_ypois',
       'ordinal_attributes_ypois'
   ]);
-  $cfunc->forDebug($app->pois);
+  
   $app->saveDataToDB($app->pois);
 
 
