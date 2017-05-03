@@ -356,7 +356,7 @@
       'nominal_attributes_ypois',
       'ordinal_attributes_ypois'
   ]);
-  
+
   $app->saveDataToDB($app->pois);
 
 

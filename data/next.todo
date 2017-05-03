@@ -1,16 +1,18 @@
-Problem:
+Problem mit der Datenlage gelöst!
 
-Datenlage ist Scheiße!
+Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
+=> Welcher Controller? Components? Nein, denn da hängt zu viel vom alten Controller dran!
+=> yPois Controller und da alles rin. ypois search and find
 
-1. Die es gibt Binaries die False sind und trotzdem auftauchen.
-1.1. Checken ob das nur bei Binary Attrs passiert oder auch bei den Categorie Binaries.
-2. Bei den Nominal werden nur Attrs > id 18 gesetzt.
-2. Warum???
+1. Liste aller Komopnentnen anzeigen
+2. Autocomplete Check
+2.1. Kann hier mit dem Worarround Is Display Set, gearbeitet werden?
+2.2. Sollte, denn so könnte auch bei neuen Daten (anderen Attrs etc) der Prototyp weiter getestet werden ohne erst wieder in der DB Sachen anpassen zu müssen.
 
-Also in der Tat war bei den Binaries, bzw. bei den Binaries, die aus den Attrs kamen ein Fehler. Die wurden immer transformiert, egal ob True oder false.
-Jetzt werden die Attribute die eigentlich Binaries sind nur transformiert, wenn der Value tatsächlich TRUE ist.
+Dann muss noch die Displaynames angepasst werden.
 
-Aber weiterhin werden die Nominalen Nur Für Attribute mit der ID >= 17 gesetzt. Das sind die, die auch ein Object Sind.
-Die Anderen Attribute sind Strings aus den anderen Nominalen.
+Dann  Gewichtung bauen
 
-=>>> Also mal schauen, warum bei den Nominanel keine Attrs mit Strings gesetzt werden.
+Dann Query.
+
+Dann noch mal über Ausgabe nachdenken.
