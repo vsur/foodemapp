@@ -1,11 +1,12 @@
 Problem mit der Datenlage gelöst!
 
 Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
-=> Welcher Controller? Components? Nein, denn da hängt zu viel vom alten Controller dran!
-=> yPois Controller und da alles rin. ypois search and find
 
 1. Liste aller Komopnentnen anzeigen
+1.1. Alles in ein Array packen, jedes Mit Typ Versehen und dann anzeigen.
 2. Autocomplete Check
+// Wie baue ich Feldauswahl und Anzeige laut PP?
+// Vorher, wie wurde es bis dato gelöst?
 2.1. Kann hier mit dem Worarround Is Display Set, gearbeitet werden?
 2.2. Sollte, denn so könnte auch bei neuen Daten (anderen Attrs etc) der Prototyp weiter getestet werden ohne erst wieder in der DB Sachen anpassen zu müssen.
 

@@ -91,4 +91,15 @@ class NominalAttributesTable extends Table
 
         return $rules;
     }
+
+    public function getAllEntriesWithUnifiedDisplayNames () {
+      $allNominalAttributes = $this->find('all');
+      foreach ($allNominalAttributes as $nominalAttribute) {
+        if(empty($nominalAttribute->display_name)) {
+          $nominalAttribute->display_name = $nominalAttribute->name;
+        }
+      }
+      $unifiedNominalAttributes = $allNominalAttributes;
+      return $unifiedNominalAttributes;
+    }
 }

@@ -95,4 +95,15 @@ class OrdinalAttributesTable extends Table
 
         return $rules;
     }
+
+    public function getAllEntriesWithUnifiedDisplayNames () {
+      $allOrdinalAttributes = $this->find('all');
+      foreach ($allOrdinalAttributes as $ordinalAttribute) {
+        if(empty($ordinalAttribute->display_name)) {
+          $ordinalAttribute->display_name = $ordinalAttribute->name;
+        }
+      }
+      $unifiedOrdinalAttributes = $allOrdinalAttributes;
+      return $unifiedOrdinalAttributes;
+    }
 }

@@ -24,6 +24,25 @@ class YpoisController extends AppController
         $this->set('_serialize', ['ypois']);
     }
 
+    public function setScenario() {
+      $this->viewBuilder()->layout('Foodmapp');
+      // Get all BinaryComponents
+      $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
+
+      // Get all NominalAttributes
+      $nominalAttributes = $this->Ypois->NominalAttributes->getAllEntriesWithUnifiedDisplayNames();
+
+      // Get all OrdinalAttributes
+      $ordinalAttributes = $this->Ypois->OrdinalAttributes->getAllEntriesWithUnifiedDisplayNames();
+      debug(count($ordinalAttributes->toArray()));
+      debug($ordinalAttributes->toArray());
+
+      $ypois = $this->paginate($this->Ypois);
+
+      $this->set(compact('ypois'));
+      $this->set('_serialize', ['ypois']);
+    }
+
     /**
      * View method
      *

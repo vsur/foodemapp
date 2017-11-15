@@ -84,4 +84,15 @@ class BinaryComponentsTable extends Table
 
         return $rules;
     }
+
+    public function getAllEntriesWithUnifiedDisplayNames () {
+      $allBinaryComponents = $this->find('all');
+      foreach ($allBinaryComponents as $binaryComponent) {
+        if(empty($binaryComponent->display_name)) {
+          $binaryComponent->display_name = $binaryComponent->name;
+        }
+      }
+      $unifiedBinaryComponents = $allBinaryComponents;
+      return $unifiedBinaryComponents;
+    }
 }
