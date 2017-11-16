@@ -29,13 +29,18 @@ class YpoisController extends AppController
       // Get all BinaryComponents
       $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
-      // Get all NominalAttributes
-      $nominalAttributes = $this->Ypois->NominalAttributes->getAllEntriesWithUnifiedDisplayNames();
+      // Get all $nominalComponents with associated Attributes
+      $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
 
       // Get all OrdinalAttributes
-      $ordinalAttributes = $this->Ypois->OrdinalAttributes->getAllEntriesWithUnifiedDisplayNames();
-      debug(count($ordinalAttributes->toArray()));
+      $ordinalAttributes = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
       debug($ordinalAttributes->toArray());
+
+
+      $criteria = [];
+      foreach ($binaryComponents as $binaryComponent) {
+        # code...
+      }
 
       $ypois = $this->paginate($this->Ypois);
 

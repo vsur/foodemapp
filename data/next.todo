@@ -3,7 +3,14 @@ Problem mit der Datenlage gelöst!
 Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 1. Liste aller Komopnentnen anzeigen
+Wurde jetzte korrigiert auch wirklcih alle Components mit Attributen
+
+Sortierung in den Queries fehlt noch, wie auch in den Assocs
+
 1.1. Alles in ein Array packen, jedes Mit Typ Versehen und dann anzeigen.
+
+Dann aber noch mal sortieren
+
 2. Autocomplete Check
 // Wie baue ich Feldauswahl und Anzeige laut PP?
 // Vorher, wie wurde es bis dato gelöst?

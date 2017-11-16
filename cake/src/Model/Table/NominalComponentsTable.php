@@ -82,4 +82,25 @@ class NominalComponentsTable extends Table
 
         return $rules;
     }
+
+    public function getAllEntriesWithUnifiedDisplayNames ($withAttrs = null) {
+      $allNominalComponents = $this->find('all');
+      if($withAttrs) {
+        $allNominalComponents->contain(['NominalAttributes']);
+      }
+      foreach ($allNominalComponents as $nominalComponent) {
+        if(empty($nominalComponent->display_name)) {
+          $nominalComponent->display_name = $nominalComponent->name;
+          if($nominalComponent->has('nominal_attributes')) {
+            foreach ($nominalComponent->nominal_attributes as $nominalAttribute) {
+              if(empty($nominalAttribute->display_name)) {
+                $nominalAttribute->display_name = $nominalAttribute->name;
+              }
+            }
+          }
+        }
+      }
+      $unifiedNominalComponents = $allNominalComponents;
+      return $unifiedNominalComponents;
+    }
 }

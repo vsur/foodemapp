@@ -82,4 +82,25 @@ class OrdinalComponentsTable extends Table
 
         return $rules;
     }
+
+    public function getAllEntriesWithUnifiedDisplayNames ($withAttrs = null) {
+      $allOrdinalComponents = $this->find('all');
+      if($withAttrs) {
+        $allOrdinalComponents->contain(['OrdinalAttributes']);
+      }
+      foreach ($allOrdinalComponents as $ordinalComponent) {
+        if(empty($ordinalComponent->display_name)) {
+          $ordinalComponent->display_name = $ordinalComponent->name;
+          if($ordinalComponent->has('ordinal_attributes')) {
+            foreach ($ordinalComponent->ordinal_attributes as $ordinalAttribute) {
+              if(empty($ordinalAttribute->display_name)) {
+                $ordinalAttribute->display_name = $ordinalAttribute->name;
+              }
+            }
+          }
+        }
+      }
+      $unifiedOrdinalComponents = $allOrdinalComponents;
+      return $unifiedOrdinalComponents;
+    }
 }
