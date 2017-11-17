@@ -84,9 +84,20 @@ class NominalComponentsTable extends Table
     }
 
     public function getAllEntriesWithUnifiedDisplayNames ($withAttrs = null) {
-      $allNominalComponents = $this->find('all');
+      $allNominalComponents = $this->find('all')
+        // display_name is probably empty so final sorting sould be done late
+        ->order([
+          'display_name' => 'ASC',
+          'name' => 'ASC'
+        ]);
       if($withAttrs) {
-        $allNominalComponents->contain(['NominalAttributes']);
+        // The assoc data can be sorted yet!
+        $allNominalComponents->contain(['NominalAttributes' => [
+            'sort' => [
+              'NominalAttributes.display_name' => 'ASC',
+              'NominalAttributes.name' => 'ASC'
+            ]
+          ]]);
       }
       foreach ($allNominalComponents as $nominalComponent) {
         if(empty($nominalComponent->display_name)) {

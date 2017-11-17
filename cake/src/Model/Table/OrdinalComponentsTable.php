@@ -84,9 +84,19 @@ class OrdinalComponentsTable extends Table
     }
 
     public function getAllEntriesWithUnifiedDisplayNames ($withAttrs = null) {
-      $allOrdinalComponents = $this->find('all');
+      $allOrdinalComponents = $this->find('all')
+      // display_name is probably empty so final sorting sould be done late
+      ->order([
+        'display_name' => 'ASC',
+        'name' => 'ASC'
+      ]);
       if($withAttrs) {
-        $allOrdinalComponents->contain(['OrdinalAttributes']);
+        $allOrdinalComponents->contain(['OrdinalAttributes' => [
+          'sort' => [
+            'OrdinalAttributes.display_name' => 'ASC',
+            'OrdinalAttributes.name' => 'ASC'
+          ]
+        ]]);
       }
       foreach ($allOrdinalComponents as $ordinalComponent) {
         if(empty($ordinalComponent->display_name)) {

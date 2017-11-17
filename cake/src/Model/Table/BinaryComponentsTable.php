@@ -86,7 +86,12 @@ class BinaryComponentsTable extends Table
     }
 
     public function getAllEntriesWithUnifiedDisplayNames () {
-      $allBinaryComponents = $this->find('all');
+      $allBinaryComponents = $this->find('all')
+        // display_name is probably empty so final sorting sould be done late
+        ->order([
+          'display_name' => 'ASC',
+          'name' => 'ASC'
+        ]);
       foreach ($allBinaryComponents as $binaryComponent) {
         if(empty($binaryComponent->display_name)) {
           $binaryComponent->display_name = $binaryComponent->name;

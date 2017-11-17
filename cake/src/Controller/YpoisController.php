@@ -28,19 +28,33 @@ class YpoisController extends AppController
       $this->viewBuilder()->layout('Foodmapp');
       // Get all BinaryComponents
       $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
+      // debug($binaryComponents->toArray());
 
       // Get all $nominalComponents with associated Attributes
       $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
 
       // Get all OrdinalAttributes
-      $ordinalAttributes = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
-      debug($ordinalAttributes->toArray());
-
+      $ordinalComponents = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
 
       $criteria = [];
       foreach ($binaryComponents as $binaryComponent) {
-        # code...
+        array_push($criteria, $binaryComponent);
       }
+      foreach ($nominalComponents as $nominalComponent) {
+        array_push($criteria, $nominalComponent);
+      }
+      foreach ($ordinalComponents as $ordinalComponent) {
+        array_push($criteria, $ordinalComponent);
+      }
+      // Sort criteria once at the end, assoc hast to be sorted earllier
+      // Hole eine Liste von Spalten
+      foreach ($criteria as $key => $row) {
+          $displayName[$key] = $row['display_name'];
+      }
+      array_multisort($displayName, SORT_ASC, $criteria);
+
+      debug($criteria);
+
 
       $ypois = $this->paginate($this->Ypois);
 
