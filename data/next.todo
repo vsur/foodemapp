@@ -3,21 +3,30 @@ Problem mit der Datenlage gelöst!
 Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 1. Liste aller Komopnentnen anzeigen
-Wurde jetzte korrigiert auch wirklcih alle Components mit Attributen
-
-Sortierung in den Queries fehlt noch, wie auch in den Assocs
-
-1.1. Alles in ein Array packen, jedes Mit Typ Versehen und dann anzeigen.
-
-Dann aber noch mal sortieren
-
-DONE
 
 2. Autocomplete Check
-// Wie baue ich Feldauswahl und Anzeige laut PP?
-// Vorher, wie wurde es bis dato gelöst?
-2.1. Kann hier mit dem Worarround Is Display Set, gearbeitet werden?
-2.2. Sollte, denn so könnte auch bei neuen Daten (anderen Attrs etc) der Prototyp weiter getestet werden ohne erst wieder in der DB Sachen anpassen zu müssen.
+Für den Input müsste Awesomplete um Values ergänzt werden:
+var input = document.getElementById("myinput");
+
+// Show label but insert value into the input:
+new Awesomplete(input, {
+	list: [
+		{ label: "Belarus", value: "BY" },
+		{ label: "China", value: "CN" },
+		{ label: "United States", value: "US" }
+	]
+});
+
+// Same with arrays:
+new Awesomplete(input, {
+	list: [
+		[ "Belarus", "BY" ],
+		[ "China", "CN" ],
+		[ "United States", "US" ]
+	]
+});
+Aus den gewählten Componenten wird mit JS ein Query gebaut und via JS an Cake gefeuert.
+Die Vals in Awesomplete müssten also irgendwas mit "Typ:ID" haben damit es verarbeitet werden kann. 
 
 Dann muss noch die Displaynames angepasst werden.
 
