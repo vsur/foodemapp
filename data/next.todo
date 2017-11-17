@@ -26,7 +26,7 @@ new Awesomplete(input, {
 	]
 });
 Aus den gewählten Componenten wird mit JS ein Query gebaut und via JS an Cake gefeuert.
-Die Vals in Awesomplete müssten also irgendwas mit "Typ:ID" haben damit es verarbeitet werden kann. 
+Die Vals in Awesomplete müssten also irgendwas mit "Typ:ID" haben damit es verarbeitet werden kann.
 
 Dann muss noch die Displaynames angepasst werden.
 

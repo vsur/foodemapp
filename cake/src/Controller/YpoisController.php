@@ -25,7 +25,7 @@ class YpoisController extends AppController
     }
 
     public function setScenario() {
-      $this->viewBuilder()->layout('Foodmapp');
+      $this->viewBuilder()->layout('Fmappbeta');
       // Get all BinaryComponents
       $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
       // debug($binaryComponents->toArray());
@@ -53,13 +53,13 @@ class YpoisController extends AppController
       }
       array_multisort($displayName, SORT_ASC, $criteria);
 
-      debug($criteria);
+      // debug($criteria);
 
 
       $ypois = $this->paginate($this->Ypois);
 
-      $this->set(compact('ypois'));
-      $this->set('_serialize', ['ypois']);
+      $this->set(compact('criteria'));
+      $this->set('_serialize', ['criteria']);
     }
 
     /**
@@ -76,7 +76,6 @@ class YpoisController extends AppController
         ]);
 
         $this->set('ypois', $ypois);
-        $this->set('_serialize', ['ypois']);
     }
 
     /**

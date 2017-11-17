@@ -57,6 +57,10 @@ module.exports = function(grunt) {
 			noBoot: {
 				src: ['javascripts/fmapp_app.js'],
 				dest: 'js/fmapp_app.js',
+			},
+			noBootBeta: {
+				src: ['javascripts/fmapp_beta_app.js'],
+				dest: 'js/fmapp_beta_app.js',
 			}
 		},
 
@@ -65,7 +69,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['**/*.js'],
-				tasks: ['jshint', 'concat:noBoot'],
+				tasks: ['jshint', 'concat:noBootBeta'],
 				options: {
 					spawn: false,
 				},
