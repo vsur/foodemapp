@@ -10,3 +10,5 @@ sec/foodm_var.xml
 .settings/org.eclipse.wst.common.project.facet.core.xml
 
 cake/webroot/js/empty
+
+cake/webroot/node_modules/*/*
