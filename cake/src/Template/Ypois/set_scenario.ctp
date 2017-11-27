@@ -57,16 +57,14 @@
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
 <script type="text/javascript">
-var components = <?= json_encode($components) ?>;
-// TODO Muss CriterionNames werden, aber es muss auch dem Controller Kommen!
-var componentsNames = <?= '["' . implode('", "', $componentsNames) . '"]' ?>;
+var criterionNames = <?= json_encode($criterionNames) ?>;
 var input = document.getElementById("criteriaInput");
 var awesomplete = new Awesomplete(input, {
   minChars: 1,
   autoFirst: true,
   maxItems: 10
 });
-awesomplete.list = componentsNames;
+awesomplete.list = criterionNames;
 </script>
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓

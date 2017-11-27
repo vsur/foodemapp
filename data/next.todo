@@ -2,35 +2,14 @@ Problem mit der Datenlage gelöst!
 
 Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
-1. Liste aller Komopnentnen anzeigen
+1. Action für Criterion auswahl aus Awesomeplete bauen. Platzier die Dinger.
+1.1. Binary.
+1.2. Nominal.
+1.3. Ordinal
 
-2. Autocomplete Check
-Für den Input müsste Awesomplete um Values ergänzt werden:
-var input = document.getElementById("myinput");
+2. Dann Action bei Zeig-Mir Button um ein Query zu feuern.
 
-// Show label but insert value into the input:
-new Awesomplete(input, {
-	list: [
-		{ label: "Belarus", value: "BY" },
-		{ label: "China", value: "CN" },
-		{ label: "United States", value: "US" }
-	]
-});
-
-// Same with arrays:
-new Awesomplete(input, {
-	list: [
-		[ "Belarus", "BY" ],
-		[ "China", "CN" ],
-		[ "United States", "US" ]
-	]
-});
-Aus den gewählten Componenten wird mit JS ein Query gebaut und via JS an Cake gefeuert.
-Die Vals in Awesomplete müssten also irgendwas mit "Typ:ID" haben damit es verarbeitet werden kann.
-
-Dann muss noch die Displaynames angepasst werden.
-
-Dann  Gewichtung bauen
+3. Dann noch mal hübsch machen
 
 Dann Query.
 

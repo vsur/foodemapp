@@ -47,19 +47,44 @@ class YpoisController extends AppController
         array_push($criteria, $ordinalComponent);
       }
       // Sort criteria once at the end, assoc hast to be sorted earllier
-      // Hole eine Liste von Spalten
       foreach ($criteria as $key => $row) {
           $displayName[$key] = $row['display_name'];
       }
       array_multisort($displayName, SORT_ASC, $criteria);
 
-      // debug($criteria);
+      $criterionNames = [];
+      foreach ($criteria as $criterion) {
+        $newEntry = [];
+        $criterionType = $criterion->source();
+        $criterionTypeAction = "";
+        $criterionInitials = "";
+        switch ($criterionType) {
+          case 'BinaryComponents':
+            $criterionTypeAction = "On/Off";
+            $criterionInitials = "BC";
+            break;
 
+          case 'NominalComponents':
+            $criterionTypeAction = "auswählen";
+            $criterionInitials = "NC";
+            break;
 
-      $ypois = $this->paginate($this->Ypois);
+          case 'OrdinalComponents':
+            $criterionTypeAction = "einstellen";
+            $criterionInitials = "OC";
+            break;
+        }
+        $criterionName = $criterion->display_name . " " . $criterionTypeAction;
+        $criterionIdentifier = $criterionInitials . "." . $criterion->id;
 
-      $this->set(compact('criteria'));
-      $this->set('_serialize', ['criteria']);
+        array_push($newEntry, $criterionName);
+        array_push($newEntry, $criterionIdentifier);
+
+        array_push($criterionNames, $newEntry);
+      }
+      // debug($criterionNames);
+
+      $this->set(compact('criteria', 'criterionNames'));
     }
 
     /**
