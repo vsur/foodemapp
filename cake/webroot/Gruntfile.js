@@ -102,6 +102,6 @@ module.exports = function(grunt) {
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);
 	grunt.registerTask('doJS', ['jshint', 'concat:noBoot']);
-	grunt.registerTask('doBuild', ['sass', 'autoprefixer', 'jshint', 'concat:noBoot']);
+	grunt.registerTask('doBuild', ['sass', 'autoprefixer', 'jshint', 'concat:noBoot', 'concat:noBootBeta']);
 
 };
