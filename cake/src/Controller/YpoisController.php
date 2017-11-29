@@ -38,12 +38,15 @@ class YpoisController extends AppController
 
       $criteria = [];
       foreach ($binaryComponents as $binaryComponent) {
+        $binaryComponent->modelType = $binaryComponent->source();
         array_push($criteria, $binaryComponent);
       }
       foreach ($nominalComponents as $nominalComponent) {
+        $nominalComponent->modelType = $nominalComponent->source();
         array_push($criteria, $nominalComponent);
       }
       foreach ($ordinalComponents as $ordinalComponent) {
+        $ordinalComponent->modelType = $ordinalComponent->source();
         array_push($criteria, $ordinalComponent);
       }
       // Sort criteria once at the end, assoc hast to be sorted earllier
@@ -53,7 +56,7 @@ class YpoisController extends AppController
       array_multisort($displayName, SORT_ASC, $criteria);
 
       $criterionNames = [];
-      foreach ($criteria as $criterion) {
+      foreach ($criteria as $keyIndex => $criterion) {
         $newEntry = [];
         $criterionType = $criterion->source();
         $criterionTypeAction = "";
@@ -75,7 +78,7 @@ class YpoisController extends AppController
             break;
         }
         $criterionName = $criterion->display_name . " " . $criterionTypeAction;
-        $criterionIdentifier = $criterionInitials . "." . $criterion->id;
+        $criterionIdentifier = $criterionInitials . "." . $criterion->id . "#" . $keyIndex;
 
         array_push($newEntry, $criterionName);
         array_push($newEntry, $criterionIdentifier);

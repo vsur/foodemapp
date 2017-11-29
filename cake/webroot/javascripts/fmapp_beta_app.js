@@ -11,7 +11,7 @@ var fmApp = {
   checkInput: function() {
     var inputValue = $("#criteriaInput").val();
     if(inputValue !== "") {
-      this.addComponent();
+      this.addComponent(inputValue);
     } else {
       this.showInputError();
     }
@@ -22,8 +22,12 @@ var fmApp = {
     $("#criteriaInput").attr('placeholder', 'Kategorie wählen!').toggleClass("noChoice");
     setTimeout(function(){ $("#criteriaInput").toggleClass("noChoice"); }, 2000);
   },
-  addComponent: function() {
-    var chosenComponent = $("#criteriaInput").val();
+  addComponent: function(chosenComponent) {
+    // chosenComponent Kommt als Undiefiened an, warum???
+    // var criterionIndex =  chosenComponent.indexOf("#");
+    var criterionIndex =  chosenComponent;
+    var criterionType =  chosenComponent;
+    alert(criterionIndex);
     $("#criteriaInput").val("").attr('placeholder', '').toggleClass("chosen");
     setTimeout(function() {
       $("#criteriaInput").attr('placeholder', 'Weitere wählen').toggleClass("chosen");

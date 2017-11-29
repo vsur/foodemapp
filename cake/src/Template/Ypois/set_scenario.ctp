@@ -112,3 +112,14 @@ awesomplete.list = criterionNames;
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
 </div> <!-- /.container -->
+
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+↓↓↓ Criteria Block for JS ↓↓↓
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<script type="text/javascript">
+var criteria = <?= json_encode($criteria) ?>;
+console.log(criteria);
+</script>
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+↑↑↑↑ Criteria Block for JS ↑↑↑↑
+↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
