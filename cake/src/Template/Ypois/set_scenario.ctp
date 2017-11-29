@@ -118,7 +118,6 @@ awesomplete.list = criterionNames;
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <script type="text/javascript">
 var criteria = <?= json_encode($criteria) ?>;
-console.log(criteria);
 </script>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Criteria Block for JS ↑↑↑↑
