@@ -2839,16 +2839,16 @@ fieldset[disabled] a.btn {
   border-color: transparent; }
   .btn-default:focus, .btn-default.focus {
     color: #444;
-    background-color: #e6e6e6;
+    background-color: #e6e5e5;
     border-color: transparent; }
   .btn-default:hover {
     color: #444;
-    background-color: #e6e6e6;
+    background-color: #e6e5e5;
     border-color: transparent; }
   .btn-default:active, .btn-default.active,
   .open > .btn-default.dropdown-toggle {
     color: #444;
-    background-color: #e6e6e6;
+    background-color: #e6e5e5;
     border-color: transparent; }
     .btn-default:active:hover, .btn-default:active:focus, .btn-default:active.focus, .btn-default.active:hover, .btn-default.active:focus, .btn-default.active.focus,
     .open > .btn-default.dropdown-toggle:hover,
@@ -4222,7 +4222,7 @@ a.label:hover, a.label:focus {
 .label-default {
   background-color: #bbb; }
   .label-default[href]:hover, .label-default[href]:focus {
-    background-color: #a2a2a2; }
+    background-color: #a2a1a1; }
 
 .label-primary {
   background-color: #2196F3; }
@@ -4301,7 +4301,7 @@ a.badge:hover, a.badge:focus {
     font-size: 20px;
     font-weight: 200; }
   .jumbotron > hr {
-    border-top-color: #e0e0e0; }
+    border-top-color: #e0dfdf; }
   .container .jumbotron,
   .container-fluid .jumbotron {
     border-radius: 3px;

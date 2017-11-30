@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
 			// when this task is run, lint the Gruntfile and all js files in src
 			build: {
-				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js'],
+				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'fmapp_beta_app'],
 				dest: 'js/'
 			}
 		},
@@ -69,7 +69,8 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['**/*.js'],
-				tasks: ['jshint', 'concat:noBootBeta'],
+				tasks: ['jshint'],
+				// tasks: ['jshint', 'concat:noBootBeta'],
 				options: {
 					spawn: false,
 				},
@@ -96,7 +97,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-html');
 	grunt.loadNpmTasks('grunt-sass');
-	grunt.loadNpmTasks('jshint-stylish');
 
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);
