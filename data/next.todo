@@ -4,7 +4,9 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 1. Action für Criterion auswahl aus Awesomeplete bauen. Platzier die Dinger.
 1.1. Binary.
-bei AddCompoment in JS kommt Undiefiened an?
+
+Ausgabe der tatsächlinen Compoent Auswahl also Switch oder Attrs + Rating in je Bootstrap Cols
+
 1.2. Nominal.
 1.3. Ordinal
 

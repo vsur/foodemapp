@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
 			// when this task is run, lint the Gruntfile and all js files in src
 			build: {
-				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'fmapp_beta_app'],
+				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'javascripts/fmapp_beta_app.js'],
 				dest: 'js/'
 			}
 		},
@@ -68,18 +68,17 @@ module.exports = function(grunt) {
 		// Keep on
 		watch: {
 			scripts: {
-				files: ['**/*.js'],
-				tasks: ['jshint'],
-				// tasks: ['jshint', 'concat:noBootBeta'],
+				files: ['javascripts/*.js'],
+				tasks: ['jshint', 'concat:noBootBeta'],
 				options: {
-					spawn: false,
+					spawn: false
 				},
 			},
 			css: {
 				files: '**/*.scss',
 				tasks: ['sass'],
 				options: {
-					livereload: true,
+					livereload: true
 				},
 			},
 		}

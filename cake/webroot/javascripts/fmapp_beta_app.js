@@ -6,6 +6,7 @@ var fmApp = {
   init: function(params) {
      // … do something
   },
+  standardRating: 2, // Out of 3
   currentComponent: "",
   chosenSelection: [],
   checkInput: function() {
@@ -24,53 +25,75 @@ var fmApp = {
   },
   addComponent: function() {
     var inputValue = $("#criteriaInput").val();
-    alert(inputValue);
-    var criterionIndex =  inputValue.indexOf("#");
-    alert(criterionIndex);
-    var criterionType =  "No";
+    var chosenComponent;
+    var selectedCriterion = {
+      index   :   inputValue.slice(inputValue.indexOf("#") + 1),
+      type    :   inputValue.slice(0,2),
+      id      :   inputValue.slice(inputValue.indexOf(".") + 1, inputValue.indexOf("#"))
+    };
+    if(this.checkDataMatching(selectedCriterion)) {
+      chosenComponent = criteria[selectedCriterion.index];
+    } else {
+      this.alertMessage("Fehler bei der Datenzuordnung Ihrer Auswahl", "alert-danger");
+      console.log("Matching-Error \nAuswahl: " + criterionNames[selectedCriterion.index][0] + "\n" + "Zuordnung: " + criteria[selectedCriterion.index].display_name + "\nAus Input kommend: " + inputValue + "\n" + "Index: " + selectedCriterion.index + "\n" + "Typ: " + selectedCriterion.type + "\n" + "Model-ID: " + selectedCriterion.id);
+    }
+    // Reset input-fied
     $("#criteriaInput").val("").attr('placeholder', '').toggleClass("chosen");
     setTimeout(function() {
       $("#criteriaInput").attr('placeholder', 'Weitere wählen').toggleClass("chosen");
     }, 2000);
-    // Prepend choosen component
-    // this.chosenSelection.push(chosenComponent);
+    // Add Component to selection
     this.chosenSelection.push(
       {
-        'componentName': chosenComponent,
-        'config': {},
-        'gauge':  {},
-        'weight': 0.0
+        'componentName'   :       chosenComponent.display_name,
+        'componentType'   :       chosenComponent.modelType,
+        'componentId'     :       chosenComponent.id,
+        'rating'          :       this.standardRating,
+        'binaryState'     :       true,
+        'nominalAttribute':       null,
+        'ordinalAttribute':       null
       }
     );
-    this.currentComponent = '<p id="' + chosenComponent + '">' + chosenComponent + ' <a title="Diese Katrgorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
+    // Prepend choosen component
+    this.currentComponent = '<p id="' + chosenComponent.modelType + "." + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
     $("#criteriaChoice").append(this.currentComponent);
     $(".throwComponent").click(function() {
       var componentToDelete = $(this).parent().attr("id");
       $(this).parent().remove();
       fmApp.deleteComponent(componentToDelete);
     });
-    // Base for Gauge <svg id="fillgauge1" width="25%" height="250" onclick="gauge1.update(NewValue());"></svg>
-    var newGaugeSize = 250/3;
-    var newGauge = '<svg id="' + chosenComponent + 'Gauge" class="gaugeValue"' +
-      // Höhe stimmt noch nicht und muss auch nach Paste angepasst werden.
-      'width="' + newGaugeSize + '" height="' + newGaugeSize + '"></svg>';
-    $("#criteriaOutput").append(newGauge);
-    var gaugeObj = this.chosenSelection[this.chosenSelection.length -1];
-    gaugeObj.config = liquidFillGaugeDefaultSettings();
-    gaugeObj.config.circleColor = "#c2005d";
-    gaugeObj.config.textColor = "#7d003c";
-    gaugeObj.config.waveTextColor = "#c2005d";
-    gaugeObj.config.waveColor = "#7d003c";
-    gaugeObj.gauge = loadLiquidFillGauge(chosenComponent + "Gauge", 100, gaugeObj.config);
-    var d3Obj = d3.select("svg#" + chosenComponent + "Gauge");
-    d3Obj.on('click', function () {
-      yPos = d3.mouse(this)[1];
-      var objHeight = d3Obj.attr('height');
-      var newGaugeValue = Math.round( (objHeight - yPos) / objHeight * 100 );
-      gaugeObj.weight = newGaugeValue;
-      gaugeObj.gauge.update(gaugeObj.weight);
-    });
-    // TODO: Set right width for all gauges when addin new
+    // TODO Hier Weiter
+    $("#criteriaOutput").append(chosenComponent.display_name);
+  },
+  checkDataMatching: function(criterionToCheck) {
+    var machtingCorrect = true;
+    // Check names
+    if( criterionNames[criterionToCheck.index][0].search(criteria[criterionToCheck.index].display_name) < 0 ) {
+      machtingCorrect = false;
+    }
+    // Check types
+    var typeToCheck = "";
+    switch (criterionToCheck.type) {
+      case 'BC':
+        typeToCheck = "BinaryComponents";
+        break;
+
+      case 'NC':
+        typeToCheck = "NominalComponents";
+        break;
+
+      case 'OC':
+        typeToCheck = "OrdinalComponents";
+        break;
+    }
+    if(typeToCheck != criteria[criterionToCheck.index].modelType) {
+      machtingCorrect = false;
+    }
+    // Check ids
+    if(criterionToCheck.id != criteria[criterionToCheck.index].id) {
+      machtingCorrect = false;
+    }
+    return machtingCorrect;
   },
   deleteComponent: function(delName) {
     $("#" + delName ).remove();
@@ -103,7 +126,6 @@ var fmApp = {
    * sucess | info | warning | danger
    */
   alertMessage: function(alertText, alertState) {
-    console.log(alertState);
     if(alertState === undefined) {
       alertState = "alert-info";
     }
