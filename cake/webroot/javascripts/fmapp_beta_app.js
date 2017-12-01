@@ -62,8 +62,33 @@ var fmApp = {
       $(this).parent().remove();
       fmApp.deleteComponent(componentToDelete);
     });
-    // TODO Hier Weiter
-    $("#criteriaOutput").append(chosenComponent.display_name);
+    var labelRow = "";
+    if(this.chosenSelection.length <= 1) {
+      // Add labels to areas
+
+      labelRow += '<div class="row hidden-sm hidden-xs">';
+      labelRow +=   '<div class="col-md-6">';
+      labelRow +=     '<label class="text-info">Kategorien einstellen</label>';
+      labelRow +=   '</div>';
+      labelRow +=   '<div class="col-md-6">';
+      labelRow +=     '<label class="text-info">Kategorien einstellen</label>';
+      labelRow +=   '</div>';
+      labelRow += '</div>';
+    }
+    var chosenComponentToPaste = "";
+    var chosenComponentToPasteRating = "";
+
+    chosenComponentToPaste        +=  '<div class="row">';
+    chosenComponentToPaste        +=    '<div class="col-md-6">';
+    chosenComponentToPaste        +=      chosenComponent.display_name;
+    chosenComponentToPaste        +=    '</div>';
+
+    chosenComponentToPasteRating  +=    '<div class="col-md-6">';
+    chosenComponentToPasteRating  +=      'Rating = ' + 'Statische Ausgabe 2. Muss noch dynamisch aus chosenSelection kommen';
+    chosenComponentToPasteRating  +=     '</div>';
+    chosenComponentToPasteRating  +=  '</div>';
+
+    $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
   },
   checkDataMatching: function(criterionToCheck) {
     var machtingCorrect = true;

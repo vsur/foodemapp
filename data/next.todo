@@ -5,7 +5,9 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 1. Action für Criterion auswahl aus Awesomeplete bauen. Platzier die Dinger.
 1.1. Binary.
 
-Ausgabe der tatsächlinen Compoent Auswahl also Switch oder Attrs + Rating in je Bootstrap Cols
+Ausgabe der Krierien mit Rating. Hier Hier noch mal Überlegen wie man ein schlaues Corresponding Matching hinbekommt,
+was auch für Rating Manipultaion gebraucht wird. Irgendwas müsste da im Alpha schon gebaut sein.
+In Richtung: Suche in chosenSelection nach Eintrag mit Namen, bzw. Id und Typ.
 
 1.2. Nominal.
 1.3. Ordinal

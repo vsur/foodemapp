@@ -42,7 +42,7 @@
 
   <div class="col-md-6">
     <div id="criteriaOutput">
-
+      <label class="text-info hidden-md hidden-lg"><?= __('Einstellen und Werten der Kategorien') ?></label>
     </div>
   </div>
 </div> <!-- /.row -->
