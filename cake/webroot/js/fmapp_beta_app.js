@@ -6,7 +6,7 @@ var fmApp = {
   init: function(params) {
      // … do something
   },
-  standardRating: 2, // Out of 3
+  standardRating: 1.5, // Out of 3
   currentComponent: "",
   chosenSelection: [],
   checkInput: function() {
@@ -55,7 +55,7 @@ var fmApp = {
       }
     );
     // Prepend choosen component
-    this.currentComponent = '<p id="' + chosenComponent.modelType + "." + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
+    this.currentComponent = '<p id="criteriaList#' + chosenComponent.modelType + "." + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
     $("#criteriaChoice").append(this.currentComponent);
     $(".throwComponent").click(function() {
       var componentToDelete = $(this).parent().attr("id");
@@ -78,13 +78,13 @@ var fmApp = {
     var chosenComponentToPaste = "";
     var chosenComponentToPasteRating = "";
 
-    chosenComponentToPaste        +=  '<div class="row">';
+    chosenComponentToPaste        +=  '<div id="criteriaOptions#' + chosenComponent.modelType + "." + chosenComponent.id + '" class="row">';
     chosenComponentToPaste        +=    '<div class="col-md-6">';
     chosenComponentToPaste        +=      chosenComponent.display_name;
     chosenComponentToPaste        +=    '</div>';
 
     chosenComponentToPasteRating  +=    '<div class="col-md-6">';
-    chosenComponentToPasteRating  +=      'Rating = ' + 'Statische Ausgabe 2. Muss noch dynamisch aus chosenSelection kommen';
+    chosenComponentToPasteRating  +=      'Rating = ' + this.getRating(chosenComponent.modelType, chosenComponent.id);
     chosenComponentToPasteRating  +=     '</div>';
     chosenComponentToPasteRating  +=  '</div>';
 
@@ -129,6 +129,18 @@ var fmApp = {
     console.log("Noch Einträge:  " + this.chosenSelection.length);
     console.log(this.chosenSelection);
 
+  },
+  getRating: function(modelType, id) {
+    var selectionIndex;
+    for(var i = 0; i < this.chosenSelection.length; i++) {
+      if(this.chosenSelection[i].componentType == modelType && this.chosenSelection[i].componentId == id) {
+        selectionIndex = i;
+      } else {
+        selectionIndex = undefined;
+      }
+    }
+    var rating = this.chosenSelection[selectionIndex].rating;
+    return rating;
   },
   updateGauge: function(clickedGauge) {
     var j;
