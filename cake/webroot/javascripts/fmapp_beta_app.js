@@ -6,7 +6,7 @@ var fmApp = {
   init: function(params) {
      // … do something
   },
-  standardRating: 1.5, // Out of 3
+  standardRating: 2, // Out of 3
   currentComponent: "",
   chosenSelection: [],
   checkInput: function() {
