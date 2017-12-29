@@ -71,7 +71,7 @@ var fmApp = {
       labelRow +=     '<label class="text-info">Kategorien einstellen</label>';
       labelRow +=   '</div>';
       labelRow +=   '<div class="col-md-6">';
-      labelRow +=     '<label class="text-info">Kategorien einstellen</label>';
+      labelRow +=     '<label class="text-info">Gewichtung einstellen</label>';
       labelRow +=   '</div>';
       labelRow += '</div>';
     }
