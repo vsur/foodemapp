@@ -7,7 +7,7 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 Rating ist nun dynamisch.
 Es muss noch eine setRating gebaut werden aber dazu muss erst mal die Ratingansicht also die Sterne gebaut werden!
-THIS is Next!
+NEXt is Setzen des Rating im JS object on Click. 
 
 1.2. Nominal.
 1.3. Ordinal

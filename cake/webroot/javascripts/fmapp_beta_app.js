@@ -77,14 +77,13 @@ var fmApp = {
     }
     var chosenComponentToPaste = "";
     var chosenComponentToPasteRating = "";
-
     chosenComponentToPaste        +=  '<div id="criteriaOptions#' + chosenComponent.modelType + "." + chosenComponent.id + '" class="row">';
     chosenComponentToPaste        +=    '<div class="col-md-6">';
     chosenComponentToPaste        +=      chosenComponent.display_name;
     chosenComponentToPaste        +=    '</div>';
 
     chosenComponentToPasteRating  +=    '<div class="col-md-6">';
-    chosenComponentToPasteRating  +=      'Rating = ' + this.getRating(chosenComponent.modelType, chosenComponent.id);
+    chosenComponentToPasteRating  +=      this.buildRatingRadio(chosenComponent.modelType, chosenComponent.id);
     chosenComponentToPasteRating  +=     '</div>';
     chosenComponentToPasteRating  +=  '</div>';
 
@@ -141,6 +140,18 @@ var fmApp = {
     }
     var rating = this.chosenSelection[selectionIndex].rating;
     return rating;
+  },
+  buildRatingRadio: function(modelType, id) {
+    var ratingRadio;
+    ratingRadioStart = '<div class="rate">';
+      radiostar5 = '<input type="radio" id="star5" name="rate#' + modelType + '.' + id + '" value="5" ' + (this.getRating(modelType, id) == 5 ? 'checked' : '') + '/><label for="star5" title="text">5 stars</label>';
+      radiostar4 = '<input type="radio" id="star4" name="rate#' + modelType + '.' + id + '" value="4" ' + (this.getRating(modelType, id) == 4 ? 'checked' : '') + '/><label for="star4" title="text">4 stars</label>';
+      radiostar3 = '<input type="radio" id="star3" name="rate#' + modelType + '.' + id + '" value="3" ' + (this.getRating(modelType, id) == 3 ? 'checked' : '') + '/><label for="star3" title="text">3 stars</label>';
+      radiostar2 = '<input type="radio" id="star2" name="rate#' + modelType + '.' + id + '" value="2" ' + (this.getRating(modelType, id) == 2 ? 'checked' : '') + '/><label for="star2" title="text">2 stars</label>';
+      radiostar1 = '<input type="radio" id="star1" name="rate#' + modelType + '.' + id + '" value="1" ' + (this.getRating(modelType, id) == 1 ? 'checked' : '') + '/><label for="star1" title="text">1 star</label>';
+    ratingRadioEnd = '</div>';
+    ratingRadio = ratingRadioStart + radiostar5 + radiostar4 + radiostar3 + radiostar2 + radiostar1 + ratingRadioEnd;
+    return ratingRadio;
   },
   updateGauge: function(clickedGauge) {
     var j;
@@ -206,6 +217,7 @@ $( document ).ready(function() {
     $("#criteriaInput").val($(this).attr("name"));
     fmApp.addComponent();
   });
+
   var listDisplayState = true;
   // Cosy Show Criteria
   $("#showAllCriteria").css("cursor", "pointer").click(function(){
@@ -219,5 +231,10 @@ $( document ).ready(function() {
         listDisplayState = !listDisplayState;
       });
     });
+  });
+
+  $("#criteriaOutput").on("click", ".rate>input", function() {
+    var selectedValue = $(this).val();
+    // NEXT set Rating
   });
 });

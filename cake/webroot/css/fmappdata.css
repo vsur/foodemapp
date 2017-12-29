@@ -6528,11 +6528,54 @@ input[type="checkbox"],
 .carousel-caption h1, .carousel-caption h2, .carousel-caption h3, .carousel-caption h4, .carousel-caption h5, .carousel-caption h6 {
   color: inherit; }
 
+* {
+  margin: 0;
+  padding: 0; }
+
+.rate {
+  border: none;
+  float: left;
+  height: 30px;
+  padding: 0 0px; }
+
+.rate:not(:checked) > input {
+  position: absolute;
+  top: -9999px; }
+
+.rate:not(:checked) > label {
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  line-height: 30px;
+  color: #ccc;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-size: 30px; }
+
+.rate:not(:checked) > label:before {
+  content: '★ '; }
+
+.rate > input:checked ~ label {
+  color: #ffc700; }
+
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217; }
+
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08; }
+
 /*
  * Some Colors
  */
 body {
-  padding-top: 75px; }
+  padding-top: 74px; }
 
 .navbar-default {
   background: #7d003c;
@@ -6545,6 +6588,9 @@ body {
 
 .navbar-brand:hover, .navbar-brand:focus {
   color: #fff !important; }
+
+#criteriaOutput {
+  margin-bottom: 15px; }
 
 .components.choose {
   padding-bottom: 2em; }

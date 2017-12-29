@@ -11,6 +11,9 @@
 // Import Bootswatch Theme
 @import "bootswatch";
 
+// Import Bootswatch Theme
+@import "rate";
+
 /*
  * Some Colors
  */
@@ -18,7 +21,7 @@
 $urcd-color: #7d003c;
 
 body {
-	padding-top: 75px;
+	padding-top: 74px;
 }
 
 .navbar-default {
@@ -34,7 +37,9 @@ body {
 .navbar-brand:hover, .navbar-brand:focus {
 		color: #fff !important;
 }
-
+ #criteriaOutput {
+	 margin-bottom: 15px;
+ }
 .components.choose {
 	padding-bottom: 2em;
 }
