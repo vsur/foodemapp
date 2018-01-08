@@ -40,42 +40,14 @@ class YpoisController extends AppController
       $criteria = $this->combineAllComponetsToOneCriteriaArray($binaryComponents, $nominalComponents, $ordinalComponents);
 
       // Set combined criterion names for autocompletion and differentiation
-      $criterionNames = [];
-      foreach ($criteria as $keyIndex => $criterion) {
-        $newEntry = [];
-        $criterionType = $criterion->source();
-        $criterionTypeAction = "";
-        $criterionInitials = "";
-        switch ($criterionType) {
-          case 'BinaryComponents':
-            $criterionTypeAction = "On/Off";
-            $criterionInitials = "BC";
-            break;
+      $criterionNames = $this->setCombinedCriterionNames($criteria);
 
-          case 'NominalComponents':
-            $criterionTypeAction = "auswählen";
-            $criterionInitials = "NC";
-            break;
-
-          case 'OrdinalComponents':
-            $criterionTypeAction = "einstellen";
-            $criterionInitials = "OC";
-            break;
-        }
-        $criterionName = $criterion->display_name . " " . $criterionTypeAction;
-        $criterionIdentifier = $criterionInitials . "." . $criterion->id . "#" . $keyIndex;
-
-        array_push($newEntry, $criterionName);
-        array_push($newEntry, $criterionIdentifier);
-
-        array_push($criterionNames, $newEntry);
-      }
       // debug($criterionNames);
 
       $this->set(compact('criteria', 'criterionNames'));
     }
 
-    public function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null) {
+    protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null) {
         $criteria = [];
         foreach ($binaryComponents as $binaryComponent) {
           $binaryComponent->modelType = $binaryComponent->source();
@@ -96,6 +68,41 @@ class YpoisController extends AppController
         array_multisort($displayName, SORT_ASC, $criteria);
         return $criteria;
     }
+
+    protected function setCombinedCriterionNames($criteria = null) {
+        $criterionNames = [];
+        foreach ($criteria as $keyIndex => $criterion) {
+          $newEntry = [];
+          $criterionType = $criterion->source();
+          $criterionTypeAction = "";
+          $criterionInitials = "";
+          switch ($criterionType) {
+            case 'BinaryComponents':
+              $criterionTypeAction = "On/Off";
+              $criterionInitials = "BC";
+              break;
+
+            case 'NominalComponents':
+              $criterionTypeAction = "auswählen";
+              $criterionInitials = "NC";
+              break;
+
+            case 'OrdinalComponents':
+              $criterionTypeAction = "einstellen";
+              $criterionInitials = "OC";
+              break;
+          }
+          $criterionName = $criterion->display_name . " " . $criterionTypeAction;
+          $criterionIdentifier = $criterionInitials . "." . $criterion->id . "#" . $keyIndex;
+
+          array_push($newEntry, $criterionName);
+          array_push($newEntry, $criterionIdentifier);
+
+          array_push($criterionNames, $newEntry);
+        }
+        return $criterionNames;
+    }
+
 
     /**
      * View method
