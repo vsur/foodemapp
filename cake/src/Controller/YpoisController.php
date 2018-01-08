@@ -36,25 +36,10 @@ class YpoisController extends AppController
       // Get all OrdinalAttributes
       $ordinalComponents = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
 
-      $criteria = [];
-      foreach ($binaryComponents as $binaryComponent) {
-        $binaryComponent->modelType = $binaryComponent->source();
-        array_push($criteria, $binaryComponent);
-      }
-      foreach ($nominalComponents as $nominalComponent) {
-        $nominalComponent->modelType = $nominalComponent->source();
-        array_push($criteria, $nominalComponent);
-      }
-      foreach ($ordinalComponents as $ordinalComponent) {
-        $ordinalComponent->modelType = $ordinalComponent->source();
-        array_push($criteria, $ordinalComponent);
-      }
-      // Sort criteria once at the end, assoc hast to be sorted earllier
-      foreach ($criteria as $key => $row) {
-          $displayName[$key] = $row['display_name'];
-      }
-      array_multisort($displayName, SORT_ASC, $criteria);
+      // Wrap up all criteria
+      $criteria = $this->combineAllComponetsToOneCriteriaArray($binaryComponents, $nominalComponents, $ordinalComponents);
 
+      // Set combined criterion names for autocompletion and differentiation
       $criterionNames = [];
       foreach ($criteria as $keyIndex => $criterion) {
         $newEntry = [];
@@ -88,6 +73,28 @@ class YpoisController extends AppController
       // debug($criterionNames);
 
       $this->set(compact('criteria', 'criterionNames'));
+    }
+
+    public function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null) {
+        $criteria = [];
+        foreach ($binaryComponents as $binaryComponent) {
+          $binaryComponent->modelType = $binaryComponent->source();
+          array_push($criteria, $binaryComponent);
+        }
+        foreach ($nominalComponents as $nominalComponent) {
+          $nominalComponent->modelType = $nominalComponent->source();
+          array_push($criteria, $nominalComponent);
+        }
+        foreach ($ordinalComponents as $ordinalComponent) {
+          $ordinalComponent->modelType = $ordinalComponent->source();
+          array_push($criteria, $ordinalComponent);
+        }
+        // Sort criteria once at the end, assoc hast to be sorted earllier
+        foreach ($criteria as $key => $row) {
+            $displayName[$key] = $row['display_name'];
+        }
+        array_multisort($displayName, SORT_ASC, $criteria);
+        return $criteria;
     }
 
     /**
