@@ -9,6 +9,9 @@ var fmApp = {
   standardRating: 2, // Out of 3
   currentComponent: "",
   chosenSelection: [],
+  callTest: function() {
+      console.log("I got called");
+  },
   checkInput: function() {
     var inputValue = $("#criteriaInput").val();
     if(inputValue !== "") {
@@ -119,6 +122,19 @@ var fmApp = {
     }
     return machtingCorrect;
   },
+  findIndexOfChosenComponent: function(modelType, id) {
+      var foundIndex = null;
+      this.chosenSelection.forEach(function(component, index) {
+          // Check if type machtes
+          if(component.componentType == modelType) {
+              // Check if ID matches
+              if(component.componentId == id) {
+                  foundIndex = index;
+              }
+          }
+      });
+      return foundIndex;
+  },
   deleteComponent: function(delName) {
     $("#" + delName ).remove();
     $("#" + delName + "Gauge" ).remove();
@@ -140,6 +156,10 @@ var fmApp = {
     }
     var rating = this.chosenSelection[selectionIndex].rating;
     return rating;
+  },
+  setRating: function(indexOfChosenSelection, newRating) {
+      console.log("HIER WEITER MACHEN");
+      // go To indexOfChosenSelection entry and set newRating
   },
   buildRatingRadio: function(modelType, id) {
     var ratingRadio;
@@ -234,7 +254,17 @@ $( document ).ready(function() {
   });
 
   $("#criteriaOutput").on("click", ".rate>input", function() {
-    var selectedValue = $(this).val();
-    // NEXT set Rating
+      // Get component string of clicked rating element
+      var componentIdentifierName = $(this).attr("name");
+      // Extract ModelType of component
+      var componentModelType = componentIdentifierName.slice(componentIdentifierName.indexOf("#") + 1, componentIdentifierName.indexOf("."));
+      // Ectract Id of component
+      var componentId = componentIdentifierName.slice(componentIdentifierName.indexOf(".") + 1);
+      // Get Index to set Rating in chosenSelection
+      var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+      // Actual clicked Rating
+      var recentRating = $(this).val();
+      // Set Rating
+      fmApp.setRating(indexInSelection, recentRating);
   });
 });
