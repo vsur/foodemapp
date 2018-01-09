@@ -78,13 +78,24 @@ var fmApp = {
             labelRow += '</div>';
             labelRow += '</div>';
         }
+
         var chosenComponentToPaste = "";
-        var chosenComponentToPasteRating = "";
         chosenComponentToPaste += '<div id="criteriaOptions#' + chosenComponent.modelType + "." + chosenComponent.id + '" class="row">';
         chosenComponentToPaste += '<div class="col-md-6">';
-        chosenComponentToPaste += chosenComponent.display_name;
+        chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
+        if(chosenComponent.modelType == 'BinaryComponents') {
+            chosenComponentToPaste += this.pasteBinarySwitch(chosenComponent);
+        }
+        console.log(criteria);
+        /*
+         * Er muss paste Binary selection
+         * Dann Paste Nominal selection
+         * Dann Ordinal Selection
+         */
+
         chosenComponentToPaste += '</div>';
 
+        var chosenComponentToPasteRating = "";
         chosenComponentToPasteRating += '<div class="col-md-6">';
         chosenComponentToPasteRating += this.buildRatingRadio(chosenComponent.modelType, chosenComponent.id);
         chosenComponentToPasteRating += '</div>';
@@ -121,6 +132,18 @@ var fmApp = {
             machtingCorrect = false;
         }
         return machtingCorrect;
+    },
+    pasteBinarySwitch: function(chosenComponent) {
+        var switchString;
+        switchString += '<p>';
+        switchString += chosenComponent.display_name + ' ';
+        // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
+        switchString += '<label class="switch">';
+        switchString +=     '<input type="checkbox">';
+        switchString +=     '<span class="slider round"></span>';
+        switchString += '</label>';
+        switchString += '<p>';
+        return switchString;
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;

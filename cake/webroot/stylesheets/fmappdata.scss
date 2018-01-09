@@ -11,8 +11,11 @@
 // Import Bootswatch Theme
 @import "bootswatch";
 
-// Import Bootswatch Theme
+// Import Style for Star Rating
 @import "rate";
+
+// Import Style for Binary Switches
+@import "switch";
 
 /*
  * Some Colors
@@ -39,6 +42,10 @@ body {
 }
  #criteriaOutput {
 	 margin-bottom: 15px;
+ }
+ .componentNameHeader {
+	 font-size: 1.3em;
+	 font-weight: bolder;
  }
 .components.choose {
 	padding-bottom: 2em;
