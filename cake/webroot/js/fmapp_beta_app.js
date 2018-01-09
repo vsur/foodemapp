@@ -6,7 +6,7 @@ var fmApp = {
     init: function(params) {
         // … do something
     },
-    standardRating: 2, // Out of 3
+    standardRating: 3, // Out of 3
     currentComponent: "",
     chosenSelection: [],
     callTest: function() {
@@ -158,8 +158,12 @@ var fmApp = {
         return rating;
     },
     setRating: function(indexOfChosenSelection, newRating) {
-        console.log("HIER WEITER MACHEN");
-        // go To indexOfChosenSelection entry and set newRating
+        var componentToSetRating = this.chosenSelection[indexOfChosenSelection];
+        componentToSetRating.rating = newRating;
+        // debug
+        this.chosenSelection.forEach(function(component, index) {
+            console.log(component.componentName + ': ' + component.rating);
+        });
     },
     buildRatingRadio: function(modelType, id) {
         var ratingRadio;
