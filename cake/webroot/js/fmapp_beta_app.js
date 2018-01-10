@@ -86,7 +86,6 @@ var fmApp = {
         if(chosenComponent.modelType == 'BinaryComponents') {
             chosenComponentToPaste += this.pasteBinarySwitch(chosenComponent);
         }
-        console.log(criteria);
         /*
          * Er muss paste Binary selection
          * Dann Paste Nominal selection
@@ -134,15 +133,15 @@ var fmApp = {
         return machtingCorrect;
     },
     pasteBinarySwitch: function(chosenComponent) {
-        var switchString;
+        var switchString = '';
         switchString += '<p>';
-        switchString += chosenComponent.display_name + ' ';
+        switchString += '<span class="componentNameBinarySlider">' + chosenComponent.display_name + '</span>';
         // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
         switchString += '<label class="switch">';
-        switchString +=     '<input type="checkbox">';
+        switchString +=     '<input type="checkbox" checked>';
         switchString +=     '<span class="slider round"></span>';
         switchString += '</label>';
-        switchString += '<p>';
+        switchString += '</p>';
         return switchString;
     },
     findIndexOfChosenComponent: function(modelType, id) {

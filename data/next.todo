@@ -8,7 +8,7 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 NEXT:
 Schön machen von der Switch Ausgabe Anordnung/Größe
 
-Erst mal aber das erste undefined das ausgegegen wird entfernen? WO KOMMTS her?
+
 
 1.2. Ausgabe für Nominal
 1.3. Ausgabe für Ordinal
@@ -24,3 +24,5 @@ Dann noch mal über Ausgabe nachdenken.
 
 *** Notes ***
 Switch einfach aus Checkbox siehe https://www.w3schools.com/howto/howto_css_switch.asp
+
+Wo kam das erste undefined her? Weil du trottel eine Variable Instantierst aber nicht deklarierst und dann eine Stringverkettung machst, geht nicht! Depp!
