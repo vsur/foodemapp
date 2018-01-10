@@ -83,7 +83,7 @@ class NominalComponentsTable extends Table
         return $rules;
     }
 
-    public function getAllEntriesWithUnifiedDisplayNames ($withAttrs = null) {
+    public function getAllEntriesWithUnifiedDisplayNamesAndIconsPaths ($withAttrs = null) {
       $allNominalComponents = $this->find('all')
         // display_name is probably empty so final sorting sould be done late
         ->order([
@@ -106,6 +106,9 @@ class NominalComponentsTable extends Table
             foreach ($nominalComponent->nominal_attributes as $nominalAttribute) {
               if(empty($nominalAttribute->display_name)) {
                 $nominalAttribute->display_name = $nominalAttribute->name;
+              }
+              if(empty($nominalAttribute->icon_path)) {
+                $nominalAttribute->icon_path = 'iconPlaceholder';
               }
             }
           }

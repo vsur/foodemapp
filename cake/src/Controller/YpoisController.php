@@ -31,7 +31,7 @@ class YpoisController extends AppController
       // debug($binaryComponents->toArray());
 
       // Get all $nominalComponents with associated Attributes
-      $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
+      $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNamesAndIconsPaths($withNominalAttr = true);
 
       // Get all OrdinalAttributes
       $ordinalComponents = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);

@@ -6654,6 +6654,27 @@ body {
   padding-right: 15px;
   vertical-align: top; }
 
+.nominalAttributesContainer {
+  position: relative;
+  width: 100%; }
+
+.nominalAttributesContainer > .nominalAttribute {
+  position: relative;
+  display: block;
+  float: left;
+  margin-bottom: 15px; }
+
+.nominalAttributesContainer.fourfold > .nominalAttribute {
+  width: 25%; }
+
+.nominalAttributesContainer > .nominalAttribute > figure, .nominalAttributesContainer > .nominalAttribute > figcaption {
+  position: relative;
+  width: 100%; }
+
+.nominalAttributesContainer > .nominalAttribute > figure {
+  padding-top: 100%;
+  /* 1:1 Aspect Ratio */ }
+
 .components.choose {
   padding-bottom: 2em; }
 

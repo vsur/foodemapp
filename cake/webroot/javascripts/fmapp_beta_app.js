@@ -86,8 +86,11 @@ var fmApp = {
         if(chosenComponent.modelType == 'BinaryComponents') {
             chosenComponentToPaste += this.pasteBinarySwitch(chosenComponent);
         }
+        if(chosenComponent.modelType == 'NominalComponents') {
+            chosenComponentToPaste += this.pasteNominalAttributes(chosenComponent);
+        }
         /*
-         * Er muss paste Binary selection
+         * ✓ Binary selection
          * Dann Paste Nominal selection
          * Dann Ordinal Selection
          */
@@ -143,6 +146,33 @@ var fmApp = {
         switchString += '</label>';
         switchString += '</p>';
         return switchString;
+    },
+    pasteNominalAttributes: function(chosenComponent) {
+        console.log(chosenComponent);
+        // 3er Reihen bauen, außer bei den 4er
+        // Am besten ein Modulo 3 sonst halt 4er kacheln
+        var nominalAttributes = '';
+        // Differentiate cols for Attributes based on amount
+        if(chosenComponent.nominal_attributes.length % 3 == 0) {
+            nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer trible">';
+        } else {
+            nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
+        }
+        chosenComponent.nominal_attributes.forEach(function(nominalAttribute, index) {
+            nominalAttributes += fmApp.buildSingleNominalAttribute(nominalAttribute);
+        });
+        nominalAttributes += '</div>';
+
+        return nominalAttributes;
+    },
+    buildSingleNominalAttribute: function(nominalAttribute) {
+        var nominalAttributeToPaste = '';
+        nominalAttributeToPaste += '<div class="nominalAttribute">';
+        nominalAttributeToPaste +=      '<figure id="nomindalAttribute.' + nominalAttribute.id + '" class="' + nominalAttribute.icon_path + '">';
+        nominalAttributeToPaste +=      '</figure>';
+        nominalAttributeToPaste +=      '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
+        nominalAttributeToPaste += '</div>';
+        return nominalAttributeToPaste;
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;
