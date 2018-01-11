@@ -3,12 +3,13 @@ Problem mit der Datenlage gelöst!
 Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 1. Action für Criterion auswahl aus Awesomeplete bauen. Platzier die Dinger.
-1.1. ✓ Baue Schalte für Binary
+1.1. ✓ Baue Schalter für Binary
 1.2. Ausgabe für Nominal
 Ausgabe vorbereitet. 3 Spalter und 4 Spalter
 Next die Icons richtig setzen.
-=> Es gibt eine AI Vorlagen Datei, bei der die Zeichenflächennamen gleich der Dateinamen sind und das sollen auch die ClassenNamen sein. Noch mal anpassen wg. bindeStrichen, nicht camelcased.
-Das am besten auslagen in eine SCSS Datei. 
+Vorbereitung für CSS BG Images fertig.
+NEXT: Hier besser eine ordinäres Radio bauen!
+Nun Styling des Blocks, dann noch active Status wählen.
 
 1.3. Ausgabe für Ordinal
 

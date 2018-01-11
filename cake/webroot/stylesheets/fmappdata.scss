@@ -17,6 +17,9 @@
 // Import Style for Binary Switches
 @import "switch";
 
+// Import Icon Set Information
+@import "iconset";
+
 /*
  * Some Colors
  */
@@ -62,6 +65,9 @@ body {
 	display: block;
 	float: left;
 	margin-bottom: 15px;
+}
+.nominalAttributesContainer.triple > .nominalAttribute {
+	width: 33%;
 }
 .nominalAttributesContainer.fourfold > .nominalAttribute {
 	width: 25%;

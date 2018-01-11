@@ -154,7 +154,7 @@ var fmApp = {
         var nominalAttributes = '';
         // Differentiate cols for Attributes based on amount
         if(chosenComponent.nominal_attributes.length % 3 == 0) {
-            nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer trible">';
+            nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer triple">';
         } else {
             nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
         }
@@ -168,7 +168,7 @@ var fmApp = {
     buildSingleNominalAttribute: function(nominalAttribute) {
         var nominalAttributeToPaste = '';
         nominalAttributeToPaste += '<div class="nominalAttribute">';
-        nominalAttributeToPaste +=      '<figure id="nomindalAttribute.' + nominalAttribute.id + '" class="' + nominalAttribute.icon_path + '">';
+        nominalAttributeToPaste +=      '<figure id="nominalAttribute.' + nominalAttribute.id + '" class="attrIcons ' + nominalAttribute.icon_path + '">';
         nominalAttributeToPaste +=      '</figure>';
         nominalAttributeToPaste +=      '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
         nominalAttributeToPaste += '</div>';
