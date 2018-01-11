@@ -159,19 +159,22 @@ var fmApp = {
             nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
         }
         chosenComponent.nominal_attributes.forEach(function(nominalAttribute, index) {
-            nominalAttributes += fmApp.buildSingleNominalAttribute(nominalAttribute);
+            nominalAttributes += fmApp.buildSingleNominalAttribute(nominalAttribute, chosenComponent);
         });
         nominalAttributes += '</div>';
 
         return nominalAttributes;
     },
-    buildSingleNominalAttribute: function(nominalAttribute) {
+    buildSingleNominalAttribute: function(nominalAttribute, chosenComponent) {
         var nominalAttributeToPaste = '';
         nominalAttributeToPaste += '<div class="nominalAttribute">';
-        nominalAttributeToPaste +=      '<figure id="nominalAttribute.' + nominalAttribute.id + '" class="attrIcons ' + nominalAttribute.icon_path + '">';
-        nominalAttributeToPaste +=      '</figure>';
-        nominalAttributeToPaste +=      '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
+        nominalAttributeToPaste +=      '<input type="radio" id="nominalAttribute.' + nominalAttribute.id + '" name="attribues#' + chosenComponent.modelType + '.' + chosenComponent.id + '" value="5" />';
+        nominalAttributeToPaste +=      '<label for="nominalAttribute.' + nominalAttribute.id + '"" title="text">';
+        nominalAttributeToPaste +=          '<figure id="nominalAttribute.' + nominalAttribute.id + '" class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
+        nominalAttributeToPaste +=          '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
+        nominalAttributeToPaste +=      '</label>';
         nominalAttributeToPaste += '</div>';
+
         return nominalAttributeToPaste;
     },
     findIndexOfChosenComponent: function(modelType, id) {

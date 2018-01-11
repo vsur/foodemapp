@@ -6681,13 +6681,33 @@ body {
 .nominalAttributesContainer.fourfold > .nominalAttribute {
   width: 25%; }
 
-.nominalAttributesContainer > .nominalAttribute > figure, .nominalAttributesContainer > .nominalAttribute > figcaption {
+.nominalAttributesContainer > .nominalAttribute > input {
+  display: none; }
+
+.nominalAttributesContainer > .nominalAttribute > label,
+.nominalAttributesContainer > .nominalAttribute > label > figure,
+.nominalAttributesContainer > .nominalAttribute > label > figcaption {
   position: relative;
   width: 100%; }
 
-.nominalAttributesContainer > .nominalAttribute > figure {
+.nominalAttributesContainer > .nominalAttribute > label > figure {
   padding-top: 100%;
   /* 1:1 Aspect Ratio */ }
+
+.nominalAttributesContainer > .nominalAttribute > label > figure {
+  text-align: center; }
+
+.nominalAttributesContainer > .nominalAttribute > input ~ label:hover > figure,
+.nominalAttributesContainer > .nominalAttribute > input ~ label:hover > figcaption {
+  color: #7d003c;
+  -webkit-filter: drop-shadow(0px 0px 5px #7d003c);
+  filter: drop-shadow(0px 0px 5px #7d003c); }
+
+.nominalAttributesContainer > .nominalAttribute > input:checked ~ label > figure,
+.nominalAttributesContainer > .nominalAttribute > input:checked ~ label > figcaption {
+  color: #4CAF50;
+  -webkit-filter: drop-shadow(0px 0px 5px #4CAF50);
+  filter: drop-shadow(0px 0px 5px #4CAF50); }
 
 .components.choose {
   padding-bottom: 2em; }

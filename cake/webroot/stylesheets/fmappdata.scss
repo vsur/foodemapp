@@ -72,12 +72,33 @@ body {
 .nominalAttributesContainer.fourfold > .nominalAttribute {
 	width: 25%;
 }
-.nominalAttributesContainer > .nominalAttribute > figure, .nominalAttributesContainer > .nominalAttribute > figcaption {
+.nominalAttributesContainer > .nominalAttribute > input {
+	display: none;
+}
+.nominalAttributesContainer > .nominalAttribute > label,
+.nominalAttributesContainer > .nominalAttribute > label > figure,
+.nominalAttributesContainer > .nominalAttribute > label >figcaption {
 	position: relative;
 	width: 100%;
 }
-.nominalAttributesContainer > .nominalAttribute > figure {
+.nominalAttributesContainer > .nominalAttribute > label > figure {
 	padding-top: 100%; /* 1:1 Aspect Ratio */
+}
+.nominalAttributesContainer > .nominalAttribute > label > figure {
+	text-align: center;
+}
+// .nominalAttributesContainer > .nominalAttribute > > input:checked ~ label > figure {
+.nominalAttributesContainer > .nominalAttribute > input ~ label:hover > figure,
+.nominalAttributesContainer > .nominalAttribute > input ~ label:hover > figcaption  {
+	color: $urcd-color;
+	 -webkit-filter: drop-shadow(0px 0px 5px $urcd-color);
+	 filter: drop-shadow(0px 0px 5px $urcd-color);
+}
+.nominalAttributesContainer > .nominalAttribute > input:checked ~ label > figure,
+.nominalAttributesContainer > .nominalAttribute > input:checked ~ label > figcaption  {
+	color: $brand-success;
+	 -webkit-filter: drop-shadow(0px 0px 5px $brand-success);
+	 filter: drop-shadow(0px 0px 5px $brand-success);
 }
 .components.choose {
 	padding-bottom: 2em;
