@@ -89,9 +89,12 @@ var fmApp = {
         if(chosenComponent.modelType == 'NominalComponents') {
             chosenComponentToPaste += this.pasteNominalAttributes(chosenComponent);
         }
+        if(chosenComponent.modelType == 'OrdinalComponents') {
+            chosenComponentToPaste += this.pasteOridnalAttributes(chosenComponent);
+        }
         /*
          * ✓ Binary selection
-         * Dann Paste Nominal selection
+         * ✓ Dann Paste Nominal selection
          * Dann Ordinal Selection
          */
 
@@ -148,9 +151,6 @@ var fmApp = {
         return switchString;
     },
     pasteNominalAttributes: function(chosenComponent) {
-        console.log(chosenComponent);
-        // 3er Reihen bauen, außer bei den 4er
-        // Am besten ein Modulo 3 sonst halt 4er kacheln
         var nominalAttributes = '';
         // Differentiate cols for Attributes based on amount
         if(chosenComponent.nominal_attributes.length % 3 == 0) {
@@ -164,6 +164,13 @@ var fmApp = {
         nominalAttributes += '</div>';
 
         return nominalAttributes;
+    },
+    pasteOrdinalAttributes: function(chosenComponent) {
+        var ordinalAttributes = '';
+        ordinalAttributes += '';
+        ordinalAttributes += '</div>';
+
+        return ordinalAttributes;
     },
     buildSingleNominalAttribute: function(nominalAttribute, chosenComponent) {
         var nominalAttributeToPaste = '';
