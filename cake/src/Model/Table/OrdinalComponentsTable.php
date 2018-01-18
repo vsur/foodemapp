@@ -93,6 +93,7 @@ class OrdinalComponentsTable extends Table
       if($withAttrs) {
         $allOrdinalComponents->contain(['OrdinalAttributes' => [
           'sort' => [
+            'OrdinalAttributes.meter' => 'ASC',
             'OrdinalAttributes.display_name' => 'ASC',
             'OrdinalAttributes.name' => 'ASC'
           ]

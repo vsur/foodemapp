@@ -22,7 +22,6 @@ var fmApp = {
 
     },
     showInputError: function() {
-        // $('#criteriaInput').attr('placeholder', 'Kategorie wählen!').addClass('noChoice').delay(2000).removeClass('noChoice');
         $("#criteriaInput").attr('placeholder', 'Kategorie wählen!').toggleClass("noChoice");
         setTimeout(function() {
             $("#criteriaInput").toggleClass("noChoice");
@@ -90,7 +89,7 @@ var fmApp = {
             chosenComponentToPaste += this.pasteNominalAttributes(chosenComponent);
         }
         if(chosenComponent.modelType == 'OrdinalComponents') {
-            chosenComponentToPaste += this.pasteOridnalAttributes(chosenComponent);
+            chosenComponentToPaste += this.pasteOrdinalAttributes(chosenComponent);
         }
         /*
          * ✓ Binary selection
@@ -166,8 +165,19 @@ var fmApp = {
         return nominalAttributes;
     },
     pasteOrdinalAttributes: function(chosenComponent) {
+        console.log(chosenComponent);
+        var meterMax = chosenComponent.ordinal_attributes.pop().meter;
+        console.log("Max Meter: " + meterMax);
+        var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
+        console.log("Steps: " + rangeSteps);
         var ordinalAttributes = '';
-        ordinalAttributes += '';
+        ordinalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '">';
+        ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
+        ordinalAttributes += '<datalist id="attributes#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
+        chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
+            ordinalAttributes += '<option id="ordinal_attribute.' + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '">';
+        });
+        ordinalAttributes += '</datalist>';
         ordinalAttributes += '</div>';
 
         return ordinalAttributes;

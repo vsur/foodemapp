@@ -10,9 +10,11 @@ Moment wie sieht es denn eigentlich mit meinem Chosen-Component aus? Also dem JS
 Erst anschauen dann überlegen ob Dropdown oder Radio oder oder oder.
 => Ganz easy über einen Slider und zwar HTML Input Range!
 
+Problem. Das MEter wird nicht richtig berechnet!
+
 2. Dann Action bei Zeig-Mir Button um ein Query zu feuern.
 
-Eigentlich muss sich aus der URL immer eine GUI Bauen lassen. 
+Eigentlich muss sich aus der URL immer eine GUI Bauen lassen.
 
 3. Dann noch mal hübsch machen
 
