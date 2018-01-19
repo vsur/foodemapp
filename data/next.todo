@@ -7,11 +7,11 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 1.2. ✓ Ausgabe für Nominal
 Moment wie sieht es denn eigentlich mit meinem Chosen-Component aus? Also dem JS Array? GUI muss ja immer aus dem Array kreierbar sein!
 1.3. Ausgabe für Ordinal
-Erst anschauen dann überlegen ob Dropdown oder Radio oder oder oder.
-=> Ganz easy über einen Slider und zwar HTML Input Range!
 
-Problem. Das MEter wird nicht richtig berechnet!
-JS in Z 168 chosenComponent.ordinal_attributes.pop().meter; liefert die ID nicht meter! Da reinschauen!
+HiER Weiter: JS Zeile 208.
+Schauen wie man den Wert aus dem Input Feld Dynmisch setzen / Anzeige kann.
+Momentan scheitert es an der AnzeigeAUswahl des Elements
+
 
 2. Dann Action bei Zeig-Mir Button um ein Query zu feuern.
 

@@ -106,6 +106,7 @@ var fmApp = {
         chosenComponentToPasteRating += '</div>';
 
         $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
+        this.setCurrent_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
     },
     checkDataMatching: function(criterionToCheck) {
         var machtingCorrect = true;
@@ -165,15 +166,12 @@ var fmApp = {
         return nominalAttributes;
     },
     pasteOrdinalAttributes: function(chosenComponent) {
-        console.log(chosenComponent);
         var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
         var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
-        console.log("NUr Pop: " + meterMax.meter);
-        console.log(meterMax);
         var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
-        console.log("Steps: " + rangeSteps);
         var ordinalAttributes = '';
-        ordinalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="ordinalAttributesContainer">';
+        ordinalAttributes += '<div id="criteriaAttributes_' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="ordinalAttributesContainer">';
+        ordinalAttributes += '<p class="ordinalAttributeChoice text-primary">Dynmisch Setzen</p>';
         ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
         ordinalAttributes += '<datalist id="attributesDataList#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
         chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
@@ -193,7 +191,6 @@ var fmApp = {
         });
         ordinalAttributes += '</table>';
         ordinalAttributes += '</div>';
-
         return ordinalAttributes;
     },
     buildSingleNominalAttribute: function(nominalAttribute, chosenComponent) {
@@ -207,6 +204,12 @@ var fmApp = {
         nominalAttributeToPaste += '</div>';
 
         return nominalAttributeToPaste;
+    },
+    setCurrent_ordinalAttributeChoice_String: function(modelType, id) {
+        console.log("Kommt an");
+        var cssSelector = '#criteriaAttributes_' + modelType + '.' + id;
+        console.log("selektor:" + cssSelector);
+        console.log($("#criteriaAttributes_OrdinalComponents.2"));
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;
