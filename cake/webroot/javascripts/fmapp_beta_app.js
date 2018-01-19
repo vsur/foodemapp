@@ -166,18 +166,32 @@ var fmApp = {
     },
     pasteOrdinalAttributes: function(chosenComponent) {
         console.log(chosenComponent);
-        var meterMax = chosenComponent.ordinal_attributes.pop().meter;
-        console.log("Max Meter: " + meterMax);
+        var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
+        var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
+        console.log("NUr Pop: " + meterMax.meter);
+        console.log(meterMax);
         var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
         console.log("Steps: " + rangeSteps);
         var ordinalAttributes = '';
-        ordinalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '">';
+        ordinalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="ordinalAttributesContainer">';
         ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
-        ordinalAttributes += '<datalist id="attributes#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
+        ordinalAttributes += '<datalist id="attributesDataList#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
         chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
             ordinalAttributes += '<option id="ordinal_attribute.' + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '">';
         });
         ordinalAttributes += '</datalist>';
+        ordinalAttributes += '<table id="attributesList#' + chosenComponent.modelType + '.' + chosenComponent.id +  '" class="table table-hover">';
+        ordinalAttributes += '<tr>';
+        ordinalAttributes += '<th>#</th>';
+        ordinalAttributes += '<th>Label</th>';
+        ordinalAttributes += '</tr>';
+        chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
+            ordinalAttributes +=    '<tr>';
+            ordinalAttributes +=    '<td>' +  ordinalAttribute.meter  + '</td>';
+            ordinalAttributes +=    '<td>' +  ordinalAttribute.display_name  + '</td>';
+            ordinalAttributes +=    '</tr>';
+        });
+        ordinalAttributes += '</table>';
         ordinalAttributes += '</div>';
 
         return ordinalAttributes;

@@ -6709,6 +6709,9 @@ body {
   -webkit-filter: drop-shadow(0px 0px 5px #4CAF50);
   filter: drop-shadow(0px 0px 5px #4CAF50); }
 
+.ordinalAttributesContainer > input {
+  margin-bottom: 1em; }
+
 .components.choose {
   padding-bottom: 2em; }
 
