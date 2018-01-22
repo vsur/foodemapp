@@ -93,7 +93,11 @@ class YpoisController extends AppController
               break;
           }
           $criterionName = $criterion->display_name . " " . $criterionTypeAction;
-          $criterionIdentifier = $criterionInitials . "." . $criterion->id . "#" . $keyIndex;
+          // Selection list must have the criterions ID and the exact index of combineAllComponetsToOneCriteriaArray
+          // _C-ID_ Prefix for _ Component ID _ in combination with Repo-Source the criterion can be identified
+          // _ALLC-ID_ Prefix for _ AllComponetsToOneCriteriaArray Index _ to get find data again later
+          $criterionIdentifier = $criterionInitials . "#" . $criterion->id . "." . $keyIndex;
+          // $criterionIdentifier = $criterionInitials . "_C-ID_" . $criterion->id . "_ALLC-ID_" . $keyIndex;
 
           array_push($newEntry, $criterionName);
           array_push($newEntry, $criterionIdentifier);

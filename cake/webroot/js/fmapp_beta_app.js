@@ -35,6 +35,7 @@ var fmApp = {
             type: inputValue.slice(0, 2),
             id: inputValue.slice(inputValue.indexOf(".") + 1, inputValue.indexOf("#"))
         };
+        console.log(selectedCriterion);
         if (this.checkDataMatching(selectedCriterion)) {
             chosenComponent = criteria[selectedCriterion.index];
         } else {
@@ -79,7 +80,7 @@ var fmApp = {
         }
 
         var chosenComponentToPaste = "";
-        chosenComponentToPaste += '<div id="criteriaOptions#' + chosenComponent.modelType + "." + chosenComponent.id + '" class="row">';
+        chosenComponentToPaste += '<div id="criteriaOptions#' + chosenComponent.modelType + "-" + chosenComponent.id + '" class="row">';
         chosenComponentToPaste += '<div class="col-md-6">';
         chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
         if(chosenComponent.modelType == 'BinaryComponents') {
@@ -207,9 +208,9 @@ var fmApp = {
     },
     setCurrent_ordinalAttributeChoice_String: function(modelType, id) {
         console.log("Kommt an");
-        var cssSelector = '#criteriaAttributes_' + modelType + '.' + id;
-        console.log("selektor:" + cssSelector);
-        console.log($("#criteriaAttributes_OrdinalComponents.2"));
+        var cssSelector = '#criteriaAttributes#' + modelType + '-' + id;
+        console.log("selektor: " + cssSelector);
+        console.log($("#criteriaOptions#OrdinalComponents-2"));
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;
@@ -307,7 +308,7 @@ var fmApp = {
 $(document).ready(function() {
     // Function for selection
     window.addEventListener("awesomplete-select", function(e) {
-        // User types somethin and a select is made.
+        // User types something and a select is made.
         // Therefor action button shall apear,
         $("#chooseAction").slideDown("fast");
     }, false);
