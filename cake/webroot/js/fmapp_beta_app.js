@@ -7,6 +7,11 @@ var fmApp = {
         // … do something
     },
     standardRating: 3, // Out of 3
+    componentModelTypePrefix: '_C-MODEL_',
+    componentIdPrefix: '_C-ID_',
+    nominalAttributeIdPrefix: '_NCATTR-ID_',
+    ordinnalAttributeIdPrefix: '_OCATTR-ID_',
+    combinedCriteriaArrayIndex: '_ALLC-ID_',
     currentComponent: "",
     chosenSelection: [],
     callTest: function() {
@@ -31,11 +36,12 @@ var fmApp = {
         var inputValue = $("#criteriaInput").val();
         var chosenComponent;
         var selectedCriterion = {
-            index: inputValue.slice(inputValue.indexOf("#") + 1),
             type: inputValue.slice(0, 2),
-            id: inputValue.slice(inputValue.indexOf(".") + 1, inputValue.indexOf("#"))
+            // Slice ID between prefixes out of string
+            id: inputValue.slice( inputValue.indexOf(this.componentIdPrefix) + this.componentIdPrefix.length,  inputValue.indexOf(this.combinedCriteriaArrayIndex) ) ,
+            // Slice Index position in Array after last prefix out of string
+            index: inputValue.slice( inputValue.indexOf(this.combinedCriteriaArrayIndex) + this.combinedCriteriaArrayIndex.length )
         };
-        console.log(selectedCriterion);
         if (this.checkDataMatching(selectedCriterion)) {
             chosenComponent = criteria[selectedCriterion.index];
         } else {
@@ -58,7 +64,7 @@ var fmApp = {
             'ordinalAttribute': null
         });
         // Prepend choosen component
-        this.currentComponent = '<p id="criteriaList#' + chosenComponent.modelType + "." + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
+        this.currentComponent = '<p id="criteriaList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
         $("#criteriaChoice").append(this.currentComponent);
         $(".throwComponent").click(function() {
             var componentToDelete = $(this).parent().attr("id");
@@ -80,7 +86,7 @@ var fmApp = {
         }
 
         var chosenComponentToPaste = "";
-        chosenComponentToPaste += '<div id="criteriaOptions#' + chosenComponent.modelType + "-" + chosenComponent.id + '" class="row">';
+        chosenComponentToPaste += '<div id="criteriaOptions' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="row">';
         chosenComponentToPaste += '<div class="col-md-6">';
         chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
         if(chosenComponent.modelType == 'BinaryComponents') {
@@ -155,9 +161,9 @@ var fmApp = {
         var nominalAttributes = '';
         // Differentiate cols for Attributes based on amount
         if(chosenComponent.nominal_attributes.length % 3 == 0) {
-            nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer triple">';
+            nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer triple">';
         } else {
-            nominalAttributes += '<div id="criteriaAttributes#' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
+            nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
         }
         chosenComponent.nominal_attributes.forEach(function(nominalAttribute, index) {
             nominalAttributes += fmApp.buildSingleNominalAttribute(nominalAttribute, chosenComponent);
@@ -171,15 +177,15 @@ var fmApp = {
         var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
         var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
         var ordinalAttributes = '';
-        ordinalAttributes += '<div id="criteriaAttributes_' + chosenComponent.modelType + '.' + chosenComponent.id + '" class="ordinalAttributesContainer">';
-        ordinalAttributes += '<p class="ordinalAttributeChoice text-primary">Dynmisch Setzen</p>';
-        ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
-        ordinalAttributes += '<datalist id="attributesDataList#' + chosenComponent.modelType + '.' + chosenComponent.id +  '">';
+        ordinalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="ordinalAttributesContainer">';
+        ordinalAttributes += '<p class="ordinalAttributeChoice text-primary">Dynamisch Setzen</p>';
+        ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
+        ordinalAttributes += '<datalist id="attributesDataList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
         chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
-            ordinalAttributes += '<option id="ordinal_attribute.' + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '">';
+            ordinalAttributes += '<option id="ordinalAttribute' + this.ordinnalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '">';
         });
         ordinalAttributes += '</datalist>';
-        ordinalAttributes += '<table id="attributesList#' + chosenComponent.modelType + '.' + chosenComponent.id +  '" class="table table-hover">';
+        ordinalAttributes += '<table id="attributesList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '" class="table table-hover">';
         ordinalAttributes += '<tr>';
         ordinalAttributes += '<th>#</th>';
         ordinalAttributes += '<th>Label</th>';
@@ -197,9 +203,9 @@ var fmApp = {
     buildSingleNominalAttribute: function(nominalAttribute, chosenComponent) {
         var nominalAttributeToPaste = '';
         nominalAttributeToPaste += '<div class="nominalAttribute">';
-        nominalAttributeToPaste +=      '<input type="radio" id="nominalAttribute.' + nominalAttribute.id + '" name="attribues#' + chosenComponent.modelType + '.' + chosenComponent.id + '" value="5" />';
-        nominalAttributeToPaste +=      '<label for="nominalAttribute.' + nominalAttribute.id + '"" title="text">';
-        nominalAttributeToPaste +=          '<figure id="nominalAttribute.' + nominalAttribute.id + '" class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
+        nominalAttributeToPaste +=      '<input type="radio" id="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" />';
+        nominalAttributeToPaste +=      '<label for="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
+        nominalAttributeToPaste +=          '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
         nominalAttributeToPaste +=          '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
         nominalAttributeToPaste +=      '</label>';
         nominalAttributeToPaste += '</div>';
@@ -208,9 +214,9 @@ var fmApp = {
     },
     setCurrent_ordinalAttributeChoice_String: function(modelType, id) {
         console.log("Kommt an");
-        var cssSelector = '#criteriaAttributes#' + modelType + '-' + id;
+        var cssSelector = '#criteriaAttributes' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id;
         console.log("selektor: " + cssSelector);
-        console.log($("#criteriaOptions#OrdinalComponents-2"));
+        console.log($("#criteriaOptions_C-MODEL_OrdinalComponents_C-ID_2"));
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;

@@ -10,7 +10,7 @@ Moment wie sieht es denn eigentlich mit meinem Chosen-Component aus? Also dem JS
 
 HiER Weiter: JS Zeile 208.
 Schauen wie man den Wert aus dem Input Feld Dynmisch setzen / Anzeige kann.
-Momentan scheitert es an der AnzeigeAUswahl des Elements
+Anzeige scheiterte Weil der Veit ein Dummer Dummer Depp ist! Sau genial ID mit # im Namen zu vergeben und . als ID Prefix. Das geht halt nicht du Trottel das dynamisch auszufählen
 
 
 2. Dann Action bei Zeig-Mir Button um ein Query zu feuern.
@@ -28,3 +28,5 @@ Dann noch mal über Ausgabe nachdenken.
 Switch einfach aus Checkbox siehe https://www.w3schools.com/howto/howto_css_switch.asp
 
 Wo kam das erste undefined her? Weil du trottel eine Variable in JS instantierst aber nicht deklarierst und dann eine Stringverkettung machst, geht nicht! Depp!
+
+Nehme nie #/. mit in die Class- bzw Id-Namen mit auf, jQuery kriegt das nicht getrennt, wie auch! Dummer Veit.
