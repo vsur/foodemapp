@@ -5,13 +5,12 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 1. Action für Criterion auswahl aus Awesomeplete bauen. Platzier die Dinger.
 1.1. ✓ Baue Schalter für Binary
 1.2. ✓ Ausgabe für Nominal
-Moment wie sieht es denn eigentlich mit meinem Chosen-Component aus? Also dem JS Array? GUI muss ja immer aus dem Array kreierbar sein!
-1.3. Ausgabe für Ordinal
+1.3. ✓ Ausgabe für Ordinal
 
-HiER Weiter: JS Zeile 208.
-Schauen wie man den Wert aus dem Input Feld Dynmisch setzen / Anzeige kann.
-Anzeige scheiterte Weil der Veit ein Dummer Dummer Depp ist! Sau genial ID mit # im Namen zu vergeben und . als ID Prefix. Das geht halt nicht du Trottel das dynamisch auszufählen
+Hier weiter JS 368 Die Ratings werden wohl nicht mehr im JS Object gesetztz, weil noch mit #/. gesiced wird. Das muss korrigiert werden
 
+1.4 Setze Nominal-Attr-Auswahl im JS Object chosenSelection
+1.5 Setze Ordinal-Attr-Auswahl im JS Object chosenSelection
 
 2. Dann Action bei Zeig-Mir Button um ein Query zu feuern.
 

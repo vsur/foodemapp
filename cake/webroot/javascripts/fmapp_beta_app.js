@@ -10,7 +10,7 @@ var fmApp = {
     componentModelTypePrefix: '_C-MODEL_',
     componentIdPrefix: '_C-ID_',
     nominalAttributeIdPrefix: '_NCATTR-ID_',
-    ordinnalAttributeIdPrefix: '_OCATTR-ID_',
+    ordinalAttributeIdPrefix: '_OCATTR-ID_',
     combinedCriteriaArrayIndex: '_ALLC-ID_',
     currentComponent: "",
     chosenSelection: [],
@@ -182,7 +182,8 @@ var fmApp = {
         ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
         ordinalAttributes += '<datalist id="attributesDataList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
         chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
-            ordinalAttributes += '<option id="ordinalAttribute' + this.ordinnalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '">';
+            console.log(ordinalAttribute.id);
+            ordinalAttributes += '<option id="ordinalAttribute' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '" name="' + ordinalAttribute.display_name + '">';
         });
         ordinalAttributes += '</datalist>';
         ordinalAttributes += '<table id="attributesList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '" class="table table-hover">';
@@ -213,10 +214,17 @@ var fmApp = {
         return nominalAttributeToPaste;
     },
     setCurrent_ordinalAttributeChoice_String: function(modelType, id) {
-        console.log("Kommt an");
-        var cssSelector = '#criteriaAttributes' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id;
-        console.log("selektor: " + cssSelector);
-        console.log($("#criteriaOptions_C-MODEL_OrdinalComponents_C-ID_2"));
+        var cssSelector = "" + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id;
+        var currentMeter = $("#criteriaAttributes" + cssSelector + "> input").val();
+        // Get display_name to selected meter
+        var display_nameToShow = null;
+        $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
+            var ocId = null;
+            if(this.value == currentMeter ) {
+                display_nameToShow = $(this).attr("name");
+            }
+        });
+        $("#criteriaAttributes" + cssSelector + "> p.ordinalAttributeChoice").html(display_nameToShow);
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;
