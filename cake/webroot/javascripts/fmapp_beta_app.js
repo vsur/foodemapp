@@ -272,11 +272,11 @@ var fmApp = {
     buildRatingRadio: function(modelType, id) {
         var ratingRadio;
         ratingRadioStart = '<div class="rate">';
-        radiostar5 = '<input type="radio" id="star5#' + modelType + '.' + id + '" name="rate#' + modelType + '.' + id + '" value="5" ' + (this.getRating(modelType, id) == 5 ? 'checked' : '') + '/><label for="star5#' + modelType + '.' + id + '" title="text">5 stars</label>';
-        radiostar4 = '<input type="radio" id="star4#' + modelType + '.' + id + '" name="rate#' + modelType + '.' + id + '" value="4" ' + (this.getRating(modelType, id) == 4 ? 'checked' : '') + '/><label for="star4#' + modelType + '.' + id + '" title="text">4 stars</label>';
-        radiostar3 = '<input type="radio" id="star3#' + modelType + '.' + id + '" name="rate#' + modelType + '.' + id + '" value="3" ' + (this.getRating(modelType, id) == 3 ? 'checked' : '') + '/><label for="star3#' + modelType + '.' + id + '" title="text">3 stars</label>';
-        radiostar2 = '<input type="radio" id="star2#' + modelType + '.' + id + '" name="rate#' + modelType + '.' + id + '" value="2" ' + (this.getRating(modelType, id) == 2 ? 'checked' : '') + '/><label for="star2#' + modelType + '.' + id + '" title="text">2 stars</label>';
-        radiostar1 = '<input type="radio" id="star1#' + modelType + '.' + id + '" name="rate#' + modelType + '.' + id + '" value="1" ' + (this.getRating(modelType, id) == 1 ? 'checked' : '') + '/><label for="star1#' + modelType + '.' + id + '" title="text">1 star</label>';
+        radiostar5 = '<input type="radio" id="star5' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="5" ' + (this.getRating(modelType, id) == 5 ? 'checked' : '') + '/><label for="star5' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">5 stars</label>';
+        radiostar4 = '<input type="radio" id="star4' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="4" ' + (this.getRating(modelType, id) == 4 ? 'checked' : '') + '/><label for="star4' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">4 stars</label>';
+        radiostar3 = '<input type="radio" id="star3' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="3" ' + (this.getRating(modelType, id) == 3 ? 'checked' : '') + '/><label for="star3' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">3 stars</label>';
+        radiostar2 = '<input type="radio" id="star2' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="2" ' + (this.getRating(modelType, id) == 2 ? 'checked' : '') + '/><label for="star2' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">2 stars</label>';
+        radiostar1 = '<input type="radio" id="star1' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="1" ' + (this.getRating(modelType, id) == 1 ? 'checked' : '') + '/><label for="star1' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">1 star</label>';
         ratingRadioEnd = '</div>';
         ratingRadio = ratingRadioStart + radiostar5 + radiostar4 + radiostar3 + radiostar2 + radiostar1 + ratingRadioEnd;
         return ratingRadio;
@@ -365,9 +365,9 @@ $(document).ready(function() {
         // Get component string of clicked rating element
         var componentIdentifierName = $(this).attr("name");
         // Extract ModelType of component
-        var componentModelType = componentIdentifierName.slice(componentIdentifierName.indexOf("#") + 1, componentIdentifierName.indexOf("."));
+        var componentModelType = componentIdentifierName.slice(componentIdentifierName.indexOf(fmApp.componentModelTypePrefix) + fmApp.componentModelTypePrefix.length, componentIdentifierName.indexOf(fmApp.componentIdPrefix));
         // Ectract Id of component
-        var componentId = componentIdentifierName.slice(componentIdentifierName.indexOf(".") + 1);
+        var componentId = componentIdentifierName.slice(componentIdentifierName.indexOf(fmApp.componentIdPrefix) + fmApp.componentIdPrefix.length);
         // Get Index to set Rating in chosenSelection
         var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
         // Actual clicked Rating
