@@ -14,9 +14,6 @@ var fmApp = {
     combinedCriteriaArrayIndex: '_ALLC-ID_',
     currentComponent: "",
     chosenSelection: [],
-    callTest: function() {
-        console.log("I got called");
-    },
     checkInput: function() {
         var inputValue = $("#criteriaInput").val();
         if (inputValue !== "") {
@@ -37,10 +34,10 @@ var fmApp = {
         var chosenComponent;
         var selectedCriterion = {
             type: inputValue.slice(0, 2),
-            // Slice ID between prefixes out of string
-            id: inputValue.slice( inputValue.indexOf(this.componentIdPrefix) + this.componentIdPrefix.length,  inputValue.indexOf(this.combinedCriteriaArrayIndex) ) ,
-            // Slice Index position in Array after last prefix out of string
-            index: inputValue.slice( inputValue.indexOf(this.combinedCriteriaArrayIndex) + this.combinedCriteriaArrayIndex.length )
+            // Get ID between prefixes out of string
+            id: this.sliceComponentIdOffString(inputValue),
+            // Get Index position in array after last prefix out of string
+            index: this.sliceCombinedCriteriaArrayIndexOffString(inputValue)
         };
         if (this.checkDataMatching(selectedCriterion)) {
             chosenComponent = criteria[selectedCriterion.index];
@@ -60,8 +57,8 @@ var fmApp = {
             'componentId': chosenComponent.id,
             'rating': this.standardRating,
             'binaryState': true,
-            'nominalAttribute': null,
-            'ordinalAttribute': null
+            'nominalAttributeId': null,
+            'ordinalAttributeId': null
         });
         // Prepend choosen component
         this.currentComponent = '<p id="criteriaList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
@@ -172,6 +169,11 @@ var fmApp = {
 
         return nominalAttributes;
     },
+    setNominalChoice: function(indexOfChosenSelection, newNominalAttributeId) {
+        var componentToSetNominalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
+        componentToSetNominalAttributeChoice.nominalAttributeId = newNominalAttributeId;
+        console.log(this.chosenSelection[indexOfChosenSelection]);
+    },
     pasteOrdinalAttributes: function(chosenComponent) {
         var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
         var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
@@ -182,7 +184,6 @@ var fmApp = {
         ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
         ordinalAttributes += '<datalist id="attributesDataList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
         chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
-            console.log(ordinalAttribute.id);
             ordinalAttributes += '<option id="ordinalAttribute' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '" name="' + ordinalAttribute.display_name + '">';
         });
         ordinalAttributes += '</datalist>';
@@ -239,6 +240,22 @@ var fmApp = {
         });
         return foundIndex;
     },
+    sliceComponentModelTypeOffString: function(findModelIn) {
+        var foundModelType = findModelIn.slice(findModelIn.indexOf(this.componentModelTypePrefix) + this.componentModelTypePrefix.length, findModelIn.indexOf(this.componentIdPrefix));
+        return foundModelType;
+    },
+    sliceComponentIdOffString: function(findIdIn) {
+        var foundComponentId = findIdIn.slice(findIdIn.indexOf(this.componentIdPrefix) + this.componentIdPrefix.length);
+        return parseInt(foundComponentId);
+    },
+    sliceCombinedCriteriaArrayIndexOffString: function(findCombinedCriteriaArrayIndexIn) {
+        var foundCombinedCriteriaArrayIndex = findCombinedCriteriaArrayIndexIn.slice( findCombinedCriteriaArrayIndexIn.indexOf(this.combinedCriteriaArrayIndex) + this.combinedCriteriaArrayIndex.length );
+        return foundCombinedCriteriaArrayIndex;
+    },
+    sliceNominalAttributeIdOffString: function(findNominalAttributeIdIn) {
+        var foundNominalAttributeId = findNominalAttributeIdIn.slice(findNominalAttributeIdIn.indexOf(this.nominalAttributeIdPrefix) + this.nominalAttributeIdPrefix.length);
+        return parseInt(foundNominalAttributeId);
+    },
     deleteComponent: function(delName) {
         $("#" + delName).remove();
         $("#" + delName + "Gauge").remove();
@@ -264,7 +281,6 @@ var fmApp = {
     setRating: function(indexOfChosenSelection, newRating) {
         var componentToSetRating = this.chosenSelection[indexOfChosenSelection];
         componentToSetRating.rating = newRating;
-        // debug
         this.chosenSelection.forEach(function(component, index) {
             console.log(component.componentName + ': ' + component.rating);
         });
@@ -361,13 +377,33 @@ $(document).ready(function() {
         });
     });
 
+    // Click handler for nominal attribute choice
+    $("#criteriaOutput").on("click", ".nominalAttributesContainer > .nominalAttribute > input", function() {
+        console.log($(this));
+        // Get component string of clicked nomnial attribuite element
+        var componentIdentifierName = $(this).attr("name");
+        // Get nominal attribute string of clicked nomnial attribuite element
+        var nominalAttributeIdentifierName = this.id;
+        // Extract ModelType of component
+        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        // Extract Id of component
+        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
+        // Get Index to set Rating in chosenSelection
+        var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+        // Extract id of nominal attribute
+        var nominalAttributeId = fmApp.sliceNominalAttributeIdOffString(nominalAttributeIdentifierName);
+        // Set attribute in Comoponent
+        fmApp.setNominalChoice(indexInSelection, nominalAttributeId);
+    });
+
+    // Click handler for rating
     $("#criteriaOutput").on("click", ".rate>input", function() {
         // Get component string of clicked rating element
         var componentIdentifierName = $(this).attr("name");
         // Extract ModelType of component
-        var componentModelType = componentIdentifierName.slice(componentIdentifierName.indexOf(fmApp.componentModelTypePrefix) + fmApp.componentModelTypePrefix.length, componentIdentifierName.indexOf(fmApp.componentIdPrefix));
-        // Ectract Id of component
-        var componentId = componentIdentifierName.slice(componentIdentifierName.indexOf(fmApp.componentIdPrefix) + fmApp.componentIdPrefix.length);
+        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        // Extract Id of component
+        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
         // Get Index to set Rating in chosenSelection
         var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
         // Actual clicked Rating

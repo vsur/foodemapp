@@ -6690,6 +6690,10 @@ body {
   position: relative;
   width: 100%; }
 
+.nominalAttributesContainer > .nominalAttribute > label > figcaption {
+  text-align: center;
+  width: 100%; }
+
 .nominalAttributesContainer > .nominalAttribute > label > figure {
   padding-top: 100%;
   /* 1:1 Aspect Ratio */ }

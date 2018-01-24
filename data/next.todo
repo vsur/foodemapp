@@ -6,11 +6,9 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 1.1. ✓ Baue Schalter für Binary
 1.2. ✓ Ausgabe für Nominal
 1.3. ✓ Ausgabe für Ordinal
+1.4. ✓ Setze Nominal-Attr-Auswahl im JS Object chosenSelection
 
-Hier weiter JS 368 Die Ratings werden wohl nicht mehr im JS Object gesetztz, weil noch mit #/. gesiced wird. Das muss korrigiert werden
-
-1.4 Setze Nominal-Attr-Auswahl im JS Object chosenSelection
-1.5 Setze Ordinal-Attr-Auswahl im JS Object chosenSelection
+Next: 1.5 Setze Ordinal-Attr-Auswahl im JS Object chosenSelection
 
 2. Dann Action bei Zeig-Mir Button um ein Query zu feuern.
 
