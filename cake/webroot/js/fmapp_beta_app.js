@@ -110,7 +110,11 @@ var fmApp = {
         chosenComponentToPasteRating += '</div>';
 
         $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
-        this.setCurrent_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
+
+        // Set ordinal attribute choice string initialy
+        if(chosenComponent.modelType == 'OrdinalComponents') {
+            this.setCurrent_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
+        }
     },
     checkDataMatching: function(criterionToCheck) {
         var machtingCorrect = true;
@@ -174,6 +178,11 @@ var fmApp = {
         componentToSetNominalAttributeChoice.nominalAttributeId = newNominalAttributeId;
         console.log(this.chosenSelection[indexOfChosenSelection]);
     },
+    setOrdinalChoice: function(indexOfChosenSelection, newOrdinalAttributeId) {
+        var componentToSetOrdinalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
+        componentToSetOrdinalAttributeChoice.ordinalAttributeId = newOrdinalAttributeId;
+        console.log(this.chosenSelection[indexOfChosenSelection]);
+    },
     pasteOrdinalAttributes: function(chosenComponent) {
         var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
         var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
@@ -218,14 +227,26 @@ var fmApp = {
         var cssSelector = "" + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id;
         var currentMeter = $("#criteriaAttributes" + cssSelector + "> input").val();
         // Get display_name to selected meter
-        var display_nameToShow = null;
+        var displayNameToShow = this.findDisplayNameOfChoosenOrdinalAttribute(cssSelector, currentMeter);
+        $("#criteriaAttributes" + cssSelector + "> p.ordinalAttributeChoice").html(displayNameToShow);
+    },
+    findDisplayNameOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
+        var foundDisplayName = null;
         $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
-            var ocId = null;
             if(this.value == currentMeter ) {
-                display_nameToShow = $(this).attr("name");
+                foundDisplayName = $(this).attr("name");
             }
         });
-        $("#criteriaAttributes" + cssSelector + "> p.ordinalAttributeChoice").html(display_nameToShow);
+        return foundDisplayName;
+    },
+    findIdOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
+        var foundId = null;
+        $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
+            if(this.value == currentMeter ) {
+                foundId = fmApp.sliceOrdinalAttributeIdOffString(this.id);
+            }
+        });
+        return foundId;
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;
@@ -255,6 +276,10 @@ var fmApp = {
     sliceNominalAttributeIdOffString: function(findNominalAttributeIdIn) {
         var foundNominalAttributeId = findNominalAttributeIdIn.slice(findNominalAttributeIdIn.indexOf(this.nominalAttributeIdPrefix) + this.nominalAttributeIdPrefix.length);
         return parseInt(foundNominalAttributeId);
+    },
+    sliceOrdinalAttributeIdOffString: function(findOrdinalAttributeIdIn) {
+        var foundOrdinalAttributeId = findOrdinalAttributeIdIn.slice(findOrdinalAttributeIdIn.indexOf(this.ordinalAttributeIdPrefix) + this.ordinalAttributeIdPrefix.length);
+        return parseInt(foundOrdinalAttributeId);
     },
     deleteComponent: function(delName) {
         $("#" + delName).remove();
@@ -392,8 +417,30 @@ $(document).ready(function() {
         var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
         // Extract id of nominal attribute
         var nominalAttributeId = fmApp.sliceNominalAttributeIdOffString(nominalAttributeIdentifierName);
-        // Set attribute in Comoponent
+        // Set attribute choice in Selection on update
         fmApp.setNominalChoice(indexInSelection, nominalAttributeId);
+    });
+
+    // Click handler for ordinal attribute choice
+    $("#criteriaOutput").on("mousedown mousemove mouseup", ".ordinalAttributesContainer > input", function() {
+        // Get component string of clicked rating element
+        var componentIdentifierName = $(this).attr("list");
+        // Extract ModelType of component
+        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        // Extract Id of component
+        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
+        // Get Index to set Rating in chosenSelection
+        var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+        // Actual clicked Rating
+        var recentOrdinalAttributeMeter = $(this).val();
+        // Build CSS Selector
+        var cssSelector = "" + fmApp.componentModelTypePrefix + componentModelType + fmApp.componentIdPrefix + componentId;
+        // Get id of current selected ordinal attribute
+        var recentOrdinalAttributeId = fmApp.findIdOfChoosenOrdinalAttribute(cssSelector, recentOrdinalAttributeMeter);
+        // Set ordinal attribute choice string on update
+        fmApp.setCurrent_ordinalAttributeChoice_String(componentModelType, componentId);
+        // Set ordinal attribute choice in Selection on update
+        fmApp.setOrdinalChoice(indexInSelection, recentOrdinalAttributeId);
     });
 
     // Click handler for rating
