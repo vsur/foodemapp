@@ -56,7 +56,7 @@ var fmApp = {
             'componentType': chosenComponent.modelType,
             'componentId': chosenComponent.id,
             'rating': this.standardRating,
-            'binaryState': true,
+            'binaryState': null,
             'nominalAttributeId': null,
             'ordinalAttributeId': null
         });
@@ -88,6 +88,7 @@ var fmApp = {
         chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
         if(chosenComponent.modelType == 'BinaryComponents') {
             chosenComponentToPaste += this.pasteBinarySwitch(chosenComponent);
+            this.setBinaryChoice(this.findIndexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), true);
         }
         if(chosenComponent.modelType == 'NominalComponents') {
             chosenComponentToPaste += this.pasteNominalAttributes(chosenComponent);
@@ -148,7 +149,7 @@ var fmApp = {
     },
     pasteBinarySwitch: function(chosenComponent) {
         var switchString = '';
-        switchString += '<p>';
+        switchString += '<p class="binaryComponentContainer">';
         switchString += '<span class="componentNameBinarySlider">' + chosenComponent.display_name + '</span>';
         // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
         switchString += '<label class="switch">';
@@ -172,6 +173,11 @@ var fmApp = {
         nominalAttributes += '</div>';
 
         return nominalAttributes;
+    },
+    setBinaryChoice: function(indexOfChosenSelection, newBinaryState) {
+        var componentToSetBinaryChoice = this.chosenSelection[indexOfChosenSelection];
+        componentToSetBinaryChoice.binaryState = newBinaryState;
+        console.log(this.chosenSelection[indexOfChosenSelection]);
     },
     setNominalChoice: function(indexOfChosenSelection, newNominalAttributeId) {
         var componentToSetNominalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
@@ -402,9 +408,23 @@ $(document).ready(function() {
         });
     });
 
+    // Click handler for binary choice
+    $("#criteriaOutput").on("click", ".binaryComponentContainer > label.switch > input", function() {
+        // Get component string of clicked nomnial attribuite element
+        var componentIdentifierName = $(this).parent().parent().parent().parent().attr("id");
+        // Extract ModelType of component
+        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        // Extract Id of component
+        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
+        // Get Index to set Rating in chosenSelection
+        var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+        // Get recent binary component state
+        var recentBinaryState = $(this).is(":checked");
+        // Set binary choice in Selection on update
+        fmApp.setBinaryChoice(indexInSelection, recentBinaryState);
+    });
     // Click handler for nominal attribute choice
     $("#criteriaOutput").on("click", ".nominalAttributesContainer > .nominalAttribute > input", function() {
-        console.log($(this));
         // Get component string of clicked nomnial attribuite element
         var componentIdentifierName = $(this).attr("name");
         // Get nominal attribute string of clicked nomnial attribuite element
