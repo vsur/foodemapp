@@ -10,11 +10,14 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 1.5. ✓ Setze Ordinal-Attr-Auswahl im JS Object chosenSelection
 1.6. ✓ Setze Binary-Compnent-Auswahl im JS Object choosen Selection
 
-Param aus Comp und Attr Kürzel  = Rating.
+2.1. ✓ Query bauen
+2.2. Set Scenario aus Query GUI bauen
+=> Kontrollvariable und JSON-Object ist schon gebaut aus PARAMs = configuredSelection
+=> Abfrage geht auch schon. Nun muss noch über das Object Iteriert werden und die Dinger gebaut werden.
+Weiter Zeile 386
 
-2. Dann Action bei Zeig-Mir Button um ein Query zu feuern.
+2.3. Aus Query dann neu Search Matches bauen
 
-JA Funktion die Link baut und auf Cake Feuert, dort wieder alles zerlegt und dann was einzeigt
 
 3. Dann noch mal hübsch machen
 

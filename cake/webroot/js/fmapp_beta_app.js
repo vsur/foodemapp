@@ -338,11 +338,24 @@ var fmApp = {
     },
     comparePois: function() {
         var paramString = "?";
-        for (var i = 0; i < this.chosenSelection.length; i++) {
-            paramString += this.chosenSelection[i].componentName + "=" + this.chosenSelection[i].weight;
-            paramString += i < (this.chosenSelection.length - 1) ? "&" : "";
-        }
-        window.location = '../pois/matchesPie/' + paramString;
+        var url = '../ypois/findMatches/';
+        this.chosenSelection.forEach(function(component, index) {
+            switch (component.componentType) {
+                case 'BinaryComponents':
+                    paramString += 'BC' + fmApp.componentIdPrefix + component.componentId + '=' + component.rating;
+                    break;
+
+                case 'NominalComponents':
+                    paramString += 'NC' + fmApp.componentIdPrefix + component.componentId +  fmApp.nominalAttributeIdPrefix + component.nominalAttributeId +  '=' + component.rating;
+                    break;
+
+                case 'OrdinalComponents':
+                    paramString += 'OC' + fmApp.componentIdPrefix + component.componentId +  fmApp.ordinalAttributeIdPrefix + component.ordinalAttributeId + '=' + component.rating;
+                    break;
+            }
+            paramString += index < (fmApp.chosenSelection.length - 1) ? "&" : "";
+        });
+        window.location = url + paramString;
     },
     /*
      * There are three different alert state by Bootstrap
@@ -367,6 +380,11 @@ var fmApp = {
 };
 
 $(document).ready(function() {
+
+    if(configuredSelection) {
+        $("#loadingSpinnerContainer").fadeIn(500);
+        console.log(configuredSelection);
+    }
     // Function for selection
     window.addEventListener("awesomplete-select", function(e) {
         // User types something and a select is made.

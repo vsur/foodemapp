@@ -12,6 +12,14 @@
 
 <?= $this->Flash->render() ?>
 
+<div id="loadingSpinnerContainer">
+    <div class="spinner">
+      <div class="cube1"></div>
+      <div class="cube2"></div>
+    </div>
+    <h1>Ihre Auwahl wird analysiert</h1>
+</div>
+
 <div class="container" role="main">
   <div class="row">
   <div class="col-md-12">
@@ -118,7 +126,8 @@ awesomplete.list = criterionNames;
 ↓↓↓ Criteria Block for JS ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <script type="text/javascript">
-var criteria = <?= json_encode($criteria) ?>;
+    var criteria = <?= json_encode($criteria) ?>;
+    var configuredSelection = <?= json_encode($configuredSelection) ?>;
 </script>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Criteria Block for JS ↑↑↑↑

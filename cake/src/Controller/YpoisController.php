@@ -42,9 +42,12 @@ class YpoisController extends AppController
       // Set combined criterion names for autocompletion and differentiation
       $criterionNames = $this->setCombinedCriterionNames($criteria);
 
-      // debug($criterionNames);
+      $configuredSelection = NULL;
+      if (!empty($this->request->query)) {
+          $configuredSelection = $this->request->query;
+      }
 
-      $this->set(compact('criteria', 'criterionNames'));
+      $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null) {
