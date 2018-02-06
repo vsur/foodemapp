@@ -12,9 +12,11 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 2.1. ✓ Query bauen
 2.2. Set Scenario aus Query GUI bauen
-=> Kontrollvariable und JSON-Object ist schon gebaut aus PARAMs = configuredSelection
+
 => Abfrage geht auch schon. Nun muss noch über das Object Iteriert werden und die Dinger gebaut werden.
-Weiter Zeile 386
+Weiter Zeile 43
+Die States/ID für das Setzen der chosenSelection muss gelöst werden. Wohl wieder über slice, evtt auch auslagern.
+Dann noch in der GUI Umsettzen. Am besten erst mal für Binary und dann für den Rest.
 
 2.3. Aus Query dann neu Search Matches bauen
 

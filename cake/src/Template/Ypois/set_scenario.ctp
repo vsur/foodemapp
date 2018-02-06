@@ -66,7 +66,6 @@
 
 <script type="text/javascript">
 var criterionNames = <?= json_encode($criterionNames) ?>;
-console.log(criterionNames);
 var input = document.getElementById("criteriaInput");
 var awesomplete = new Awesomplete(input, {
   minChars: 1,

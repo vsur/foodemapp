@@ -9,6 +9,7 @@ var fmApp = {
     standardRating: 3, // Out of 3
     componentModelTypePrefix: '_C-MODEL_',
     componentIdPrefix: '_C-ID_',
+    binaryStatePrefix: '_BC-STATE_',
     nominalAttributeIdPrefix: '_NCATTR-ID_',
     ordinalAttributeIdPrefix: '_OCATTR-ID_',
     combinedCriteriaArrayIndex: '_ALLC-ID_',
@@ -29,16 +30,23 @@ var fmApp = {
             $("#criteriaInput").toggleClass("noChoice");
         }, 2000);
     },
-    addComponent: function() {
-        var inputValue = $("#criteriaInput").val();
+    addComponent: function(componentDataFromURL) {
         var chosenComponent;
-        var selectedCriterion = {
-            type: inputValue.slice(0, 2),
-            // Get ID between prefixes out of string
-            id: this.sliceComponentIdOffString(inputValue),
-            // Get Index position in array after last prefix out of string
-            index: this.sliceCombinedCriteriaArrayIndexOffString(inputValue)
-        };
+        var selectedCriterion;
+        var inputValue;
+        var bcState = null;
+        var ncAttrId = null;
+        var ocAttrId = null;
+        if (componentDataFromURL) {
+            inputValue = Object.keys(componentDataFromURL)[0];
+            selectedCriterion = this.setCriterionByURLData(inputValue);
+            bcState = null; // <= To Set for Dynamic Gui
+            ncAttrId = null;
+            ocAttrId = null;
+        } else {
+            inputValue = $("#criteriaInput").val();
+            selectedCriterion = this.setCriterionByInputChoice(inputValue);
+        }
         if (this.checkDataMatching(selectedCriterion)) {
             chosenComponent = criteria[selectedCriterion.index];
         } else {
@@ -50,13 +58,14 @@ var fmApp = {
         setTimeout(function() {
             $("#criteriaInput").attr('placeholder', 'Weitere wählen').toggleClass("chosen");
         }, 2000);
+
         // Add Component to selection
         this.chosenSelection.push({
             'componentName': chosenComponent.display_name,
             'componentType': chosenComponent.modelType,
             'componentId': chosenComponent.id,
             'rating': this.standardRating,
-            'binaryState': null,
+            'binaryState': bcState,
             'nominalAttributeId': null,
             'ordinalAttributeId': null
         });
@@ -86,14 +95,14 @@ var fmApp = {
         chosenComponentToPaste += '<div id="criteriaOptions' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="row">';
         chosenComponentToPaste += '<div class="col-md-6">';
         chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
-        if(chosenComponent.modelType == 'BinaryComponents') {
+        if (chosenComponent.modelType == 'BinaryComponents') {
             chosenComponentToPaste += this.pasteBinarySwitch(chosenComponent);
             this.setBinaryChoice(this.findIndexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), true);
         }
-        if(chosenComponent.modelType == 'NominalComponents') {
+        if (chosenComponent.modelType == 'NominalComponents') {
             chosenComponentToPaste += this.pasteNominalAttributes(chosenComponent);
         }
-        if(chosenComponent.modelType == 'OrdinalComponents') {
+        if (chosenComponent.modelType == 'OrdinalComponents') {
             chosenComponentToPaste += this.pasteOrdinalAttributes(chosenComponent);
         }
         /*
@@ -113,9 +122,45 @@ var fmApp = {
         $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
 
         // Set ordinal attribute choice string initialy
-        if(chosenComponent.modelType == 'OrdinalComponents') {
+        if (chosenComponent.modelType == 'OrdinalComponents') {
             this.setCurrent_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
         }
+    },
+    setCriterionByURLData: function(inputValue) {
+        var componentModelIdentifier = inputValue.slice(0, 2);
+        var componentModelType = "";
+        switch (componentModelIdentifier) {
+            case 'BC':
+                componentModelType = "BinaryComponents";
+                break;
+
+            case 'NC':
+                componentModelType = "NominalComponents";
+                break;
+
+            case 'OC':
+                componentModelType = "OrdinalComponents";
+                break;
+        }
+        var componentId = this.sliceComponentIdOffString(inputValue);
+        selectedCriterion = {
+            type: componentModelIdentifier,
+            // Get ID between prefixes out of string
+            id: componentId,
+            // Get Index position in array after last prefix out of string
+            index: this.findIndexOfComponentInCriteria(componentModelType, componentId)
+        };
+        return selectedCriterion;
+    },
+    setCriterionByInputChoice: function(inputValue) {
+        selectedCriterion = {
+            type: inputValue.slice(0, 2),
+            // Get ID between prefixes out of string
+            id: this.sliceComponentIdOffString(inputValue),
+            // Get Index position in array after last prefix out of string
+            index: this.sliceCombinedCriteriaArrayIndexOffString(inputValue)
+        };
+        return selectedCriterion;
     },
     checkDataMatching: function(criterionToCheck) {
         var machtingCorrect = true;
@@ -153,8 +198,8 @@ var fmApp = {
         switchString += '<span class="componentNameBinarySlider">' + chosenComponent.display_name + '</span>';
         // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
         switchString += '<label class="switch">';
-        switchString +=     '<input type="checkbox" checked>';
-        switchString +=     '<span class="slider round"></span>';
+        switchString += '<input type="checkbox" checked>';
+        switchString += '<span class="slider round"></span>';
         switchString += '</label>';
         switchString += '</p>';
         return switchString;
@@ -162,7 +207,7 @@ var fmApp = {
     pasteNominalAttributes: function(chosenComponent) {
         var nominalAttributes = '';
         // Differentiate cols for Attributes based on amount
-        if(chosenComponent.nominal_attributes.length % 3 == 0) {
+        if (chosenComponent.nominal_attributes.length % 3 == 0) {
             nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer triple">';
         } else {
             nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
@@ -177,17 +222,14 @@ var fmApp = {
     setBinaryChoice: function(indexOfChosenSelection, newBinaryState) {
         var componentToSetBinaryChoice = this.chosenSelection[indexOfChosenSelection];
         componentToSetBinaryChoice.binaryState = newBinaryState;
-        console.log(this.chosenSelection[indexOfChosenSelection]);
     },
     setNominalChoice: function(indexOfChosenSelection, newNominalAttributeId) {
         var componentToSetNominalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
         componentToSetNominalAttributeChoice.nominalAttributeId = newNominalAttributeId;
-        console.log(this.chosenSelection[indexOfChosenSelection]);
     },
     setOrdinalChoice: function(indexOfChosenSelection, newOrdinalAttributeId) {
         var componentToSetOrdinalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
         componentToSetOrdinalAttributeChoice.ordinalAttributeId = newOrdinalAttributeId;
-        console.log(this.chosenSelection[indexOfChosenSelection]);
     },
     pasteOrdinalAttributes: function(chosenComponent) {
         var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
@@ -196,22 +238,22 @@ var fmApp = {
         var ordinalAttributes = '';
         ordinalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="ordinalAttributesContainer">';
         ordinalAttributes += '<p class="ordinalAttributeChoice text-primary">Dynamisch Setzen</p>';
-        ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
-        ordinalAttributes += '<datalist id="attributesDataList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '">';
+        ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">';
+        ordinalAttributes += '<datalist id="attributesDataList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">';
         chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
             ordinalAttributes += '<option id="ordinalAttribute' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '" name="' + ordinalAttribute.display_name + '">';
         });
         ordinalAttributes += '</datalist>';
-        ordinalAttributes += '<table id="attributesList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id +  '" class="table table-hover">';
+        ordinalAttributes += '<table id="attributesList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="table table-hover">';
         ordinalAttributes += '<tr>';
         ordinalAttributes += '<th>#</th>';
         ordinalAttributes += '<th>Label</th>';
         ordinalAttributes += '</tr>';
         chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
-            ordinalAttributes +=    '<tr>';
-            ordinalAttributes +=    '<td>' +  ordinalAttribute.meter  + '</td>';
-            ordinalAttributes +=    '<td>' +  ordinalAttribute.display_name  + '</td>';
-            ordinalAttributes +=    '</tr>';
+            ordinalAttributes += '<tr>';
+            ordinalAttributes += '<td>' + ordinalAttribute.meter + '</td>';
+            ordinalAttributes += '<td>' + ordinalAttribute.display_name + '</td>';
+            ordinalAttributes += '</tr>';
         });
         ordinalAttributes += '</table>';
         ordinalAttributes += '</div>';
@@ -220,11 +262,11 @@ var fmApp = {
     buildSingleNominalAttribute: function(nominalAttribute, chosenComponent) {
         var nominalAttributeToPaste = '';
         nominalAttributeToPaste += '<div class="nominalAttribute">';
-        nominalAttributeToPaste +=      '<input type="radio" id="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" />';
-        nominalAttributeToPaste +=      '<label for="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
-        nominalAttributeToPaste +=          '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
-        nominalAttributeToPaste +=          '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
-        nominalAttributeToPaste +=      '</label>';
+        nominalAttributeToPaste += '<input type="radio" id="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" />';
+        nominalAttributeToPaste += '<label for="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
+        nominalAttributeToPaste += '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
+        nominalAttributeToPaste += '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
+        nominalAttributeToPaste += '</label>';
         nominalAttributeToPaste += '</div>';
 
         return nominalAttributeToPaste;
@@ -239,7 +281,7 @@ var fmApp = {
     findDisplayNameOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
         var foundDisplayName = null;
         $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
-            if(this.value == currentMeter ) {
+            if (this.value == currentMeter) {
                 foundDisplayName = $(this).attr("name");
             }
         });
@@ -248,11 +290,24 @@ var fmApp = {
     findIdOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
         var foundId = null;
         $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
-            if(this.value == currentMeter ) {
+            if (this.value == currentMeter) {
                 foundId = fmApp.sliceOrdinalAttributeIdOffString(this.id);
             }
         });
         return foundId;
+    },
+    findIndexOfComponentInCriteria: function(modelType, id) {
+        var foundIndex = null;
+        criteria.forEach(function(component, index) {
+            // Check if type machtes
+            if (component.modelType == modelType) {
+                // Check if ID matches
+                if (component.id == id)  {
+                    foundIndex = index;
+                }
+            }
+        });
+        return foundIndex;
     },
     findIndexOfChosenComponent: function(modelType, id) {
         var foundIndex = null;
@@ -276,7 +331,7 @@ var fmApp = {
         return parseInt(foundComponentId);
     },
     sliceCombinedCriteriaArrayIndexOffString: function(findCombinedCriteriaArrayIndexIn) {
-        var foundCombinedCriteriaArrayIndex = findCombinedCriteriaArrayIndexIn.slice( findCombinedCriteriaArrayIndexIn.indexOf(this.combinedCriteriaArrayIndex) + this.combinedCriteriaArrayIndex.length );
+        var foundCombinedCriteriaArrayIndex = findCombinedCriteriaArrayIndexIn.slice(findCombinedCriteriaArrayIndexIn.indexOf(this.combinedCriteriaArrayIndex) + this.combinedCriteriaArrayIndex.length);
         return foundCombinedCriteriaArrayIndex;
     },
     sliceNominalAttributeIdOffString: function(findNominalAttributeIdIn) {
@@ -312,9 +367,6 @@ var fmApp = {
     setRating: function(indexOfChosenSelection, newRating) {
         var componentToSetRating = this.chosenSelection[indexOfChosenSelection];
         componentToSetRating.rating = newRating;
-        this.chosenSelection.forEach(function(component, index) {
-            console.log(component.componentName + ': ' + component.rating);
-        });
     },
     buildRatingRadio: function(modelType, id) {
         var ratingRadio;
@@ -342,15 +394,15 @@ var fmApp = {
         this.chosenSelection.forEach(function(component, index) {
             switch (component.componentType) {
                 case 'BinaryComponents':
-                    paramString += 'BC' + fmApp.componentIdPrefix + component.componentId + '=' + component.rating;
+                    paramString += 'BC' + fmApp.componentIdPrefix + component.componentId + fmApp.binaryStatePrefix + (component.binaryState ? 1 : 0) + '=' + component.rating;
                     break;
 
                 case 'NominalComponents':
-                    paramString += 'NC' + fmApp.componentIdPrefix + component.componentId +  fmApp.nominalAttributeIdPrefix + component.nominalAttributeId +  '=' + component.rating;
+                    paramString += 'NC' + fmApp.componentIdPrefix + component.componentId + fmApp.nominalAttributeIdPrefix + component.nominalAttributeId + '=' + component.rating;
                     break;
 
                 case 'OrdinalComponents':
-                    paramString += 'OC' + fmApp.componentIdPrefix + component.componentId +  fmApp.ordinalAttributeIdPrefix + component.ordinalAttributeId + '=' + component.rating;
+                    paramString += 'OC' + fmApp.componentIdPrefix + component.componentId + fmApp.ordinalAttributeIdPrefix + component.ordinalAttributeId + '=' + component.rating;
                     break;
             }
             paramString += index < (fmApp.chosenSelection.length - 1) ? "&" : "";
@@ -381,9 +433,9 @@ var fmApp = {
 
 $(document).ready(function() {
 
-    if(configuredSelection) {
+    if (configuredSelection) {
         $("#loadingSpinnerContainer").fadeIn(500);
-        console.log(configuredSelection);
+        fmApp.addComponent(configuredSelection);
     }
     // Function for selection
     window.addEventListener("awesomplete-select", function(e) {
