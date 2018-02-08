@@ -39,15 +39,15 @@ var fmApp = {
         var ocAttrId = null;
         if (componentDataFromURL) {
             inputValue = Object.keys(componentDataFromURL)[0];
-            selectedCriterion = this.setCriterionByURLData(inputValue);
+            selectedCriterion = this.sets.criterionByURLData(inputValue);
             bcState = null; // <= To Set for Dynamic Gui
             ncAttrId = null;
             ocAttrId = null;
         } else {
             inputValue = $("#criteriaInput").val();
-            selectedCriterion = this.setCriterionByInputChoice(inputValue);
+            selectedCriterion = this.sets.criterionByInputChoice(inputValue);
         }
-        if (this.checkDataMatching(selectedCriterion)) {
+        if (this.checks.dataMatching(selectedCriterion)) {
             chosenComponent = criteria[selectedCriterion.index];
         } else {
             this.alertMessage("Fehler bei der Datenzuordnung Ihrer Auswahl", "alert-danger");
@@ -96,26 +96,21 @@ var fmApp = {
         chosenComponentToPaste += '<div class="col-md-6">';
         chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
         if (chosenComponent.modelType == 'BinaryComponents') {
-            chosenComponentToPaste += this.pasteBinarySwitch(chosenComponent);
-            this.setBinaryChoice(this.findIndexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), true);
+            chosenComponentToPaste += this.pastes.binarySwitch(chosenComponent);
+            this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), true);
         }
         if (chosenComponent.modelType == 'NominalComponents') {
-            chosenComponentToPaste += this.pasteNominalAttributes(chosenComponent);
+            chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent);
         }
         if (chosenComponent.modelType == 'OrdinalComponents') {
-            chosenComponentToPaste += this.pasteOrdinalAttributes(chosenComponent);
+            chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent);
         }
-        /*
-         * ✓ Binary selection
-         * ✓ Dann Paste Nominal selection
-         * Dann Ordinal Selection
-         */
 
         chosenComponentToPaste += '</div>';
 
         var chosenComponentToPasteRating = "";
         chosenComponentToPasteRating += '<div class="col-md-6">';
-        chosenComponentToPasteRating += this.buildRatingRadio(chosenComponent.modelType, chosenComponent.id);
+        chosenComponentToPasteRating += this.pastes.builds.ratingRadio(chosenComponent.modelType, chosenComponent.id);
         chosenComponentToPasteRating += '</div>';
         chosenComponentToPasteRating += '</div>';
 
@@ -123,224 +118,268 @@ var fmApp = {
 
         // Set ordinal attribute choice string initialy
         if (chosenComponent.modelType == 'OrdinalComponents') {
-            this.setCurrent_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
+            this.sets.current_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
         }
     },
-    setCriterionByURLData: function(inputValue) {
-        var componentModelIdentifier = inputValue.slice(0, 2);
-        var componentModelType = "";
-        switch (componentModelIdentifier) {
-            case 'BC':
-                componentModelType = "BinaryComponents";
-                break;
 
-            case 'NC':
-                componentModelType = "NominalComponents";
-                break;
+    checks: {
+        dataMatching: function(criterionToCheck) {
+            var machtingCorrect = true;
+            // Check names
+            if (criterionNames[criterionToCheck.index][0].search(criteria[criterionToCheck.index].display_name) < 0) {
+                machtingCorrect = false;
+            }
+            // Check types
+            var typeToCheck = "";
+            switch (criterionToCheck.type) {
+                case 'BC':
+                    typeToCheck = "BinaryComponents";
+                    break;
 
-            case 'OC':
-                componentModelType = "OrdinalComponents";
-                break;
-        }
-        var componentId = this.sliceComponentIdOffString(inputValue);
-        selectedCriterion = {
-            type: componentModelIdentifier,
-            // Get ID between prefixes out of string
-            id: componentId,
-            // Get Index position in array after last prefix out of string
-            index: this.findIndexOfComponentInCriteria(componentModelType, componentId)
-        };
-        return selectedCriterion;
-    },
-    setCriterionByInputChoice: function(inputValue) {
-        selectedCriterion = {
-            type: inputValue.slice(0, 2),
-            // Get ID between prefixes out of string
-            id: this.sliceComponentIdOffString(inputValue),
-            // Get Index position in array after last prefix out of string
-            index: this.sliceCombinedCriteriaArrayIndexOffString(inputValue)
-        };
-        return selectedCriterion;
-    },
-    checkDataMatching: function(criterionToCheck) {
-        var machtingCorrect = true;
-        // Check names
-        if (criterionNames[criterionToCheck.index][0].search(criteria[criterionToCheck.index].display_name) < 0) {
-            machtingCorrect = false;
-        }
-        // Check types
-        var typeToCheck = "";
-        switch (criterionToCheck.type) {
-            case 'BC':
-                typeToCheck = "BinaryComponents";
-                break;
+                case 'NC':
+                    typeToCheck = "NominalComponents";
+                    break;
 
-            case 'NC':
-                typeToCheck = "NominalComponents";
-                break;
+                case 'OC':
+                    typeToCheck = "OrdinalComponents";
+                    break;
+            }
+            if (typeToCheck != criteria[criterionToCheck.index].modelType) {
+                machtingCorrect = false;
+            }
+            // Check ids
+            if (criterionToCheck.id != criteria[criterionToCheck.index].id) {
+                machtingCorrect = false;
+            }
+            return machtingCorrect;
+        },
+    },
+    finds: {
+        displayNameOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
+            var foundDisplayName = null;
+            $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
+                if (this.value == currentMeter) {
+                    foundDisplayName = $(this).attr("name");
+                }
+            });
+            return foundDisplayName;
+        },
+        idOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
+            var foundId = null;
+            $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
+                if (this.value == currentMeter) {
+                    foundId = fmApp.slices.ordinalAttributeIdOffString(this.id);
+                }
+            });
+            console.log("Found: " + foundId);
+            return foundId;
+        },
+        indexOfChosenComponent: function(modelType, id) {
+            var foundIndex = null;
+            this.chosenSelection.forEach(function(component, index) {
+                // Check if type machtes
+                if (component.componentType == modelType) {
+                    // Check if ID matches
+                    if (component.componentId == id)  {
+                        foundIndex = index;
+                    }
+                }
+            });
+            return foundIndex;
+        },
+        indexOfComponentInCriteria: function(modelType, id) {
+            var foundIndex = null;
+            criteria.forEach(function(component, index) {
+                // Check if type machtes
+                if (component.modelType == modelType) {
+                    // Check if ID matches
+                    if (component.id == id)  {
+                        foundIndex = index;
+                    }
+                }
+            });
+            return foundIndex;
+        },
+    },
+    gets: {
+        rating: function(modelType, id) {
+            var selectionIndex;
+            for (var i = 0; i < this.chosenSelection.length; i++) {
+                if (this.chosenSelection[i].componentType == modelType && this.chosenSelection[i].componentId == id) {
+                    selectionIndex = i;
+                } else {
+                    selectionIndex = undefined;
+                }
+            }
+            var rating = this.chosenSelection[selectionIndex].rating;
+            return rating;
+        },
+    },
+    pastes: {
+        builds: {
+            ratingRadio: function(modelType, id) {
+                var ratingRadio;
+                ratingRadioStart = '<div class="rate">';
+                radiostar5 = '<input type="radio" id="star5' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="5" ' + (this.gets.rating(modelType, id) == 5 ? 'checked' : '') + '/><label for="star5' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">5 stars</label>';
+                radiostar4 = '<input type="radio" id="star4' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="4" ' + (this.gets.rating(modelType, id) == 4 ? 'checked' : '') + '/><label for="star4' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">4 stars</label>';
+                radiostar3 = '<input type="radio" id="star3' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="3" ' + (this.gets.rating(modelType, id) == 3 ? 'checked' : '') + '/><label for="star3' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">3 stars</label>';
+                radiostar2 = '<input type="radio" id="star2' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="2" ' + (this.gets.rating(modelType, id) == 2 ? 'checked' : '') + '/><label for="star2' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">2 stars</label>';
+                radiostar1 = '<input type="radio" id="star1' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="1" ' + (this.gets.rating(modelType, id) == 1 ? 'checked' : '') + '/><label for="star1' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">1 star</label>';
+                ratingRadioEnd = '</div>';
+                ratingRadio = ratingRadioStart + radiostar5 + radiostar4 + radiostar3 + radiostar2 + radiostar1 + ratingRadioEnd;
+                return ratingRadio;
+            },
+            singleNominalAttribute: function(nominalAttribute, chosenComponent) {
+                var nominalAttributeToPaste = '';
+                nominalAttributeToPaste += '<div class="nominalAttribute">';
+                nominalAttributeToPaste += '<input type="radio" id="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" />';
+                nominalAttributeToPaste += '<label for="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
+                nominalAttributeToPaste += '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
+                nominalAttributeToPaste += '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
+                nominalAttributeToPaste += '</label>';
+                nominalAttributeToPaste += '</div>';
 
-            case 'OC':
-                typeToCheck = "OrdinalComponents";
-                break;
-        }
-        if (typeToCheck != criteria[criterionToCheck.index].modelType) {
-            machtingCorrect = false;
-        }
-        // Check ids
-        if (criterionToCheck.id != criteria[criterionToCheck.index].id) {
-            machtingCorrect = false;
-        }
-        return machtingCorrect;
-    },
-    pasteBinarySwitch: function(chosenComponent) {
-        var switchString = '';
-        switchString += '<p class="binaryComponentContainer">';
-        switchString += '<span class="componentNameBinarySlider">' + chosenComponent.display_name + '</span>';
-        // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
-        switchString += '<label class="switch">';
-        switchString += '<input type="checkbox" checked>';
-        switchString += '<span class="slider round"></span>';
-        switchString += '</label>';
-        switchString += '</p>';
-        return switchString;
-    },
-    pasteNominalAttributes: function(chosenComponent) {
-        var nominalAttributes = '';
-        // Differentiate cols for Attributes based on amount
-        if (chosenComponent.nominal_attributes.length % 3 == 0) {
-            nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer triple">';
-        } else {
-            nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
-        }
-        chosenComponent.nominal_attributes.forEach(function(nominalAttribute, index) {
-            nominalAttributes += fmApp.buildSingleNominalAttribute(nominalAttribute, chosenComponent);
-        });
-        nominalAttributes += '</div>';
+                return nominalAttributeToPaste;
+            },
+        },
+        binarySwitch: function(chosenComponent) {
+            var switchString = '';
+            switchString += '<p class="binaryComponentContainer">';
+            switchString += '<span class="componentNameBinarySlider">' + chosenComponent.display_name + '</span>';
+            // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
+            switchString += '<label class="switch">';
+            switchString += '<input type="checkbox" checked>';
+            switchString += '<span class="slider round"></span>';
+            switchString += '</label>';
+            switchString += '</p>';
+            return switchString;
+        },
+        nominalAttributes: function(chosenComponent) {
+            var nominalAttributes = '';
+            // Differentiate cols for Attributes based on amount
+            if (chosenComponent.nominal_attributes.length % 3 == 0) {
+                nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer triple">';
+            } else {
+                nominalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
+            }
+            chosenComponent.nominal_attributes.forEach(function(nominalAttribute, index) {
+                nominalAttributes += fmApp.pastes.builds.singleNominalAttribute(nominalAttribute, chosenComponent);
+            });
+            nominalAttributes += '</div>';
 
-        return nominalAttributes;
-    },
-    setBinaryChoice: function(indexOfChosenSelection, newBinaryState) {
-        var componentToSetBinaryChoice = this.chosenSelection[indexOfChosenSelection];
-        componentToSetBinaryChoice.binaryState = newBinaryState;
-    },
-    setNominalChoice: function(indexOfChosenSelection, newNominalAttributeId) {
-        var componentToSetNominalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
-        componentToSetNominalAttributeChoice.nominalAttributeId = newNominalAttributeId;
-    },
-    setOrdinalChoice: function(indexOfChosenSelection, newOrdinalAttributeId) {
-        var componentToSetOrdinalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
-        componentToSetOrdinalAttributeChoice.ordinalAttributeId = newOrdinalAttributeId;
-    },
-    pasteOrdinalAttributes: function(chosenComponent) {
-        var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
-        var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
-        var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
-        var ordinalAttributes = '';
-        ordinalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="ordinalAttributesContainer">';
-        ordinalAttributes += '<p class="ordinalAttributeChoice text-primary">Dynamisch Setzen</p>';
-        ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">';
-        ordinalAttributes += '<datalist id="attributesDataList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">';
-        chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
-            ordinalAttributes += '<option id="ordinalAttribute' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '" name="' + ordinalAttribute.display_name + '">';
-        });
-        ordinalAttributes += '</datalist>';
-        ordinalAttributes += '<table id="attributesList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="table table-hover">';
-        ordinalAttributes += '<tr>';
-        ordinalAttributes += '<th>#</th>';
-        ordinalAttributes += '<th>Label</th>';
-        ordinalAttributes += '</tr>';
-        chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
+            return nominalAttributes;
+        },
+        ordinalAttributes: function(chosenComponent) {
+            var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
+            var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
+            var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
+            var ordinalAttributes = '';
+            ordinalAttributes += '<div id="criteriaAttributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="ordinalAttributesContainer">';
+            ordinalAttributes += '<p class="ordinalAttributeChoice text-primary">Dynamisch Setzen</p>';
+            ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">';
+            ordinalAttributes += '<datalist id="attributesDataList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">';
+            chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
+                ordinalAttributes += '<option id="ordinalAttribute' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '" name="' + ordinalAttribute.display_name + '">';
+            });
+            ordinalAttributes += '</datalist>';
+            ordinalAttributes += '<table id="attributesList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="table table-hover">';
             ordinalAttributes += '<tr>';
-            ordinalAttributes += '<td>' + ordinalAttribute.meter + '</td>';
-            ordinalAttributes += '<td>' + ordinalAttribute.display_name + '</td>';
+            ordinalAttributes += '<th>#</th>';
+            ordinalAttributes += '<th>Label</th>';
             ordinalAttributes += '</tr>';
-        });
-        ordinalAttributes += '</table>';
-        ordinalAttributes += '</div>';
-        return ordinalAttributes;
+            chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
+                ordinalAttributes += '<tr>';
+                ordinalAttributes += '<td>' + ordinalAttribute.meter + '</td>';
+                ordinalAttributes += '<td>' + ordinalAttribute.display_name + '</td>';
+                ordinalAttributes += '</tr>';
+            });
+            ordinalAttributes += '</table>';
+            ordinalAttributes += '</div>';
+            return ordinalAttributes;
+        },
     },
-    buildSingleNominalAttribute: function(nominalAttribute, chosenComponent) {
-        var nominalAttributeToPaste = '';
-        nominalAttributeToPaste += '<div class="nominalAttribute">';
-        nominalAttributeToPaste += '<input type="radio" id="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" />';
-        nominalAttributeToPaste += '<label for="nominalAttribute' + this.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
-        nominalAttributeToPaste += '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
-        nominalAttributeToPaste += '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
-        nominalAttributeToPaste += '</label>';
-        nominalAttributeToPaste += '</div>';
+    sets: {
+        binaryChoice: function(indexOfChosenSelection, newBinaryState) {
+            var componentToSetBinaryChoice = this.chosenSelection[indexOfChosenSelection];
+            componentToSetBinaryChoice.binaryState = newBinaryState;
+        },
+        criterionByInputChoice: function(inputValue) {
+            selectedCriterion = {
+                type: inputValue.slice(0, 2),
+                // Get ID between prefixes out of string
+                id: this.slices.componentIdOffString(inputValue),
+                // Get Index position in array after last prefix out of string
+                index: this.slices.combinedCriteriaArrayIndexOffString(inputValue)
+            };
+            return selectedCriterion;
+        },
+        criterionByURLData: function(inputValue) {
+            var componentModelIdentifier = inputValue.slice(0, 2);
+            var componentModelType = "";
+            switch (componentModelIdentifier) {
+                case 'BC':
+                    componentModelType = "BinaryComponents";
+                    break;
 
-        return nominalAttributeToPaste;
-    },
-    setCurrent_ordinalAttributeChoice_String: function(modelType, id) {
-        var cssSelector = "" + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id;
-        var currentMeter = $("#criteriaAttributes" + cssSelector + "> input").val();
-        // Get display_name to selected meter
-        var displayNameToShow = this.findDisplayNameOfChoosenOrdinalAttribute(cssSelector, currentMeter);
-        $("#criteriaAttributes" + cssSelector + "> p.ordinalAttributeChoice").html(displayNameToShow);
-    },
-    findDisplayNameOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
-        var foundDisplayName = null;
-        $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
-            if (this.value == currentMeter) {
-                foundDisplayName = $(this).attr("name");
+                case 'NC':
+                    componentModelType = "NominalComponents";
+                    break;
+
+                case 'OC':
+                    componentModelType = "OrdinalComponents";
+                    break;
             }
-        });
-        return foundDisplayName;
+            var componentId = this.slices.componentIdOffString(inputValue);
+            selectedCriterion = {
+                type: componentModelIdentifier,
+                // Get ID between prefixes out of string
+                id: componentId,
+                // Get Index position in array after last prefix out of string
+                index: this.finds.indexOfComponentInCriteria(componentModelType, componentId)
+            };
+            return selectedCriterion;
+        },
+        current_ordinalAttributeChoice_String: function(modelType, id) {
+            var cssSelector = "" + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id;
+            var currentMeter = $("#criteriaAttributes" + cssSelector + "> input").val();
+            // Get display_name to selected meter
+            var displayNameToShow = this.finds.displayNameOfChoosenOrdinalAttribute(cssSelector, currentMeter);
+            $("#criteriaAttributes" + cssSelector + "> p.ordinalAttributeChoice").html(displayNameToShow);
+        },
+        nominalChoice: function(indexOfChosenSelection, newNominalAttributeId) {
+            var componentToSetNominalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
+            componentToSetNominalAttributeChoice.nominalAttributeId = newNominalAttributeId;
+        },
+        ordinalChoice: function(indexOfChosenSelection, newOrdinalAttributeId) {
+            var componentToSetOrdinalAttributeChoice = this.chosenSelection[indexOfChosenSelection];
+            componentToSetOrdinalAttributeChoice.ordinalAttributeId = newOrdinalAttributeId;
+        },
+        rating: function(indexOfChosenSelection, newRating) {
+            var componentToSetRating = this.chosenSelection[indexOfChosenSelection];
+            componentToSetRating.rating = newRating;
+        },
     },
-    findIdOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
-        var foundId = null;
-        $("datalist#attributesDataList" + cssSelector + " > option").each(function(index) {
-            if (this.value == currentMeter) {
-                foundId = fmApp.sliceOrdinalAttributeIdOffString(this.id);
-            }
-        });
-        return foundId;
-    },
-    findIndexOfComponentInCriteria: function(modelType, id) {
-        var foundIndex = null;
-        criteria.forEach(function(component, index) {
-            // Check if type machtes
-            if (component.modelType == modelType) {
-                // Check if ID matches
-                if (component.id == id)  {
-                    foundIndex = index;
-                }
-            }
-        });
-        return foundIndex;
-    },
-    findIndexOfChosenComponent: function(modelType, id) {
-        var foundIndex = null;
-        this.chosenSelection.forEach(function(component, index) {
-            // Check if type machtes
-            if (component.componentType == modelType) {
-                // Check if ID matches
-                if (component.componentId == id)  {
-                    foundIndex = index;
-                }
-            }
-        });
-        return foundIndex;
-    },
-    sliceComponentModelTypeOffString: function(findModelIn) {
-        var foundModelType = findModelIn.slice(findModelIn.indexOf(this.componentModelTypePrefix) + this.componentModelTypePrefix.length, findModelIn.indexOf(this.componentIdPrefix));
-        return foundModelType;
-    },
-    sliceComponentIdOffString: function(findIdIn) {
-        var foundComponentId = findIdIn.slice(findIdIn.indexOf(this.componentIdPrefix) + this.componentIdPrefix.length);
-        return parseInt(foundComponentId);
-    },
-    sliceCombinedCriteriaArrayIndexOffString: function(findCombinedCriteriaArrayIndexIn) {
-        var foundCombinedCriteriaArrayIndex = findCombinedCriteriaArrayIndexIn.slice(findCombinedCriteriaArrayIndexIn.indexOf(this.combinedCriteriaArrayIndex) + this.combinedCriteriaArrayIndex.length);
-        return foundCombinedCriteriaArrayIndex;
-    },
-    sliceNominalAttributeIdOffString: function(findNominalAttributeIdIn) {
-        var foundNominalAttributeId = findNominalAttributeIdIn.slice(findNominalAttributeIdIn.indexOf(this.nominalAttributeIdPrefix) + this.nominalAttributeIdPrefix.length);
-        return parseInt(foundNominalAttributeId);
-    },
-    sliceOrdinalAttributeIdOffString: function(findOrdinalAttributeIdIn) {
-        var foundOrdinalAttributeId = findOrdinalAttributeIdIn.slice(findOrdinalAttributeIdIn.indexOf(this.ordinalAttributeIdPrefix) + this.ordinalAttributeIdPrefix.length);
-        return parseInt(foundOrdinalAttributeId);
+    slices: {
+        combinedCriteriaArrayIndexOffString: function(findCombinedCriteriaArrayIndexIn) {
+            var foundCombinedCriteriaArrayIndex = findCombinedCriteriaArrayIndexIn.slice(findCombinedCriteriaArrayIndexIn.indexOf(this.combinedCriteriaArrayIndex) + this.combinedCriteriaArrayIndex.length);
+            return foundCombinedCriteriaArrayIndex;
+        },
+        componentIdOffString: function(findIdIn) {
+            var foundComponentId = findIdIn.slice(findIdIn.indexOf(this.componentIdPrefix) + this.componentIdPrefix.length);
+            return parseInt(foundComponentId);
+        },
+        componentModelTypeOffString: function(findModelIn) {
+            var foundModelType = findModelIn.slice(findModelIn.indexOf(this.componentModelTypePrefix) + this.componentModelTypePrefix.length, findModelIn.indexOf(this.componentIdPrefix));
+            return foundModelType;
+        },
+        nominalAttributeIdOffString: function(findNominalAttributeIdIn) {
+            var foundNominalAttributeId = findNominalAttributeIdIn.slice(findNominalAttributeIdIn.indexOf(this.nominalAttributeIdPrefix) + this.nominalAttributeIdPrefix.length);
+            return parseInt(foundNominalAttributeId);
+        },
+        ordinalAttributeIdOffString: function(findOrdinalAttributeIdIn) {
+            var foundOrdinalAttributeId = findOrdinalAttributeIdIn.slice(findOrdinalAttributeIdIn.indexOf(this.ordinalAttributeIdPrefix) + this.ordinalAttributeIdPrefix.length);
+            return parseInt(foundOrdinalAttributeId);
+        },
     },
     deleteComponent: function(delName) {
         $("#" + delName).remove();
@@ -352,34 +391,9 @@ var fmApp = {
         console.log(this.chosenSelection);
 
     },
-    getRating: function(modelType, id) {
-        var selectionIndex;
-        for (var i = 0; i < this.chosenSelection.length; i++) {
-            if (this.chosenSelection[i].componentType == modelType && this.chosenSelection[i].componentId == id) {
-                selectionIndex = i;
-            } else {
-                selectionIndex = undefined;
-            }
-        }
-        var rating = this.chosenSelection[selectionIndex].rating;
-        return rating;
-    },
-    setRating: function(indexOfChosenSelection, newRating) {
-        var componentToSetRating = this.chosenSelection[indexOfChosenSelection];
-        componentToSetRating.rating = newRating;
-    },
-    buildRatingRadio: function(modelType, id) {
-        var ratingRadio;
-        ratingRadioStart = '<div class="rate">';
-        radiostar5 = '<input type="radio" id="star5' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="5" ' + (this.getRating(modelType, id) == 5 ? 'checked' : '') + '/><label for="star5' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">5 stars</label>';
-        radiostar4 = '<input type="radio" id="star4' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="4" ' + (this.getRating(modelType, id) == 4 ? 'checked' : '') + '/><label for="star4' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">4 stars</label>';
-        radiostar3 = '<input type="radio" id="star3' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="3" ' + (this.getRating(modelType, id) == 3 ? 'checked' : '') + '/><label for="star3' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">3 stars</label>';
-        radiostar2 = '<input type="radio" id="star2' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="2" ' + (this.getRating(modelType, id) == 2 ? 'checked' : '') + '/><label for="star2' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">2 stars</label>';
-        radiostar1 = '<input type="radio" id="star1' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" name="rate' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" value="1" ' + (this.getRating(modelType, id) == 1 ? 'checked' : '') + '/><label for="star1' + this.componentModelTypePrefix + modelType + this.componentIdPrefix + id + '" title="text">1 star</label>';
-        ratingRadioEnd = '</div>';
-        ratingRadio = ratingRadioStart + radiostar5 + radiostar4 + radiostar3 + radiostar2 + radiostar1 + ratingRadioEnd;
-        return ratingRadio;
-    },
+
+
+
     updateGauge: function(clickedGauge) {
         var j;
         for (var i = 0; i < this.chosenSelection.length; i++) {
@@ -483,15 +497,15 @@ $(document).ready(function() {
         // Get component string of clicked nomnial attribuite element
         var componentIdentifierName = $(this).parent().parent().parent().parent().attr("id");
         // Extract ModelType of component
-        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        var componentModelType = fmApp.slices.componentModelTypeOffString(componentIdentifierName);
         // Extract Id of component
-        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
+        var componentId = fmApp.slices.componentIdOffString(componentIdentifierName);
         // Get Index to set Rating in chosenSelection
-        var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+        var indexInSelection = fmApp.finds.indexOfChosenComponent(componentModelType, componentId);
         // Get recent binary component state
         var recentBinaryState = $(this).is(":checked");
         // Set binary choice in Selection on update
-        fmApp.setBinaryChoice(indexInSelection, recentBinaryState);
+        fmApp.sets.binaryChoice(indexInSelection, recentBinaryState);
     });
     // Click handler for nominal attribute choice
     $("#criteriaOutput").on("click", ".nominalAttributesContainer > .nominalAttribute > input", function() {
@@ -500,15 +514,15 @@ $(document).ready(function() {
         // Get nominal attribute string of clicked nomnial attribuite element
         var nominalAttributeIdentifierName = this.id;
         // Extract ModelType of component
-        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        var componentModelType = fmApp.slices.componentModelTypeOffString(componentIdentifierName);
         // Extract Id of component
-        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
+        var componentId = fmApp.slices.componentIdOffString(componentIdentifierName);
         // Get Index to set Rating in chosenSelection
-        var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+        var indexInSelection = fmApp.finds.indexOfChosenComponent(componentModelType, componentId);
         // Extract id of nominal attribute
-        var nominalAttributeId = fmApp.sliceNominalAttributeIdOffString(nominalAttributeIdentifierName);
+        var nominalAttributeId = fmApp.slices.nominalAttributeIdOffString(nominalAttributeIdentifierName);
         // Set attribute choice in Selection on update
-        fmApp.setNominalChoice(indexInSelection, nominalAttributeId);
+        fmApp.sets.nominalChoice(indexInSelection, nominalAttributeId);
     });
 
     // Click handler for ordinal attribute choice
@@ -516,21 +530,21 @@ $(document).ready(function() {
         // Get component string of clicked rating element
         var componentIdentifierName = $(this).attr("list");
         // Extract ModelType of component
-        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        var componentModelType = fmApp.slices.componentModelTypeOffString(componentIdentifierName);
         // Extract Id of component
-        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
+        var componentId = fmApp.slices.componentIdOffString(componentIdentifierName);
         // Get Index to set Rating in chosenSelection
-        var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+        var indexInSelection = fmApp.finds.indexOfChosenComponent(componentModelType, componentId);
         // Actual clicked Rating
         var recentOrdinalAttributeMeter = $(this).val();
         // Build CSS Selector
         var cssSelector = "" + fmApp.componentModelTypePrefix + componentModelType + fmApp.componentIdPrefix + componentId;
         // Get id of current selected ordinal attribute
-        var recentOrdinalAttributeId = fmApp.findIdOfChoosenOrdinalAttribute(cssSelector, recentOrdinalAttributeMeter);
+        var recentOrdinalAttributeId = fmApp.finds.idOfChoosenOrdinalAttribute(cssSelector, recentOrdinalAttributeMeter);
         // Set ordinal attribute choice string on update
-        fmApp.setCurrent_ordinalAttributeChoice_String(componentModelType, componentId);
+        fmApp.sets.current_ordinalAttributeChoice_String(componentModelType, componentId);
         // Set ordinal attribute choice in Selection on update
-        fmApp.setOrdinalChoice(indexInSelection, recentOrdinalAttributeId);
+        fmApp.sets.ordinalChoice(indexInSelection, recentOrdinalAttributeId);
     });
 
     // Click handler for rating
@@ -538,14 +552,14 @@ $(document).ready(function() {
         // Get component string of clicked rating element
         var componentIdentifierName = $(this).attr("name");
         // Extract ModelType of component
-        var componentModelType = fmApp.sliceComponentModelTypeOffString(componentIdentifierName);
+        var componentModelType = fmApp.slices.componentModelTypeOffString(componentIdentifierName);
         // Extract Id of component
-        var componentId = fmApp.sliceComponentIdOffString(componentIdentifierName);
+        var componentId = fmApp.slices.componentIdOffString(componentIdentifierName);
         // Get Index to set Rating in chosenSelection
-        var indexInSelection = fmApp.findIndexOfChosenComponent(componentModelType, componentId);
+        var indexInSelection = fmApp.finds.indexOfChosenComponent(componentModelType, componentId);
         // Actual clicked Rating
         var recentRating = $(this).val();
         // Set Rating
-        fmApp.setRating(indexInSelection, recentRating);
+        fmApp.sets.rating(indexInSelection, recentRating);
     });
 });
