@@ -14,6 +14,7 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 2.2. Set Scenario aus Query GUI bauen
 
 => Abfrage geht auch schon. Nun muss noch über das Object Iteriert werden und die Dinger gebaut werden.
+Vorher noch mal Funktionen Kapseln _> Refactoring
 Weiter Zeile 43
 Die States/ID für das Setzen der chosenSelection muss gelöst werden. Wohl wieder über slice, evtt auch auslagern.
 Dann noch in der GUI Umsettzen. Am besten erst mal für Binary und dann für den Rest.
