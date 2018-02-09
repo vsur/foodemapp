@@ -20,8 +20,7 @@
     <h1>Ihre Auwahl wird analysiert</h1>
 </div>
 
-<div class="container" role="main">
-  <div class="row">
+<div class="row">
   <div class="col-md-12">
     <?= $this->Html->image('wordcloud.png', ['alt' => 'Wordcloud von Themenfeldern dieser Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
   </div>
@@ -38,7 +37,7 @@
       <label for="criteriaInput"><?= __('Kategorie') ?></label>
       <input style="width: 100%;" type="text" class="awesomplete" id="criteriaInput" placeholder="Essen">
     </div>
-    <button id="chooseAction" style="width: 100%;" type="button" class="btn btn-default" onclick="fmApp.checkInput()"><?= __('Auswählen') ?></button>
+    <button id="chooseAction" style="width: 100%;" type="button" class="btn btn-default" onclick="fmApp.checks.input()"><?= __('Auswählen') ?></button>
   </div>
 
   <div class="col-md-4">
@@ -118,8 +117,6 @@ awesomplete.list = criterionNames;
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Cake  Block ↑↑↑↑
 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
-
-</div> <!-- /.container -->
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Criteria Block for JS ↓↓↓

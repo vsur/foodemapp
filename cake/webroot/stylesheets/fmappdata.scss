@@ -138,42 +138,42 @@ body {
 	cursor: row-resize;
 }
 
-input#componentInput::-webkit-input-placeholder {
+input#componentInput::-webkit-input-placeholder, input#criteriaInput::-webkit-input-placeholder {
 	transition: color 0.5s ease-in-out;
 }
-input#componentInput:-moz-placeholder {
+input#componentInput:-moz-placeholder, input#criteriaInput:-moz-placeholder {
 	transition: color 0.5s ease-in-out;
 }
-input#componentInput::-moz-placeholder {
+input#componentInput::-moz-placeholder, input#criteriaInput::-moz-placeholder {
 	transition: color 0.5s ease-in-out;
 }
-input#componentInput:-ms-input-placeholder {
+input#componentInput:-ms-input-placeholder, input#criteriaInput:-ms-input-placeholder {
   transition: color 0.5s ease-in-out;
 }
 // Placeholder Error Color
-input#componentInput.noChoice::-webkit-input-placeholder {
+input#componentInput.noChoice::-webkit-input-placeholder, input#criteriaInput.noChoice::-webkit-input-placeholder {
 	color: $brand-danger;
 }
-input#componentInput.noChoice:-moz-placeholder {
+input#componentInput.noChoice:-moz-placeholder, input#criteriaInput.noChoice:-moz-placeholder {
 	color: $brand-danger;
 }
-input#componentInput.noChoice::-moz-placeholder {
+input#componentInput.noChoice::-moz-placeholder, input#criteriaInput.noChoice::-moz-placeholder {
 	color: $brand-danger;
 }
-input#componentInput.noChoice:-ms-input-placeholder {
+input#componentInput.noChoice:-ms-input-placeholder, input#criteriaInput.noChoice:-ms-input-placeholder {
 	color: $brand-danger;
 }
 // Shortly Fade Placeholder by setting its color to white
-input#componentInput.chosen::-webkit-input-placeholder {
+input#componentInput.chosen::-webkit-input-placeholder, input#criteriaInput.chosen::-webkit-input-placeholder {
 	color: white;
 }
-input#componentInput.chosen:-moz-placeholder {
+input#componentInput.chosen:-moz-placeholder, input#criteriaInput.chosen:-moz-placeholder {
 	color: white;
 }
-input#componentInput.chosen::-moz-placeholder {
+input#componentInput.chosen::-moz-placeholder, input#criteriaInput.chosen::-moz-placeholder {
 	color: white;
 }
-input#componentInput.chosen:-ms-input-placeholder {
+input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-ms-input-placeholder {
 	color: white;
 }
 
