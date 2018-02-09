@@ -6,16 +6,18 @@ var fmApp = {
     init: function(params) {
         // … do something
     },
+
     // Main Props
-    standardRating: 3, // Out of 3
-    componentModelTypePrefix: '_C-MODEL_',
-    componentIdPrefix: '_C-ID_',
     binaryStatePrefix: '_BC-STATE_',
+    combinedCriteriaArrayIndex: '_ALLC-ID_',
+    componentIdPrefix: '_C-ID_',
+    componentModelTypePrefix: '_C-MODEL_',
+    chosenSelection: [],
+    currentComponent: "",
     nominalAttributeIdPrefix: '_NCATTR-ID_',
     ordinalAttributeIdPrefix: '_OCATTR-ID_',
-    combinedCriteriaArrayIndex: '_ALLC-ID_',
-    currentComponent: "",
-    chosenSelection: [],
+    standardRating: 3, // Out of 3
+
     // Main Controls
     checks: {
         input: function() {
@@ -264,6 +266,10 @@ var fmApp = {
         },
     },
     slices: {
+        binaryStateOffStringAsBoolean: function(findBinaryStateIn) {
+            var foundBinaryState = findBinaryStateIn.slice(findBinaryStateIn.indexOf(fmApp.binaryStatePrefix) + fmApp.binaryStatePrefix.length);
+            return !!(parseInt(foundBinaryState));
+        },
         combinedCriteriaArrayIndexOffString: function(findCombinedCriteriaArrayIndexIn) {
             var foundCombinedCriteriaArrayIndex = findCombinedCriteriaArrayIndexIn.slice(findCombinedCriteriaArrayIndexIn.indexOf(fmApp.combinedCriteriaArrayIndex) + fmApp.combinedCriteriaArrayIndex.length);
             return foundCombinedCriteriaArrayIndex;
@@ -285,6 +291,7 @@ var fmApp = {
             return parseInt(foundOrdinalAttributeId);
         },
     },
+
     // Main Functions
     addComponent: function(componentDataFromURL) {
         var chosenComponent;
@@ -293,16 +300,18 @@ var fmApp = {
         var bcState = null;
         var ncAttrId = null;
         var ocAttrId = null;
+        // Called direclty by URL or by Input
         if (componentDataFromURL) {
             inputValue = Object.keys(componentDataFromURL)[0];
             selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
-            bcState = null; // <= To Set for Dynamic Gui
+            bcState = selectedCriterion.type == 'BC' ? fmApp.slices.binaryStateOffStringAsBoolean(inputValue) : null;
             ncAttrId = null;
             ocAttrId = null;
         } else {
             inputValue = $("#criteriaInput").val();
             selectedCriterion = fmApp.sets.criterionByInputChoice(inputValue);
         }
+        // Check Data
         if (this.checks.dataMatching(selectedCriterion)) {
             chosenComponent = criteria[selectedCriterion.index];
         } else {
@@ -353,7 +362,7 @@ var fmApp = {
         chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
         if (chosenComponent.modelType == 'BinaryComponents') {
             chosenComponentToPaste += this.pastes.binarySwitch(chosenComponent);
-            this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), true);
+            this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
         }
         if (chosenComponent.modelType == 'NominalComponents') {
             chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent);
