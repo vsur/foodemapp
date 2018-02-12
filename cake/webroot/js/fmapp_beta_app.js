@@ -161,7 +161,6 @@ var fmApp = {
             return switchString;
         },
         nominalAttributes: function(chosenComponent, attributeToSet) {
-            console.log("Attr: " + attributeToSet);
             var nominalAttributes = '';
             // Differentiate cols for Attributes based on amount
             if (chosenComponent.nominal_attributes.length % 3 == 0) {
@@ -176,14 +175,22 @@ var fmApp = {
 
             return nominalAttributes;
         },
-        ordinalAttributes: function(chosenComponent) {
+        ordinalAttributes: function(chosenComponent, attributeToSet) {
             var meterMin = chosenComponent.ordinal_attributes.slice()[0].meter;
             var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
             var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
+            var valueToSet = null;
+            if(attributeToSet) {
+                chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
+                    if (ordinalAttribute.id == attributeToSet) {
+                        valueToSet = ordinalAttribute.meter;
+                    }
+                });
+            }
             var ordinalAttributes = '';
             ordinalAttributes += '<div id="criteriaAttributes' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" class="ordinalAttributesContainer">';
             ordinalAttributes += '<p class="ordinalAttributeChoice text-primary">Dynamisch Setzen</p>';
-            ordinalAttributes += '<input type="range" min="1" max="5" step="1" list="attributes' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '">';
+            ordinalAttributes += '<input type="range" min="1" max="' + chosenComponent.ordinal_attributes.length + '" step="1" list="attributes' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '"' + (valueToSet ? 'value="' + valueToSet + '"' : '') + '>';
             ordinalAttributes += '<datalist id="attributesDataList' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '">';
             chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
                 ordinalAttributes += '<option id="ordinalAttribute' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '" name="' + ordinalAttribute.display_name + '">';
@@ -307,7 +314,7 @@ var fmApp = {
             selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
             bcState = selectedCriterion.type == 'BC' ? fmApp.slices.binaryStateOffStringAsBoolean(inputValue) : null;
             ncAttrId = selectedCriterion.type == 'NC' ? fmApp.slices.nominalAttributeIdOffString(inputValue) : null;
-            ocAttrId = null;
+            ocAttrId = selectedCriterion.type == 'OC' ? fmApp.slices.ordinalAttributeIdOffString(inputValue) : null;
         } else {
             inputValue = $("#criteriaInput").val();
             selectedCriterion = fmApp.sets.criterionByInputChoice(inputValue);
@@ -334,7 +341,7 @@ var fmApp = {
             'rating': this.standardRating,
             'binaryState': bcState,
             'nominalAttributeId': ncAttrId,
-            'ordinalAttributeId': null
+            'ordinalAttributeId': ocAttrId
         });
         // Prepend choosen component
         this.currentComponent = '<p id="criteriaList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
@@ -369,7 +376,7 @@ var fmApp = {
             chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
         }
         if (chosenComponent.modelType == 'OrdinalComponents') {
-            chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent);
+            chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, ocAttrId);
         }
 
         chosenComponentToPaste += '</div>';
@@ -450,8 +457,13 @@ var fmApp = {
 $(document).ready(function() {
 
     if (configuredSelection) {
+        console.log(configuredSelection.typeof);
+        $("#criteriaChoice").fadeOut(250);
+        $("#criteriaOutput").fadeOut(250);
         $("#loadingSpinnerContainer").fadeIn(500);
-        fmApp.addComponent(configuredSelection);
+        Object.keys(configuredSelection).forEach(function (configuredComponent, index) {
+            fmApp.addComponent(configuredComponent);
+        });
     }
     // Function for selection
     window.addEventListener("awesomplete-select", function(e) {
@@ -527,8 +539,8 @@ $(document).ready(function() {
         fmApp.sets.nominalChoice(indexInSelection, nominalAttributeId);
     });
 
-    // Click handler for ordinal attribute choice
-    $("#criteriaOutput").on("mousedown mousemove mouseup", ".ordinalAttributesContainer > input", function() {
+    // Click handler for ordinal attribute choice, first try was [mousedown mousemove mouseup] but input seems to work as well
+    $("#criteriaOutput").on("input", ".ordinalAttributesContainer > input", function() {
         // Get component string of clicked rating element
         var componentIdentifierName = $(this).attr("list");
         // Extract ModelType of component
