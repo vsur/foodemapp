@@ -135,10 +135,10 @@ var fmApp = {
                 ratingRadio = ratingRadioStart + radiostar5 + radiostar4 + radiostar3 + radiostar2 + radiostar1 + ratingRadioEnd;
                 return ratingRadio;
             },
-            singleNominalAttribute: function(nominalAttribute, chosenComponent) {
+            singleNominalAttribute: function(nominalAttribute, chosenComponent, attributeToSet) {
                 var nominalAttributeToPaste = '';
                 nominalAttributeToPaste += '<div class="nominalAttribute">';
-                nominalAttributeToPaste += '<input type="radio" id="nominalAttribute' + fmApp.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" />';
+                nominalAttributeToPaste += '<input type="radio" id="nominalAttribute' + fmApp.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" ' + (nominalAttribute.id == attributeToSet ? 'checked' : '') + '/>';
                 nominalAttributeToPaste += '<label for="nominalAttribute' + fmApp.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
                 nominalAttributeToPaste += '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
                 nominalAttributeToPaste += '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
@@ -160,7 +160,8 @@ var fmApp = {
             switchString += '</p>';
             return switchString;
         },
-        nominalAttributes: function(chosenComponent) {
+        nominalAttributes: function(chosenComponent, attributeToSet) {
+            console.log("Attr: " + attributeToSet);
             var nominalAttributes = '';
             // Differentiate cols for Attributes based on amount
             if (chosenComponent.nominal_attributes.length % 3 == 0) {
@@ -169,7 +170,7 @@ var fmApp = {
                 nominalAttributes += '<div id="criteriaAttributes' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" class="nominalAttributesContainer fourfold">';
             }
             chosenComponent.nominal_attributes.forEach(function(nominalAttribute, index) {
-                nominalAttributes += fmApp.pastes.builds.singleNominalAttribute(nominalAttribute, chosenComponent);
+                nominalAttributes += fmApp.pastes.builds.singleNominalAttribute(nominalAttribute, chosenComponent, attributeToSet);
             });
             nominalAttributes += '</div>';
 
@@ -305,7 +306,7 @@ var fmApp = {
             inputValue = Object.keys(componentDataFromURL)[0];
             selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
             bcState = selectedCriterion.type == 'BC' ? fmApp.slices.binaryStateOffStringAsBoolean(inputValue) : null;
-            ncAttrId = null;
+            ncAttrId = selectedCriterion.type == 'NC' ? fmApp.slices.nominalAttributeIdOffString(inputValue) : null;
             ocAttrId = null;
         } else {
             inputValue = $("#criteriaInput").val();
@@ -332,7 +333,7 @@ var fmApp = {
             'componentId': chosenComponent.id,
             'rating': this.standardRating,
             'binaryState': bcState,
-            'nominalAttributeId': null,
+            'nominalAttributeId': ncAttrId,
             'ordinalAttributeId': null
         });
         // Prepend choosen component
@@ -365,7 +366,7 @@ var fmApp = {
             this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
         }
         if (chosenComponent.modelType == 'NominalComponents') {
-            chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent);
+            chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
         }
         if (chosenComponent.modelType == 'OrdinalComponents') {
             chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent);

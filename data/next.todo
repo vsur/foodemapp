@@ -14,7 +14,7 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 2.2. Set Scenario aus Query GUI bauen
 => Abfrage geht auch schon. Nun muss noch über das Object Iteriert werden und die Dinger gebaut werden.
 2.2.1. ✓ Für Binary
-2.2.2. Für Nominal
+2.2.2. ✓ Für Nominal
 2.2.3. Für Ordinal
 
 Dann noch in der GUI Umsettzen. Am besten erst mal für Binary und dann für den Rest.
