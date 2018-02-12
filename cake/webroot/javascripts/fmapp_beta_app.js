@@ -148,13 +148,13 @@ var fmApp = {
                 return nominalAttributeToPaste;
             },
         },
-        binarySwitch: function(chosenComponent) {
+        binarySwitch: function(chosenComponent, stateToSet) {
             var switchString = '';
             switchString += '<p class="binaryComponentContainer">';
             switchString += '<span class="componentNameBinarySlider">' + chosenComponent.display_name + '</span>';
             // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
             switchString += '<label class="switch">';
-            switchString += '<input type="checkbox" checked>';
+            switchString += '<input type="checkbox" ' + ( stateToSet ? 'checked' : '') + '>';
             switchString += '<span class="slider round"></span>';
             switchString += '</label>';
             switchString += '</p>';
@@ -310,6 +310,7 @@ var fmApp = {
         } else {
             inputValue = $("#criteriaInput").val();
             selectedCriterion = fmApp.sets.criterionByInputChoice(inputValue);
+            bcState = selectedCriterion.type == 'BC' ? true : null;
         }
         // Check Data
         if (this.checks.dataMatching(selectedCriterion)) {
@@ -345,7 +346,6 @@ var fmApp = {
         var labelRow = "";
         if (this.chosenSelection.length <= 1) {
             // Add labels to areas
-
             labelRow += '<div class="row hidden-sm hidden-xs">';
             labelRow += '<div class="col-md-6">';
             labelRow += '<label class="text-info">Kategorien einstellen</label>';
@@ -361,7 +361,7 @@ var fmApp = {
         chosenComponentToPaste += '<div class="col-md-6">';
         chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
         if (chosenComponent.modelType == 'BinaryComponents') {
-            chosenComponentToPaste += this.pastes.binarySwitch(chosenComponent);
+            chosenComponentToPaste += this.pastes.binarySwitch(chosenComponent, bcState);
             this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
         }
         if (chosenComponent.modelType == 'NominalComponents') {
