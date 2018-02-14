@@ -310,7 +310,7 @@ var fmApp = {
         var ocAttrId = null;
         // Called direclty by URL or by Input
         if (componentDataFromURL) {
-            inputValue = Object.keys(componentDataFromURL)[0];
+            inputValue = componentDataFromURL.identifierString;
             selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
             bcState = selectedCriterion.type == 'BC' ? fmApp.slices.binaryStateOffStringAsBoolean(inputValue) : null;
             ncAttrId = selectedCriterion.type == 'NC' ? fmApp.slices.nominalAttributeIdOffString(inputValue) : null;
@@ -457,12 +457,22 @@ var fmApp = {
 $(document).ready(function() {
 
     if (configuredSelection) {
-        console.log(configuredSelection.typeof);
+        console.log(configuredSelection);
         $("#criteriaChoice").fadeOut(250);
         $("#criteriaOutput").fadeOut(250);
-        $("#loadingSpinnerContainer").fadeIn(500);
-        Object.keys(configuredSelection).forEach(function (configuredComponent, index) {
-            fmApp.addComponent(configuredComponent);
+        $("#loadingSpinnerContainer").fadeIn(500, function(event) {
+            for (var configuredComponentKey in configuredSelection) {
+                var componentDataFromURL = {identifierString : configuredComponentKey, rating : configuredSelection[configuredComponentKey] };
+                console.log(componentDataFromURL);
+                console.log(componentDataFromURL.identifierString);
+                fmApp.addComponent(componentDataFromURL);
+            }
+            setTimeout(function(){
+                $("#criteriaChoice").fadeIn(250);
+                $("#criteriaOutput").fadeIn(250, function(event) {
+                    $("#loadingSpinnerContainer").fadeOut(500);
+                });
+            }, 1000);
         });
     }
     // Function for selection
@@ -521,6 +531,7 @@ $(document).ready(function() {
         // Set binary choice in Selection on update
         fmApp.sets.binaryChoice(indexInSelection, recentBinaryState);
     });
+
     // Click handler for nominal attribute choice
     $("#criteriaOutput").on("click", ".nominalAttributesContainer > .nominalAttribute > input", function() {
         // Get component string of clicked nomnial attribuite element

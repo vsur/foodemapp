@@ -16,9 +16,10 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 2.2.1. ✓ Für Binary
 2.2.2. ✓ Für Nominal
 2.2.3. ✓ Für Ordinal
+2.2.4. ✓ Interation über Params
 
-Nun aber die Iteration über die einzelnen Params klären und auflösen.
-Weiter Zeile 460
+Problem Rating wird nicht dynamisch gesetzt!
+Weietr Zeile 341
 
 Dann noch in der GUI Umsettzen. Am besten erst mal für Binary und dann für den Rest.
 
