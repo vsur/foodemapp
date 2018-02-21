@@ -25,29 +25,64 @@ class YpoisController extends AppController
     }
 
     public function setScenario() {
-      $this->viewBuilder()->layout('Fmappbeta');
-      // Get all BinaryComponents
-      $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
-      // debug($binaryComponents->toArray());
+        $this->viewBuilder()->layout('Fmappbeta');
+        // Get all BinaryComponents
+        $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
-      // Get all $nominalComponents with associated Attributes
-      $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNamesAndIconsPaths($withNominalAttr = true);
+        // Get all $nominalComponents with associated Attributes
+        $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNamesAndIconsPaths($withNominalAttr = true);
 
-      // Get all OrdinalAttributes
-      $ordinalComponents = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
+        // Get all OrdinalAttributes
+        $ordinalComponents = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
 
-      // Wrap up all criteria
-      $criteria = $this->combineAllComponetsToOneCriteriaArray($binaryComponents, $nominalComponents, $ordinalComponents);
+        // Wrap up all criteria
+        $criteria = $this->combineAllComponetsToOneCriteriaArray($binaryComponents, $nominalComponents, $ordinalComponents);
 
-      // Set combined criterion names for autocompletion and differentiation
-      $criterionNames = $this->setCombinedCriterionNames($criteria);
+        // Set combined criterion names for autocompletion and differentiation
+        $criterionNames = $this->setCombinedCriterionNames($criteria);
 
-      $configuredSelection = NULL;
-      if (!empty($this->request->query)) {
-          $configuredSelection = $this->request->query;
-      }
+        $configuredSelection = NULL;
+        if (!empty($this->request->query)) {
+            $configuredSelection = $this->request->query;
+        }
 
-      $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
+        $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
+    }
+
+    public function findMatches() {
+        $this->viewBuilder()->layout('Fmappbeta');
+        // Get all BinaryComponents
+        $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
+        // debug($binaryComponents->toArray());
+
+        // Get all $nominalComponents with associated Attributes
+        $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNamesAndIconsPaths($withNominalAttr = true);
+
+        // Get all OrdinalAttributes
+        $ordinalComponents = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
+
+        // Wrap up all criteria
+        $criteria = $this->combineAllComponetsToOneCriteriaArray($binaryComponents, $nominalComponents, $ordinalComponents);
+
+        // Set combined criterion names for autocompletion and differentiation
+        $criterionNames = $this->setCombinedCriterionNames($criteria);
+
+        $configuredSelection = NULL;
+        if (!empty($this->request->query)) {
+            $configuredSelection = $this->request->query;
+        }
+
+        // Get all matching ypois or all
+        $ypois;
+        if($configuredSelection) {
+            $ypois = $this->Ypois
+                ->find("all")
+                ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
+        } else {
+            $ypois = $this->Ypois->find("all");
+        }
+
+        $this->set(compact('ypois', 'criteria', 'criterionNames', 'configuredSelection'));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null) {
