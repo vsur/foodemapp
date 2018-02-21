@@ -312,11 +312,13 @@ var fmApp = {
         if (componentDataFromURL) {
             inputValue = componentDataFromURL.identifierString;
             selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
+            cRating = componentDataFromURL.rating;
             bcState = selectedCriterion.type == 'BC' ? fmApp.slices.binaryStateOffStringAsBoolean(inputValue) : null;
             ncAttrId = selectedCriterion.type == 'NC' ? fmApp.slices.nominalAttributeIdOffString(inputValue) : null;
             ocAttrId = selectedCriterion.type == 'OC' ? fmApp.slices.ordinalAttributeIdOffString(inputValue) : null;
         } else {
             inputValue = $("#criteriaInput").val();
+            cRating = this.standardRating;
             selectedCriterion = fmApp.sets.criterionByInputChoice(inputValue);
             bcState = selectedCriterion.type == 'BC' ? true : null;
         }
@@ -338,7 +340,7 @@ var fmApp = {
             'componentName': chosenComponent.display_name,
             'componentType': chosenComponent.modelType,
             'componentId': chosenComponent.id,
-            'rating': this.standardRating,
+            'rating': cRating,
             'binaryState': bcState,
             'nominalAttributeId': ncAttrId,
             'ordinalAttributeId': ocAttrId
@@ -416,7 +418,7 @@ var fmApp = {
     },
     comparePois: function() {
         var paramString = "?";
-        var url = '../ypois/findMatches/';
+        var url = '../findMatches/';
         this.chosenSelection.forEach(function(component, index) {
             switch (component.componentType) {
                 case 'BinaryComponents':

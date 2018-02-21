@@ -2,7 +2,7 @@ Problem mit der Datenlage gelöst!
 
 Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
-1. Action für Criterion auswahl aus Awesomeplete bauen. Platzier die Dinger.
+1. ✓ Action für Criterion auswahl aus Awesomeplete bauen. Platzier die Dinger.
 1.1. ✓ Baue Schalter für Binary
 1.2. ✓ Ausgabe für Nominal
 1.3. ✓ Ausgabe für Ordinal
@@ -11,20 +11,24 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 1.6. ✓ Setze Binary-Compnent-Auswahl im JS Object choosen Selection
 
 2.1. ✓ Query bauen
-2.2. Set Scenario aus Query GUI bauen
-=> Abfrage geht auch schon. Nun muss noch über das Object Iteriert werden und die Dinger gebaut werden.
+2.2. ✓ Set Scenario aus Query GUI bauen
 2.2.1. ✓ Für Binary
 2.2.2. ✓ Für Nominal
 2.2.3. ✓ Für Ordinal
 2.2.4. ✓ Interation über Params
+2.2.5. ✓ Rating wird dznamisch gesetzt
 
-Problem Rating wird nicht dynamisch gesetzt!
-Weietr Zeile 341
-
-Dann noch in der GUI Umsettzen. Am besten erst mal für Binary und dann für den Rest.
-
-2.3. Aus Query dann neu Search Matches bauen
-
+2.3. Aus Query dann Search Matches bauen
+2.3.1. Reine Debugausgabe
+2.3.2. Liste
+2.3.2.1. Mobile
+2.3.2.2. Dekstop
+2.3.3. Karte
+2.3.3.1. Mobile
+2.3.3.2. Dekstop
+2.3.4. Chroddiagram
+2.3.5. Weitere GUI-Elemente
+2.3.6. Zusammenspiel der GUIS, Selektion usw.
 
 3. Dann noch mal hübsch machen
 
