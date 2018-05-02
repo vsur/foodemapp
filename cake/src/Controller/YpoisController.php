@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -24,7 +25,8 @@ class YpoisController extends AppController
         $this->set('_serialize', ['ypois']);
     }
 
-    public function setScenario() {
+    public function setScenario()
+    {
         $this->viewBuilder()->layout('Fmappbeta');
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
@@ -49,7 +51,8 @@ class YpoisController extends AppController
         $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
     }
 
-    public function findMatches() {
+    public function findMatches()
+    {
         $this->viewBuilder()->layout('Fmappbeta');
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
@@ -73,31 +76,53 @@ class YpoisController extends AppController
         }
 
         // Get all matching ypois or all
-        $ypois;
-        if($configuredSelection) {
+        $ypois = (object)[];
+        if ($configuredSelection) {
+           /* Example $confugredSelection
+                [
+                    'BC_C-ID_79_BC-STATE_1' => '5',
+                    'NC_C-ID_1_NCATTR-ID_2' => '4',
+                    'OC_C-ID_2_OCATTR-ID_6' => '2'
+                ]
+            */
             $ypois = $this->Ypois
                 ->find("all")
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
+            $ypois->matching('BinaryComponents', function ($q) use ($configuredSelection) {
+                return $q->where(['BinaryComponents.id' => 3]);
+                /*
+                 * Lässt sich das umbauen?
+                 * ->where(function (QueryExpression $exp) {
+                    return $exp
+                        ->eq('author_id', 2)
+                        ->eq('published', true)
+                        ->notEq('spam', true)
+                        ->gt('view_count', 10);
+                });*/
+            });
+            debug("configuredSelection is Set");
         } else {
-            $ypois = $this->Ypois->find("all");
+            $ypois = $this->Ypois->find("all")
+                ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
         }
 
         $this->set(compact('ypois', 'criteria', 'criterionNames', 'configuredSelection'));
     }
 
-    protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null) {
+    protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)
+    {
         $criteria = [];
         foreach ($binaryComponents as $binaryComponent) {
-          $binaryComponent->modelType = $binaryComponent->source();
-          array_push($criteria, $binaryComponent);
+            $binaryComponent->modelType = $binaryComponent->source();
+            array_push($criteria, $binaryComponent);
         }
         foreach ($nominalComponents as $nominalComponent) {
-          $nominalComponent->modelType = $nominalComponent->source();
-          array_push($criteria, $nominalComponent);
+            $nominalComponent->modelType = $nominalComponent->source();
+            array_push($criteria, $nominalComponent);
         }
         foreach ($ordinalComponents as $ordinalComponent) {
-          $ordinalComponent->modelType = $ordinalComponent->source();
-          array_push($criteria, $ordinalComponent);
+            $ordinalComponent->modelType = $ordinalComponent->source();
+            array_push($criteria, $ordinalComponent);
         }
         // Sort criteria once at the end, assoc hast to be sorted earllier
         foreach ($criteria as $key => $row) {
@@ -107,39 +132,40 @@ class YpoisController extends AppController
         return $criteria;
     }
 
-    protected function setCombinedCriterionNames($criteria = null) {
+    protected function setCombinedCriterionNames($criteria = null)
+    {
         $criterionNames = [];
         foreach ($criteria as $keyIndex => $criterion) {
-          $newEntry = [];
-          $criterionType = $criterion->source();
-          $criterionTypeAction = "";
-          $criterionInitials = "";
-          switch ($criterionType) {
-            case 'BinaryComponents':
-              $criterionTypeAction = "On/Off";
-              $criterionInitials = "BC";
-              break;
+            $newEntry = [];
+            $criterionType = $criterion->source();
+            $criterionTypeAction = "";
+            $criterionInitials = "";
+            switch ($criterionType) {
+                case 'BinaryComponents':
+                    $criterionTypeAction = "On/Off";
+                    $criterionInitials = "BC";
+                    break;
 
-            case 'NominalComponents':
-              $criterionTypeAction = "auswählen";
-              $criterionInitials = "NC";
-              break;
+                case 'NominalComponents':
+                    $criterionTypeAction = "auswählen";
+                    $criterionInitials = "NC";
+                    break;
 
-            case 'OrdinalComponents':
-              $criterionTypeAction = "einstellen";
-              $criterionInitials = "OC";
-              break;
-          }
-          $criterionName = $criterion->display_name . " " . $criterionTypeAction;
-          // Selection list must have the criterions ID and the exact index of combineAllComponetsToOneCriteriaArray
-          // _C-ID_ Prefix for _ Component ID _ in combination with Repo-Source the criterion can be identified
-          // _ALLC-ID_ Prefix for _ AllComponetsToOneCriteriaArray Index _ to get find data again later
-          $criterionIdentifier = $criterionInitials . "_C-ID_" . $criterion->id . "_ALLC-ID_" . $keyIndex;
+                case 'OrdinalComponents':
+                    $criterionTypeAction = "einstellen";
+                    $criterionInitials = "OC";
+                    break;
+            }
+            $criterionName = $criterion->display_name . " " . $criterionTypeAction;
+            // Selection list must have the criterions ID and the exact index of combineAllComponetsToOneCriteriaArray
+            // _C-ID_ Prefix for _ Component ID _ in combination with Repo-Source the criterion can be identified
+            // _ALLC-ID_ Prefix for _ AllComponetsToOneCriteriaArray Index _ to get find data again later
+            $criterionIdentifier = $criterionInitials . "_C-ID_" . $criterion->id . "_ALLC-ID_" . $keyIndex;
 
-          array_push($newEntry, $criterionName);
-          array_push($newEntry, $criterionIdentifier);
+            array_push($newEntry, $criterionName);
+            array_push($newEntry, $criterionIdentifier);
 
-          array_push($criterionNames, $newEntry);
+            array_push($criterionNames, $newEntry);
         }
         return $criterionNames;
     }

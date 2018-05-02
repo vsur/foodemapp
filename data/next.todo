@@ -22,6 +22,13 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 Hier dann weiter, ist vorbereitet, was fehlt ist der tatsächliche Query aus den Params
 
+Wie Query Bauen? Mehrere Matchinngs an einander? Oder alles in eine Query Match Where: https://book.cakephp.org/3.0/en/orm/query-builder.html#advanced-conditions
+Ausprobieren auf Binary und Nominal
+
+=> Dann kann das entsprechende Partameter Obnject gebaut werden.
+
+Weiter YpoisController Z92
+
 2.3.1. Reine Debugausgabe
 2.3.2. Liste
 2.3.2.1. Mobile
