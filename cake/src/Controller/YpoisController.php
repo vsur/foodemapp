@@ -85,11 +85,23 @@ class YpoisController extends AppController
                     'OC_C-ID_2_OCATTR-ID_6' => '2'
                 ]
             */
+            $configuredSelection["test"] = 3;
             $ypois = $this->Ypois
                 ->find("all")
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
             $ypois->matching('BinaryComponents', function ($q) use ($configuredSelection) {
-                return $q->where(['BinaryComponents.id' => 3]);
+                debug($configuredSelection);
+                // return $q->where(['BinaryComponents.id' => $configuredSelection["test"]]);
+                return $q->where(function ($exp) use ($configuredSelection) {
+                    // Conditionsaufbauen
+                    $hasBinaryConditions;
+                    $hasNotBinaryConditions;
+                    $hasNominalAttributeConditions;
+                    $hasOrdinalAttributeConditions;
+
+                    return $exp
+                        ->eq('BinaryComponents.id', $configuredSelection["test"]);
+                });
                 /*
                  * Lässt sich das umbauen?
                  * ->where(function (QueryExpression $exp) {
