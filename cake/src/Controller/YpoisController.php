@@ -85,23 +85,33 @@ class YpoisController extends AppController
                     'OC_C-ID_2_OCATTR-ID_6' => '2'
                 ]
             */
-            $configuredSelection["test"] = 3;
+            $configuredSelection["test"] = 79;
             $ypois = $this->Ypois
                 ->find("all")
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
+            $ypois->matching('BinaryComponents', function ($q) {
+                return $q->where(['AND' => ['BinaryComponents.id' => 93, 'BinaryComponents.id' => 79]]);
+            });
+            /*
             $ypois->matching('BinaryComponents', function ($q) use ($configuredSelection) {
                 debug($configuredSelection);
                 // return $q->where(['BinaryComponents.id' => $configuredSelection["test"]]);
                 return $q->where(function ($exp) use ($configuredSelection) {
-                    // Conditionsaufbauen
-                    $hasBinaryConditions;
+                    // Conditions aufbauen
+                    $exp
+                        ->eq('BinaryComponents.id', $configuredSelection["test"])
+                        // ->eq('BinaryComponents.id', 93)
+                        ;
+                    // $exp->add(['BinaryComponents.id' => $configuredSelection["test"]]);
+                    $hasBinaryConditions = $exp;
+            // ->eq('author_id', 5);
                     $hasNotBinaryConditions;
                     $hasNominalAttributeConditions;
                     $hasOrdinalAttributeConditions;
 
-                    return $exp
-                        ->eq('BinaryComponents.id', $configuredSelection["test"]);
+                    return $exp->and_([$hasBinaryConditions]);
                 });
+                */
                 /*
                  * Lässt sich das umbauen?
                  * ->where(function (QueryExpression $exp) {
@@ -110,8 +120,9 @@ class YpoisController extends AppController
                         ->eq('published', true)
                         ->notEq('spam', true)
                         ->gt('view_count', 10);
-                });*/
+                });
             });
+            */
             debug("configuredSelection is Set");
         } else {
             $ypois = $this->Ypois->find("all")
