@@ -89,21 +89,37 @@ class YpoisController extends AppController
             $ypois = $this->Ypois
                 ->find("all")
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
+                /*
             $ypois->matching('BinaryComponents', function ($q) {
                 return $q
 //                    ->where(['BinaryComponents.id' => 79])
-                    ->andWhere(['BinaryComponents.id' => 3])
+                    ->where(['BinaryComponents.id' => 3])
+                    ->andWhere(['BinaryComponents.id' => 7])
                     ;
-            });
+            });*/
+            $ypois = $this->Ypois->find()
+            ->join([
+                'a' => [
+                    'table' => 'binary_components_ypois',
+                    'conditions' => 'a.ypoi_id = Ypois.id'
+                ],
+                'b' => [
+                    'table' => 'binary_components_ypois',
+                    'conditions' => 'b.ypoi_id = Ypois.id'
+                ]
+            ])
+            ->where('a.binary_component_id = 79')
+            ->enableAutoFields(true);
             debug($ypois->sql());
 
+            /*
             $rawYpois = $this->Ypois->query('
-                SELECT * FROM ypois 
+                SELECT * FROM ypois
                 WHERE ypois.id IN (SELECT ypois_id FROM binary_components_ypois WHERE binary_components_id = 3)
             ');
             debug($rawYpois->sql());
 
-            /*
+
             $ypois->matching('BinaryComponents', function ($q) use ($configuredSelection) {
                 debug($configuredSelection);
                 // return $q->where(['BinaryComponents.id' => $configuredSelection["test"]]);
