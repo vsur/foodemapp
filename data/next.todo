@@ -22,12 +22,13 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 Hier dann weiter, ist vorbereitet, was fehlt ist der tatsächliche Query aus den Params
 
-Wie Query Bauen? Mehrere Matchinngs an einander? Oder alles in eine Query Match Where: https://book.cakephp.org/3.0/en/orm/query-builder.html#advanced-conditions
-Ausprobieren auf Binary und Nominal
-
-=> Dann kann das entsprechende Partameter Obnject gebaut werden.
-
-Weiter YpoisController Z92
+Query geht dank Andi.
+Nun mal SQL Bauen, damit auch NOT EXISTS auf mehreren Funktioniert.
+Dann beides in Array Cake
+Dann Nomninal
+Dann Ordinals
+Dann Query Object from Params bauen, aber SQL Inject Check
+Dann Query-Bauen
 
 2.3.1. Reine Debugausgabe
 2.3.2. Liste
