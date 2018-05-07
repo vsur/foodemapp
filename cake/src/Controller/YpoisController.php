@@ -98,6 +98,7 @@ class YpoisController extends AppController
                     ;
             });*/
             $ypois = $this->Ypois->find()
+               ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
             ->join([
                 'a' => [
                     'table' => 'binary_components_ypois',
@@ -108,8 +109,10 @@ class YpoisController extends AppController
                     'conditions' => 'b.ypoi_id = Ypois.id'
                 ]
             ])
-            ->where('a.binary_component_id = 79')
-            ->enableAutoFields(true);
+            ->where('a.binary_component_id = 75')
+            ->where('b.binary_component_id = 23')
+            ->enableAutoFields(true)
+            ->distinct(['Ypois.id']);
             debug($ypois->sql());
 
             /*
