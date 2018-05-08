@@ -20,11 +20,15 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 2.3. Aus Query dann Search Matches bauen
 
-Hier dann weiter, ist vorbereitet, was fehlt ist der tatsächliche Query aus den Params
-
 Query geht dank Andi.
-Nun mal SQL Bauen, damit auch NOT EXISTS auf mehreren Funktioniert.
-Dann beides in Array Cake
+✓ Nun mal SQL Bauen, damit auch NOT EXISTS auf mehreren Funktioniert.
+
+Not Matching auf allen Assocs geht. Nun die Joins für alle Assocs noch bauen und …
+
+dann klären ob nun bei der Auwahl von Attrs nur ergbenisse geliefert werden, die
+a) diese Attribute haben,
+b) oder aber keinen Eintrag mit dem anderen Attribut
+
 Dann Nomninal
 Dann Ordinals
 Dann Query Object from Params bauen, aber SQL Inject Check

@@ -86,33 +86,52 @@ class YpoisController extends AppController
                 ]
             */
             $configuredSelection["test"] = 79;
-            $ypois = $this->Ypois
-                ->find("all")
-                ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
-                /*
-            $ypois->matching('BinaryComponents', function ($q) {
-                return $q
-//                    ->where(['BinaryComponents.id' => 79])
-                    ->where(['BinaryComponents.id' => 3])
-                    ->andWhere(['BinaryComponents.id' => 7])
-                    ;
-            });*/
+
             $ypois = $this->Ypois->find()
-               ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
-            ->join([
-                'a' => [
-                    'table' => 'binary_components_ypois',
-                    'conditions' => 'a.ypoi_id = Ypois.id'
-                ],
-                'b' => [
-                    'table' => 'binary_components_ypois',
-                    'conditions' => 'b.ypoi_id = Ypois.id'
-                ]
-            ])
-            ->where('a.binary_component_id = 75')
-            ->where('b.binary_component_id = 23')
-            ->enableAutoFields(true)
-            ->distinct(['Ypois.id']);
+                ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
+                ->notMatching('BinaryComponents', function ($q) {
+                    return $q
+                        ->where(['BinaryComponents.id' => 77])
+                        ->orWhere(['BinaryComponents.id' => 81])
+                        ;
+                })
+                ->notMatching('NominalAttributes', function ($q) {
+                    return $q
+                        ->where(['NominalAttributes.id' => 1])
+                        ->orWhere(['NominalAttributes.id' => 9])
+                        ;
+                })
+                ->notMatching('OrdinalAttributes', function ($q) {
+                    return $q
+                        ->where(['OrdinalAttributes.id' => 4])
+                        ->orWhere(['OrdinalAttributes.id' => 8])
+                        ;
+                })
+                /*
+                 * Der klappt so, kann als Array beliebig gebaut werden
+                 *
+                ->join([
+                    'a' => [
+                        'table' => 'binary_components_ypois',
+                        'conditions' =>
+                            [
+                                'a.ypoi_id = Ypois.id',
+                                'a.binary_component_id = 75',
+                            ]
+                    ],
+                    'b' => [
+                        'table' => 'binary_components_ypois',
+                        'conditions' =>
+                            [
+                                'b.ypoi_id = Ypois.id',
+                                'b.binary_component_id = 80',
+                            ]
+                    ]
+                ])
+                */
+//                ->distinct('Ypois.id')
+                ->enableAutoFields(true)
+                ;
             debug($ypois->sql());
 
             /*
