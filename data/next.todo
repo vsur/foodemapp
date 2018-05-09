@@ -29,7 +29,11 @@ dann klären ob nun bei der Auwahl von Attrs nur ergbenisse geliefert werden, di
 a) diese Attribute haben,
 b) oder aber keinen Eintrag mit dem anderen Attribut
 
-Dann Nomninal
+Dann Nomninal Include/Join bauen
+
+Dann Ordinal Max Apperance View
+Dann Ordinals include bauen
+
 Dann Ordinals
 Dann Query Object from Params bauen, aber SQL Inject Check
 Dann Query-Bauen
@@ -58,3 +62,24 @@ Switch einfach aus Checkbox siehe https://www.w3schools.com/howto/howto_css_swit
 Wo kam das erste undefined her? Weil du trottel eine Variable in JS instantierst aber nicht deklarierst und dann eine Stringverkettung machst, geht nicht! Depp!
 
 Nehme nie #/. mit in die Class- bzw Id-Namen mit auf, jQuery kriegt das nicht getrennt, wie auch! Dummer Veit.
+
+*** Daten Fehlen ***
+** NC BYOB/Corkage **
+Es gitb keine YPOIS für NC BYOB/Corkage?! Es muss noch mal geklärt werden warum, im Ursprungsdatensatz sind 1315 Stück voranden. Die eigentlich auch passen müssten
+** Ages Allowed **
+Hier gibts nur ein 1?! mit 21plus die 19plus zeigen evtl. Night Clubs (no Match auf Essensrelation)
+allages = 21, 0 = ypois
+18plus = 50 , 0 = ypois
+19plus = 5, 0 = ypois
+21plus = 177, 1 = ypois
+*** Music/Fehl ***
+Karaoke und Live (vermutlich wg. fehlender Essensrelation)
+*** Good For fehlt auch oft (22080 währen in Yelp) ***
+*** Diatry Restrictions gibt es nur 18 für Vegan, 156 sind nur in Yelp, aber ich weiß noch nicht wieviele davon nicht vegan ***
+Es sind eigentlich 52 vegiterian in YELP TODO Check why not YPOIS ({'attributes.Dietary Restrictions': {$exists: true},'attributes.Dietary Restrictions.vegetarian': true})
+*** Ambience ***
+Hier gibts nur Casual, Hispster, Trendy und romantic = 17 Gesamt. Obwohl 21447 in Yelp Ambience haben, hier noch mal mit Query Builder checken, wie viele auf OR subattr = true stehen.
+
+
+
+
