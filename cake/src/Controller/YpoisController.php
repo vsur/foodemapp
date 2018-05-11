@@ -78,14 +78,11 @@ class YpoisController extends AppController
         // Get all matching ypois or all
         $ypois = (object)[];
         if ($configuredSelection) {
-           /* Example $confugredSelection
-                [
-                    'BC_C-ID_79_BC-STATE_1' => '5',
-                    'NC_C-ID_1_NCATTR-ID_2' => '4',
-                    'OC_C-ID_2_OCATTR-ID_6' => '2'
-                ]
-            */
-            $configuredSelection["test"] = 79;
+
+
+            $filerSelection = $this->buildFilterObjectFromSelection($configuredSelection);
+
+            debug($configuredSelection);
 
             $ypois = $this->Ypois->find()
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
@@ -143,22 +140,22 @@ class YpoisController extends AppController
                  * JOIN ON Nominal Attributes
                  */
                 ->join([
-                    'noca_5' => [
-                        'table' => 'nominal_attributes_ypois',
-                        'conditions' =>
-                            [
-                                'noca_5.ypoi_id = Ypois.id',
-                                'noca_5.nominal_attribute_id = 5',
-                            ]
-                    ],
-                    'noca_2' => [
-                        'table' => 'nominal_attributes_ypois',
-                        'conditions' =>
-                            [
-                                'noca_2.ypoi_id = Ypois.id',
-                                'noca_2.nominal_attribute_id = 1',
-                            ]
-                    ]
+//                    'noca_5' => [
+//                        'table' => 'nominal_attributes_ypois',
+//                        'conditions' =>
+//                            [
+//                                'noca_5.ypoi_id = Ypois.id',
+//                                'noca_5.nominal_attribute_id = 26',
+//                            ]
+//                    ],
+//                    'noca_2' => [
+//                        'table' => 'nominal_attributes_ypois',
+//                        'conditions' =>
+//                            [
+//                                'noca_2.ypoi_id = Ypois.id',
+//                                'noca_2.nominal_attribute_id = 38',
+//                            ]
+//                    ]
                 ])
 
                 /*
@@ -183,12 +180,7 @@ class YpoisController extends AppController
                     ],
 
                 ])
-
-//                ->distinct('Ypois.id')
-                ->enableAutoFields(true)
-                ;
-            debug($ypois->sql());
-
+                ->enableAutoFields(true);
             /*
             $rawYpois = $this->Ypois->query('
                 SELECT * FROM ypois
@@ -227,7 +219,6 @@ class YpoisController extends AppController
                 });
             });
             */
-            debug("configuredSelection is Set");
         } else {
             $ypois = $this->Ypois->find("all")
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
@@ -297,6 +288,39 @@ class YpoisController extends AppController
         return $criterionNames;
     }
 
+    protected function buildFilterObjectFromSelection($configuredSelection = null) {
+        /* Example $confugredSelection
+            [
+                'BC_C-ID_79_BC-STATE_1' => '5',
+                'NC_C-ID_1_NCATTR-ID_2' => '4',
+                'OC_C-ID_2_OCATTR-ID_6' => '2'
+            ]
+        */
+        $filters = (object)[];
+        $filters->notMatchingBinaries = [];
+        $filters->matchingBinaries = [];
+        $filters->matchingNominals = [];
+        $filters->matchingOrdinals = [];
+
+        foreach ($configuredSelection as $combinedComponentString => $componentRating) {
+            switch (true) {
+                case strstr($combinedComponentString,'BC_C-ID'):
+                    // Build and fill matchingBinaries and notMatchingBinaries
+                    debug("Found Binary Component in configuredSelection");
+                    break;
+                case strstr($combinedComponentString,'NCATTR-ID'):
+                    // Build and fill matchingNominals
+                    debug("Found Nominal Component in configuredSelection");
+                    break;
+                case strstr($combinedComponentString,'OCATTR-ID'):
+                    // Build and fill matchingOrdinals
+                    debug("Found Ordinal Component in configuredSelection");
+                    break;
+            }
+        }
+
+        return $filters;
+    }
 
     /**
      * View method

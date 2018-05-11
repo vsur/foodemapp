@@ -26,6 +26,9 @@ Query geht dank Andi.
 Not Matching auf allen Assocs geht. Nun die Joins für alle Assocs noch bauen und …
 
 NEXT: Dann Ordinals
+
+Obacht. Datenstamm Daham und im Büro gehen auseinader!
+
 Dann: Query Object from Params bauen, aber SQL Inject Check
 Dann Query-Bauen
 
