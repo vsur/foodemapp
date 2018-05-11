@@ -418,7 +418,7 @@ var fmApp = {
     },
     comparePois: function() {
         var paramString = "?";
-        var url = '../findMatches/';
+        var url = 'findMatches';
         this.chosenSelection.forEach(function(component, index) {
             switch (component.componentType) {
                 case 'BinaryComponents':
