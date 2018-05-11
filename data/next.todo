@@ -25,17 +25,8 @@ Query geht dank Andi.
 
 Not Matching auf allen Assocs geht. Nun die Joins für alle Assocs noch bauen und …
 
-dann klären ob nun bei der Auwahl von Attrs nur ergbenisse geliefert werden, die
-a) diese Attribute haben,
-b) oder aber keinen Eintrag mit dem anderen Attribut
-
-Dann Nomninal Include/Join bauen
-
-Dann Ordinal Max Apperance View
-Dann Ordinals include bauen
-
-Dann Ordinals
-Dann Query Object from Params bauen, aber SQL Inject Check
+NEXT: Dann Ordinals
+Dann: Query Object from Params bauen, aber SQL Inject Check
 Dann Query-Bauen
 
 2.3.1. Reine Debugausgabe
@@ -80,6 +71,4 @@ Es sind eigentlich 52 vegiterian in YELP TODO Check why not YPOIS ({'attributes.
 *** Ambience ***
 Hier gibts nur Casual, Hispster, Trendy und romantic = 17 Gesamt. Obwohl 21447 in Yelp Ambience haben, hier noch mal mit Query Builder checken, wie viele auf OR subattr = true stehen.
 
-
-
-
+Bei den Ordinal Componenten und Attributen gibt es überall was

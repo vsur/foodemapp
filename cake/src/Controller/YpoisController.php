@@ -89,12 +89,20 @@ class YpoisController extends AppController
 
             $ypois = $this->Ypois->find()
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
+                /*
                 ->notMatching('BinaryComponents', function ($q) {
                     return $q
                         ->where(['BinaryComponents.id' => 77])
                         ->orWhere(['BinaryComponents.id' => 81])
                         ;
                 })
+
+                Ein Not Matching auf den Nominalen- bzw Ordinalen-Attributen bleibt erst mal offen.
+                Später kann dies noch dazu gebaut werden. Für die Nominal wäre dies tatsächlich sinnvoll, da viele Ypois oft entsprechende Attribute nicht haben – ergo vielleicht zu wenig Ergebnisse zurück geliefert werden.
+                Um das Abzufangen müsste man quasi bei ich will Nichtraucher nicht nach diesem Attr suchen sondern eben auf: has NOT die anderen beiden.
+
+                Für die Ordinalen-Attribute macht aber das negieren wahrscheinlich keinen Sinn.
+
                 ->notMatching('NominalAttributes', function ($q) {
                     return $q
                         ->where(['NominalAttributes.id' => 1])
@@ -107,9 +115,10 @@ class YpoisController extends AppController
                         ->orWhere(['OrdinalAttributes.id' => 8])
                         ;
                 })
+                */
+
                 /*
-                 * Der klappt so, kann als Array beliebig gebaut werden
-                 *
+                 * JOIN ON TRUE Binary Components
                 ->join([
                     'a' => [
                         'table' => 'binary_components_ypois',
@@ -128,7 +137,53 @@ class YpoisController extends AppController
                             ]
                     ]
                 ])
-                */
+                 */
+
+                /*
+                 * JOIN ON Nominal Attributes
+                 */
+                ->join([
+                    'noca_5' => [
+                        'table' => 'nominal_attributes_ypois',
+                        'conditions' =>
+                            [
+                                'noca_5.ypoi_id = Ypois.id',
+                                'noca_5.nominal_attribute_id = 5',
+                            ]
+                    ],
+                    'noca_2' => [
+                        'table' => 'nominal_attributes_ypois',
+                        'conditions' =>
+                            [
+                                'noca_2.ypoi_id = Ypois.id',
+                                'noca_2.nominal_attribute_id = 1',
+                            ]
+                    ]
+                ])
+
+                /*
+                 * JOIN ON Ordinal Attributes
+                 */
+                ->join([
+                    'orca_2' => [
+                        'table' => 'ordinal_attributes_ypois',
+                        'conditions' =>
+                            [
+                                'orca_2.ypoi_id = Ypois.id',
+                                'orca_2.ordinal_attribute_id = 2',
+                            ]
+                    ],
+                    'orca_11' => [
+                        'table' => 'ordinal_attributes_ypois',
+                        'conditions' =>
+                            [
+                                'orca_11.ypoi_id = Ypois.id',
+                                'orca_11.ordinal_attribute_id = 11',
+                            ]
+                    ],
+
+                ])
+
 //                ->distinct('Ypois.id')
                 ->enableAutoFields(true)
                 ;
