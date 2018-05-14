@@ -87,63 +87,37 @@ class YpoisController extends AppController
             $ypois = $this->Ypois->find()->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
 
             // Add not matching binary filters
-            $orNotMatchingConditions = ['OR' => []];
-            foreach ($filerSelection->notMatchingBinaries as $notMatchingBinary) {
-                $newOrCondition = ['BinaryComponents.id' => $notMatchingBinary->id];
-                array_push($orNotMatchingConditions['OR'], $newOrCondition);
+            if(!empty($filerSelection->notMatchingBinaries)) {
+                $orNotMatchingBinaryConditions = ['OR' => []];
+                foreach ($filerSelection->notMatchingBinaries as $notMatchingBinary) {
+                    $newOrCondition = ['BinaryComponents.id' => $notMatchingBinary->id];
+                    array_push($orNotMatchingBinaryConditions['OR'], $newOrCondition);
+                }
+                $ypois->notMatching('BinaryComponents', function ($q) use ($orNotMatchingBinaryConditions){
+                    return $q->where($orNotMatchingBinaryConditions);
+                });
             }
-            $ypois->notMatching('BinaryComponents', function ($q) use ($orNotMatchingConditions){
-                return $q->where($orNotMatchingConditions);
-            });
-//            $ypois->notMatching('BinaryComponents', function ($q) {
-//                    return $q
-//                        ->where(['BinaryComponents.id' => 77])
-//                        ->orWhere(['BinaryComponents.id' => 81])
-//                        ;
-//                });
-                /*
 
-                Ein Not Matching auf den Nominalen- bzw Ordinalen-Attributen bleibt erst mal offen.
-                Später kann dies noch dazu gebaut werden. Für die Nominal wäre dies tatsächlich sinnvoll, da viele Ypois oft entsprechende Attribute nicht haben – ergo vielleicht zu wenig Ergebnisse zurück geliefert werden.
-                Um das Abzufangen müsste man quasi bei ich will Nichtraucher nicht nach diesem Attr suchen sondern eben auf: has NOT die anderen beiden.
-
-                Für die Ordinalen-Attribute macht aber das negieren wahrscheinlich keinen Sinn.
-
-                ->notMatching('NominalAttributes', function ($q) {
-                    return $q
-                        ->where(['NominalAttributes.id' => 1])
-                        ->orWhere(['NominalAttributes.id' => 9])
-                        ;
-                })
-                ->notMatching('OrdinalAttributes', function ($q) {
-                    return $q
-                        ->where(['OrdinalAttributes.id' => 4])
-                        ->orWhere(['OrdinalAttributes.id' => 8])
-                        ;
-                })
-                */
-
-                /*
-                 * JOIN ON TRUE Binary Components
-                ->join([
-                    'a' => [
+            // Add matching binray filters
+            $binaryJoinConditions = [];
+            foreach ($filerSelection->matchingBinaries as $matchingBinary) {
+                $currentAlias = 'bccid_' . $matchingBinary->id;
+                $binaryJoinConditions[$currentAlias] =
+                    [
                         'table' => 'binary_components_ypois',
-                        'conditions' =>
-                            [
-                                'a.ypoi_id = Ypois.id',
-                                'a.binary_component_id = 75',
-                            ]
-                    ],
-                    'b' => [
-                        'table' => 'binary_components_ypois',
-                        'conditions' =>
-                            [
-                                'b.ypoi_id = Ypois.id',
-                                'b.binary_component_id = 80',
-                            ]
+                        'conditions' => [
+                            $currentAlias . '.ypoi_id = Ypois.id',
+                            $currentAlias  . '.binary_component_id = ' . $matchingBinary->id
+                        ]
                     ]
-                ])
-                 */
+
+                ;
+            }
+            $ypois->join($binaryJoinConditions);
+
+            // Add matching nomina filters
+            // TODO: NEXT!
+
 
                 /*
                  * JOIN ON Nominal Attributes
