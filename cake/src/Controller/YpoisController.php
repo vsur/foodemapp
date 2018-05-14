@@ -84,15 +84,24 @@ class YpoisController extends AppController
 
             debug($filerSelection);
 
-            $ypois = $this->Ypois->find()
-                ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
+            $ypois = $this->Ypois->find()->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
+
+            // Add not matching binary filters
+            $orNotMatchingConditions = ['OR' => []];
+            foreach ($filerSelection->notMatchingBinaries as $notMatchingBinary) {
+                $newOrCondition = ['BinaryComponents.id' => $notMatchingBinary->id];
+                array_push($orNotMatchingConditions['OR'], $newOrCondition);
+            }
+            $ypois->notMatching('BinaryComponents', function ($q) use ($orNotMatchingConditions){
+                return $q->where($orNotMatchingConditions);
+            });
+//            $ypois->notMatching('BinaryComponents', function ($q) {
+//                    return $q
+//                        ->where(['BinaryComponents.id' => 77])
+//                        ->orWhere(['BinaryComponents.id' => 81])
+//                        ;
+//                });
                 /*
-                ->notMatching('BinaryComponents', function ($q) {
-                    return $q
-                        ->where(['BinaryComponents.id' => 77])
-                        ->orWhere(['BinaryComponents.id' => 81])
-                        ;
-                })
 
                 Ein Not Matching auf den Nominalen- bzw Ordinalen-Attributen bleibt erst mal offen.
                 Später kann dies noch dazu gebaut werden. Für die Nominal wäre dies tatsächlich sinnvoll, da viele Ypois oft entsprechende Attribute nicht haben – ergo vielleicht zu wenig Ergebnisse zurück geliefert werden.
@@ -139,7 +148,7 @@ class YpoisController extends AppController
                 /*
                  * JOIN ON Nominal Attributes
                  */
-                ->join([
+//                ->join([
 //                    'noca_5' => [
 //                        'table' => 'nominal_attributes_ypois',
 //                        'conditions' =>
@@ -156,11 +165,10 @@ class YpoisController extends AppController
 //                                'noca_2.nominal_attribute_id = 38',
 //                            ]
 //                    ]
-                ])
+//                ])
 
                 /*
                  * JOIN ON Ordinal Attributes
-                 */
                 ->join([
                     'orca_2' => [
                         'table' => 'ordinal_attributes_ypois',
@@ -180,45 +188,9 @@ class YpoisController extends AppController
                     ],
 
                 ])
-                ->enableAutoFields(true);
-            /*
-            $rawYpois = $this->Ypois->query('
-                SELECT * FROM ypois
-                WHERE ypois.id IN (SELECT ypois_id FROM binary_components_ypois WHERE binary_components_id = 3)
-            ');
-            debug($rawYpois->sql());
+                 */
 
-
-            $ypois->matching('BinaryComponents', function ($q) use ($configuredSelection) {
-                debug($configuredSelection);
-                // return $q->where(['BinaryComponents.id' => $configuredSelection["test"]]);
-                return $q->where(function ($exp) use ($configuredSelection) {
-                    // Conditions aufbauen
-                    $exp
-                        ->eq('BinaryComponents.id', $configuredSelection["test"])
-                        // ->eq('BinaryComponents.id', 93)
-                        ;
-                    // $exp->add(['BinaryComponents.id' => $configuredSelection["test"]]);
-                    $hasBinaryConditions = $exp;
-            // ->eq('author_id', 5);
-                    $hasNotBinaryConditions;
-                    $hasNominalAttributeConditions;
-                    $hasOrdinalAttributeConditions;
-
-                    return $exp->and_([$hasBinaryConditions]);
-                });
-                */
-                /*
-                 * Lässt sich das umbauen?
-                 * ->where(function (QueryExpression $exp) {
-                    return $exp
-                        ->eq('author_id', 2)
-                        ->eq('published', true)
-                        ->notEq('spam', true)
-                        ->gt('view_count', 10);
-                });
-            });
-            */
+                $ypois->enableAutoFields(true);
         } else {
             $ypois = $this->Ypois->find("all")
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
@@ -308,8 +280,11 @@ class YpoisController extends AppController
                     // Build and fill matchingBinaries and notMatchingBinaries
                     $settedComponent = $this->rebuildIdsFromString($combinedComponentString, 'BC_C-ID_');
                     $settedComponent->rating = $componentRating;
-                    // TODO Unterscheidung auf Matching/NotMatching noch einbauen
-                    array_push($filters->matchingBinaries, $settedComponent);
+                    if ($settedComponent->binaryComponentState) {
+                        array_push($filters->matchingBinaries, $settedComponent);
+                    } else {
+                        array_push($filters->notMatchingBinaries, $settedComponent);
+                    }
                     break;
                 case strstr($combinedComponentString,'_NCATTR-ID_'):
                     // Build and fill matchingNominals
