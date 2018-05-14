@@ -82,7 +82,7 @@ class YpoisController extends AppController
 
             $filerSelection = $this->buildFilterObjectFromSelection($configuredSelection);
 
-            debug($configuredSelection);
+            debug($filerSelection);
 
             $ypois = $this->Ypois->find()
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
@@ -304,22 +304,89 @@ class YpoisController extends AppController
 
         foreach ($configuredSelection as $combinedComponentString => $componentRating) {
             switch (true) {
-                case strstr($combinedComponentString,'BC_C-ID'):
+                case strstr($combinedComponentString,'BC_C-ID_'):
                     // Build and fill matchingBinaries and notMatchingBinaries
-                    debug("Found Binary Component in configuredSelection");
+                    $settedComponent = $this->rebuildIdsFromString($combinedComponentString, 'BC_C-ID_');
+                    $settedComponent->rating = $componentRating;
+                    // TODO Unterscheidung auf Matching/NotMatching noch einbauen
+                    array_push($filters->matchingBinaries, $settedComponent);
                     break;
-                case strstr($combinedComponentString,'NCATTR-ID'):
+                case strstr($combinedComponentString,'_NCATTR-ID_'):
                     // Build and fill matchingNominals
-                    debug("Found Nominal Component in configuredSelection");
+                    $settedComponent = $this->rebuildIdsFromString($combinedComponentString, 'NC_C-ID_');
+                    $settedComponent->rating = $componentRating;
+                    array_push($filters->matchingNominals, $settedComponent);
                     break;
-                case strstr($combinedComponentString,'OCATTR-ID'):
+                case strstr($combinedComponentString,'_OCATTR-ID_'):
                     // Build and fill matchingOrdinals
-                    debug("Found Ordinal Component in configuredSelection");
+                    $settedComponent = $this->rebuildIdsFromString($combinedComponentString, 'OC_C-ID_');
+                    $settedComponent->rating = $componentRating;
+                    array_push($filters->matchingOrdinals, $settedComponent);
                     break;
             }
+
         }
 
         return $filters;
+    }
+
+    protected function rebuildIdsFromString($combinedComponentString = null, $componentIdentifierString = null) {
+        // Set string position of id-identifier
+        $idStart = strlen($componentIdentifierString);
+        // Create object to store reslults
+        $currentSettedComponent = (object) [];
+
+        switch ($componentIdentifierString) {
+            case 'BC_C-ID_':
+                // Set sting position after id
+                $idEnd = strrpos($combinedComponentString, '_BC-STATE_');
+                // Set length of current id
+                $idLength = $idEnd - $idStart;
+                // Slice id from string
+                $compnentId = substr($combinedComponentString, $idStart, $idLength);
+                // Set sting position of state-identifier
+                $stateEnd = $idEnd + strlen('_BC-STATE_');
+                // Slice state value from string
+                $bcState = substr($combinedComponentString, $stateEnd) === '1' ? true : false;
+                // Set properties
+                $currentSettedComponent->id = $compnentId;
+                $currentSettedComponent->binaryComponentState = $bcState;
+                break;
+
+            case 'NC_C-ID_':
+                // Set sting position after component id
+                $idEnd = strrpos($combinedComponentString, '_NCATTR-ID_');
+                // Set length of current component id
+                $idLength = $idEnd - $idStart;
+                // Slice id from string
+                $compnentId = substr($combinedComponentString, $idStart, $idLength);
+                // Set sting position of state-identifier
+                $attributeStart = $idEnd + strlen('_NCATTR-ID_');
+                // Slice attribute id from string
+                $attributeId = substr($combinedComponentString, $attributeStart);
+                // Set properties
+                $currentSettedComponent->id = $compnentId;
+                $currentSettedComponent->attribute = (object)['id' => $attributeId];
+                break;
+
+            case 'OC_C-ID_':
+                // Set sting position after component id
+                $idEnd = strrpos($combinedComponentString, '_OCATTR-ID_');
+                // Set length of current component id
+                $idLength = $idEnd - $idStart;
+                // Slice id from string
+                $compnentId = substr($combinedComponentString, $idStart, $idLength);
+                // Set sting position of state-identifier
+                $attributeStart = $idEnd + strlen('_OCATTR-ID_');
+                // Slice attribute id from string
+                $attributeId = substr($combinedComponentString, $attributeStart);
+                // Set properties
+                $currentSettedComponent->id = $compnentId;
+                $currentSettedComponent->attribute = (object)['id' => $attributeId];
+                break;
+
+        }
+        return $currentSettedComponent;
     }
 
     /**
