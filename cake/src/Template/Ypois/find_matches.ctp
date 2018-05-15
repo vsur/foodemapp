@@ -45,7 +45,7 @@
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 
 <?php
-    if($displayVariant == 'debug' ) {
+    if($displayVariant == 'debug' || is_null($displayVariant) ) {
         echo $this->element('findMatches/debug');
     }
     if($displayVariant == 'list' ) {

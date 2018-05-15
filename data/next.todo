@@ -19,20 +19,10 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 2.2.5. ✓ Rating wird dznamisch gesetzt
 
 2.3. Aus Query dann Search Matches bauen
+2.3.1. ✓ Reine Debugausgabe
 
-Query geht dank Andi.
-✓ Nun mal SQL Bauen, damit auch NOT EXISTS auf mehreren Funktioniert.
+Listausgabe vorbereitet Weiter in Elements/findMatches/list
 
-Not Matching auf allen Assocs geht. Nun die Joins für alle Assocs noch bauen und …
-
-NEXT: Dann Ordinals
-
-Obacht. Datenstamm Daham und im Büro gehen auseinader!
-
-Dann: Query Object from Params bauen, aber SQL Inject Check
-Dann Query-Bauen
-
-2.3.1. Reine Debugausgabe
 2.3.2. Liste
 2.3.2.1. Mobile
 2.3.2.2. Dekstop

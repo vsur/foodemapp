@@ -6,6 +6,49 @@
         <?= $this->Html->image('list-mockup.png', ['alt' => 'Mock-up für die Listendarstellung der App', 'style' => 'width: 100%']); ?>
     </div>
 </div>
+<!--
+<div class="row">
+    <div class="col-md-12">
+    <?php foreach ($ypois as $nr => $ypoi): ?>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title clearfix"><strong><?= $this->Number->format($nr + 1) . '.' ?> <?= h($ypoi->name) ?></strong> <div class="pull-right">Mehr Infos anzeigen <span class="caret"></span></div></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row chosenAgregation">
+                    <div class="col-md-12">
+                        <ul class="list-inline">
+                            <li>
+                                <span class="glyphicon glyphicon-star choosenStarAgregation" aria-hidden="true"><span class="choosenStarAgregationNumber">1</span></span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-star choosenStarAgregation" aria-hidden="true"><span class="choosenStarAgregationNumber">2</span></span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-star choosenStarAgregation" aria-hidden="true"><span class="choosenStarAgregationNumber">3</span></span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-star choosenStarAgregation" aria-hidden="true"><span class="choosenStarAgregationNumber">4</span></span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-star choosenStarAgregation" aria-hidden="true"><span class="choosenStarAgregationNumber">5</span></span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="row componentOverview">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+</div>
+-->
 <div class="row">
     <div class="col-md-12">
         <table class="table table-hover">
