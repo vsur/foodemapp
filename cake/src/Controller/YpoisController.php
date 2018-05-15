@@ -51,7 +51,7 @@ class YpoisController extends AppController
         $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
     }
 
-    public function findMatches()
+    public function findMatches($displayVariant = null)
     {
         $this->viewBuilder()->layout('Fmappbeta');
         // Get all BinaryComponents
@@ -71,6 +71,8 @@ class YpoisController extends AppController
         $criterionNames = $this->setCombinedCriterionNames($criteria);
 
         $configuredSelection = NULL;
+        $filerSelection = NULL;
+
         if (!empty($this->request->query)) {
             $configuredSelection = $this->request->query;
         }
@@ -81,8 +83,6 @@ class YpoisController extends AppController
 
 
             $filerSelection = $this->buildFilterObjectFromSelection($configuredSelection);
-
-            debug($filerSelection);
 
             $ypois = $this->Ypois->find()->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
 
@@ -110,7 +110,7 @@ class YpoisController extends AppController
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
         }
 
-        $this->set(compact('ypois', 'criteria', 'criterionNames', 'configuredSelection'));
+        $this->set(compact('ypois', 'criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filerSelection'));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)
