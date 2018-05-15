@@ -102,21 +102,29 @@ class YpoisController extends AppController
             $binaryJoinConditions = [];
             foreach ($filerSelection->matchingBinaries as $matchingBinary) {
                 $currentAlias = 'bccid_' . $matchingBinary->id;
-                $binaryJoinConditions[$currentAlias] =
-                    [
-                        'table' => 'binary_components_ypois',
-                        'conditions' => [
-                            $currentAlias . '.ypoi_id = Ypois.id',
-                            $currentAlias  . '.binary_component_id = ' . $matchingBinary->id
-                        ]
+                $binaryJoinConditions[$currentAlias] = [
+                    'table' => 'binary_components_ypois',
+                    'conditions' => [
+                        $currentAlias . '.ypoi_id = Ypois.id',
+                        $currentAlias  . '.binary_component_id = ' . $matchingBinary->id
                     ]
-
-                ;
+                ];
             }
             $ypois->join($binaryJoinConditions);
 
-            // Add matching nomina filters
-            // TODO: NEXT!
+            // Add matching nominal filters
+            $nominalJoinConditions = [];
+            foreach ($filerSelection->matchingNominals as $matchingNominal) {
+                $currentAlias = 'ncattrid_' . $matchingNominal->attribute->id;
+                $nominalJoinConditions[$currentAlias] = [
+                    'table' => 'nominal_attributes_ypois',
+                    'conditions' => [
+                        $currentAlias . '.ypoi_id = Ypois.id',
+                        $currentAlias  . '.nominal_attribute_id = ' . $matchingNominal->attribute->id
+                    ]
+                ];
+            }
+            $ypois->join($nominalJoinConditions);
 
 
                 /*
