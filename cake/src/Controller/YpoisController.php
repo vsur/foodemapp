@@ -88,91 +88,23 @@ class YpoisController extends AppController
 
             // Add not matching binary filters
             if(!empty($filerSelection->notMatchingBinaries)) {
-                $orNotMatchingBinaryConditions = ['OR' => []];
-                foreach ($filerSelection->notMatchingBinaries as $notMatchingBinary) {
-                    $newOrCondition = ['BinaryComponents.id' => $notMatchingBinary->id];
-                    array_push($orNotMatchingBinaryConditions['OR'], $newOrCondition);
-                }
-                $ypois->notMatching('BinaryComponents', function ($q) use ($orNotMatchingBinaryConditions){
-                    return $q->where($orNotMatchingBinaryConditions);
-                });
+                $ypois = $this->applyNotMatchingBinariesFilter($ypois, $filerSelection);
             }
 
             // Add matching binray filters
-            $binaryJoinConditions = [];
-            foreach ($filerSelection->matchingBinaries as $matchingBinary) {
-                $currentAlias = 'bccid_' . $matchingBinary->id;
-                $binaryJoinConditions[$currentAlias] = [
-                    'table' => 'binary_components_ypois',
-                    'conditions' => [
-                        $currentAlias . '.ypoi_id = Ypois.id',
-                        $currentAlias  . '.binary_component_id = ' . $matchingBinary->id
-                    ]
-                ];
-            }
+            $binaryJoinConditions = $this->buildBinaryJoinConditions($filerSelection);
             $ypois->join($binaryJoinConditions);
 
             // Add matching nominal filters
-            $nominalJoinConditions = [];
-            foreach ($filerSelection->matchingNominals as $matchingNominal) {
-                $currentAlias = 'ncattrid_' . $matchingNominal->attribute->id;
-                $nominalJoinConditions[$currentAlias] = [
-                    'table' => 'nominal_attributes_ypois',
-                    'conditions' => [
-                        $currentAlias . '.ypoi_id = Ypois.id',
-                        $currentAlias  . '.nominal_attribute_id = ' . $matchingNominal->attribute->id
-                    ]
-                ];
-            }
+            $nominalJoinConditions = $this->buildNominalJoinConditions($filerSelection);
             $ypois->join($nominalJoinConditions);
 
+            // Add matching ordinal filters
+            $ordinalJoinConditions = $this->buildOrdinalJoinConditions($filerSelection);
+            $ypois->join($ordinalJoinConditions);
 
-                /*
-                 * JOIN ON Nominal Attributes
-                 */
-//                ->join([
-//                    'noca_5' => [
-//                        'table' => 'nominal_attributes_ypois',
-//                        'conditions' =>
-//                            [
-//                                'noca_5.ypoi_id = Ypois.id',
-//                                'noca_5.nominal_attribute_id = 26',
-//                            ]
-//                    ],
-//                    'noca_2' => [
-//                        'table' => 'nominal_attributes_ypois',
-//                        'conditions' =>
-//                            [
-//                                'noca_2.ypoi_id = Ypois.id',
-//                                'noca_2.nominal_attribute_id = 38',
-//                            ]
-//                    ]
-//                ])
-
-                /*
-                 * JOIN ON Ordinal Attributes
-                ->join([
-                    'orca_2' => [
-                        'table' => 'ordinal_attributes_ypois',
-                        'conditions' =>
-                            [
-                                'orca_2.ypoi_id = Ypois.id',
-                                'orca_2.ordinal_attribute_id = 2',
-                            ]
-                    ],
-                    'orca_11' => [
-                        'table' => 'ordinal_attributes_ypois',
-                        'conditions' =>
-                            [
-                                'orca_11.ypoi_id = Ypois.id',
-                                'orca_11.ordinal_attribute_id = 11',
-                            ]
-                    ],
-
-                ])
-                 */
-
-                $ypois->enableAutoFields(true);
+            // Set autoFields for correct joins syntax
+            $ypois->enableAutoFields(true);
         } else {
             $ypois = $this->Ypois->find("all")
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
@@ -344,6 +276,63 @@ class YpoisController extends AppController
 
         }
         return $currentSettedComponent;
+    }
+
+    protected function applyNotMatchingBinariesFilter($ypois = null, $filerSelection = null) {
+        $orNotMatchingBinaryConditions = ['OR' => []];
+        foreach ($filerSelection->notMatchingBinaries as $notMatchingBinary) {
+            $newOrCondition = ['BinaryComponents.id' => $notMatchingBinary->id];
+            array_push($orNotMatchingBinaryConditions['OR'], $newOrCondition);
+        }
+        $ypois->notMatching('BinaryComponents', function ($q) use ($orNotMatchingBinaryConditions){
+            return $q->where($orNotMatchingBinaryConditions);
+        });
+        return $ypois;
+    }
+
+    protected function buildBinaryJoinConditions($filerSelection = null) {
+        $binaryJoinConditions = [];
+        foreach ($filerSelection->matchingBinaries as $matchingBinary) {
+            $currentAlias = 'bccid_' . $matchingBinary->id;
+            $binaryJoinConditions[$currentAlias] = [
+                'table' => 'binary_components_ypois',
+                'conditions' => [
+                    $currentAlias . '.ypoi_id = Ypois.id',
+                    $currentAlias  . '.binary_component_id = ' . $matchingBinary->id
+                ]
+            ];
+        }
+        return $binaryJoinConditions;
+    }
+
+    protected function buildNominalJoinConditions($filerSelection = null) {
+        $nominalJoinConditions = [];
+        foreach ($filerSelection->matchingNominals as $matchingNominal) {
+            $currentAlias = 'ncattrid_' . $matchingNominal->attribute->id;
+            $nominalJoinConditions[$currentAlias] = [
+                'table' => 'nominal_attributes_ypois',
+                'conditions' => [
+                    $currentAlias . '.ypoi_id = Ypois.id',
+                    $currentAlias  . '.nominal_attribute_id = ' . $matchingNominal->attribute->id
+                ]
+            ];
+        }
+        return $nominalJoinConditions;
+    }
+
+    protected function buildOrdinalJoinConditions($filerSelection = null) {
+        $ordinalJoinConditions = [];
+        foreach ($filerSelection->matchingOrdinals as $matchingOrdinal) {
+            $currentAlias = 'ncattrid_' . $matchingOrdinal->attribute->id;
+            $ordinalJoinConditions[$currentAlias] = [
+                'table' => 'ordinal_attributes_ypois',
+                'conditions' => [
+                    $currentAlias . '.ypoi_id = Ypois.id',
+                    $currentAlias  . '.ordinal_attribute_id = ' . $matchingOrdinal->attribute->id
+                ]
+            ];
+        }
+        return $ordinalJoinConditions;
     }
 
     /**
