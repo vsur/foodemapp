@@ -86,10 +86,12 @@ class YpoisController extends AppController
 
             $ypois = $this->Ypois->find()->contain(
                 [
-                    'BinaryComponents',
+                    'BinaryComponents' => [  'sort' => ['name' => 'ASC']    ],
                     'NominalAttributes.NominalComponents',
-                    'OrdinalAttributes.OrdinalComponents' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ],
-                    'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'DESC']   ]
+                    'NominalAttributes' => [  'sort' => ['NominalComponents.name' => 'ASC']    ],
+                    'OrdinalAttributes' => [  'sort' => ['meter' => 'ASC']   ],
+                    'OrdinalAttributes.OrdinalComponents',
+                    'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ]
                 ]);
 
             // Add not matching binary filters
