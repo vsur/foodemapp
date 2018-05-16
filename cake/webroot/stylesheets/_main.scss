@@ -5,6 +5,10 @@
 
 $urcd-color: #7d003c;
 
+.textURcolor {
+  color: $urcd-color;
+}
+
 /*
  * Main Stuff
  */
@@ -152,6 +156,25 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 }
 #criteriaListView {
   display: none;
+}
+
+/*
+ * Matches Codes
+ */
+.componentOverview h4 > span.label {
+  display: inline-block;
+  width: 100%;
+}
+li.binaryComponentContainer label span.slider {
+  cursor: inherit;
+}
+li.nominalComponentContainer span.componentNameNominalComponent,
+li.nominalComponentContainer span.attributeNameNominalAttribute {
+  font-size: 15px;
+}
+li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
+  width: 50px;
+  height: 50px;
 }
 
 @media (max-width: 991px) {

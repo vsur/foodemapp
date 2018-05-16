@@ -6,7 +6,7 @@
         <?= $this->Html->image('list-mockup.png', ['alt' => 'Mock-up für die Listendarstellung der App', 'style' => 'width: 100%']); ?>
     </div>
 </div>
-<!--
+
 <div class="row">
     <div class="col-md-12">
     <?php foreach ($ypois as $nr => $ypoi): ?>
@@ -39,8 +39,25 @@
                 </div>
                 <div class="row componentOverview">
                     <div class="col-md-6">
+                        <h4><span class="label label-primary">Gewählte</span></h4>
                     </div>
                     <div class="col-md-6">
+                        <h4><span class="label label-default">Übrige</span></h4>
+                        <ul class="list-unstyled"">
+                            <?php foreach ($ypoi->binary_components as $binaryComponent): ?>
+                            <li class="binaryComponentContainer clearfix">
+                                <span class="componentNameBinarySlider<?= $binaryComponent->display_name != '' ? '' : ' text-muted' ?>"><?= $binaryComponent->display_name != '' ? $binaryComponent->display_name : $binaryComponent->name ?></span><label class="switch pull-right"><input type="checkbox" checked disabled><span class="slider round"></span></label>
+                            </li>
+                            <?php endforeach; ?>
+
+                            <?php foreach ($ypoi->nominal_attributes as $nomnialAttribute): ?>
+                            <li class="nominalComponentContainer">
+                                <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $nomnialAttribute->icon_path != '' ? $nomnialAttribute->icon_path : 'iconPlaceholder' ?>"></figure></div>
+                                <span class="componentNameNominalComponent<?= $nomnialAttribute->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $nomnialAttribute->nominal_component->display_name != '' ? ($nomnialAttribute->nominal_component->display_name . '.') : $nomnialAttribute->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $nomnialAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $nomnialAttribute->display_name != '' ? $nomnialAttribute->display_name : $nomnialAttribute->name ?></span>
+                            </li>
+                            <?php endforeach; ?>
+
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -48,7 +65,7 @@
     <?php endforeach; ?>
     </div>
 </div>
--->
+
 <div class="row">
     <div class="col-md-12">
         <table class="table table-hover">
