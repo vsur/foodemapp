@@ -53,13 +53,18 @@
                             <?php foreach ($ypoi->nominal_attributes as $nomnialAttribute): ?>
                             <li class="nominalComponentContainer">
                                 <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $nomnialAttribute->icon_path != '' ? $nomnialAttribute->icon_path : 'iconPlaceholder' ?>"></figure></div>
-                                <span class="componentNameNominalComponent<?= $nomnialAttribute->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $nomnialAttribute->nominal_component->display_name != '' ? ($nomnialAttribute->nominal_component->display_name . '.') : $nomnialAttribute->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $nomnialAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $nomnialAttribute->display_name != '' ? $nomnialAttribute->display_name : $nomnialAttribute->name ?></span>
+                                <span class="componentNameNominalComponent<?= $nomnialAttribute->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $nomnialAttribute->nominal_component->display_name != '' ? ($nomnialAttribute->nominal_component->display_name) : $nomnialAttribute->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $nomnialAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $nomnialAttribute->display_name != '' ? $nomnialAttribute->display_name : $nomnialAttribute->name ?></span>
                             </li>
                             <?php endforeach; ?>
 
                             <?php foreach ($ypoi->ordinal_attributes as $ordinalAttribute): ?>
                                 <li class="ordianalComponentContainer">
-
+                                    <span class="componentNameOrdinalComponent<?= $ordinalAttribute->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $ordinalAttribute->ordinal_component->display_name != '' ? ( $ordinalAttribute->ordinal_component->display_name) :  $ordinalAttribute->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $ordinalAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $ordinalAttribute->display_name != '' ? $ordinalAttribute->display_name : $ordinalAttribute->name ?></span> <br>
+                                    <?php
+                                        $minRange = reset($ordinalAttribute->ordinal_component->ordinal_attributes)->meter;
+                                        $maxRange = end($ordinalAttribute->ordinal_component->ordinal_attributes)->meter;
+                                    ?>
+                                    <input type="range" min="<?= $minRange ?>" max="<?= $maxRange ?>" step="1" value="<?= $ordinalAttribute->meter ?>" disabled>
                                 </li>
                             <?php endforeach; ?>
 
