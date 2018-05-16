@@ -88,7 +88,7 @@ class YpoisController extends AppController
                 [
                     'BinaryComponents' => [  'sort' => ['name' => 'ASC']    ],
                     'NominalAttributes.NominalComponents',
-                    'NominalAttributes' => [  'sort' => ['NominalComponents.name' => 'ASC']    ],
+                    'NominalAttributes' => [  'sort' => ['NominalComponents.display_name' => 'ASC', 'NominalComponents.name' => 'ASC']    ],
                     'OrdinalAttributes' => [  'sort' => ['meter' => 'ASC']   ],
                     'OrdinalAttributes.OrdinalComponents',
                     'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ]
