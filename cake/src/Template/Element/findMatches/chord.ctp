@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-8 col-md-offset-2">
         <h1>Mockup-Darstellung</h1>
         <h2>Chord-Diagramm für Desktop</h2>
         <p>1. Quadrant: Alle sonstigen nicht gewählten Kriterien</p>
         <p>2 + 3. Quadrant: Alle zurückgelieferten Ergebnisse/Orte</p>
         <p>4. Quadrant: Alle gewählten Kriterien</p>
         <p>Die Verbindungslinien stellen die Zuordnung von Orteh und Eigenschaften dar./p>
-        <?= $this->Html->image('list-mockup.png', ['alt' => 'Mock-up für die Listendarstellung der App', 'style' => 'width: 100%']); ?>
+        <?= $this->Html->image('chord-mockup.png', ['alt' => 'Mock-up für die Listendarstellung der App', 'style' => 'width: 100%']); ?>
     </div>
 </div>
 <div class="row">
