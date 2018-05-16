@@ -57,6 +57,12 @@
                             </li>
                             <?php endforeach; ?>
 
+                            <?php foreach ($ypoi->ordinal_attributes as $ordinalAttribute): ?>
+                                <li class="ordianalComponentContainer">
+
+                                </li>
+                            <?php endforeach; ?>
+
                         </ul>
                     </div>
                 </div>

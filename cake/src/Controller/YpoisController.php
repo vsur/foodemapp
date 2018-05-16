@@ -84,7 +84,13 @@ class YpoisController extends AppController
 
             $filerSelection = $this->buildFilterObjectFromSelection($configuredSelection);
 
-            $ypois = $this->Ypois->find()->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
+            $ypois = $this->Ypois->find()->contain(
+                [
+                    'BinaryComponents',
+                    'NominalAttributes.NominalComponents',
+                    'OrdinalAttributes.OrdinalComponents' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ],
+                    'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'DESC']   ]
+                ]);
 
             // Add not matching binary filters
             if(!empty($filerSelection->notMatchingBinaries)) {
