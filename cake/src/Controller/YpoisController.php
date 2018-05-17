@@ -89,9 +89,6 @@ class YpoisController extends AppController
             $filterSelection = $this->buildFilterObject($configuredSelection);
             $rankedSelection = $this->buildRankedSelection($filterSelection);
 
-            debug("Ranked Selection");
-            debug($rankedSelection);
-
             $ypois = $this->Ypois->find()->contain(
                 [
                     'BinaryComponents' => [  'sort' => ['display_name' => 'ASC', 'name' => 'ASC']    ],
@@ -126,7 +123,7 @@ class YpoisController extends AppController
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
         }
 
-        $this->set(compact('ypois', 'criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection'));
+        $this->set(compact('ypois', 'criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection'));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)
@@ -184,7 +181,6 @@ class YpoisController extends AppController
 
             array_push($newEntry, $criterionName);
             array_push($newEntry, $criterionIdentifier);
-
             array_push($criterionNames, $newEntry);
         }
         return $criterionNames;
@@ -296,12 +292,13 @@ class YpoisController extends AppController
     }
 
     protected function buildRankedSelection ($filterSelection = null) {
-        $rankedSelection = (object) [];
         $ratingStructure = (object) [
             'binaryComponents' => [],
             'nominalAttributes' => [],
             'ordinalAttributes' => [],
         ];
+
+        $rankedSelection = (object) [];
         $rankedSelection->rating5 = clone $ratingStructure;
         $rankedSelection->rating4 = clone $ratingStructure;
         $rankedSelection->rating3 = clone $ratingStructure;
@@ -339,7 +336,6 @@ class YpoisController extends AppController
     }
 
     protected function ratingBasedAssignment ($objectToAssign = null, $rankedSelection = null, $type = null) {
-        debug("Rating ist aktuell $objectToAssign->rating von $type mit ID $objectToAssign->id");
         switch ($objectToAssign->rating) {
             case 5:
                 array_push($rankedSelection->rating5->{$type}, $objectToAssign);
