@@ -71,7 +71,7 @@ class YpoisController extends AppController
         $criterionNames = $this->setCombinedCriterionNames($criteria);
 
         $configuredSelection = NULL;
-        $filerSelection = NULL;
+        $filterSelection = NULL;
 
         if (!empty($this->request->query)) {
             $configuredSelection = $this->request->query;
@@ -82,7 +82,7 @@ class YpoisController extends AppController
         if ($configuredSelection) {
 
 
-            $filerSelection = $this->buildFilterObjectFromSelection($configuredSelection);
+            $filterSelection = $this->buildFilterObjectFromSelection($configuredSelection);
 
             $ypois = $this->Ypois->find()->contain(
                 [
@@ -95,20 +95,20 @@ class YpoisController extends AppController
                 ]);
 
             // Add not matching binary filters
-            if(!empty($filerSelection->notMatchingBinaries)) {
-                $ypois = $this->applyNotMatchingBinariesFilter($ypois, $filerSelection);
+            if(!empty($filterSelection->notMatchingBinaries)) {
+                $ypois = $this->applyNotMatchingBinariesFilter($ypois, $filterSelection);
             }
 
             // Add matching binray filters
-            $binaryJoinConditions = $this->buildBinaryJoinConditions($filerSelection);
+            $binaryJoinConditions = $this->buildBinaryJoinConditions($filterSelection);
             $ypois->join($binaryJoinConditions);
 
             // Add matching nominal filters
-            $nominalJoinConditions = $this->buildNominalJoinConditions($filerSelection);
+            $nominalJoinConditions = $this->buildNominalJoinConditions($filterSelection);
             $ypois->join($nominalJoinConditions);
 
             // Add matching ordinal filters
-            $ordinalJoinConditions = $this->buildOrdinalJoinConditions($filerSelection);
+            $ordinalJoinConditions = $this->buildOrdinalJoinConditions($filterSelection);
             $ypois->join($ordinalJoinConditions);
 
             // Set autoFields for correct joins syntax
@@ -118,7 +118,7 @@ class YpoisController extends AppController
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
         }
 
-        $this->set(compact('ypois', 'criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filerSelection'));
+        $this->set(compact('ypois', 'criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection'));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)
@@ -286,9 +286,9 @@ class YpoisController extends AppController
         return $currentSettedComponent;
     }
 
-    protected function applyNotMatchingBinariesFilter($ypois = null, $filerSelection = null) {
+    protected function applyNotMatchingBinariesFilter($ypois = null, $filterSelection = null) {
         $orNotMatchingBinaryConditions = ['OR' => []];
-        foreach ($filerSelection->notMatchingBinaries as $notMatchingBinary) {
+        foreach ($filterSelection->notMatchingBinaries as $notMatchingBinary) {
             $newOrCondition = ['BinaryComponents.id' => $notMatchingBinary->id];
             array_push($orNotMatchingBinaryConditions['OR'], $newOrCondition);
         }
@@ -298,9 +298,9 @@ class YpoisController extends AppController
         return $ypois;
     }
 
-    protected function buildBinaryJoinConditions($filerSelection = null) {
+    protected function buildBinaryJoinConditions($filterSelection = null) {
         $binaryJoinConditions = [];
-        foreach ($filerSelection->matchingBinaries as $matchingBinary) {
+        foreach ($filterSelection->matchingBinaries as $matchingBinary) {
             $currentAlias = 'bccid_' . $matchingBinary->id;
             $binaryJoinConditions[$currentAlias] = [
                 'table' => 'binary_components_ypois',
@@ -313,9 +313,9 @@ class YpoisController extends AppController
         return $binaryJoinConditions;
     }
 
-    protected function buildNominalJoinConditions($filerSelection = null) {
+    protected function buildNominalJoinConditions($filterSelection = null) {
         $nominalJoinConditions = [];
-        foreach ($filerSelection->matchingNominals as $matchingNominal) {
+        foreach ($filterSelection->matchingNominals as $matchingNominal) {
             $currentAlias = 'ncattrid_' . $matchingNominal->attribute->id;
             $nominalJoinConditions[$currentAlias] = [
                 'table' => 'nominal_attributes_ypois',
@@ -328,9 +328,9 @@ class YpoisController extends AppController
         return $nominalJoinConditions;
     }
 
-    protected function buildOrdinalJoinConditions($filerSelection = null) {
+    protected function buildOrdinalJoinConditions($filterSelection = null) {
         $ordinalJoinConditions = [];
-        foreach ($filerSelection->matchingOrdinals as $matchingOrdinal) {
+        foreach ($filterSelection->matchingOrdinals as $matchingOrdinal) {
             $currentAlias = 'ncattrid_' . $matchingOrdinal->attribute->id;
             $ordinalJoinConditions[$currentAlias] = [
                 'table' => 'ordinal_attributes_ypois',

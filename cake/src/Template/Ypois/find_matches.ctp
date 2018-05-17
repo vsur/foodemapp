@@ -19,9 +19,9 @@
             debug("Configured Selection from URL");
             debug($configuredSelection);
         }
-        if ($filerSelection) {
+        if ($filterSelection) {
             debug("Build Filter Array");
-            debug($filerSelection);
+            debug($filterSelection);
         }
     }
 ?>
