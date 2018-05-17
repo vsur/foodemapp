@@ -70,8 +70,12 @@ class YpoisController extends AppController
         // Set combined criterion names for autocompletion and differentiation
         $criterionNames = $this->setCombinedCriterionNames($criteria);
 
+        // Store filter tokens from URL
         $configuredSelection = NULL;
+        // Store filter objects for later filter query
         $filterSelection = NULL;
+        // Store filter component sorte by ranking for filter group assignment
+        $rankedSelection = NULL;
 
         if (!empty($this->request->query)) {
             $configuredSelection = $this->request->query;
@@ -82,7 +86,11 @@ class YpoisController extends AppController
         if ($configuredSelection) {
 
 
-            $filterSelection = $this->buildFilterObjectFromSelection($configuredSelection);
+            $filterSelection = $this->buildFilterObject($configuredSelection);
+            $rankedSelection = $this->buildRankedSelection($filterSelection);
+
+            debug("Ranked Selection");
+            debug($rankedSelection);
 
             $ypois = $this->Ypois->find()->contain(
                 [
@@ -182,7 +190,7 @@ class YpoisController extends AppController
         return $criterionNames;
     }
 
-    protected function buildFilterObjectFromSelection($configuredSelection = null) {
+    protected function buildFilterObject($configuredSelection = null) {
         /* Example $confugredSelection
             [
                 'BC_C-ID_79_BC-STATE_1' => '5',
@@ -205,6 +213,7 @@ class YpoisController extends AppController
                     if ($settedComponent->binaryComponentState) {
                         array_push($filters->matchingBinaries, $settedComponent);
                     } else {
+                        $settedComponent->wholeComponentData = $this->Ypois->BinaryComponents->get($settedComponent->id);
                         array_push($filters->notMatchingBinaries, $settedComponent);
                     }
                     break;
@@ -284,6 +293,66 @@ class YpoisController extends AppController
 
         }
         return $currentSettedComponent;
+    }
+
+    protected function buildRankedSelection ($filterSelection = null) {
+        $rankedSelection = (object) [];
+        $ratingStructure = (object) [
+            'binaryComponents' => [],
+            'nominalAttributes' => [],
+            'ordinalAttributes' => [],
+        ];
+        $rankedSelection->rating5 = clone $ratingStructure;
+        $rankedSelection->rating4 = clone $ratingStructure;
+        $rankedSelection->rating3 = clone $ratingStructure;
+        $rankedSelection->rating2 = clone $ratingStructure;
+        $rankedSelection->rating1 = clone $ratingStructure;
+        $rankedSelection->binaryComponentIDs = [];
+        $rankedSelection->nominalAttributeIDs = [];
+        $rankedSelection->ordinalAttributeIDs = [];
+
+        foreach ($filterSelection->notMatchingBinaries as $notMatchingBinary) {
+            $this->ratingBasedAssignment($notMatchingBinary, $rankedSelection, 'binaryComponents');
+        }
+
+        foreach ($filterSelection->matchingBinaries as $matchingBinary) {
+            $this->ratingBasedAssignment($matchingBinary, $rankedSelection, 'binaryComponents');
+        }
+
+        foreach ($filterSelection->matchingNominals as $matchingNominalComponent) {
+            $matchingNominalAttribute = $matchingNominalComponent->attribute;
+            $matchingNominalAttribute->rating = $matchingNominalComponent->rating;
+            $this->ratingBasedAssignment($matchingNominalAttribute, $rankedSelection, 'nominalAttributes');
+        }
+
+        foreach ($filterSelection->matchingOrdinals as $matchingOrdinalComponent) {
+            $matchingOrdinalAttribute = $matchingOrdinalComponent->attribute;
+            $matchingOrdinalAttribute->rating = $matchingOrdinalComponent->rating;
+            $this->ratingBasedAssignment($matchingOrdinalAttribute, $rankedSelection, 'ordinalAttributes');
+        }
+
+        return $rankedSelection;
+    }
+
+    protected function ratingBasedAssignment ($objectToAssign = null, $rankedSelection = null, $type = null) {
+        debug("Rating ist aktuell $objectToAssign->rating von $type mit ID $objectToAssign->id");
+        switch ($objectToAssign->rating) {
+            case 5:
+                array_push($rankedSelection->rating5->{$type}, $objectToAssign);
+                break;
+            case 4:
+                array_push($rankedSelection->rating4->{$type}, $objectToAssign);
+                break;
+            case 3:
+                array_push($rankedSelection->rating3->{$type}, $objectToAssign);
+                break;
+            case 2:
+                array_push($rankedSelection->rating2->{$type}, $objectToAssign);
+                break;
+            case 1:
+                array_push($rankedSelection->rating1->{$type}, $objectToAssign);
+                break;
+        }
     }
 
     protected function applyNotMatchingBinariesFilter($ypois = null, $filterSelection = null) {
