@@ -369,12 +369,12 @@ class YpoisController extends AppController
                 break;
 
             case 'nominalAttributes':
-                $queryObject = $this->Ypois->NominalAttributes->get($objectToAssign->id)->contain(['NominalComponents']);
+                $queryObject = $this->Ypois->NominalAttributes->get($objectToAssign->id, [  'contain' => ['NominalComponents'] ]);
                 $queryObject->rating = $objectToAssign->rating;
                 break;
 
             case 'ordinalAttributes':
-                $queryObject = $this->Ypois->OrdinallAttributes->get($objectToAssign->id)->contain(['OrdinalComponents.OrdinalAttributes']);
+                $queryObject = $this->Ypois->OrdinalAttributes->get($objectToAssign->id, [  'contain' => ['OrdinalComponents.OrdinalAttributes'] ]);
                 $queryObject->rating = $objectToAssign->rating;
                 break;
 

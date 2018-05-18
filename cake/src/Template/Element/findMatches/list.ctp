@@ -38,15 +38,9 @@
                     </div>
                 </div>
                 <div class="row componentOverview">
-                    <div class="col-md-6">
+                    <div class="col-md-6 choosenSelection">
                         <h4><span class="label label-primary">Gewählte</span></h4>
-                        <ul class="list-unstyled">
-                            <?php foreach ($rankedSelection->rating5->binaryComponents as $rankedBinary): ?>
-                            <li>
-                                <span class="glyphicon glyphicon-star choosenStarAgregation" aria-hidden="true"><span class="choosenStarAgregationNumber">5</span></span>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <?php  echo $this->element('findMatches/ranked_selection_list'); ?>
                     </div>
                     <div class="col-md-6">
                         <h4><span class="label label-default">Übrige</span></h4>
@@ -61,7 +55,7 @@
 
                             <?php foreach ($ypoi->nominal_attributes as $nomnialAttribute): ?>
                                 <?php if (!in_array($nomnialAttribute->id, $rankedSelection->nominalAttributeIDs)): ?>
-                                    <li class="nominalComponentContainer">
+                                    <li class="nominalComponentContainer clearfix">
                                         <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $nomnialAttribute->icon_path != '' ? $nomnialAttribute->icon_path : 'iconPlaceholder' ?>"></figure></div>
                                         <span class="componentNameNominalComponent<?= $nomnialAttribute->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $nomnialAttribute->nominal_component->display_name != '' ? ($nomnialAttribute->nominal_component->display_name) : $nomnialAttribute->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $nomnialAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $nomnialAttribute->display_name != '' ? $nomnialAttribute->display_name : $nomnialAttribute->name ?></span>
                                     </li>
