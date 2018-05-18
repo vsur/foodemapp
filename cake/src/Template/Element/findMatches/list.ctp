@@ -40,10 +40,17 @@
                 <div class="row componentOverview">
                     <div class="col-md-6">
                         <h4><span class="label label-primary">Gewählte</span></h4>
+                        <ul class="list-unstyled">
+                            <?php foreach ($rankedSelection->rating5->binaryComponents as $rankedBinary): ?>
+                            <li>
+                                <span class="glyphicon glyphicon-star choosenStarAgregation" aria-hidden="true"><span class="choosenStarAgregationNumber">5</span></span>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
                     <div class="col-md-6">
                         <h4><span class="label label-default">Übrige</span></h4>
-                        <ul class="list-unstyled"">
+                        <ul class="list-unstyled">
                             <?php foreach ($ypoi->binary_components as $binaryComponent): ?>
                                 <?php if (!in_array($binaryComponent->id, $rankedSelection->binaryComponentIDs)): ?>
                                     <li class="binaryComponentContainer clearfix">

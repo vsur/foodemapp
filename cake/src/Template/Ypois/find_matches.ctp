@@ -23,6 +23,10 @@
             debug("Build Filter Array");
             debug($filterSelection);
         }
+        if ($rankedSelection) {
+            debug("Ranked Filter Object");
+            debug($rankedSelection);
+        }
     }
 ?>
 

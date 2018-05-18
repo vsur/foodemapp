@@ -209,7 +209,6 @@ class YpoisController extends AppController
                     if ($settedComponent->binaryComponentState) {
                         array_push($filters->matchingBinaries, $settedComponent);
                     } else {
-                        $settedComponent->wholeComponentData = $this->Ypois->BinaryComponents->get($settedComponent->id);
                         array_push($filters->notMatchingBinaries, $settedComponent);
                     }
                     break;
@@ -338,21 +337,49 @@ class YpoisController extends AppController
     protected function ratingBasedAssignment ($objectToAssign = null, $rankedSelection = null, $type = null) {
         switch ($objectToAssign->rating) {
             case 5:
-                array_push($rankedSelection->rating5->{$type}, $objectToAssign);
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating5->{$type}, $queryObejct);
                 break;
             case 4:
-                array_push($rankedSelection->rating4->{$type}, $objectToAssign);
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating4->{$type}, $queryObejct);
                 break;
             case 3:
-                array_push($rankedSelection->rating3->{$type}, $objectToAssign);
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating3->{$type}, $queryObejct);
                 break;
             case 2:
-                array_push($rankedSelection->rating2->{$type}, $objectToAssign);
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating2->{$type}, $queryObejct);
                 break;
             case 1:
-                array_push($rankedSelection->rating1->{$type}, $objectToAssign);
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating1->{$type}, $queryObejct);
                 break;
         }
+    }
+
+    protected function getSingleQueryObject ($objectToAssign = null, $type = null) {
+        $queryObject = (object)[];
+        switch($type) {
+            case 'binaryComponents':
+                $queryObject = $this->Ypois->BinaryComponents->get($objectToAssign->id);
+                $queryObject->rating = $objectToAssign->rating;
+                $queryObject->binaryComponentState = $objectToAssign->binaryComponentState;
+                break;
+
+            case 'nominalAttributes':
+                $queryObject = $this->Ypois->NominalAttributes->get($objectToAssign->id)->contain(['NominalComponents']);
+                $queryObject->rating = $objectToAssign->rating;
+                break;
+
+            case 'ordinalAttributes':
+                $queryObject = $this->Ypois->OrdinallAttributes->get($objectToAssign->id)->contain(['OrdinalComponents.OrdinalAttributes']);
+                $queryObject->rating = $objectToAssign->rating;
+                break;
+
+        }
+        return $queryObject;
     }
 
     protected function applyNotMatchingBinariesFilter($ypois = null, $filterSelection = null) {
