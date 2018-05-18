@@ -22,6 +22,7 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 2.3.1. ✓ Reine Debugausgabe
 
 Listausgabe vorbereitet Weiter in Elements/findMatches/list
+Für die Ausgabe der einzelnen gewählten, sollte ein ViewHelper gebaut werden. 
 
 2.3.2. Liste
 2.3.2.1. Mobile
