@@ -40,7 +40,7 @@
                 <div class="row componentOverview">
                     <div class="col-md-6 choosenSelection">
                         <h4><span class="label label-primary">Gewählte</span></h4>
-                        <?php  echo $this->element('findMatches/ranked_selection_list'); ?>
+                        <?= $this->Selection->createRankedSelectionList($rankedSelection) ?>
                     </div>
                     <div class="col-md-6">
                         <h4><span class="label label-default">Übrige</span></h4>

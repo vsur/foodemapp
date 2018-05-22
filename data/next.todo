@@ -21,10 +21,10 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 2.3. Aus Query dann Search Matches bauen
 2.3.1. ✓ Reine Debugausgabe
 
-Listausgabe vorbereitet Weiter in Elements/findMatches/list
-Für die Ausgabe der einzelnen gewählten, sollte ein ViewHelper gebaut werden. 
-
 2.3.2. Liste
+
+Aggregierte Ausgabe bauen.
+
 2.3.2.1. Mobile
 2.3.2.2. Dekstop
 2.3.3. Karte
