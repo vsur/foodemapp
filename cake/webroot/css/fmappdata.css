@@ -6864,9 +6864,22 @@ li.ordinalComponentContainer > input[type="range"] {
   .navbar-brand {
     font-size: 15px; } }
 
+.listMoreInfo {
+  cursor: pointer; }
+
+.chosenAgregation ul {
+  margin-bottom: 0px; }
+
+.chosenAgregation ul li {
+  width: 20%; }
+
 .choosenStarAgregation {
   font-size: 42px;
-  color: #ffc700; }
+  color: #ffc700;
+  top: 10px; }
+  @media screen and (max-width: 991px) {
+    .choosenStarAgregation {
+      left: 2px; } }
 
 .choosenStarAgregationNumber {
   font-size: 10px;
@@ -6874,3 +6887,38 @@ li.ordinalComponentContainer > input[type="range"] {
   position: absolute;
   top: 13px;
   left: 16px; }
+
+.choosenStarAgregation.muted {
+  color: #ccc; }
+
+.choosenStarAgregation.muted > .choosenStarAgregationNumber {
+  color: #807f7f; }
+
+.aggregationNumber {
+  display: inline-block;
+  border-radius: 50%;
+  behavior: url(PIE.htc);
+  /* remove if you don't care about IE8 */
+  width: 36px;
+  height: 36px;
+  padding: 0px;
+  font-size: 18px;
+  line-height: 1.75em;
+  background: #fff;
+  border: 2px solid #666;
+  color: #666;
+  text-align: center;
+  margin-left: 5px;
+  position: relative;
+  top: -4px; }
+  @media screen and (max-width: 991px) {
+    .aggregationNumber {
+      display: block;
+      margin: 10px auto 0px; } }
+
+.aggregationNumber.muted {
+  border: 2px solid #ccc;
+  color: #ccc; }
+
+.componentOverview {
+  display: none; }

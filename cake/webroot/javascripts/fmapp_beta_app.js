@@ -589,4 +589,10 @@ $(document).ready(function() {
         // Set Rating
         fmApp.sets.rating(indexInSelection, recentRating);
     });
+
+    // Click handler for list view "Mehr anzeigen …"
+    $("#listView").on("click", ".listMoreInfo", function() {
+        // NEXT Find Specific Area to Toogle
+        alert("Yo Digga");
+    });
 });

@@ -4,6 +4,7 @@ namespace App\View\Helper;
 use Cake\View\Helper;
 
 class SelectionHelper extends Helper {
+
     public function createRankedSelectionList($rankedSelection) {
         $selectionList = '<ul class="list-unstyled">';
 
@@ -19,9 +20,25 @@ class SelectionHelper extends Helper {
         return $selectionList;
     }
 
+    public function createAggregatedSelectionRow($rankedSelection) {
+        $selectionAggregation = '<ul class="list-inline">';
+
+        // Iterate over rated components
+        $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating1, 1);
+        $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating2, 2);
+        $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating3, 3);
+        $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating4, 4);
+        $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating5, 5);
+
+        $selectionAggregation .= '</ul>';
+
+        return $selectionAggregation;
+
+    }
+
     protected function buildNStarRatingListItems($ratedComponents = null, $N_StarRating = null) {
         $ratingString = '';
-        
+
         // Iterate over binary components
         foreach ($ratedComponents->binaryComponents as $rankedBinary) {
             $ratingString .= '<li class="binaryComponentContainer clearfix">';
@@ -61,6 +78,25 @@ class SelectionHelper extends Helper {
 
         return $ratingString;
 
+    }
+
+    protected function buildNStarAggregatedItems($ratedComponents = null, $N_StarRating = null) {
+        $aggregationString = '';
+
+        $binaryComponents = $ratedComponents->binaryComponents;
+        $nominalAttributes = $ratedComponents->nominalAttributes;
+        $ordinalAttributes = $ratedComponents->ordinalAttributes;
+
+        $aggregationSum = count($binaryComponents) + count($nominalAttributes) + count($ordinalAttributes);
+
+        $aggregationString .= '<li class="clearfix text-center">';
+        $aggregationString .=       '<span class="glyphicon glyphicon-star choosenStarAgregation' . ($aggregationSum == 0 ? ' muted' : '') . '" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
+        $aggregationString .=       ' ';
+        $aggregationString .=       '<span class="aggregationNumber' . ($aggregationSum == 0 ? ' muted' : '') . '">' . $aggregationSum . '</span>';
+        $aggregationString .= '</li>';
+
+
+        return $aggregationString;
     }
 
 }
