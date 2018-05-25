@@ -6842,6 +6842,15 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 /*
  * Matches Codes
  */
+#listView .panel-heading {
+  cursor: pointer; }
+
+.listMoreInfo > span.caret {
+  transition: all 1s ease; }
+
+.listMoreInfo.showMore > span.caret {
+  transform: rotate(-180deg); }
+
 .componentOverview h4 > span.label {
   display: inline-block;
   width: 100%; }

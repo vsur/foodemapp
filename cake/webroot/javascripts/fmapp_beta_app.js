@@ -590,9 +590,14 @@ $(document).ready(function() {
         fmApp.sets.rating(indexInSelection, recentRating);
     });
 
-    // Click handler for list view "Mehr anzeigen …"
-    $("#listView").on("click", ".listMoreInfo", function() {
+    // Add CSS pointer for list view panel-headings
+    $("#listView .panel-heading").css("cursor", "pointer");
+
+    // Click handler for list view "Mehr anzeigen …" on panel heading
+    $("#listView").on("click", ".panel-heading", function() {
         // NEXT Find Specific Area to Toogle
-        alert("Yo Digga");
+        $(this).parent().find(".componentOverview").slideToggle();
+        $(this).find(".listMoreInfo").toggleClass("showMore");
     });
+
 });

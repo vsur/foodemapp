@@ -1,12 +1,3 @@
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <h1>Mockup-Darstellung</h1>
-        <h2>Listenansicht als Mobile Variante</h2>
-        <p>Es sollte  eine Liste strukturiert und geordnet nach den <strong>gewählten, gewichteten</strong> Kategorien angezeigt werden.</p>
-        <?= $this->Html->image('list-mockup.png', ['alt' => 'Mock-up für die Listendarstellung der App', 'style' => 'width: 100%']); ?>
-    </div>
-</div>
-
 <div class="row" id="listView">
     <div class="col-md-12">
     <?php foreach ($ypois as $nr => $ypoi): ?>
