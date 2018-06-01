@@ -30,15 +30,13 @@
     }
 ?>
 
-<!--
-<div id="loadingSpinnerContainer">
-    <div class="spinner">
-      <div class="cube1"></div>
-      <div class="cube2"></div>
+
+<div id="filterWheelContainer">
+    <div id="wheelBlock">
+        <?= $this->Selection->createFilterWheel($rankedSelection) ?>
     </div>
-    <h1>Ihre Auwahl wird analysiert</h1>
 </div>
--->
+
 
 <div class="row">
   <div class="col-md-12">

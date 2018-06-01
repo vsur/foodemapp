@@ -8,13 +8,13 @@
             <div class="panel-body">
                 <div class="row chosenAgregation">
                     <div class="col-md-12">
-                        <?= $this->Selection->createAggregatedSelectionRow($rankedSelection) ?>
+                        <?= $rankedSelection ? $this->Selection->createAggregatedSelectionRow($rankedSelection) : '<div class="alert alert-danger" role="alert"><strong>Keine Filerauswahl getroffen, nur Detailansicht möglich</strong></div>' ?>
                     </div>
                 </div>
                 <div class="row componentOverview">
                     <div class="col-sm-6 choosenSelection">
                         <h4><span class="label label-primary">Gewählte</span></h4>
-                        <?= $this->Selection->createRankedSelectionList($rankedSelection) ?>
+                        <?= $rankedSelection ? $this->Selection->createRankedSelectionList($rankedSelection) : '<div class="alert alert-danger" role="alert"><strong>Keine Filerauswahl getroffen</strong></div>' ?>
                     </div>
                     <div class="col-sm-6">
                         <h4><span class="label label-default">Übrige</span></h4>

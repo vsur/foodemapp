@@ -36,6 +36,11 @@ class SelectionHelper extends Helper {
 
     }
 
+    public function createFilterWheel($rankedSelection) {
+        $filterWheelElements = '<h1>Und LOS D3</h1>';
+        return $filterWheelElements;
+    }
+
     protected function buildNStarRatingListItems($ratedComponents = null, $N_StarRating = null) {
         $ratingString = '';
 

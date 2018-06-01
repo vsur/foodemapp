@@ -162,6 +162,32 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 /*
  * Matches Codes
  */
+ #filterWheelSwitch {
+    margin-right: 15px;
+    float: left;
+    @media screen and (max-width: $screen-xs-max) {
+        float: right;
+    }
+ }
+ #filterWheelContainer {
+   // display: none;
+   margin: 0;
+   padding: 0;
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   z-index: 500;
+   background: rgba($urcd-color, .75);
+}
+#wheelBlock {
+    background: lighten($urcd-color, 50%);
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    transform: translate(50%, 50%);
+}
 #listView .panel-heading {
   cursor: pointer;
 }
