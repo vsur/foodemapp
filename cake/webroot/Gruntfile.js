@@ -43,10 +43,7 @@ module.exports = function(grunt) {
 			},
 
 			// when this task is run, lint the Gruntfile and all js files in src
-			build: {
-				src: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'javascripts/fmapp_beta_app.js'],
-				dest: 'js/'
-			}
+			all: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'javascripts/fmapp_beta_app.js', 'javascripts/filterwheelsunburst.js']
 		},
 
 		concat: {
@@ -59,9 +56,14 @@ module.exports = function(grunt) {
 				dest: 'js/fmapp_app.js',
 			},
 			noBootBeta: {
-				src: ['javascripts/fmapp_beta_app.js'],
-				dest: 'js/fmapp_beta_app.js',
+                src: ['javascripts/fmapp_beta_app.js'],
+                dest: 'js/fmapp_beta_app.js'
+            },
+			filterWheel: {
+				src: ['javascripts/filterwheelsunburst.js'],
+				dest: 'js/filterwheelsunburst.js',
 			}
+
 		},
 
 		// Config watch
@@ -69,7 +71,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['javascripts/*.js'],
-				tasks: ['jshint', 'concat:noBootBeta'],
+				tasks: ['jshint', 'concat:noBootBeta', 'concat:filterWheel'],
 				options: {
 					spawn: false
 				},
