@@ -13,7 +13,7 @@ class D3DataComponent extends Component {
         ];
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if ($this->checkRankedGroup($ratedComponents)) {
-                $filerWheelData->children = $this->buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData);
+                array_push($filerWheelData->children, $this->buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData));
             }
         }
         $filerWheelJSONData = json_encode($filerWheelData);
@@ -85,9 +85,9 @@ class D3DataComponent extends Component {
         // Build segemnt Data
         $segmentChildren = (object) [
             "name" => $rating,
-            "children" => []
+            "children" => (object) []
         ];
-        array_push($segmentChildren->children, $ratedChildren);
+        $segmentChildren->children = $ratedChildren;
 
         return $segmentChildren;
     }
