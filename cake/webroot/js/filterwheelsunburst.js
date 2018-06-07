@@ -44,31 +44,24 @@ var arc = d3.svg.arc()
     .innerRadius(function(d) { return Math.sqrt(d.y); })
     .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 
-var path = svg.datum(sunburstData).selectAll("path")
+var path = svg.datum(filerWheelJSONData).selectAll("path")
     .data(partition.nodes)
     .enter().append("path")
     .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
     .attr("d", arc)
     .style("stroke", "#fff")
     .style("fill", function(d) {
-        console.log("d");
-        console.log(d);
         var colorComponents = d3.scale.category10();
         var componentNames = [];
         if(d.depth == 1) {
+            console.log(d);
             return "#7d003c";
         } else if (d.depth == 2) {
-            d.parent.children.forEach(function(childComponent) {
-                componentNames.push(childComponent.name);
-            });
+            componentNames.push(d.name);
+            // Pushe immer alle parent names in Array und wähle dann später über Parent.Name wieder aus.
             colorComponents.domain(componentNames);
-            return colorComponents(d.name);
-        } else if (d.depth == 3) {
-            d.parent.parent.children.forEach(function(childComponent) {
-                componentNames.push(childComponent.name);
-            });
-            colorComponents.domain(componentNames);
-            return d3.rgb(colorComponents(d.name)).brighter(1.5).toString();
+            console.log(colorComponents(colorComponents(d.name)));
+            return d3.rgb(colorComponents(d.name)).toString();
         }
     })
     .style("fill-rule", "evenodd")
