@@ -21,20 +21,21 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 2.3. Aus Query dann Search Matches bauen
 2.3.1. ✓ Reine Debugausgabe
 
-2.3.2. Liste
+2.3.2. ✓ Liste
+2.3.2.1. ✓ Mobile
+2.3.2.2. ✓ Dekstop
 
-Aggregierte Ausgabe bauen.
+2.3.3. Filter/Wheel bauen
+2.3.3.1. Suburst bauen
+2.3.3.2. Einyel/Gruppen-Anzeige
+2.3.3.3. Thema Übrige angehen (müssen wieder Controller-Seiteig gesammelt werden).
 
-Aufräumen für Listenansicht, wenn keine Filter gesetzt sind
-
-2.3.2.1. Mobile
-2.3.2.2. Dekstop
-2.3.3. Karte
-2.3.3.1. Mobile
-2.3.3.2. Dekstop
-2.3.4. Chroddiagram
-2.3.5. Weitere GUI-Elemente
-2.3.6. Zusammenspiel der GUIS, Selektion usw.
+2.3.4. Karte
+2.3.4.1. Mobile
+2.3.4.2. Dekstop
+2.3.5. Chroddiagram
+2.3.6. Weitere GUI-Elemente
+2.3.7. Zusammenspiel der GUIS, Selektion usw.
 
 3. Dann noch mal hübsch machen
 

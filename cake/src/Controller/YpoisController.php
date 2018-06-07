@@ -11,7 +11,11 @@ use App\Controller\AppController;
  */
 class YpoisController extends AppController
 {
-
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('D3Data');
+    }
     /**
      * Index method
      *
@@ -123,7 +127,10 @@ class YpoisController extends AppController
                 ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
         }
 
-        $this->set(compact('ypois', 'criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection'));
+        // Build filter wheel data for D3.js sunburst-viz
+         $filerWheelJSONData = $this->D3Data->buildFilterWheelSuburstJSONData($rankedSelection);
+
+        $this->set(compact('ypois','criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection', 'filerWheelJSONData'));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)

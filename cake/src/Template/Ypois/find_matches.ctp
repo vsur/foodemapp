@@ -30,10 +30,13 @@
     }
 ?>
 
-
 <div id="filterWheelContainer">
     <div id="wheelBlock">
-        <?= $this->Selection->createFilterWheel($rankedSelection) ?>
+        <script type="text/javascript">
+            var filerWheelJSONData = <?= $filerWheelJSONData ?>;;
+            console.log(filerWheelJSONData);
+        </script>
+        <?= $this->Html->script('filterwheelsunburst') ?>
     </div>
 </div>
 
@@ -62,6 +65,7 @@
 ?>
 
 <script type="text/javascript">
+    /*
     var criterionNames = <?= json_encode($criterionNames) ?>;
     var input = document.getElementById("criteriaInput");
     var awesomplete = new Awesomplete(input, {
@@ -70,6 +74,7 @@
       maxItems: 10
     });
     awesomplete.list = criterionNames;
+    */
 </script>
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
