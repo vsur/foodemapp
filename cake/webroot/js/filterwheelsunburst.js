@@ -4,11 +4,12 @@
 
 // Define Space
 var maxWidth = +d3.select("#wheelBlock").style("width").replace("px", "");
+var maxHeight= +d3.select("#wheelBlock").style("width").replace("px", "");
 var margin = {top: 50, right: 10, bottom: 50, left: 10},
     // width = maxWidth - margin.left - margin.right,
     width = maxWidth,
     // height = 500 - margin.top - margin.bottom;
-    height = maxWidth/2,
+    height = maxHeight,
     radius = Math.min(width, height) / 2;
 
 // Set Color-Set
@@ -54,14 +55,18 @@ var path = svg.datum(filerWheelJSONData).selectAll("path")
         var colorComponents = d3.scale.category10();
         var componentNames = [];
         if(d.depth == 1) {
-            console.log(d);
-            return "#7d003c";
-        } else if (d.depth == 2) {
-            componentNames.push(d.name);
-            // Pushe immer alle parent names in Array und wähle dann später über Parent.Name wieder aus.
+            componentNames = d.parent.children.map(function(child) {
+                    return child.name;
+                });
             colorComponents.domain(componentNames);
-            console.log(colorComponents(colorComponents(d.name)));
             return d3.rgb(colorComponents(d.name)).toString();
+        } else if (d.depth == 2) {
+            componentNames = d.parent.children.map(function(child) {
+                return child.name;
+            });
+            colorComponents.domain(componentNames);
+            console.log(d.name);
+            return d3.rgb(colorComponents(d.name)).brighter(1.5).toString();
         }
     })
     .style("fill-rule", "evenodd")
