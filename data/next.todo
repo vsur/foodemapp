@@ -27,6 +27,35 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
 2.3.3. Filter/Wheel bauen
 2.3.3.1. Suburst bauen
+
+Adjazenz Matrix bauen
+
+    Aus yPois ein yPois Name Index Array bauen
+
+    Aus allen yPois bauen Components Array
+
+    Itteriere über Components Array und schmeiße rankedComponents raus.
+
+    Baue Matrix
+
+        Baue ein MatrixIndexArray mit allen Namen
+
+            Paste die yPois names
+            Paste alle Ranked
+            Paste alle übrigen
+
+        Itteriere über alle yPois um für jeden Eintrag die Matrix row zu bauen
+
+            dabei einfach üfer IndexChek Array Iterieren
+
+            Fill 0 für yPois
+
+            Fill ranked if vorhanden
+
+            Fill rest if vorhanden
+
+        row in Matrix Array
+
 2.3.3.2. Einyel/Gruppen-Anzeige
 2.3.3.3. Thema Übrige angehen (müssen wieder Controller-Seiteig gesammelt werden).
 
