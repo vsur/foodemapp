@@ -4,9 +4,10 @@ namespace App\Controller\Component;
 
 use Cake\Controller\Component;
 
-class D3DataComponent extends Component {
-
-    public function buildFilterWheelSuburstJSONData($rankedSelection) {
+class D3DataComponent extends Component
+{
+    public function buildFilterWheelSuburstJSONData($rankedSelection)
+    {
         $filerWheelData = (object) [
             "name" => "filterWheel",
             "children" => []
@@ -19,11 +20,50 @@ class D3DataComponent extends Component {
         $filerWheelJSONData = json_encode($filerWheelData);
         return $filerWheelJSONData;
     }
-    protected function buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData) {
+
+    public function buildChordDiagramMatrixData($ypois, $rankedSelection)
+    {
+        /*
+        Aus yPois ein yPois Name Index Array bauen
+
+        Aus allen yPois bauen Components Array
+
+        Itteriere über Components Array und schmeiße rankedComponents raus.
+
+        Baue Matrix
+
+            Baue ein MatrixIndexArray mit allen Namen
+
+                Paste die yPois names
+                Paste alle Ranked
+                Paste alle übrigen
+
+            Itteriere über alle yPois um für jeden Eintrag die Matrix row zu bauen
+
+                dabei einfach üfer IndexChek Array Iterieren
+
+                Fill 0 für yPois
+
+                Fill ranked if vorhanden
+
+                Fill rest if vorhanden
+
+            row in Matrix Array
+        */
+        // Adjacency Matrix for all pois and components
+        $adjacencyMatrix = [];
+
+        $ypoisNames = $this->buildYpoisNamesArray($ypois);
+        debug($ypoisNames);
+        return $adjacencyMatrix;
+    }
+
+    protected function buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData)
+    {
         $ratedChildren =  [];
 
         // Check and paste ranked binaryComponents as single child
-        if (    !empty($ratedComponents->binaryComponents)  ) {
+        if (!empty($ratedComponents->binaryComponents)) {
             foreach ($ratedComponents->binaryComponents as $binaryComponent) {
                 $binaryChild = (object) [
                     "name" => $binaryComponent->display_name != '' ? $binaryComponent->display_name : $binaryComponent->name,
@@ -36,9 +76,8 @@ class D3DataComponent extends Component {
             array_push($ratedChildren, $binaryChild);
         }
         // Check and paste ranked nominalAttributes as single child
-        if (    !empty($ratedComponents->nominalAttributes)  ) {
+        if (!empty($ratedComponents->nominalAttributes)) {
             foreach ($ratedComponents->nominalAttributes as $nominalAttribute) {
-
                 $aggregatedName = $nominalAttribute->nominal_component->display_name != '' ? $nominalAttribute->nominal_component->display_name : $nominalAttribute->nominal_component->name;
                 $aggregatedName .= ' ';
                 $aggregatedName .= $nominalAttribute->display_name != '' ? $nominalAttribute->display_name : $nominalAttribute->name;
@@ -60,7 +99,7 @@ class D3DataComponent extends Component {
         }
 
         // Check and paste ranked ordinalAttributes as single child
-        if (    !empty($ratedComponents->ordinalAttributes)  ) {
+        if (!empty($ratedComponents->ordinalAttributes)) {
             foreach ($ratedComponents->ordinalAttributes as $ordinalAttribute) {
                 $aggregatedName = $ordinalAttribute->ordinal_component->display_name != '' ? $ordinalAttribute->ordinal_component->display_name : $ordinalAttribute->ordinal_component->name;
                 $aggregatedName .= ' ';
@@ -92,7 +131,8 @@ class D3DataComponent extends Component {
         return $segmentChildren;
     }
 
-    protected function checkRankedGroup($ratedComponents) {
+    protected function checkRankedGroup($ratedComponents)
+    {
         $ratedComponentsAreFilled = false;
         if (
                 !empty($ratedComponents->binaryComponents) ||
@@ -102,5 +142,14 @@ class D3DataComponent extends Component {
             $ratedComponentsAreFilled  = true;
         }
         return $ratedComponentsAreFilled;
+    }
+
+    protected function buildYpoisNamesArray($ypois)
+    {
+        $ypoisNames = [];
+        foreach ($ypois as $ypoi) {
+            array_push($ypoisNames, $ypoi->name);
+        }
+        return $ypoisNames;
     }
 }
