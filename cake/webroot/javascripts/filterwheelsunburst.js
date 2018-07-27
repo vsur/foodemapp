@@ -2,6 +2,8 @@
  * Script for Filter Wheel
  */
 
+ d3.select("#filterWheelContainer").style("display", "none");
+
 // Define Space
 var maxWidth = +d3.select("#wheelBlock").style("width").replace("px", "");
 var maxHeight= +d3.select("#wheelBlock").style("width").replace("px", "");
