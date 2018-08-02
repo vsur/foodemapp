@@ -52,13 +52,17 @@ class D3DataComponent extends Component
         */
         // Adjacency Matrix for all pois and components
         $adjacencyMatrix = [];
+        $adjacencyMatrixIndex = [];
 
         $ypoisNames = $this->buildYpoisNamesArray($ypois);
         $allContainedCompponents = $this->getAllComponentNames($ypois);
-        debug($ypoisNames);
-        debug($allContainedCompponents);
-        $selectionCleandComponents = $this->removeRankedComponents($allContainedCompponents, $rankedSelection);
-        debug($selectionCleandComponents);
+        $rankedSelectionComponents = $this->getOnlyRankedComponentNames($rankedSelection);
+
+        $selectionCleandComponents = $this->removeRankedComponents($allContainedCompponents, $rankedSelectionComponents);
+
+        $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponents, $selectionCleandComponents);
+        
+        debug($adjacencyMatrixIndex);
         return $adjacencyMatrix;
     }
 
@@ -187,41 +191,43 @@ class D3DataComponent extends Component
         return $allComponentsFromYpois;
     }
 
-    protected function removeRankedComponents($allContainedCompponents, $rankedSelection)
+    protected function removeRankedComponents($allContainedCompponents, $rankedSelectionComponents)
     {
+        foreach ($rankedSelectionComponents as $rankedSelectionComponent) {
+            if (in_array($rankedSelectionComponent, $allContainedCompponents)) {
+                $currentIndexToDelete = array_search($rankedSelectionComponent, $allContainedCompponents);
+                array_splice($allContainedCompponents, $currentIndexToDelete, 1);
+            }
+        }
+        return $allContainedCompponents;
+    }
+    protected function getOnlyRankedComponentNames($rankedSelection)
+    {
+        $rankedSelectionNames = [];
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if (!empty($ratedComponents->binaryComponents)) {
                 foreach ($ratedComponents->binaryComponents as $binaryComponent) {
                     // Concat name for compoarision
                     $binaryConcatedNameForComparison = $this->buildBinaryComponentConcatenationName($binaryComponent);
-                    if (in_array($binaryConcatedNameForComparison, $allContainedCompponents)) {
-                        $currentIndexToDelete = array_search($binaryConcatedNameForComparison, $allContainedCompponents);
-                        array_splice($allContainedCompponents, $currentIndexToDelete, 1);
-                    }
+                    array_push($rankedSelectionNames, $binaryConcatedNameForComparison);
                 }
             }
             if (!empty($ratedComponents->nominalAttributes)) {
                 foreach ($ratedComponents->nominalAttributes as $nominalAttribute) {
                     // Concat name for compoarision
                     $nominalConcatedNameForCompoarision = $this->buildNominalComponentAttributeConcatenationName($nominalAttribute);
-                    if (in_array($nominalConcatedNameForCompoarision, $allContainedCompponents)) {
-                        $currentIndexToDelete = array_search($nominalConcatedNameForCompoarision, $allContainedCompponents);
-                        array_splice($allContainedCompponents, $currentIndexToDelete, 1);
-                    }
+                    array_push($rankedSelectionNames, $nominalConcatedNameForCompoarision);
                 }
             }
             if (!empty($ratedComponents->ordinalAttributes)) {
                 foreach ($ratedComponents->ordinalAttributes as $ordinalAttribute) {
                     // Concat name for compoarision
                     $ordinalConcatedNameForCompoarision = $this->buildOrdinalComponentAttributeConcatenationName($ordinalAttribute);
-                    if(in_array($ordinalConcatedNameForCompoarision, $allContainedCompponents)) {
-                        $currentIndexToDelete = array_search($ordinalConcatedNameForCompoarision, $allContainedCompponents);
-                        array_splice($allContainedCompponents, $currentIndexToDelete, 1);
-                    }
+                    array_push($rankedSelectionNames, $ordinalConcatedNameForCompoarision);
                 }
             }
         }
-        return $allContainedCompponents;
+        return $rankedSelectionNames;
     }
 
     protected function buildBinaryComponentConcatenationName($binaryComponent)
