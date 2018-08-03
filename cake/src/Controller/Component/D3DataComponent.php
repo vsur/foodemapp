@@ -260,7 +260,7 @@ class D3DataComponent extends Component
                 // Concat component and id to prepare adjacency
                 $ordinalComponentAttributeConcatenation = $this->buildOrdinalComponentAttributeConcatenationName($ordinal_attribute);
                 // Get index in $adjacencyMatrixIndex for current component
-                $currentIndex = array_search($nominalComponentAttributeConcatenation, $adjacencyMatrixIndex);
+                $currentIndex = array_search($ordinalComponentAttributeConcatenation, $adjacencyMatrixIndex);
                 $ypoisAdjacencyRow[$currentIndex] = 1;
             }
             debug($ypoi->name);
