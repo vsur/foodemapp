@@ -23,33 +23,6 @@ class D3DataComponent extends Component
 
     public function buildChordDiagramMatrixData($ypois, $rankedSelection)
     {
-        /*
-        Aus yPois ein yPois Name Index Array bauen
-
-        Aus allen yPois bauen Components Array
-
-        Itteriere über Components Array und schmeiße rankedComponents raus.
-
-        Baue Matrix
-
-            Baue ein MatrixIndexArray mit allen Namen
-
-                Paste die yPois names
-                Paste alle Ranked
-                Paste alle übrigen
-
-            Itteriere über alle yPois um für jeden Eintrag die Matrix row zu bauen
-
-                dabei einfach üfer IndexChek Array Iterieren
-
-                Fill 0 für yPois
-
-                Fill ranked if vorhanden
-
-                Fill rest if vorhanden
-
-            row in Matrix Array
-        */
         // Adjacency Matrix for all pois and components
         $adjacencyMatrix = [];
         $adjacencyMatrixIndex = [];
@@ -62,8 +35,8 @@ class D3DataComponent extends Component
 
         $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponents, $selectionCleandComponents);
 
-        debug($adjacencyMatrixIndex);
-        $adjacencyMatrix = $this->createAdjacencymMatrix($ypois, $adjacencyMatrixIndex, $ypoisNames, $rankedSelectionComponents, $selectionCleandComponents);
+        $adjacencyMatrix = $this->createAdjacencymMatrix($ypois, $adjacencyMatrixIndex);
+        array_unshift($adjacencyMatrix, $adjacencyMatrixIndex);
 
         return $adjacencyMatrix;
     }
@@ -206,10 +179,9 @@ class D3DataComponent extends Component
     protected function getOnlyRankedComponentNames($rankedSelection)
     {
         $rankedSelectionNames = [];
-        debug($rankedSelection);
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if (!empty($ratedComponents->binaryComponents)) {
-                foreach (array($ratedComponents->binaryComponents) as $binaryComponent) {
+                foreach ($ratedComponents->binaryComponents as $binaryComponent) {
                     // Concat name for compoarision
                     $binaryConcatedNameForComparison = $this->buildBinaryComponentConcatenationName($binaryComponent);
                     array_push($rankedSelectionNames, $binaryConcatedNameForComparison);
@@ -233,7 +205,7 @@ class D3DataComponent extends Component
         return $rankedSelectionNames;
     }
 
-    protected function createAdjacencymMatrix($ypois, $adjacencyMatrixIndex, $ypoisNames, $rankedSelectionComponents, $selectionCleandComponents)
+    protected function createAdjacencymMatrix($ypois, $adjacencyMatrixIndex)
     {
         $adjacencyMatrix = [];
 
@@ -264,6 +236,10 @@ class D3DataComponent extends Component
                 $currentIndex = array_search($ordinalComponentAttributeConcatenation, $adjacencyMatrixIndex);
                 $ypoisAdjacencyRow[$currentIndex] = 1;
             }
+
+            // Push created row to matrix
+            array_push($adjacencyMatrix, $ypoisAdjacencyRow);
+
         }
         return $adjacencyMatrix;
     }
