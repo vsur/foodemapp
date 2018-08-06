@@ -206,9 +206,10 @@ class D3DataComponent extends Component
     protected function getOnlyRankedComponentNames($rankedSelection)
     {
         $rankedSelectionNames = [];
+        debug($rankedSelection);
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if (!empty($ratedComponents->binaryComponents)) {
-                foreach ($ratedComponents->binaryComponents as $binaryComponent) {
+                foreach (array($ratedComponents->binaryComponents) as $binaryComponent) {
                     // Concat name for compoarision
                     $binaryConcatedNameForComparison = $this->buildBinaryComponentConcatenationName($binaryComponent);
                     array_push($rankedSelectionNames, $binaryConcatedNameForComparison);
@@ -263,10 +264,6 @@ class D3DataComponent extends Component
                 $currentIndex = array_search($ordinalComponentAttributeConcatenation, $adjacencyMatrixIndex);
                 $ypoisAdjacencyRow[$currentIndex] = 1;
             }
-            debug($ypoi->name);
-            debug(implode(", ", $ypoisAdjacencyRow));
-            debug($adjacencyMatrixIndex);
-            debug("X X X X X X X X X X X X X X X X X X X X X X X X");
         }
         return $adjacencyMatrix;
     }
