@@ -9,6 +9,20 @@
         <?= $this->Html->image('chord-mockup.png', ['alt' => 'Mock-up für die Listendarstellung der App', 'style' => 'width: 100%']); ?>
     </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="text-center">Chorddiagrammvisualisierung</h1>
+    <div id="aypoisChord">
+    </div>
+  </div>
+</div> <!-- /.row -->
+<script type="text/javascript">
+    var matrix = <?= json_encode($chordDiagramMatrixData) ?>;
+    var chordLables = matrix.shift();
+</script>
+<!-- <?= $this->Html->script('chord-diagram.js') ?> -->
+
 <div class="row">
     <div class="col-md-12">
         <table class="table table-hover">
