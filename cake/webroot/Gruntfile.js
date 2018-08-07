@@ -62,6 +62,10 @@ module.exports = function(grunt) {
 			filterWheel: {
 				src: ['javascripts/filterwheelsunburst.js'],
 				dest: 'js/filterwheelsunburst.js',
+			},
+			sunBurst: {
+				src: ['javascripts/chord-diagram.js'],
+				dest: 'js/chord-diagram.js',
 			}
 
 		},
@@ -71,7 +75,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['javascripts/*.js'],
-				tasks: ['jshint', 'concat:noBootBeta', 'concat:filterWheel'],
+				tasks: ['jshint', 'concat:noBootBeta', 'concat:filterWheel', 'concat:sunBurst'],
 				options: {
 					spawn: false
 				},
