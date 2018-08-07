@@ -136,13 +136,15 @@ class YpoisController extends AppController
         $chordDiagramMatrixData = [];
         if($displayVariant == "chord") {
             $chordDiagramMatrixData = $this->D3Data->buildChordDiagramMatrixData($ypois, $rankedSelection);
+            /*
             debug(json_encode($chordDiagramMatrixData));
             $now = Time::now();
             $now->timezone = 'Europe/Paris';
             debug($now->format('Y-m-d_H-i-s'));
             $path = './' . $now->format('Y-m-d_H-i-s') . 'JSON_Adjacency_Matrix.json';
             $file = new File($path, true);
-            // $file->write(json_encode($chordDiagramMatrixData));
+            $file->write(json_encode($chordDiagramMatrixData));
+            */
         }
 
         $this->set(compact('ypois','criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection', 'filerWheelJSONData', 'chordDiagramMatrixData'));
