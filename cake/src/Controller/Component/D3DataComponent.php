@@ -35,9 +35,8 @@ class D3DataComponent extends Component
 
         $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponents, $selectionCleandComponents);
 
-        $adjacencyMatrix = $this->createAdjacencymMatrix($ypois, $adjacencyMatrixIndex);
+        $adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelectionComponents, $selectionCleandComponents, $adjacencyMatrixIndex);
         array_unshift($adjacencyMatrix, $adjacencyMatrixIndex);
-
         return $adjacencyMatrix;
     }
 
@@ -205,11 +204,63 @@ class D3DataComponent extends Component
         return $rankedSelectionNames;
     }
 
-    protected function createAdjacencymMatrix($ypois, $adjacencyMatrixIndex)
+    protected function createAdjacencyMatrix($ypois, $rankedSelectionComponents, $selectionCleandComponents, $adjacencyMatrixIndex)
     {
         $adjacencyMatrix = [];
+        // Create adjacency column with blanks
+        $ypoisAdjacencyRow = array_fill(0, count($adjacencyMatrixIndex), 0);
+        // Paste needed rows
+        foreach ($adjacencyMatrixIndex as $row) {
+            array_push($adjacencyMatrix, $ypoisAdjacencyRow);
+        }
 
-        // Iterate over all ypois and its components to check if a adjacency needs to be created
+        foreach ($ypois as $currentYpoiIndex => $ypoi) {
+
+            // Iterate over all contained components and check $adjacencyMatrixIndex index to create adjacency
+            foreach ($ypoi->binary_components as $binaryComponent) {
+                // Concat component and id to prepare adjacency
+                $binaryComponentConcatenation = $this->buildBinaryComponentConcatenationName($binaryComponent);
+                // Get index in $adjacencyMatrixIndex for current component
+                $componentIndex = array_search($binaryComponentConcatenation, $adjacencyMatrixIndex);
+                if($componentIndex) {
+                    $adjacencyMatrix = $this->setAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex);
+                }
+            }
+            foreach ($ypoi->nominal_attributes as $nominal_attribute) {
+                // Concat component and id to prepare adjacency
+                $nominalComponentAttributeConcatenation = $this->buildNominalComponentAttributeConcatenationName($nominal_attribute);
+                // Get index in $adjacencyMatrixIndex for current component
+                $componentIndex = array_search($nominalComponentAttributeConcatenation, $adjacencyMatrixIndex);
+                if($componentIndex) {
+                    $adjacencyMatrix = $this->setAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex);
+                }
+            }
+            foreach ($ypoi->ordinal_attributes as $ordinal_attribute) {
+                // Concat component and id to prepare adjacency
+                $ordinalComponentAttributeConcatenation = $this->buildOrdinalComponentAttributeConcatenationName($ordinal_attribute);
+                // Get index in $adjacencyMatrixIndex for current component
+                $componentIndex = array_search($ordinalComponentAttributeConcatenation, $adjacencyMatrixIndex);
+                if($componentIndex) {
+                    $adjacencyMatrix = $this->setAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex);
+                }
+            }
+        }
+
+        return $adjacencyMatrix;
+    }
+
+    protected function setAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex) {
+        // Set adjacency in column for current ypoi
+        $adjacencyMatrix[$currentYpoiIndex][$componentIndex] = 1;
+        // Set adjacency in row for found component
+        $adjacencyMatrix[$componentIndex][$currentYpoiIndex] = 1;
+        return $adjacencyMatrix;
+    }
+
+
+/*
+    protected function addYpoisAdjacenciesToMatrix($adjacencyMatrix, $ypois, $adjacencyMatrixIndex)
+    {
         foreach ($ypois as $ypoi) {
             // Create adjacency row with blanks
             $ypoisAdjacencyRow = array_fill(0, count($adjacencyMatrixIndex), 0);
@@ -237,12 +288,21 @@ class D3DataComponent extends Component
                 $ypoisAdjacencyRow[$currentIndex] = 1;
             }
 
-            // Push created row to matrix
+            // Push created ypoi row to matrix
             array_push($adjacencyMatrix, $ypoisAdjacencyRow);
 
         }
         return $adjacencyMatrix;
     }
+
+    protected function addRankedAdjacenciesToMatrix($adjacencyMatrix, $rankedSelectionComponents, $adjacencyMatrixIndex)
+    {
+        debug($rankedSelectionComponents);
+        foreach ($rankedSelectionComponents as $rankedSelectionComponent) {
+            // code...
+        }
+        return $adjacencyMatrix;
+    }*/
 
     protected function buildBinaryComponentConcatenationName($binaryComponent)
     {
