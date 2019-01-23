@@ -1,27 +1,18 @@
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <h1>Mockup-Darstellung</h1>
-        <h2>Chord-Diagramm für Desktop</h2>
-        <p>1. Quadrant: Alle sonstigen nicht gewählten Kriterien</p>
-        <p>2 + 3. Quadrant: Alle zurückgelieferten Ergebnisse/Orte</p>
-        <p>4. Quadrant: Alle gewählten Kriterien</p>
-        <p>Die Verbindungslinien stellen die Zuordnung von Orteh und Eigenschaften dar./p>
-        <?= $this->Html->image('chord-mockup.png', ['alt' => 'Mock-up für die Listendarstellung der App', 'style' => 'width: 100%']); ?>
-    </div>
-</div>
 
 <div class="row">
   <div class="col-md-12">
     <h1 class="text-center">Chorddiagrammvisualisierung</h1>
-    <div id="aypoisChord">
+    <div id="ypoisChord">
     </div>
   </div>
 </div> <!-- /.row -->
 <script type="text/javascript">
     var matrix = <?= json_encode($chordDiagramMatrixData) ?>;
-    var chordLables = matrix.shift();
+    // var chordLables = matrix.shift();
 </script>
-<!-- <?= $this->Html->script('chord-diagram.js') ?> -->
+<?= $this->Html->script('d3.stretched.chord.js') ?>
+<?= $this->Html->script('d3.layout.chord.sort.js') ?>
+<?= $this->Html->script('chord-diagram.js') ?>
 
 <div class="row">
     <div class="col-md-12">
