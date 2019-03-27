@@ -2,18 +2,20 @@
  * Script for Filter Wheel
  */
 
- d3.select("#filterWheelContainer").style("display", "none");
+ // d3.select("#filterWheelContainer").style("display", "none");
 
 // Define Space
 var maxWidth = +d3.select("#wheelBlock").style("width").replace("px", "");
-var maxHeight= +d3.select("#wheelBlock").style("width").replace("px", "");
+var maxHeight= +d3.select("#wheelBlock").style("height").replace("px", "");
 var margin = {top: 50, right: 10, bottom: 50, left: 10},
     // width = maxWidth - margin.left - margin.right,
     width = maxWidth,
     // height = 500 - margin.top - margin.bottom;
     height = maxHeight,
     radius = Math.min(width, height) / 2;
-
+console.log(maxWidth);
+console.log(maxHeight);
+console.log(radius);
 // Set Color-Set
 var color = d3.scale.category10();
 

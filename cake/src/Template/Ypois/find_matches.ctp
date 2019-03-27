@@ -29,17 +29,16 @@
         }
     }
 ?>
-<!--
+
 <div id="filterWheelContainer">
     <div id="wheelBlock">
         <script type="text/javascript">
-            var filerWheelJSONData = <?= $filerWheelJSONData ?>;;
-            console.log(filerWheelJSONData);
+            var filerWheelJSONData = <?= $filerWheelJSONData ?>;
         </script>
         <?= $this->Html->script('filterwheelsunburst') ?>
     </div>
 </div>
--->
+
 
 <div class="row">
   <div class="col-md-12">
