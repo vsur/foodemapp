@@ -459,7 +459,6 @@ var fmApp = {
 $(document).ready(function() {
 
     if (configuredSelection) {
-        console.log(configuredSelection);
         $("#criteriaChoice").fadeOut(250);
         $("#criteriaOutput").fadeOut(250);
         $("#loadingSpinnerContainer").fadeIn(500, function(event) {
