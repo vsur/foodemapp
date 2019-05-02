@@ -4,7 +4,10 @@
     <div class="navbar-header">
         <?php
         if($this->request->action == 'findMatches' && !empty($this->request->query)) {
-            echo '<button id="filterWheelSwitch" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie die Filter"><span class="hidden-xs">Filteranzeige</span> <span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button>';
+            echo '<button id="filter" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie die Filter"><span class="hidden-xs">Filterung anpassen</span> <span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button>';
+        }
+        if($this->request->action) {
+            echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Komonenten Rad"><span class="hidden-xs">Komponenten browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
         }
         ?>
       <button type="button" class="navbar-toggle collapsed"

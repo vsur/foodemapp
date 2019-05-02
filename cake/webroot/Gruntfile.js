@@ -59,11 +59,11 @@ module.exports = function(grunt) {
                 src: ['javascripts/fmapp_beta_app.js'],
                 dest: 'js/fmapp_beta_app.js'
             },
-			filterWheel: {
-				src: ['javascripts/filterwheelsunburst.js'],
-				dest: 'js/filterwheelsunburst.js',
+			componentWheel: {
+				src: ['javascripts/componentwheelsunburst.js'],
+				dest: 'js/componentwheelsunburst.js',
 			},
-			sunBurst: {
+			chord: {
 				src: ['javascripts/chord-diagram.js'],
 				dest: 'js/chord-diagram.js',
 			}
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['javascripts/*.js'],
-				tasks: ['jshint', 'concat:noBootBeta', 'concat:filterWheel', 'concat:sunBurst'],
+				tasks: ['jshint', 'concat:noBootBeta', 'concat:componentWheel', 'concat:chord'],
 				options: {
 					spawn: false
 				},

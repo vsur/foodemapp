@@ -75,7 +75,7 @@
 
 
   // Soll Dummy angezeigt werden
-  let showDummy = true;
+  let showDummy = false;
   let dummyColor = "none";
   let dummyOpacity = 0;
 

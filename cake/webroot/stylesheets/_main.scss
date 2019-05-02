@@ -162,14 +162,14 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 /*
  * Matches Codes
  */
- #filterWheelSwitch {
+ button#filter, button#componentWheel {
     margin-right: 15px;
     float: left;
     @media screen and (max-width: $screen-xs-max) {
         float: right;
     }
  }
- #filterWheelContainer {
+ #compnentWheelContainer {
    // display: none;
    margin: 0;
    padding: 0;

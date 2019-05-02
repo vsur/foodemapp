@@ -30,12 +30,12 @@
     }
 ?>
 
-<div id="filterWheelContainer">
+<div id="compnentWheelContainer">
     <div id="wheelBlock">
         <script type="text/javascript">
             var filerWheelJSONData = <?= $filerWheelJSONData ?>;
         </script>
-        <?= $this->Html->script('filterwheelsunburst') ?>
+        <?= $this->Html->script('componentwheelsunburst') ?>
     </div>
 </div>
 

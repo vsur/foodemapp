@@ -27,7 +27,7 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
     3. Filter-Ansicht als zurück Button implementieren
     4. Filter/Wheel aka Komponenten Rad bauen
         *   Erst mal die Hierchie aufbauen.
-        *   Also Alle, dann übrige, dann einzelne Gewichtungsgruppen
+        *   Also Alle, dann übrige, dann einzelne Gewichtungsgruppen like in <https://observablehq.com/@d3/zoomable-sunburst>
         *   In den Ringen dann Unter-Ringe von Skalen: Binär, Nominal, Ordinal
         *   Darin dann die Komponenten
 4. Chroddiagram
