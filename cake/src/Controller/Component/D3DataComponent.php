@@ -6,7 +6,7 @@ use Cake\Controller\Component;
 
 class D3DataComponent extends Component
 {
-    public function buildFilterWheelSuburstJSONData($rankedSelection)
+    public function buildComponentWheelSuburstJSONData($ypois, $rankedSelection)
     {
         $filerWheelData = (object) [
             "name" => "filterWheel",
@@ -14,6 +14,7 @@ class D3DataComponent extends Component
         ];
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if ($this->checkRankedGroup($ratedComponents)) {
+                // TODO Aufteilen auf Skalenniveaus so dass man das auch bei den ypois machen kann
                 array_push($filerWheelData->children, $this->buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData));
             }
         }
