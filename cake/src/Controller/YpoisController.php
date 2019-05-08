@@ -148,7 +148,7 @@ class YpoisController extends AppController
                 $file = new File($path, true);
                 $file->write(json_encode($chordDiagramMatrixData));
             */
-
+            debug($chordDiagramMatrixData->rankedComponents);
         }
 
         $this->set(compact('ypois','criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection', 'filerWheelJSONData', 'chordDiagramMatrixData'));

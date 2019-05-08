@@ -25,20 +25,22 @@ class D3DataComponent extends Component
     public function buildChordDiagramMatrixData($ypois, $rankedSelection)
     {
         // Adjacency Matrix for all pois and components
-        $adjacencyMatrix = [];
+        $matrixData = (object) [];
         $adjacencyMatrixIndex = [];
 
         $ypoisNames = $this->buildYpoisNamesArray($ypois);
         $allContainedCompponents = $this->getAllComponentNames($ypois);
-        $rankedSelectionComponents = $this->getOnlyRankedComponentNames($rankedSelection);
+        $rankedSelectionComponentsNames = $this->getOnlyRankedComponentNames($rankedSelection);
 
-        $selectionCleandComponents = $this->removeRankedComponents($allContainedCompponents, $rankedSelectionComponents);
+        $selectionCleandComponents = $this->removeRankedComponents($allContainedCompponents, $rankedSelectionComponentsNames);
 
-        $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponents, $selectionCleandComponents);
+        $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponentsNames, $selectionCleandComponents);
 
-        $adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelectionComponents, $selectionCleandComponents, $adjacencyMatrixIndex);
-        array_unshift($adjacencyMatrix, $adjacencyMatrixIndex);
-        return $adjacencyMatrix;
+        $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelectionComponentsNames, $selectionCleandComponents, $adjacencyMatrixIndex);
+        $matrixData->pois = $ypois->toArray();
+        $matrixData->rankedComponents = $this->buildRankedComponentsArray($rankedSelection);
+        // array_unshift($adjacencyMatrix, $adjacencyMatrixIndex);
+        return $matrixData;
     }
 
     protected function buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData)
@@ -175,6 +177,35 @@ class D3DataComponent extends Component
             }
         }
         return $allContainedCompponents;
+    }
+    protected function buildRankedComponentsArray($rankedSelection)
+    {
+        $rankedComponents = [];
+        foreach ($rankedSelection as $rating => $ratedComponents) {
+            if (!empty($ratedComponents->binaryComponents)) {
+                foreach ($ratedComponents->binaryComponents as $binaryComponent) {
+                    $binaryComponent->componentType = 'BC';
+                    array_push($rankedComponents, $binaryComponent);
+                }
+            }
+            if (!empty($ratedComponents->nominalAttributes)) {
+                foreach ($ratedComponents->nominalAttributes as $nominalAttribute) {
+                    $nominalAttribute->componentType = 'NC';
+                    $nominalAttribute->attributeType = 'NCATTR';
+                    $nominalAttribute->nominal_component->componentType = 'NC';
+                    array_push($rankedComponents, $nominalAttribute);
+                }
+            }
+            if (!empty($ratedComponents->ordinalAttributes)) {
+                foreach ($ratedComponents->ordinalAttributes as $ordinalAttribute) {
+                    $ordinalAttribute->componentType = 'OC';
+                    $ordinalAttribute->attributeType = 'OCATTR';
+                    $ordinalAttribute->ordinal_component->componentType = 'OC';
+                    array_push($rankedComponents, $ordinalAttribute);
+                }
+            }
+        }
+        return $rankedComponents;
     }
     protected function getOnlyRankedComponentNames($rankedSelection)
     {

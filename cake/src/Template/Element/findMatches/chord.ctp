@@ -7,8 +7,12 @@
   </div>
 </div> <!-- /.row -->
 <script type="text/javascript">
-    var matrix = <?= json_encode($chordDiagramMatrixData) ?>;
-    // var chordLables = matrix.shift();
+    var matrix = <?= json_encode($chordDiagramMatrixData->adjacencyMatrix) ?>;
+    var rankedComponents = <?= json_encode($chordDiagramMatrixData->rankedComponents) ?>;
+    console.log("sdf.lkjsnd.kj,fsndölkf.jsn döklfjnfdlskjhbn");
+    console.log(matrix);
+    console.log("Zwei Zwei Zwei Zwei");
+    console.log(rankedComponents);
 </script>
 <?= $this->Html->script('d3.stretched.chord.js') ?>
 <?= $this->Html->script('d3.layout.chord.sort.js') ?>
