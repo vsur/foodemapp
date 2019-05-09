@@ -255,9 +255,9 @@ class D3DataComponent extends Component
                     // Not a ranked Component
                     if(!in_array($nominal_attribute->id, $selcetedComponentsIds->nominalAttributesIds)) {
                         array_push($selectionCleandComponentsIds->nominalAttributesIds, $nominal_attribute->id);
-                        $nominalAttribute->componentType = 'NC';
-                        $nominalAttribute->attributeType = 'NCATTR';
-                        $nominalAttribute->nominal_component->componentType = 'NC';
+                        $nominal_attribute->componentType = 'NC';
+                        $nominal_attribute->attributeType = 'NCATTR';
+                        $nominal_attribute->nominal_component->componentType = 'NC';
                         array_push($selectionCleandComponents, $nominal_attribute);
                     }
                 }
@@ -268,9 +268,10 @@ class D3DataComponent extends Component
                     // Not a ranked Component
                     if(!in_array($ordinal_attribute->id, $selcetedComponentsIds->ordinalAttributesIds)) {
                         array_push($selcetedComponentsIds->ordinalAttributesIds, $ordinal_attribute->id);
-                        $ordinalAttribute->componentType = 'OC';
-                        $ordinalAttribute->attributeType = 'OCATTR';
-                        $ordinalAttribute->ordinal_component->componentType = 'OC';
+                        // debug($ordinal_attribute);
+                        $ordinal_attribute->componentType = 'OC';
+                        $ordinal_attribute->attributeType = 'OCATTR';
+                        $ordinal_attribute->ordinal_component->componentType = 'OC';
                         array_push($selectionCleandComponents, $ordinal_attribute);
                     }
                 }
