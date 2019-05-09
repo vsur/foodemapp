@@ -67,8 +67,6 @@
   matrix_original[anzahl_elemente_rechts][anzahl_elemente] = dummy_value
   matrix_original[anzahl_elemente][anzahl_elemente_rechts] = dummy_value
 
-  console.log(matrix_original)
-  console.log(header);
 
 
 
@@ -225,21 +223,19 @@
   	// console.log(respondents)
   	// Werte zusammenaddieren
   	// Durch 2, da sonst Ziel UND Ursprung gezählt werden
-  	console.log(respondents)
   	respondents = respondents / 2
-  	console.log(respondents)
   }
   else
   {
   	// DEBUG START
   	Names = header;
   	matrix = matrix_original
-  	console.log("amountOfElements: " + amountOfElements)
-  	console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
+  	// console.log("amountOfElements: " + amountOfElements)
+  	// console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
   	amountOfElements = anzahl_elemente + 1
   	// anzahl_elemente_rechts = amountOfElements - anzahl_elemente_links - 1
-  	console.log("amountOfElements: " + amountOfElements)
-  	console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
+  	// console.log("amountOfElements: " + amountOfElements)
+  	// console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
   	respondents = 0
 
   	for(let i = 0; i < anzahl_elemente_rechts; i++) {
@@ -249,11 +245,11 @@
   			respondents += matrix_original[i][j];
   		}
 
-  		console.log(counter)
+  		// console.log(counter)
   	}
 
-  	console.log("Respondents: " + respondents)
-  	console.log("Header: " + header.length)
+  	// console.log("Respondents: " + respondents)
+  	// console.log("Header: " + header.length)
   }
   // DEBUG END
 
@@ -276,9 +272,9 @@
   var emptyPerc = 0.6,
   	emptyStroke = Math.round(respondents * emptyPerc);
 
-  	console.log("emptyStroke: " + emptyStroke)
-  	console.log("respondents: " + respondents)
-  	console.log("emptyStroke/(respondents + emptyStroke): " + emptyStroke/(respondents + emptyStroke))
+  	// console.log("emptyStroke: " + emptyStroke)
+  	// console.log("respondents: " + respondents)
+  	// console.log("emptyStroke/(respondents + emptyStroke): " + emptyStroke/(respondents + emptyStroke))
 
   // Dummy Stroke, damit wird es gerade gerichtet
   matrix[anzahl_elemente_rechts][amountOfElements - 1] = matrix[amountOfElements - 1][anzahl_elemente_rechts] = emptyStroke
@@ -296,11 +292,11 @@
   // rotate_by = (2 * Math.PI) * (emptyStroke/(respondents + emptyStroke)) / 4;
   rotate_by = 1
 
-  console.log("offset before: " + offset)
-  console.log("anzahl_elemente_links: " + anzahl_elemente_links)
-  console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
-  console.log("difference: " + difference)
-  console.log("rotate: " + rotate_by)
+  // console.log("offset before: " + offset)
+  // console.log("anzahl_elemente_links: " + anzahl_elemente_links)
+  // console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
+  // console.log("difference: " + difference)
+  // console.log("rotate: " + rotate_by)
 
   // wie :)
   // offset *= (1 + rotate_by/2)
@@ -311,8 +307,8 @@
 
   // Sollte ca. sein:
   // offset = 0.672
-  console.log("offset after calc: " + offset_test)
-  console.log(offset_test + offset)
+  // console.log("offset after calc: " + offset_test)
+  // console.log(offset_test + offset)
 
 
 
@@ -426,7 +422,7 @@
   //Include the offset in de start and end angle to rotate the Chord diagram clockwise
   function startAngle(d) {
   	calc = d.startAngle + offset;
-  	console.log("d.startAngle: " + d.startAngle + "  - offset: " + offset);
+  	// console.log("d.startAngle: " + d.startAngle + "  - offset: " + offset);
   	return d.startAngle + offset; }
   function endAngle(d) { return d.endAngle + offset; }
 

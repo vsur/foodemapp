@@ -29,17 +29,17 @@ class D3DataComponent extends Component
         $adjacencyMatrixIndex = [];
 
         $ypoisNames = $this->buildYpoisNamesArray($ypois);
-        $allContainedCompponents = $this->getAllComponentNames($ypois);
+        $allContainedComponentsNames = $this->getAllComponentNames($ypois);
         $rankedSelectionComponentsNames = $this->getOnlyRankedComponentNames($rankedSelection);
+        $selectionCleandComponentsNames = $this->removeRankedComponentsNames($allContainedComponentsNames, $rankedSelectionComponentsNames);
 
-        $selectionCleandComponents = $this->removeRankedComponents($allContainedCompponents, $rankedSelectionComponentsNames);
+        $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponentsNames, $selectionCleandComponentsNames);
 
-        $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponentsNames, $selectionCleandComponents);
-
-        $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelectionComponentsNames, $selectionCleandComponents, $adjacencyMatrixIndex);
+        $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelectionComponentsNames, $selectionCleandComponentsNames, $adjacencyMatrixIndex);
         $matrixData->pois = $ypois->toArray();
         $matrixData->rankedComponents = $this->buildRankedComponentsArray($rankedSelection);
-        // array_unshift($adjacencyMatrix, $adjacencyMatrixIndex);
+        $matrixData->otherComponents =  $this->buildOtherComponentsArray($ypois, $rankedSelection);
+
         return $matrixData;
     }
 
@@ -140,43 +140,43 @@ class D3DataComponent extends Component
 
     protected function getAllComponentNames($ypois)
     {
-        $allComponentsFromYpois = [];
+        $allComponentsNamesFromYpois = [];
         foreach ($ypois as $ypoi) {
             foreach ($ypoi->binary_components as $binaryComponent) {
                 // Concat component and id to check if display names are present
                 $binaryComponentConcatenation = $this->buildBinaryComponentConcatenationName($binaryComponent);
-                if (!in_array($binaryComponentConcatenation, $allComponentsFromYpois)) {
-                    array_push($allComponentsFromYpois, $binaryComponentConcatenation);
+                if (!in_array($binaryComponentConcatenation, $allComponentsNamesFromYpois)) {
+                    array_push($allComponentsNamesFromYpois, $binaryComponentConcatenation);
                 }
             }
             foreach ($ypoi->nominal_attributes as $nominal_attribute) {
                 // Concat attribute and component and ids to check if display names are present
                 $nominalComponentAttributeConcatenation = $this->buildNominalComponentAttributeConcatenationName($nominal_attribute);
-                if (!in_array($nominalComponentAttributeConcatenation, $allComponentsFromYpois)) {
-                    array_push($allComponentsFromYpois, $nominalComponentAttributeConcatenation);
+                if (!in_array($nominalComponentAttributeConcatenation, $allComponentsNamesFromYpois)) {
+                    array_push($allComponentsNamesFromYpois, $nominalComponentAttributeConcatenation);
                 }
             }
             foreach ($ypoi->ordinal_attributes as $ordinal_attribute) {
                 // Concat attribute and component and check if display names are present
                 $ordinalComponentAttributeConcatenation = $this->buildOrdinalComponentAttributeConcatenationName($ordinal_attribute);
 
-                if (!in_array($ordinalComponentAttributeConcatenation, $allComponentsFromYpois)) {
-                    array_push($allComponentsFromYpois, $ordinalComponentAttributeConcatenation);
+                if (!in_array($ordinalComponentAttributeConcatenation, $allComponentsNamesFromYpois)) {
+                    array_push($allComponentsNamesFromYpois, $ordinalComponentAttributeConcatenation);
                 }
             }
         }
-        return $allComponentsFromYpois;
+        return $allComponentsNamesFromYpois;
     }
 
-    protected function removeRankedComponents($allContainedCompponents, $rankedSelectionComponents)
+    protected function removeRankedComponentsNames($allContainedComponentsNames, $rankedSelectionComponents)
     {
         foreach ($rankedSelectionComponents as $rankedSelectionComponent) {
-            if (in_array($rankedSelectionComponent, $allContainedCompponents)) {
-                $currentIndexToDelete = array_search($rankedSelectionComponent, $allContainedCompponents);
-                array_splice($allContainedCompponents, $currentIndexToDelete, 1);
+            if (in_array($rankedSelectionComponent, $allContainedComponentsNames)) {
+                $currentIndexToDelete = array_search($rankedSelectionComponent, $allContainedComponentsNames);
+                array_splice($allContainedComponentsNames, $currentIndexToDelete, 1);
             }
         }
-        return $allContainedCompponents;
+        return $allContainedComponentsNames;
     }
     protected function buildRankedComponentsArray($rankedSelection)
     {
@@ -207,6 +207,77 @@ class D3DataComponent extends Component
         }
         return $rankedComponents;
     }
+    protected function buildOtherComponentsArray($ypois, $rankedSelection)
+    {
+        $selectionCleandComponents = [];
+        $selectionCleandComponentsIds = (object) [];
+        $selectionCleandComponentsIds->binaryComponentsIds = [];
+        $selectionCleandComponentsIds->nominalAttributesIds = [];
+        $selectionCleandComponentsIds->ordinalAttributesIds = [];
+        $selcetedComponentsIds = (object) [];
+        $selcetedComponentsIds->binaryComponentsIds = [];
+        $selcetedComponentsIds->nominalAttributesIds = [];
+        $selcetedComponentsIds->ordinalAttributesIds = [];
+        // Get only components IDs from selection to devide selecetd and other components
+        foreach ($rankedSelection as $rating => $ratedComponents) {
+            if (!empty($ratedComponents->binaryComponents)) {
+                foreach ($ratedComponents->binaryComponents as $binaryComponent) {
+                    array_push($selcetedComponentsIds->binaryComponentsIds, $binaryComponent->id);
+                }
+            }
+            if (!empty($ratedComponents->nominalAttributes)) {
+                foreach ($ratedComponents->nominalAttributes as $nominalAttribute) {
+                    array_push($selcetedComponentsIds->nominalAttributesIds, $nominalAttribute->id);
+                }
+            }
+            if (!empty($ratedComponents->ordinalAttributes)) {
+                foreach ($ratedComponents->ordinalAttributes as $ordinalAttribute) {
+                    array_push($selcetedComponentsIds->ordinalAttributesIds, $ordinalAttribute->id);
+                }
+            }
+        }
+        // Iterate over ypois and extract only not selected components
+        foreach ($ypois as $ypoi) {
+            foreach ($ypoi->binary_components as $binaryComponent) {
+                // Not already pushed
+                if(!in_array($binaryComponent->id, $selectionCleandComponentsIds->binaryComponentsIds)) {
+                    // Not a ranked Component
+                    if(!in_array($binaryComponent->id, $selcetedComponentsIds->binaryComponentsIds)) {
+                        array_push($selectionCleandComponentsIds->binaryComponentsIds, $binaryComponent->id);
+                        $binaryComponent->componentType = 'BC';
+                        array_push($selectionCleandComponents, $binaryComponent);
+                    }
+                }
+            }
+            foreach ($ypoi->nominal_attributes as $nominal_attribute) {
+                // Not already pushed
+                if(!in_array($nominal_attribute->id, $selectionCleandComponentsIds->nominalAttributesIds)) {
+                    // Not a ranked Component
+                    if(!in_array($nominal_attribute->id, $selcetedComponentsIds->nominalAttributesIds)) {
+                        array_push($selectionCleandComponentsIds->nominalAttributesIds, $nominal_attribute->id);
+                        $nominalAttribute->componentType = 'NC';
+                        $nominalAttribute->attributeType = 'NCATTR';
+                        $nominalAttribute->nominal_component->componentType = 'NC';
+                        array_push($selectionCleandComponents, $nominal_attribute);
+                    }
+                }
+            }
+            foreach ($ypoi->ordinal_attributes as $ordinal_attribute) {
+                // Not already pushed
+                if(!in_array($ordinal_attribute->id, $selectionCleandComponentsIds->ordinalAttributesIds)) {
+                    // Not a ranked Component
+                    if(!in_array($ordinal_attribute->id, $selcetedComponentsIds->ordinalAttributesIds)) {
+                        array_push($selcetedComponentsIds->ordinalAttributesIds, $ordinal_attribute->id);
+                        $ordinalAttribute->componentType = 'OC';
+                        $ordinalAttribute->attributeType = 'OCATTR';
+                        $ordinalAttribute->ordinal_component->componentType = 'OC';
+                        array_push($selectionCleandComponents, $ordinal_attribute);
+                    }
+                }
+            }
+        }
+        return $selectionCleandComponents;
+    }
     protected function getOnlyRankedComponentNames($rankedSelection)
     {
         $rankedSelectionNames = [];
@@ -236,7 +307,7 @@ class D3DataComponent extends Component
         return $rankedSelectionNames;
     }
 
-    protected function createAdjacencyMatrix($ypois, $rankedSelectionComponents, $selectionCleandComponents, $adjacencyMatrixIndex)
+    protected function createAdjacencyMatrix($ypois, $rankedSelectionComponents, $selectionCleandComponentsNames, $adjacencyMatrixIndex)
     {
         $adjacencyMatrix = [];
         // Create adjacency column with blanks

@@ -131,7 +131,6 @@ class YpoisController extends AppController
 
         // Build filter wheel data for D3.js sunburst-viz
          $filerWheelJSONData = $this->D3Data->buildComponentWheelSuburstJSONData($ypois, $rankedSelection);
-         debug($filerWheelJSONData);
 
         // Build chord diagram matrix for D3.js
         $chordDiagramMatrixData = [];
@@ -148,7 +147,6 @@ class YpoisController extends AppController
                 $file = new File($path, true);
                 $file->write(json_encode($chordDiagramMatrixData));
             */
-            debug($chordDiagramMatrixData->rankedComponents);
         }
 
         $this->set(compact('ypois','criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection', 'filerWheelJSONData', 'chordDiagramMatrixData'));

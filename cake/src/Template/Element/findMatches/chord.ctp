@@ -9,10 +9,9 @@
 <script type="text/javascript">
     var matrix = <?= json_encode($chordDiagramMatrixData->adjacencyMatrix) ?>;
     var rankedComponents = <?= json_encode($chordDiagramMatrixData->rankedComponents) ?>;
-    console.log("sdf.lkjsnd.kj,fsndölkf.jsn döklfjnfdlskjhbn");
-    console.log(matrix);
-    console.log("Zwei Zwei Zwei Zwei");
-    console.log(rankedComponents);
+    var otherComponents = <?= json_encode($chordDiagramMatrixData->otherComponents) ?>;
+    console.log("Alle ChorddigramMatrixData");
+    console.log( <?= json_encode($chordDiagramMatrixData) ?>);
 </script>
 <?= $this->Html->script('d3.stretched.chord.js') ?>
 <?= $this->Html->script('d3.layout.chord.sort.js') ?>

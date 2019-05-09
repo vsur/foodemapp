@@ -41,7 +41,7 @@ var arc = d3.svg.arc()
     })
     .innerRadius(function(d) { return Math.sqrt(d.y); })
     .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
-console.log(filerWheelJSONData);
+
 var path = svg.datum(filerWheelJSONData).selectAll("path")
     .data(partition.nodes)
     .enter().append("path")
@@ -53,16 +53,12 @@ var path = svg.datum(filerWheelJSONData).selectAll("path")
         var componentNames = [];
         if(d.depth == 1) {
             componentNames = d.parent.children.map(function(child) {
-                    console.log("Depth 1");
-                    console.log(child.name);
                     return child.name;
                 });
             colorComponents.domain(componentNames);
             return d3.rgb(colorComponents(d.name)).toString();
         } else if (d.depth == 2) {
             componentNames = d.parent.children.map(function(child) {
-                console.log("Depth 2");
-                console.log(child.name);
                 return child.name;
             });
             colorComponents.domain(componentNames);
