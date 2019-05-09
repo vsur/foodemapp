@@ -139,13 +139,22 @@ class YpoisController extends AppController
             /*
              *  Create JSON Files, uncomment next part
 
-                debug(json_encode($chordDiagramMatrixData));
+                // debug(json_encode($chordDiagramMatrixData));
                 $now = Time::now();
                 $now->timezone = 'Europe/Paris';
                 debug($now->format('Y-m-d_H-i-s'));
                 $path = './' . $now->format('Y-m-d_H-i-s_') . 'JSON_Adjacency_Matrix.json';
                 $file = new File($path, true);
-                $file->write(json_encode($chordDiagramMatrixData));
+                $file->write(json_encode($chordDiagramMatrixData->adjacencyMatrix));
+                $path = './' . $now->format('Y-m-d_H-i-s_') . 'JSON_Pois.json';
+                $file = new File($path, true);
+                $file->write(json_encode($chordDiagramMatrixData->pois));
+                $path = './' . $now->format('Y-m-d_H-i-s_') . 'JSON_RankedComponents.json';
+                $file = new File($path, true);
+                $file->write(json_encode($chordDiagramMatrixData->rankedComponents));
+                $path = './' . $now->format('Y-m-d_H-i-s_') . 'JSON_OtherComponents.json';
+                $file = new File($path, true);
+                $file->write(json_encode($chordDiagramMatrixData->otherComponents));
             */
         }
 
