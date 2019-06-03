@@ -130,7 +130,7 @@ class YpoisController extends AppController
         }
 
         // Build filter wheel data for D3.js sunburst-viz
-         $filerWheelJSONData = $this->D3Data->buildComponentWheelSuburstJSONData($ypois, $rankedSelection);
+         $componentWheelJSONData = $this->D3Data->buildComponentWheelSuburstJSONData($ypois, $rankedSelection);
 
         // Build chord diagram matrix for D3.js
         $chordDiagramMatrixData = [];
@@ -158,7 +158,7 @@ class YpoisController extends AppController
             */
         }
 
-        $this->set(compact('ypois','criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection', 'filerWheelJSONData', 'chordDiagramMatrixData'));
+        $this->set(compact('ypois','criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection', 'componentWheelJSONData', 'chordDiagramMatrixData'));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)

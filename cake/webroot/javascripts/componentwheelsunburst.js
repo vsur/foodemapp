@@ -2,8 +2,8 @@
  * Script for Filter Wheel
  */
 
- d3.select("#compnentWheelContainer").style("display", "none");
-
+ d3.select("#compnentWheelContainer").style("display", "block");
+console.log(componentWheelJSONData);
 // Define Space
 var maxWidth = +d3.select("#wheelBlock").style("width").replace("px", "");
 var maxHeight= +d3.select("#wheelBlock").style("height").replace("px", "");
@@ -42,7 +42,7 @@ var arc = d3.svg.arc()
     .innerRadius(function(d) { return Math.sqrt(d.y); })
     .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 
-var path = svg.datum(filerWheelJSONData).selectAll("path")
+var path = svg.datum(componentWheelJSONData).selectAll("path")
     .data(partition.nodes)
     .enter().append("path")
     .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring

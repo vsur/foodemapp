@@ -33,7 +33,7 @@
 <div id="compnentWheelContainer">
     <div id="wheelBlock">
         <script type="text/javascript">
-            var filerWheelJSONData = <?= $filerWheelJSONData ?>;
+            var componentWheelJSONData = <?= $componentWheelJSONData ?>;
         </script>
         <?= $this->Html->script('componentwheelsunburst') ?>
     </div>

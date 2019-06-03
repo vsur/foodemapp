@@ -8,18 +8,18 @@ class D3DataComponent extends Component
 {
     public function buildComponentWheelSuburstJSONData($ypois, $rankedSelection)
     {
-        $filerWheelData = (object) [
-            "name" => "filterWheel",
+        $componentWheelData = (object) [
+            "name" => "componentWheel",
             "children" => []
         ];
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if ($this->checkRankedGroup($ratedComponents)) {
                 // TODO Aufteilen auf Skalenniveaus so dass man das auch bei den ypois machen kann
-                array_push($filerWheelData->children, $this->buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData));
+                array_push($componentWheelData->children, $this->buildSingleRankedSegmentData($rating, $ratedComponents, $componentWheelData));
             }
         }
-        $filerWheelJSONData = json_encode($filerWheelData);
-        return $filerWheelJSONData;
+        $componentWheelJSONData = json_encode($componentWheelData);
+        return $componentWheelJSONData;
     }
 
     public function buildChordDiagramMatrixData($ypois, $rankedSelection)
