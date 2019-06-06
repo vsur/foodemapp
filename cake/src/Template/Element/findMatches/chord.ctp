@@ -11,7 +11,8 @@
     var rankedComponents = <?= json_encode($chordDiagramMatrixData->rankedComponents) ?>;
     var otherComponents = <?= json_encode($chordDiagramMatrixData->otherComponents) ?>;
     console.log("Alle ChorddigramMatrixData");
-    console.log( <?= json_encode($chordDiagramMatrixData) ?>);
+    var chordDiagramMatrixData = <?= json_encode($chordDiagramMatrixData) ?>;
+    console.log(chordDiagramMatrixData);
 </script>
 <?= $this->Html->script('d3.stretched.chord.js') ?>
 <?= $this->Html->script('d3.layout.chord.sort.js') ?>
