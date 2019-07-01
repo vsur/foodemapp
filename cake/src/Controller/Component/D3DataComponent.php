@@ -14,7 +14,100 @@ class D3DataComponent extends Component
         ];
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if ($this->checkRankedGroup($ratedComponents)) {
-                // TODO Aufteilen auf Skalenniveaus so dass man das auch bei den ypois machen kann
+                // Segmentes are devided in 3 or 7 groups
+                // * choosen components
+                // * other components
+                // * 1–5 ranked groups
+                //
+                // What makes something like
+                //
+                // {
+                //   "name"  : "componentWheel",
+                //   "children" : [
+                //     {
+                //       "name"      :   "choosenComponents",
+                //       "children"  :   [
+                //         {
+                //           "name"      :   "rating5",
+                //           "children"  :   [
+                //             {
+                //               "name"      :   "binaryComponents",
+                //               "children"  :   [
+                //                 {
+                //                   "name": "Italian",
+                //                   "rating": "4",
+                //                   "type": "BC",
+                //                   "id": 64,
+                //                   "binaryComponentState": true,
+                //                   "value": 1
+                //                 },
+                //                 {
+                //                   "name": "Pizza",
+                //                   "rating": "5",
+                //                   "type": "BC",
+                //                   "id": 79,
+                //                   "binaryComponentState": true,
+                //                   "value":  1
+                //                 }
+                //               ]
+                //             },
+                //             {
+                //               "name"      :   "nominalComponents",
+                //               "children"  :   [
+                //                 {
+                //                   "attibuteDisplayName": "",
+                //                   "attributeId": "1",
+                //                   "attributeName": "casual",
+                //                   "componentId": 1,
+                //                   "componentName": "Attire",
+                //                   "name": "Attire casual",
+                //                   "rating": 5,
+                //                   "type": "NC",
+                //                   "value": 1
+                //                 },
+                //               ]
+                //             },
+                //             {
+                //               "name"      :   "ordinalComponents",
+                //               "children"  :   [
+                //                 {
+                //                   "attibuteDisplayName": "Auf der Straße",
+                //                   "attributeId": "5",
+                //                   "attributeName": "street",
+                //                   "componentDisplayName": "Parkmöglichkeiten",
+                //                   "componentId": 2,
+                //                   "componentName": "Attire",
+                //                   "name": "Parkmöglichkeiten Auf der Straße",
+                //                   "rating": 5,
+                //                   "type": "OC",
+                //                   "value": 1
+                //                 },
+                //               ]
+                //             },
+                //           ]
+                //         }
+                //       ]
+                //     },
+                //     {
+                //       "name"      :   "otherComponents",
+                //       "children"  :   []
+                //     },
+                //     {
+                //       "name"      :   "rating5",
+                //       "children"  :   []
+                //     },
+                //     {
+                //       "name"      :   "rating4",
+                //       "children"  :   []
+                //     },
+                //     {
+                //       "name"      :   "rating3",
+                //       "children"  :   []
+                //     }
+                //   ]
+                // }
+                //
+                
                 array_push($componentWheelData->children, $this->buildSingleRankedSegmentData($rating, $ratedComponents, $componentWheelData));
             }
         }

@@ -2,15 +2,20 @@
  * Script for Filter Wheel
  */
 
- d3.select("#compnentWheelContainer").style("display", "none");
+ // d3.select("#compnentWheelContainer").style("display", "none");
 console.log(componentWheelJSONData);
 // Define Space
+
 var maxWidth = +d3.select("#wheelBlock").style("width").replace("px", "");
 var maxHeight= +d3.select("#wheelBlock").style("height").replace("px", "");
 var margin = {top: 50, right: 10, bottom: 50, left: 10},
     width = maxWidth,
     height = maxHeight,
     radius = Math.min(width, height) / 2;
+
+
+    console.log("w" + width);
+    console.log("h" + height);
 
 // Addtional for labels
 var x = d3.scale.linear()
