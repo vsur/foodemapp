@@ -12,6 +12,8 @@ class D3DataComponent extends Component
             "name" => "componentWheel",
             "children" => []
         ];
+        array_push($componentWheelData->children, $this->buildChoosenSegmentFields());
+        debug($componentWheelData);
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if ($this->checkRankedGroup($ratedComponents)) {
                 // Segmentes are devided in 3 or 7 groups
@@ -107,8 +109,12 @@ class D3DataComponent extends Component
                 //   ]
                 // }
                 //
-                
+
+                // Build choosenComponents segment
+
                 array_push($componentWheelData->children, $this->buildSingleRankedSegmentData($rating, $ratedComponents, $componentWheelData));
+                debug( $this->buildSingleRankedSegmentData($rating, $ratedComponents, $componentWheelData));
+                // Paste choosenComponent also in single ranked segemnt
             }
         }
         $componentWheelJSONData = json_encode($componentWheelData);
@@ -134,6 +140,72 @@ class D3DataComponent extends Component
         $matrixData->otherComponents =  $this->buildOtherComponentsArray($ypois, $rankedSelection);
 
         return $matrixData;
+    }
+
+    protected function buildChoosenSegmentFields() {
+        $componentTypeFields = [
+            (object) [
+                "name" => "choosenComponents",
+                "children" => $this->buildrankedComponentFields()
+            ],
+            (object) [
+                "name" => "otherComponents",
+                "children" => $this->buildComponentTypeFields()
+            ],
+            $this->buildrankedComponentFields()
+        ];
+        return $componentTypeFields;
+
+    }
+
+    protected function buildrankedComponentFields() {
+        $rankedComponentFields = [
+            (object) [
+                "name" => "rating5",
+                "children" => $this->buildComponentTypeFields()
+            ],
+            (object) [
+                "name" => "rating4",
+                "children" => $this->buildComponentTypeFields()
+            ],
+            (object) [
+                "name" => "rating3",
+                "children" => $this->buildComponentTypeFields()
+            ],
+            (object) [
+                "name" => "rating2",
+                "children" => $this->buildComponentTypeFields()
+            ],
+            (object) [
+                "name" => "rating1",
+                "children" => $this->buildComponentTypeFields()
+            ],
+        ];
+
+        return $rankedComponentFields;
+    }
+
+    protected function buildComponentTypeFields() {
+        $binaryComponentFields = (object) [
+            "name" => "binaryComponents",
+            "children" => []
+        ];
+        $nominalComponentFields = (object) [
+            "name" => "nominalComponents",
+            "children" => []
+        ];
+        $ordinalComponentFields = (object) [
+            "name" => "ordinalComponents",
+            "children" => []
+        ];
+
+        $componentTypeFields = [];
+
+        array_push($componentTypeFields, $binaryComponentFields);
+        array_push($componentTypeFields, $nominalComponentFields);
+        array_push($componentTypeFields, $ordinalComponentFields);
+
+        return $componentTypeFields;
     }
 
     protected function buildSingleRankedSegmentData($rating, $ratedComponents, $filerWheelData)
