@@ -110,17 +110,17 @@ class D3DataComponent extends Component
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if ($this->checkRankedGroup($ratedComponents)) {
                 // Build choosenComponents segment
+                // and
+                // paste choosenComponent also in single ranked segment
                 $ratingNumber = substr($rating, -1);
                 $ratingIndexToPutComponetTo = 5 - $ratingNumber; // $componentWheelData->children[0][0]->children[$indexToPutComponetTo]
-                // debug($ratingIndexToPutComponetTo);
-                // debug( $componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]);
                 $componentWheelData = $this->buildSingleRankedSegmentData($rating, $ratedComponents, $componentWheelData, $ratingIndexToPutComponetTo);
-                // $componentTypeIndextoPutComponentTo = $this->componentTypeIndextoPutComponentTo();
-                // debug($ratedComponents);
-                // Paste choosenComponent also in single ranked segemnt
             }
         }
-        debug($componentWheelData);
+        // Build otherComponents segment
+        $otherComponents = $this->buildOtherComponentsArray($ypois, $rankedSelection);
+        $componentWheelData = $this->buildOtherSegmentData($componentWheelData, $otherComponents);
+
         $componentWheelJSONData = json_encode($componentWheelData);
         return $componentWheelJSONData;
     }
@@ -142,7 +142,6 @@ class D3DataComponent extends Component
         $matrixData->pois = $ypois->toArray();
         $matrixData->rankedComponents = $this->buildRankedComponentsArray($rankedSelection);
         $matrixData->otherComponents =  $this->buildOtherComponentsArray($ypois, $rankedSelection);
-
         return $matrixData;
     }
 
@@ -221,13 +220,7 @@ class D3DataComponent extends Component
         // Check and paste ranked binaryComponents as single child
         if (!empty($ratedComponents->binaryComponents)) {
             foreach ($ratedComponents->binaryComponents as $binaryComponent) {
-                $binaryChild = (object) [
-                    "name" => $binaryComponent->display_name != '' ? $binaryComponent->display_name : $binaryComponent->name,
-                    "rating" => $binaryComponent->rating,
-                    "type" => "BC",
-                    "id" => $binaryComponent->id,
-                    "binaryComponentState" => $binaryComponent->binaryComponentState
-                ];
+                $binaryChild = $this->buildTransformedComponentDataForSunburstChildItem("BC", $binaryComponent, $withRating = TRUE);
             }
             // Add in choosen group
             array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
@@ -237,22 +230,7 @@ class D3DataComponent extends Component
         // Check and paste ranked nominalAttributes as single child
         if (!empty($ratedComponents->nominalAttributes)) {
             foreach ($ratedComponents->nominalAttributes as $nominalAttribute) {
-                $aggregatedName = $nominalAttribute->nominal_component->display_name != '' ? $nominalAttribute->nominal_component->display_name : $nominalAttribute->nominal_component->name;
-                $aggregatedName .= ' ';
-                $aggregatedName .= $nominalAttribute->display_name != '' ? $nominalAttribute->display_name : $nominalAttribute->name;
-
-                $nominalChild = (object) [
-                    "name" => $aggregatedName,
-                    "componentName" => $nominalAttribute->nominal_component->name,
-                    "componentDisplayName" => $nominalAttribute->nominal_component->display_name,
-                    "attributeName" => $nominalAttribute->name,
-                    "attibuteDisplayName" => $nominalAttribute->display_name,
-                    "rating" => $nominalAttribute->rating,
-                    "type" => "NC",
-                    "componentId" => $nominalAttribute->nominal_component->id,
-                    "attributeId" => $nominalAttribute->id,
-                    "binaryComponentState" => $nominalAttribute->binaryComponentState
-                ];
+                $nominalChild = $this->buildTransformedComponentDataForSunburstChildItem("NC", $nominalAttribute, $withRating = TRUE);
             }
             // Add in choosen group
             array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
@@ -263,22 +241,7 @@ class D3DataComponent extends Component
         // Check and paste ranked ordinalAttributes as single child
         if (!empty($ratedComponents->ordinalAttributes)) {
             foreach ($ratedComponents->ordinalAttributes as $ordinalAttribute) {
-                $aggregatedName = $ordinalAttribute->ordinal_component->display_name != '' ? $ordinalAttribute->ordinal_component->display_name : $ordinalAttribute->ordinal_component->name;
-                $aggregatedName .= ' ';
-                $aggregatedName .= $ordinalAttribute->display_name != '' ? $ordinalAttribute->display_name : $ordinalAttribute->name;
-
-                $ordinalChild = (object) [
-                    "name" => $aggregatedName,
-                    "componentName" => $ordinalAttribute->ordinal_component->name,
-                    "componentDisplayName" => $ordinalAttribute->ordinal_component->display_name,
-                    "attributeName" => $ordinalAttribute->name,
-                    "attibuteDisplayName" => $ordinalAttribute->display_name,
-                    "rating" => $ordinalAttribute->rating,
-                    "type" => "OC",
-                    "componentId" => $ordinalAttribute->ordinal_component->id,
-                    "attributeId" => $ordinalAttribute->id,
-                    "binaryComponentState" => $ordinalAttribute->binaryComponentState
-                ];
+                $ordinalChild = $this->buildTransformedComponentDataForSunburstChildItem("OC", $ordinalAttribute, $withRating = TRUE);
             }
             // Add in choosen group
             array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
@@ -287,6 +250,25 @@ class D3DataComponent extends Component
         }
         return $componentWheelData;
     }
+    protected function buildOtherSegmentData($componentWheelData, $otherComponents)
+    {
+        foreach($otherComponents as $otherComponent) {
+            $componentChild = $this->buildTransformedComponentDataForSunburstChildItem($otherComponent->componentType, $otherComponent);
+            switch ($otherComponent->componentType) {
+                case 'BC':
+                    array_push($componentWheelData->children[0][1]->children[0]->children, $componentChild);
+                    break;
+                case 'NC':
+                    array_push($componentWheelData->children[0][1]->children[1]->children, $componentChild);
+                    break;
+                case 'OC':
+                    array_push($componentWheelData->children[0][1]->children[2]->children, $componentChild);
+                    break;
+            }
+        }
+        return $componentWheelData;
+    }
+
 
     protected function checkRankedGroup($ratedComponents)
     {
@@ -600,5 +582,72 @@ class D3DataComponent extends Component
             (empty($ordinalAttribute->display_name) ? $ordinalAttribute->name : $ordinalAttribute->display_name) .
             "_OC_C-ID_" . $ordinalAttribute->ordinal_component->id . "_OCATTR-ID_" . $ordinalAttribute->id;
         return $concatedOrdinalName;
+    }
+    protected function buildTransformedComponentDataForSunburstChildItem($componentType, $component, $withRating = NULL) {
+        $componentAsSunBurstChildItem = (object) [];
+
+        switch ($componentType) {
+            case "BC":
+                $binaryComponent = $component;
+                $componentAsSunBurstChildItem = (object) [
+                    "name" => $binaryComponent->display_name != '' ? $binaryComponent->display_name : $binaryComponent->name,
+                    // "rating" => $binaryComponent->rating,
+                    "type" => "BC",
+                    "id" => $binaryComponent->id,
+                ];
+                if(isset($binaryComponent->binaryComponentState)) {
+                    $componentAsSunBurstChildItem->binaryComponentState = $binaryComponent->binaryComponentState;
+                }
+                if($withRating) {
+                    $componentAsSunBurstChildItem->rating = $binaryComponent->rating;
+                }
+                break;
+            case "NC":
+                $nominalAttribute = $component;
+                $aggregatedName = $nominalAttribute->nominal_component->display_name != '' ? $nominalAttribute->nominal_component->display_name : $nominalAttribute->nominal_component->name;
+                $aggregatedName .= ' ';
+                $aggregatedName .= $nominalAttribute->display_name != '' ? $nominalAttribute->display_name : $nominalAttribute->name;
+
+                $componentAsSunBurstChildItem = (object) [
+                    "name" => $aggregatedName,
+                    "componentName" => $nominalAttribute->nominal_component->name,
+                    "componentDisplayName" => $nominalAttribute->nominal_component->display_name,
+                    "attributeName" => $nominalAttribute->name,
+                    "attibuteDisplayName" => $nominalAttribute->display_name,
+                    // "rating" => $nominalAttribute->rating,
+                    "type" => "NC",
+                    "componentId" => $nominalAttribute->nominal_component->id,
+                    "attributeId" => $nominalAttribute->id,
+                    "binaryComponentState" => $nominalAttribute->binaryComponentState
+                ];
+                if($withRating) {
+                    $componentAsSunBurstChildItem->rating = $nominalAttribute->rating;
+                }
+                break;
+            case "OC":
+                $ordinalAttribute = $component;
+                $aggregatedName = $ordinalAttribute->ordinal_component->display_name != '' ? $ordinalAttribute->ordinal_component->display_name : $ordinalAttribute->ordinal_component->name;
+                $aggregatedName .= ' ';
+                $aggregatedName .= $ordinalAttribute->display_name != '' ? $ordinalAttribute->display_name : $ordinalAttribute->name;
+
+                $componentAsSunBurstChildItem = (object) [
+                    "name" => $aggregatedName,
+                    "componentName" => $ordinalAttribute->ordinal_component->name,
+                    "componentDisplayName" => $ordinalAttribute->ordinal_component->display_name,
+                    "attributeName" => $ordinalAttribute->name,
+                    "attibuteDisplayName" => $ordinalAttribute->display_name,
+                    // "rating" => $ordinalAttribute->rating,
+                    "type" => "OC",
+                    "componentId" => $ordinalAttribute->ordinal_component->id,
+                    "attributeId" => $ordinalAttribute->id,
+                    "binaryComponentState" => $ordinalAttribute->binaryComponentState
+                ];
+                if($withRating) {
+                    $componentAsSunBurstChildItem->rating = $ordinalAttribute->rating;
+                }
+                break;
+        }
+
+        return $componentAsSunBurstChildItem;
     }
 }
