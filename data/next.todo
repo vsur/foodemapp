@@ -26,15 +26,16 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
       2. ✓ Dekstop
     3. ✓ Filter-Ansicht als zurück Button implementieren
     4. Filter/Wheel aka Komponenten Rad bauen
-        *   Erst mal die Hierchie aufbauen.
-        *   Also Alle, dann übrige, dann einzelne Gewichtungsgruppen like in <https://observablehq.com/@d3/zoomable-sunburst>
+        *   ✓ Erst mal die Hierchie aufbauen.
+        *   ✓ In den Ringen dann Unter-Ringe von Skalen: Binär, Nominal, Ordinal
+        *   ✓ Darin dann die Komponenten
+        *   Also Ranked, dann übrige, dann einzelne Gewichtungsgruppen like in <https://observablehq.com/@d3/zoomable-sunburst>
             * Problem, die Observablke Sachen sind notbeooks und nicht pure JS.
-            * Am besten mal schauen ob die V% von D3 tut was sie bisher soll.
-            * Und schauen wie man an non Observable Code von Zoomable Sunburst ran kommt. 
-        *   In den Ringen dann Unter-Ringe von Skalen: Binär, Nominal, Ordinal
-        *   Darin dann die Komponenten
+            * Am besten mal schauen ob die V5 von D3 tut was sie bisher soll.
+            * Und schauen wie man an non Observable Code von Zoomable Sunburst ran kommt.
+            * Hilfereich evtl andere Sunburst Tuts
 4. Chroddiagram
-    1. ✓ Erste Version von Stefan einbauen
+    1. ✓ Erste Version von Stephan einbauen
     2. Überareitung
     3. Erneuter Einbau
     4. Fine Tuning
