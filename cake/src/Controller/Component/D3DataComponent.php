@@ -160,7 +160,7 @@ class D3DataComponent extends Component
         foreach ($this->buildrankedComponentFields() as $rankedComponentFieldData) {
             array_push($componentTypeFields, $rankedComponentFieldData);
         }
-        
+
         return $componentTypeFields;
 
     }
@@ -195,7 +195,7 @@ class D3DataComponent extends Component
     protected function buildComponentTypeFields() {
         $binaryComponentFields = (object) [
             "name" => "binaryComponents",
-            "children" => [["richtig" => "binary"]]
+            "children" => []
         ];
         $nominalComponentFields = (object) [
             "name" => "nominalComponents",
@@ -229,7 +229,10 @@ class D3DataComponent extends Component
                     "binaryComponentState" => $binaryComponent->binaryComponentState
                 ];
             }
+            // Add in choosen group
             array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
+            // Add in single rating group
+            array_push($componentWheelData->children[0][$ratingIndexToPutComponetTo +2]->children[0]->children, $binaryChild);
         }
         // Check and paste ranked nominalAttributes as single child
         if (!empty($ratedComponents->nominalAttributes)) {
@@ -251,7 +254,10 @@ class D3DataComponent extends Component
                     "binaryComponentState" => $nominalAttribute->binaryComponentState
                 ];
             }
+            // Add in choosen group
             array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
+            // Add in single rating group
+            array_push($componentWheelData->children[0][$ratingIndexToPutComponetTo + 2]->children[1]->children, $nominalChild);
         }
 
         // Check and paste ranked ordinalAttributes as single child
@@ -274,7 +280,10 @@ class D3DataComponent extends Component
                     "binaryComponentState" => $ordinalAttribute->binaryComponentState
                 ];
             }
-            array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $ordinalChild);
+            // Add in choosen group
+            array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
+            // Add in single rating group
+            array_push($componentWheelData->children[0][$ratingIndexToPutComponetTo + 2]->children[2]->children, $ordinalChild);
         }
         return $componentWheelData;
     }
