@@ -105,7 +105,7 @@ class D3DataComponent extends Component
         //   ]
         // }
         //
-        array_push($componentWheelData->children, $this->buildChoosenSegmentFields());
+        $componentWheelData->children = array_merge($componentWheelData->children, $this->buildChoosenSegmentFields());
 
         foreach ($rankedSelection as $rating => $ratedComponents) {
             if ($this->checkRankedGroup($ratedComponents)) {
@@ -118,8 +118,8 @@ class D3DataComponent extends Component
             }
         }
         // Build otherComponents segment
-        $otherComponents = $this->buildOtherComponentsArray($ypois, $rankedSelection);
-        $componentWheelData = $this->buildOtherSegmentData($componentWheelData, $otherComponents);
+        // $otherComponents = $this->buildOtherComponentsArray($ypois, $rankedSelection);
+        // $componentWheelData = $this->buildOtherSegmentData($componentWheelData, $otherComponents);
 
         $componentWheelJSONData = json_encode($componentWheelData);
         return $componentWheelJSONData;
@@ -146,6 +146,7 @@ class D3DataComponent extends Component
     }
 
     protected function buildChoosenSegmentFields() {
+        debug($this->buildrankedComponentFields());
         $componentTypeFields = [
             (object) [
                 "name" => "choosenComponents",
@@ -223,9 +224,10 @@ class D3DataComponent extends Component
                 $binaryChild = $this->buildTransformedComponentDataForSunburstChildItem("BC", $binaryComponent, $withRating = TRUE);
             }
             // Add in choosen group
-            array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
+            // TODO Hier Feheler
+            array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
             // Add in single rating group
-            array_push($componentWheelData->children[0][$ratingIndexToPutComponetTo +2]->children[0]->children, $binaryChild);
+            array_push($componentWheelData->children[$ratingIndexToPutComponetTo +2]->children[0]->children, $binaryChild);
         }
         // Check and paste ranked nominalAttributes as single child
         if (!empty($ratedComponents->nominalAttributes)) {
@@ -233,9 +235,10 @@ class D3DataComponent extends Component
                 $nominalChild = $this->buildTransformedComponentDataForSunburstChildItem("NC", $nominalAttribute, $withRating = TRUE);
             }
             // Add in choosen group
-            array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
+            // // TODO Hier Feheler
+            array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
             // Add in single rating group
-            array_push($componentWheelData->children[0][$ratingIndexToPutComponetTo + 2]->children[1]->children, $nominalChild);
+            array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[1]->children, $nominalChild);
         }
 
         // Check and paste ranked ordinalAttributes as single child
@@ -244,9 +247,10 @@ class D3DataComponent extends Component
                 $ordinalChild = $this->buildTransformedComponentDataForSunburstChildItem("OC", $ordinalAttribute, $withRating = TRUE);
             }
             // Add in choosen group
-            array_push($componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
+            // // TODO Hier Feheler
+            array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
             // Add in single rating group
-            array_push($componentWheelData->children[0][$ratingIndexToPutComponetTo + 2]->children[2]->children, $ordinalChild);
+            array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[2]->children, $ordinalChild);
         }
         return $componentWheelData;
     }
