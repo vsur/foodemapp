@@ -119,6 +119,7 @@ function mouseover(d) {
     // console.log(d.rating);
     var percentage = (10 * d.rating ).toPrecision(3) + "%";
     var pathName = d.name;
+    console.log(pathName);
     if (d.depth == 3) {
         d3.select("#percentage")
             .text(percentage);

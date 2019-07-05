@@ -118,8 +118,8 @@ class D3DataComponent extends Component
             }
         }
         // Build otherComponents segment
-        // $otherComponents = $this->buildOtherComponentsArray($ypois, $rankedSelection);
-        // $componentWheelData = $this->buildOtherSegmentData($componentWheelData, $otherComponents);
+        $otherComponents = $this->buildOtherComponentsArray($ypois, $rankedSelection);
+        $componentWheelData = $this->buildOtherSegmentData($componentWheelData, $otherComponents);
 
         $componentWheelJSONData = json_encode($componentWheelData);
         return $componentWheelJSONData;
@@ -256,13 +256,13 @@ class D3DataComponent extends Component
             $componentChild = $this->buildTransformedComponentDataForSunburstChildItem($otherComponent->componentType, $otherComponent);
             switch ($otherComponent->componentType) {
                 case 'BC':
-                    array_push($componentWheelData->children[0][1]->children[0]->children, $componentChild);
+                    array_push($componentWheelData->children[1]->children[0]->children, $componentChild);
                     break;
                 case 'NC':
-                    array_push($componentWheelData->children[0][1]->children[1]->children, $componentChild);
+                    array_push($componentWheelData->children[1]->children[1]->children, $componentChild);
                     break;
                 case 'OC':
-                    array_push($componentWheelData->children[0][1]->children[2]->children, $componentChild);
+                    array_push($componentWheelData->children[1]->children[2]->children, $componentChild);
                     break;
             }
         }
