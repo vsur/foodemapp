@@ -146,7 +146,6 @@ class D3DataComponent extends Component
     }
 
     protected function buildChoosenSegmentFields() {
-        debug($this->buildrankedComponentFields());
         $componentTypeFields = [
             (object) [
                 "name" => "choosenComponents",
@@ -224,7 +223,6 @@ class D3DataComponent extends Component
                 $binaryChild = $this->buildTransformedComponentDataForSunburstChildItem("BC", $binaryComponent, $withRating = TRUE);
             }
             // Add in choosen group
-            // TODO Hier Feheler
             array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
             // Add in single rating group
             array_push($componentWheelData->children[$ratingIndexToPutComponetTo +2]->children[0]->children, $binaryChild);
@@ -235,7 +233,6 @@ class D3DataComponent extends Component
                 $nominalChild = $this->buildTransformedComponentDataForSunburstChildItem("NC", $nominalAttribute, $withRating = TRUE);
             }
             // Add in choosen group
-            // // TODO Hier Feheler
             array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
             // Add in single rating group
             array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[1]->children, $nominalChild);
@@ -247,7 +244,6 @@ class D3DataComponent extends Component
                 $ordinalChild = $this->buildTransformedComponentDataForSunburstChildItem("OC", $ordinalAttribute, $withRating = TRUE);
             }
             // Add in choosen group
-            // // TODO Hier Feheler
             array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
             // Add in single rating group
             array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[2]->children, $ordinalChild);
