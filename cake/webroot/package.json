@@ -20,5 +20,7 @@
     "grunt-sass": "^2.1.0",
     "jshint-stylish": "^2.2.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "d3": "^5.9.7"
+  }
 }
