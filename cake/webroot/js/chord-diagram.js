@@ -234,14 +234,14 @@
  ////////////////////////////////////////////////////////////
 
  var chords = wrapper.selectAll("path.chord")
-    .datum(chord)
-    .append("path")
- 	.attr("class", "chord")
- 	.style("stroke", "none")
- 	.style("fill", "#C4C4C4")
- 	.style("opacity", function(d) { return (Names[d.source.index] === "" ? dummyOpacity : opacityDefault); }) //Make the dummy strokes have a zero opacity (invisible)
- 	.style("pointer-events", function(d,i) { return (Names[d.source.index] === "" ? "none" : "auto"); }) //Remove pointer events from dummy strokes
- 	.attr("d", path);
+     .data(chord.chords)
+     .enter().append("path")
+     .attr("class", "chord")
+     .style("stroke", "none")
+     .style("fill", "#C4C4C4")
+     .style("opacity", function(d) { return (Names[d.source.index] === "" ? dummyOpacity : opacityDefault); }) //Make the dummy strokes have a zero opacity (invisible)
+     .style("pointer-events", function(d,i) { return (Names[d.source.index] === "" ? "none" : "auto"); }) //Remove pointer events from dummy strokes
+     .attr("d", path);
 
  ////////////////////////////////////////////////////////////
  ///////////////////////// Tooltip //////////////////////////
