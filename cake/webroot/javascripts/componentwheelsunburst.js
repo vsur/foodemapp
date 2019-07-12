@@ -14,17 +14,20 @@ var margin = {top: 50, right: 10, bottom: 50, left: 10},
     radius = Math.min(width, height) / 2;
 
 // const standardColor = d3.scaleOrdinal.range(["#A07A19", "#AC30C0", "#EB9A72", "#BA86F5", "#EA22A8"]);
-const color = d3.scaleOrdinal(d3.schemeCategory20b);
+const urCdBaseColors =  d3.scaleOrdinal().range(["#7d003c", "#8e8e8d"]);
+const urTriadeColors = d3.scaleOrdinal().range(["#0AB0C9", "#07414A", "#7D003C", "#8A7C0E", "#C9146C"]);
+const urCdColorPalette = d3.scaleOrdinal().range(["#ecbc00", "#cdd30f", "#aea700", "#00556a", "#ec6200", "#bf002a", "#9c004b", "#009b77", "#008993", "#4fb800", "#0087b2"]);
 
     console.log("w" + width);
     console.log("h" + height);
+    console.log("r" + radius);
 
 // Addtional for labels
-var x = d3.scaleLinear()
-    .range([0, 2 * Math.PI]);
-
-var y = d3.scaleLinear()
-    .range([0, radius]);
+// var x = d3.scaleLinear()
+//     .range([0, 2 * Math.PI]);
+//
+// var y = d3.scaleLinear()
+//     .range([0, radius]);
 
 var svg = d3.select("#wheelBlock").append("svg")
     .attr("width", width)
@@ -42,21 +45,29 @@ var partition = d3.partition()
     .size([2 * Math.PI, radius]);
 
 var root = d3.hierarchy(componentWheelJSONData)
-    .sum(function (d) { return d.size});
+    // .sum(function (d) { return 1});
+    .count();
 
 partition(root);
 
 var arc = d3.arc()
+    .startAngle(function (d) { return d.x0 })
+    .endAngle(function (d) { return d.x1 })
+    .innerRadius(function (d) { return d.y0 })
+    .outerRadius(function (d) { return d.y1 });
+    /*
     .startAngle(function(d) { return d.x0; })
     .endAngle(function(d) {
         // return d.x + d.dx;
-        return d.x1;
-    })
+        return d.x1 + d.x0;
+    });
+
     .innerRadius(function(d) { return Math.sqrt(d.y0); })
     .outerRadius(function(d) {
         // return Math.sqrt(d.y + d.dy);
-        return Math.sqrt(d.y1);
+        return Math.sqrt(d.y1 +d.y0);
     });
+    */
 
 var path = svg.selectAll("path")
     .data(root.descendants())
@@ -64,7 +75,9 @@ var path = svg.selectAll("path")
     .attr("display", function (d) { return d.depth ? null : "none"; })
     .attr("d", arc)
     .style('stroke', '#fff')
-    .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });
+    .style("fill", function (d) {
+        return urCdBaseColors((d.children ? d : d.parent).data.name);
+    });
     // .style("fill-rule", "evenodd")
     // .each(stash)
     // .each(stash)
@@ -112,7 +125,7 @@ function computeTextRotation(d) {
     return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
 }
 */
-d3.select(self.frameElement).style("height", height + "px");
+// d3.select(self.frameElement).style("height", height + "px");
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
 function mouseover(d) {
