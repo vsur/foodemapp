@@ -6,8 +6,6 @@
 console.log(componentWheelJSONData);
 // Define Space
 
-console.log(d3.selectAll("p"));
-
 var maxWidth = +d3.select("#wheelBlock").style("width").replace("px", "");
 var maxHeight= +d3.select("#wheelBlock").style("height").replace("px", "");
 var margin = {top: 50, right: 10, bottom: 50, left: 10},
@@ -16,7 +14,7 @@ var margin = {top: 50, right: 10, bottom: 50, left: 10},
     radius = Math.min(width, height) / 2;
 
 // const standardColor = d3.scaleOrdinal.range(["#A07A19", "#AC30C0", "#EB9A72", "#BA86F5", "#EA22A8"]);
-const standardColor =  d3.color("steelblue");
+const color = d3.scaleOrdinal(d3.schemeCategory20b);
 
     console.log("w" + width);
     console.log("h" + height);
@@ -62,31 +60,17 @@ var arc = d3.arc()
 
 var path = svg.selectAll("path")
     .data(root.descendants())
-    .enter().append("path")
-    .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
+    .enter().append('path')
+    .attr("display", function (d) { return d.depth ? null : "none"; })
     .attr("d", arc)
-    .style("stroke", "#fff")
-    .style("fill", function(d) {
-        var componentNames = [];
-        if(d.depth == 1) {
-            componentNames = d.parent.children.map(function(child) {
-                    return child.name;
-                });
-            standardColor.domain(componentNames);
-            return d3.rgb(standardColor(d.name)).toString();
-        } else if (d.depth == 2) {
-            componentNames = d.parent.children.map(function(child) {
-                return child.name;
-            });
-            standardColor.domain(componentNames);
-            return d3.rgb(standardColor(d.name)).brighter(1.5).toString();
-        }
-    })
-    .style("fill-rule", "evenodd")
+    .style('stroke', '#fff')
+    .style("fill", function (d) { return color((d.children ? d : d.parent).data.name); });
+    // .style("fill-rule", "evenodd")
     // .each(stash)
     // .each(stash)
-    .on("mouseover", mouseover)
-    .on("mouseleave", mouseleave);
+
+    // .on("mouseover", mouseover)
+    // .on("mouseleave", mouseleave);
 
 /*
 var text = d3.selectAll("path").append("text")
