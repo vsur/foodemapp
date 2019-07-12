@@ -47,7 +47,9 @@ $cakeDescription = 'Food_M_App';
     <?= $this->Html->script('awesomplete.min.js') ?>
     <?= $this->Html->script('jquery-2.1.4.min.js') ?>
     <!-- <?= $this->Html->script('d3.min.js') ?> -->
+
     <?= $this->Html->script('d3.v5.js') ?>
+
     <?= $this->Html->script('http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js') ?>
     <?= $this->Html->script('leaflet-providers.js') ?>
 
