@@ -164,14 +164,14 @@
  /////////////////// D3 Initialisierung /////////////////////
  ////////////////////////////////////////////////////////////
 
- var chord = d3.layout.chord()
- 	.padding(padding_between_arcs)
+ var chord = d3.chord()
+ 	.padAngle(padding_between_arcs)
  	// .padding(1)
  	// .sortSubgroups(d3.descending) //sort the chords inside an arc from high to low
- 	.sortChords(d3.descending) //which chord should be shown on top when chords cross. Now the biggest chord is at the bottom
- 	.matrix(matrix);
+ 	.sortSubgroups(d3.descending) //which chord should be shown on top when chords cross. Now the biggest chord is at the bottom
+ 	(matrix);
 
- var arc = d3.svg.arc()
+ var arc = d3.arc()
  	.innerRadius(innerRadius)
  	.outerRadius(outerRadius)
  	.startAngle(startAngle) //startAngle and endAngle now include the offset in degrees
@@ -183,7 +183,7 @@
  	.endAngle(endAngle)
  	.pullOutSize(pullOutSize);
 
- var fill = d3.scale.ordinal()
+ var fill = d3.scaleOrdinal()
      .domain(d3.range(Names.length))
      .range(["#C4C4C4","#C4C4C4","#C4C4C4","#E0E0E0","#EDC951","#CC333F","#00A0B0","#E0E0E0"]);
 
@@ -234,8 +234,8 @@
  ////////////////////////////////////////////////////////////
 
  var chords = wrapper.selectAll("path.chord")
- 	.data(chord.chords)
- 	.enter().append("path")
+    .datum(chord)
+    .append("path")
  	.attr("class", "chord")
  	.style("stroke", "none")
  	.style("fill", "#C4C4C4")
@@ -301,13 +301,13 @@
  	{sIndex: otherAttributesStart, eIndex: otherAttributesEnd, title: 'Other Components', color: '#0000FF'}
  ];
 
- var cD = chord.groups();
+ var cD = chord.groups;
 
  // Draw arcs
  for(var i=0;i<groups.length;i++) {
  	var __g = groups[i];
 
- 	var arc1 = d3.svg.arc()
+ 	var arc1 = d3.arc()
  		.innerRadius(innerRadius * 1.1)
  		.outerRadius(outerRadius * 1.11)
  		.startAngle(
