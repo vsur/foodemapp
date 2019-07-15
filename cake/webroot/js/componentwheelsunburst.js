@@ -2,7 +2,7 @@
  * Script for Filter Wheel
  */
 
- d3.select("#compnentWheelContainer").style("display", "none");
+ // d3.select("#compnentWheelContainer").style("display", "none");
 console.log(componentWheelJSONData);
 // Define Space
 
@@ -15,6 +15,11 @@ var margin = {top: 50, right: 10, bottom: 50, left: 10},
 
 // const standardColor = d3.scaleOrdinal.range(["#A07A19", "#AC30C0", "#EB9A72", "#BA86F5", "#EA22A8"]);
 const urCdBaseColors =  d3.scaleOrdinal().range(["#7d003c", "#8e8e8d"]);
+
+const fMappYellowStar =  d3.scaleOrdinal()
+                            .range(["#ffc700", "ffd233", "#ffdd66", "ffe999", "fff4cc"])
+                            .domain(["rating5", "rating4", "rating3", "rating2", "rating1"]);
+
 const urTriadeColors = d3.scaleOrdinal().range(["#0AB0C9", "#07414A", "#7D003C", "#8A7C0E", "#C9146C"]);
 const urCdColorPalette = d3.scaleOrdinal().range(["#ecbc00", "#cdd30f", "#aea700", "#00556a", "#ec6200", "#bf002a", "#9c004b", "#009b77", "#008993", "#4fb800", "#0087b2"]);
 
@@ -68,22 +73,43 @@ var arc = d3.arc()
         return Math.sqrt(d.y1 +d.y0);
     });
     */
-
 var path = svg.selectAll("path")
     .data(root.descendants())
     .enter().append('path')
-    .attr("display", function (d) { return d.depth ? null : "none"; })
+    .attr("display", function (d) { return d.depth ? null : "inline"; }) // Inner circle visible?
     .attr("d", arc)
     .style('stroke', '#fff')
     .style("fill", function (d) {
-        return urCdBaseColors((d.children ? d : d.parent).data.name);
-    });
-    // .style("fill-rule", "evenodd")
+
+        switch (d.depth) {
+            case 0:
+                return urCdBaseColors(d.data.name);
+                break;
+            case 1:
+                if(d.data.name == "choosenComponents") {
+                    urCdBaseColors.domain(d.data.name);
+                    return d3.rgb(urCdBaseColors(d.data.name)).brighter(1.5);
+                } else if(d.data.name == "otherComponents") {
+                    urCdBaseColors.domain(["choosenComponents", d.data.name]);
+                    return urCdBaseColors(d.data.name);
+                } else {
+                    return fMappYellowStar(d.data.name);
+                }
+                console.log(urCdBaseColors(0));
+                break;
+            default:
+                console.log("\ndepth: " + d.depth);
+                console.log((d.children ? d : d.parent).data.name);
+                return "black";
+        }
+    })
+    .style("fill-rule", "evenodd")
     // .each(stash)
     // .each(stash)
 
-    // .on("mouseover", mouseover)
-    // .on("mouseleave", mouseleave);
+    .on("mouseover", mouseover)
+    .on("mouseleave", mouseleave);
+    ;
 
 /*
 var text = d3.selectAll("path").append("text")
@@ -157,7 +183,7 @@ function mouseover(d) {
         .style("visibility", "");
 
     // Fade all the segments.
-    d3.selectAll("path")
+    d3.selectAll("#wheelBlock path")
     // .transition()
     // .duration(500)
         .style("opacity", 0.3);
