@@ -234,7 +234,7 @@
  ////////////////////////////////////////////////////////////
 
  var chords = wrapper.selectAll("path.chord")
-     .data(chord.chords)
+     .data(chord)
      .enter().append("path")
      .attr("class", "chord")
      .style("stroke", "none")
@@ -242,7 +242,7 @@
      .style("opacity", function(d) { return (Names[d.source.index] === "" ? dummyOpacity : opacityDefault); }) //Make the dummy strokes have a zero opacity (invisible)
      .style("pointer-events", function(d,i) { return (Names[d.source.index] === "" ? "none" : "auto"); }) //Remove pointer events from dummy strokes
      .attr("d", path);
-
+     
  ////////////////////////////////////////////////////////////
  ///////////////////////// Tooltip //////////////////////////
  ////////////////////////////////////////////////////////////
