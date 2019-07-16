@@ -17,8 +17,13 @@ var margin = {top: 50, right: 10, bottom: 50, left: 10},
 const urCdBaseColors =  d3.scaleOrdinal().range(["#7d003c", "#8e8e8d"]);
 
 const fMappYellowStar =  d3.scaleOrdinal()
-                            .range(["#ffc700", "ffd233", "#ffdd66", "ffe999", "fff4cc"])
+                            .range(["#ffc700", "#ffd233", "#ffdd66", "ffe999", "fff4cc"])
                             .domain(["rating5", "rating4", "rating3", "rating2", "rating1"]);
+
+const componentTypeColors =  d3.scaleOrdinal()
+                            .range(["#065180", "#33B1FF", "#1486CC"])
+                            .domain(["binaryComponents", "nominalComponents", "ordinalComponents"]);
+
 
 const urTriadeColors = d3.scaleOrdinal().range(["#0AB0C9", "#07414A", "#7D003C", "#8A7C0E", "#C9146C"]);
 const urCdColorPalette = d3.scaleOrdinal().range(["#ecbc00", "#cdd30f", "#aea700", "#00556a", "#ec6200", "#bf002a", "#9c004b", "#009b77", "#008993", "#4fb800", "#0087b2"]);
@@ -95,12 +100,30 @@ var path = svg.selectAll("path")
                 } else {
                     return fMappYellowStar(d.data.name);
                 }
-                console.log(urCdBaseColors(0));
+                break;
+            case 2:
+                if(d.parent.data.name == "choosenComponents") {
+                    return fMappYellowStar(d.data.name);
+                } else {
+                    return componentTypeColors(d.data.name);
+                }
+                break;
+            case 3:
+                if(d.parent.parent.data.name == "choosenComponents") {
+                    return componentTypeColors(d.data.name);
+                } else {
+                    let lighterComponentColor = d3.hsl(componentTypeColors(d.data.name));
+                    lighterComponentColor.l += 0.2;
+                    return lighterComponentColor;
+                }
+                break;
+            case 4:
+                let lighterComponentColor = d3.hsl(componentTypeColors(d.data.name));
+                lighterComponentColor.l += 0.2;
+                return lighterComponentColor;
                 break;
             default:
-                console.log("\ndepth: " + d.depth);
-                console.log((d.children ? d : d.parent).data.name);
-                return "black";
+                return urCdColorPalette(d.data.name);
         }
     })
     .style("fill-rule", "evenodd")
@@ -157,8 +180,8 @@ function computeTextRotation(d) {
 function mouseover(d) {
     // console.log(d.rating);
     var percentage = (10 * d.rating ).toPrecision(3) + "%";
-    var pathName = d.name;
-    console.log(pathName);
+    var pathName = d.data.name;
+    console.log(d);
     if (d.depth == 3) {
         d3.select("#percentage")
             .text(percentage);
