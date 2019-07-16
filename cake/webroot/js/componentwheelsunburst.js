@@ -178,38 +178,15 @@ function computeTextRotation(d) {
 
 // Fade all but the current sequence, and show it in the breadcrumb trail.
 function mouseover(d) {
-    // console.log(d.rating);
-    var percentage = (10 * d.rating ).toPrecision(3) + "%";
-    var pathName = d.data.name;
-    console.log(d);
-    if (d.depth == 3) {
-        d3.select("#percentage")
-            .text(percentage);
-
-        d3.select("#nameAttribute")
-            .text(pathName);
-
-    } else if (d.depth == 2) {
-        d3.select("#percentage")
-            .text(pathName);
-
-        d3.select("#nameAttribute")
-            .text(d.parent.name);} else if (d.depth == 1) {
-        d3.select("#percentage")
-            .text("");
-
-        d3.select("#nameAttribute")
-            .text(pathName);
-    }
-
-    d3.select("#explanation")
-        .style("visibility", "");
+    let pathName = d.data.name;
+    let infoString = setInfoString(d);
+    d3.select("#coponentTextInfo span").style("visibility", "").html(infoString);
 
     // Fade all the segments.
     d3.selectAll("#wheelBlock path")
     // .transition()
-    // .duration(500)
-        .style("opacity", 0.3);
+    // .duration(250)
+    .style("opacity", 0.3);
 
     // Then highlight only those that are an ancestor of the current segment.
     d3.select(this)
@@ -228,6 +205,22 @@ function mouseleave(d) {
     // .duration(1000)
         .style("opacity", 1);
 
-    d3.select("#explanation")
+    d3.select("#coponentTextInfo span")
         .style("visibility", "hidden");
+}
+
+function setInfoString(d) {
+    let infoString = "";
+    let isCategory = false;
+    let namesTranslationNeeded = Object.keys(sunburstTranslations);
+    if (namesTranslationNeeded.includes( d.data.name)) {
+        isCategory = true;
+    }
+    if (isCategory) {
+        infoString = sunburstTranslations[d.data.name];
+    } else {
+        let componentPrefix = sunburstTranslations[d.parent.data.name] +  ": "
+        infoString = componentPrefix + "<u>" + d.data.name + "</u>";
+    }
+    return infoString;
 }

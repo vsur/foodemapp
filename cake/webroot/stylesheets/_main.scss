@@ -188,6 +188,28 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
     height: 50%;
     transform: translate(50%, 50%);
 }
+#componentTextContainer {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 25%;
+    bottom: 0%;
+}
+#coponentTextInfo {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    position: absolute;
+    width: 70%;
+    height: 50%;
+    font-size: 2em;
+    color: white;
+}
+
 #listView .panel-heading {
   cursor: pointer;
 }

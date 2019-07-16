@@ -35,7 +35,13 @@
         <script type="text/javascript">
             var componentWheelJSONData = <?= $componentWheelJSONData ?>;
         </script>
+        <?= $this->Html->script('sunburst-translations') ?>
         <?= $this->Html->script('componentwheelsunburst') ?>
+    </div>
+    <div id="componentTextContainer">
+        <div id="coponentTextInfo">
+            <span></span>
+        </div>
     </div>
 </div>
 
