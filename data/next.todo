@@ -29,11 +29,13 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
         *   ✓ Erst mal die Hierchie aufbauen.
         *   ✓ In den Ringen dann Unter-Ringe von Skalen: Binär, Nominal, Ordinal
         *   ✓ Darin dann die Komponenten
-        *   Also Ranked, dann übrige, dann einzelne Gewichtungsgruppen like in <https://observablehq.com/@d3/zoomable-sunburst>
-            * Problem, die Observablke Sachen sind notbeooks und nicht pure JS.
-            * Am besten mal schauen ob die V5 von D3 tut was sie bisher soll.
-            * Und schauen wie man an non Observable Code von Zoomable Sunburst ran kommt.
-            * Hilfereich evtl andere Sunburst Tuts
+        *   ✓ Also Ranked, dann übrige, dann einzelne Gewichtungsgruppen like in <https://observablehq.com/@d3/zoomable-sunburst>
+            * ✓ Problem, die Observablke Sachen sind notbeooks und nicht pure JS.
+            * ✓ Am besten mal schauen ob die V5 von D3 tut was sie bisher soll.
+            * ✓ Und schauen wie man an non Observable Code von Zoomable Sunburst ran kommt.
+            * ✓ Hilfereich evtl andere Sunburst Tuts
+        * Dynmaisches Zeichnen einbauen
+        * Zoom später einbauen
 4. Chroddiagram
     1. ✓ Erste Version von Stephan einbauen
     2. Überareitung
