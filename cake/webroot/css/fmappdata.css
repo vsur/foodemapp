@@ -6866,7 +6866,6 @@ button#filter, button#componentWheel {
   background: rgba(125, 0, 60, 0.75); }
 
 #wheelBlock {
-  background: #ff7dbb;
   position: absolute;
   width: 50%;
   height: 50%;
@@ -7002,3 +7001,9 @@ text {
 
 path.chord {
   fill-opacity: .80; }
+
+/*
+ * Styling for sunburst diagram
+ */
+.node text {
+  font-size: 12px; }
