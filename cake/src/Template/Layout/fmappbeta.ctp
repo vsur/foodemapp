@@ -35,7 +35,7 @@ $cakeDescription = 'Food_M_App';
     <!-- Bootstrap core CSS -->
     <?= $this->Html->css('fmappdata.css') ?>
     <!-- Leaflet CSS -->
-    <?= $this->Html->css('http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css') ?>
+    <?= $this->Html->css('leaflet.css') ?>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -46,11 +46,10 @@ $cakeDescription = 'Food_M_App';
     <!-- Some JS at the end of the document but awesomplete and d3-->
     <?= $this->Html->script('awesomplete.min.js') ?>
     <?= $this->Html->script('jquery-2.1.4.min.js') ?>
-    <!-- <?= $this->Html->script('d3.min.js') ?> -->
 
     <?= $this->Html->script('d3.v5.js') ?>
 
-    <?= $this->Html->script('http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js') ?>
+    <?= $this->Html->script('leaflet.1.5.1') ?>
     <?= $this->Html->script('leaflet-providers.js') ?>
 
     <?= $this->fetch('meta') ?>

@@ -66,6 +66,10 @@ module.exports = function(grunt) {
 			chord: {
 				src: ['javascripts/chord-diagram.js'],
 				dest: 'js/chord-diagram.js',
+			},
+			leafletMap: {
+				src: ['javascripts/leaflet-map.js'],
+				dest: 'js/leaflet-map.js',
 			}
 
 		},
@@ -75,7 +79,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['javascripts/*.js'],
-				tasks: ['jshint', 'concat:noBootBeta', 'concat:componentWheel', 'concat:chord'],
+				tasks: ['jshint', 'concat:noBootBeta', 'concat:componentWheel', 'concat:chord', 'concat:leafletMap'],
 				options: {
 					spawn: false
 				},

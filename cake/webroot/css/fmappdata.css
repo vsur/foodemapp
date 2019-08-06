@@ -7007,3 +7007,10 @@ path.chord {
  */
 .node text {
   font-size: 12px; }
+
+/***************************
+ * Put here stuff for Map  *
+ ***************************/
+#poisMap {
+  position: relative;
+  width: 100%; }

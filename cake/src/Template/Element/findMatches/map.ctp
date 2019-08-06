@@ -1,11 +1,13 @@
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <h1>Mockup-Darstellung</h1>
-        <h2>Kartenansicht als Mobile Variante</h2>
-        <p>Auf einer Karte werden die einzelnen Orte mit den gewählten Kategorien visualisiert, ggf. wird agregiert.</p>
-        <?= $this->Html->image('map-mockup.png', ['alt' => 'Mock-up für die Kartendarstellung der App', 'style' => 'width: 100%']); ?>
+    <div class="col-md-12">
+        <h1>Ihre Egebnisse auf einer Karte</h1>
+         <div id="ypoisMap"></div>
     </div>
 </div>
+<script type="text/javascript">
+    var ypois = <?= json_encode($ypois) ?>;
+</script>
+<?= $this->Html->script('leaflet-map.js') ?>
 <div class="row">
     <div class="col-md-12">
         <table class="table table-hover">
