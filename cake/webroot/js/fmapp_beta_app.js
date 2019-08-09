@@ -141,6 +141,7 @@ var fmApp = {
                 nominalAttributeToPaste += '<input type="radio" id="nominalAttribute' + fmApp.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" ' + (nominalAttribute.id == attributeToSet ? 'checked' : '') + '/>';
                 nominalAttributeToPaste += '<label for="nominalAttribute' + fmApp.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
                 nominalAttributeToPaste += '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
+                console.log(nominalAttribute.icon_path ? nominalAttribute.icon_path : "NOPiu" );
                 nominalAttributeToPaste += '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
                 nominalAttributeToPaste += '</label>';
                 nominalAttributeToPaste += '</div>';

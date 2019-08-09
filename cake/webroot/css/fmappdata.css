@@ -6631,13 +6631,140 @@ input:checked + .slider:before {
 /* Icon Set Classes for Attributes */
 .attrIcons {
   background-position: 50% 50%;
-  background-size: cover; }
-
-.iconPlaceholder {
+  background-size: cover;
   background-image: url("../img/icons/icon-placeholder.svg"); }
 
 .smokeNo {
   background-image: url("../img/icons/smoke-no.svg"); }
+
+.ages-18plus {
+  background-image: url("../img/icons/ages-18plus.svg"); }
+
+.ages-19plus {
+  background-image: url("../img/icons/ages-19plus.svg"); }
+
+.ages-21plus {
+  background-image: url("../img/icons/ages-21plus.svg"); }
+
+.ages-all {
+  background-image: url("../img/icons/ages-all.svg"); }
+
+.ambience-casual {
+  background-image: url("../img/icons/ambience-casual.svg"); }
+
+.ambience-classy {
+  background-image: url("../img/icons/ambience-classy.svg"); }
+
+.ambience-divey {
+  background-image: url("../img/icons/ambience-divey.svg"); }
+
+.ambience-hipster {
+  background-image: url("../img/icons/ambience-hipster.svg"); }
+
+.ambience-intimate {
+  background-image: url("../img/icons/ambience-intimate.svg"); }
+
+.ambience-romantic {
+  background-image: url("../img/icons/ambience-romantic.svg"); }
+
+.ambience-touristy {
+  background-image: url("../img/icons/ambience-touristy.svg"); }
+
+.ambience-trendy {
+  background-image: url("../img/icons/ambience-trendy.svg"); }
+
+.ambience-upscale {
+  background-image: url("../img/icons/ambience-upscale.svg"); }
+
+.attire-casual {
+  background-image: url("../img/icons/attire-casual.svg"); }
+
+.attire-dressy {
+  background-image: url("../img/icons/attire-dressy.svg"); }
+
+.attire-formal {
+  background-image: url("../img/icons/attire-formal.svg"); }
+
+.byob-free {
+  background-image: url("../img/icons/byob-free.svg"); }
+
+.byob-no {
+  background-image: url("../img/icons/byob-no.svg"); }
+
+.byob-yes-corkage {
+  background-image: url("../img/icons/byob-yes-corkage.svg"); }
+
+.diet-dairyfree {
+  background-image: url("../img/icons/diet-dairyfree.svg"); }
+
+.diet-glutenfree {
+  background-image: url("../img/icons/diet-glutenfree.svg"); }
+
+.diet-halal {
+  background-image: url("../img/icons/diet-halal.svg"); }
+
+.diet-koscher {
+  background-image: url("../img/icons/diet-koscher.svg"); }
+
+.diet-soyfree-veggie {
+  background-image: url("../img/icons/diet-soyfree-veggie.svg"); }
+
+.diet-vegan {
+  background-image: url("../img/icons/diet-vegan.svg"); }
+
+.goodfor-breakfast {
+  background-image: url("../img/icons/diet-vegoodfor-breakfast.svg"); }
+
+.goodfor-brunch {
+  background-image: url("../img/icons/goodfor-brunch.svg"); }
+
+.goodfor-dessert {
+  background-image: url("../img/icons/goodfor-dessert.svg"); }
+
+.goodfor-dinner {
+  background-image: url("../img/icons/goodfor-dinner.svg"); }
+
+.goodfor-latenight {
+  background-image: url("../img/icons/goodfor-latenight.svg"); }
+
+.goodfor-lunch {
+  background-image: url("../img/icons/goodfor-lunch.svg"); }
+
+.music-background {
+  background-image: url("../img/icons/music-background.svg"); }
+
+.music-dj {
+  background-image: url("../img/icons/music-dj.svg"); }
+
+.music-jukebox {
+  background-image: url("../img/icons/music-jukebox.svg"); }
+
+.music-karaoke {
+  background-image: url("../img/icons/music-karaoke.svg"); }
+
+.music-live {
+  background-image: url("../img/icons/music-live.svg"); }
+
+.music-video {
+  background-image: url("../img/icons/music-video.svg"); }
+
+.smoking-no {
+  background-image: url("../img/icons/smoking-no.svg"); }
+
+.smoking-outdoor {
+  background-image: url("../img/icons/smoking-outdoor.svg"); }
+
+.smoking-yes {
+  background-image: url("../img/icons/smoking-yes.svg"); }
+
+.wifi-no {
+  background-image: url("../img/icons/wifi-no.svg"); }
+
+.wifi-paid {
+  background-image: url("../img/icons/wifi-paid.svg"); }
+
+.wifi-yes {
+  background-image: url("../img/icons/wifi-yes.svg"); }
 
 /*
  * Loading Spinner Code found on http://tobiasahlin.com/spinkit/

@@ -3,21 +3,15 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:8889
--- Erstellungszeit: 09. Aug 2019 um 22:23
+-- Erstellungszeit: 09. Aug 2019 um 23:18
 -- Server-Version: 5.5.42
 -- PHP-Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
--- Datenbank: `fm_cake`
+-- Datenbank: `fm_cake_food`
 --
 
 -- --------------------------------------------------------
@@ -4782,49 +4776,49 @@ CREATE TABLE `nominal_attributes` (
 --
 
 INSERT INTO `nominal_attributes` (`id`, `nominal_component_id`, `name`, `display_name`, `icon_path`, `created`, `modified`) VALUES
-(1, 1, 'casual', 'Lässig', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(2, 1, 'dressy', 'Schick', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(3, 1, 'formal', 'Feierlich', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(4, 2, 'free', 'Kostenlos', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(5, 2, 'no', 'Nein', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(6, 2, 'paid', 'Bezahlt', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(7, 3, 'no', 'Nein', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(8, 3, 'outdoor', 'Außen', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(9, 3, 'yes', 'Ja', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(10, 4, 'no', 'Nein', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(11, 4, 'yes_corkage', 'Mitbringen von Flaschen erlaubt', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(12, 4, 'yes_free', 'Kostenlos', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(14, 5, '19plus', '19+', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(15, 5, '21plus', '21+', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(16, 5, 'allages', 'Jedes Alter', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(17, 6, 'background_music', 'Hintergrundmusik', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(18, 6, 'dj', 'DJ', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(19, 6, 'jukebox', 'Jukebox', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(20, 6, 'karaoke', 'Karaoke', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(21, 6, 'live', 'Live', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(22, 6, 'video', 'Video', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(23, 7, 'breakfast', 'Frühstück', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(24, 7, 'brunch', 'Brunch', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(25, 7, 'dessert', 'Nachspeise', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(26, 7, 'dinner', 'Abendessen', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(27, 7, 'latenight', 'Spät abends', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(28, 7, 'lunch', 'Mittagessen', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(29, 8, 'dairy-free', 'Laktosefrei', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(30, 8, 'gluten-free', 'Glutenfrei', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(31, 8, 'halal', 'Halal', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(32, 8, 'kosher', 'Koscher', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(33, 8, 'soy-freevegetarian', 'Vegetarisch ohne Soja', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(34, 8, 'vegan', 'Vegan', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(35, 9, 'casual', 'Lässig', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(36, 9, 'classy', 'Vornehm', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(37, 9, 'divey', 'Heruntergekommen', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(38, 9, 'hipster', 'Hipster', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(39, 9, 'intimate', 'Zwanglos', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(40, 9, 'romantic', 'Romantisch', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(41, 9, 'touristy', 'Touristisch', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(42, 9, 'trendy', 'Modern', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(43, 9, 'upscale', 'Gehoben', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
-(44, 5, '18plus', '18+', NULL, '2017-02-15 16:59:40', '2017-02-15 16:59:40');
+(1, 1, 'casual', 'Lässig', 'attire-casual', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(2, 1, 'dressy', 'Schick', 'attire-dressy', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(3, 1, 'formal', 'Feierlich', 'attire-formal', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(4, 2, 'free', 'Kostenlos', 'wifi-yes', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(5, 2, 'no', 'Nein', 'wifi-no', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(6, 2, 'paid', 'Bezahlt', 'wifi-paid', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(7, 3, 'no', 'Nein', 'smoking-no', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(8, 3, 'outdoor', 'Außen', 'smoking-outdoor', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(9, 3, 'yes', 'Ja', 'smoking-yes', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(10, 4, 'no', 'Nein', 'byob-no', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(11, 4, 'yes_corkage', 'Mitbringen von Flaschen erlaubt', 'byob-yes-corkage', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(12, 4, 'yes_free', 'Kostenlos', 'byob-free', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(14, 5, '19plus', '19+', 'ages-19plus', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(15, 5, '21plus', '21+', 'ages-21plus', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(16, 5, 'allages', 'Jedes Alter', 'ages-all', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(17, 6, 'background_music', 'Hintergrundmusik', 'music-background', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(18, 6, 'dj', 'DJ', 'music-dj', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(19, 6, 'jukebox', 'Jukebox', 'music-jukebox', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(20, 6, 'karaoke', 'Karaoke', 'music-karaoke', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(21, 6, 'live', 'Live', 'music-live', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(22, 6, 'video', 'Video', 'music-video', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(23, 7, 'breakfast', 'Frühstück', 'goodfor-breakfast', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(24, 7, 'brunch', 'Brunch', 'goodfor-brunch', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(25, 7, 'dessert', 'Nachspeise', 'goodfor-dessert', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(26, 7, 'dinner', 'Abendessen', 'goodfor-dinner', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(27, 7, 'latenight', 'Spät abends', 'goodfor-latenight', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(28, 7, 'lunch', 'Mittagessen', 'goodfor-lunch', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(29, 8, 'dairy-free', 'Laktosefrei', 'diet-dairyfree', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(30, 8, 'gluten-free', 'Glutenfrei', 'diet-glutenfree', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(31, 8, 'halal', 'Halal', 'diet-halal', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(32, 8, 'kosher', 'Koscher', 'diet-koscher', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(33, 8, 'soy-freevegetarian', 'Vegetarisch ohne Soja', 'diet-soyfree-veggie', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(34, 8, 'vegan', 'Vegan', 'diet-vegan', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(35, 9, 'casual', 'Lässig', 'ambience-casual', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(36, 9, 'classy', 'Vornehm', 'ambience-classy', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(37, 9, 'divey', 'Heruntergekommen', 'ambience-divey', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(38, 9, 'hipster', 'Hipster', 'ambience-hipster', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(39, 9, 'intimate', 'Zwanglos', 'ambience-intimate', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(40, 9, 'romantic', 'Romantisch', 'ambience-romantic', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(41, 9, 'touristy', 'Touristisch', 'ambience-touristy', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(42, 9, 'trendy', 'Modern', 'ambience-trendy', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(43, 9, 'upscale', 'Gehoben', 'ambience-upscale', '2017-02-15 16:59:40', '2017-02-15 16:59:40'),
+(44, 5, '18plus', '18+', 'ages-18plus', '2017-02-15 16:59:40', '2017-02-15 16:59:40');
 
 -- --------------------------------------------------------
 
@@ -12672,6 +12666,3 @@ ALTER TABLE `tags`
 --
 ALTER TABLE `ypois`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=893;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
