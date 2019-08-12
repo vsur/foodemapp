@@ -220,7 +220,7 @@ return [
             'port' => 8889,
             'username' => 'root',
             'password' => 'root',
-            'database' => 'fm_cake',
+            'database' => 'fm_cake_isac_storage',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,

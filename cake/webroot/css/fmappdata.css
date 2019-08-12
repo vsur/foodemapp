@@ -6772,17 +6772,17 @@ input:checked + .slider:before {
 /*********************************
  * Icons für ISAC Lagerstandorte *
  *********************************/
-.3_jaw_power_chuck {
-  background-image: url("../img/icons/industry-storage/3_jaw_power_chuck.svg"); }
+.three_jaw_power_chuck {
+  background-image: url("../img/icons/industry-storage/three_jaw_power_chuck.svg"); }
 
-.cables-3x1, 0 {
-  background-image: url("../img/icons/industry-storage/cables-3x1,0.svg"); }
+.cables-3x1_0 {
+  background-image: url("../img/icons/industry-storage/cables-3x1_0.svg"); }
 
-.cables-3x1, 5 {
-  background-image: url("../img/icons/industry-storage/cables-3x1,5.svg"); }
+.cables-3x1_5 {
+  background-image: url("../img/icons/industry-storage/cables-3x1_5.svg"); }
 
-.cables-5x1, 5 {
-  background-image: url("../img/icons/industry-storage/cables-5x1,5.svg"); }
+.cables-5x1_5 {
+  background-image: url("../img/icons/industry-storage/cables-5x1_5.svg"); }
 
 .cradridge_mandrel {
   background-image: url("../img/icons/industry-storage/cradridge_mandrel.svg"); }
