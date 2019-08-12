@@ -6634,6 +6634,9 @@ input:checked + .slider:before {
   background-size: cover;
   background-image: url("../img/icons/icon-placeholder.svg"); }
 
+/***********************
+ * Icons für Food-map  *
+ ***********************/
 .smokeNo {
   background-image: url("../img/icons/smoke-no.svg"); }
 
@@ -6765,6 +6768,402 @@ input:checked + .slider:before {
 
 .wifi-yes {
   background-image: url("../img/icons/wifi-yes.svg"); }
+
+/*********************************
+ * Icons für ISAC Lagerstandorte *
+ *********************************/
+.3_jaw_power_chuck {
+  background-image: url("../img/icons/industry-storage/3_jaw_power_chuck.svg"); }
+
+.cables-3x1, 0 {
+  background-image: url("../img/icons/industry-storage/cables-3x1,0.svg"); }
+
+.cables-3x1, 5 {
+  background-image: url("../img/icons/industry-storage/cables-3x1,5.svg"); }
+
+.cables-5x1, 5 {
+  background-image: url("../img/icons/industry-storage/cables-5x1,5.svg"); }
+
+.cradridge_mandrel {
+  background-image: url("../img/icons/industry-storage/cradridge_mandrel.svg"); }
+
+.drill_bits--concrete_drill {
+  background-image: url("../img/icons/industry-storage/drill_bits--concrete_drill.svg"); }
+
+.drill_bits-metal_drill {
+  background-image: url("../img/icons/industry-storage/drill_bits-metal_drill.svg"); }
+
+.drill_bits-wood_drill {
+  background-image: url("../img/icons/industry-storage/drill_bits-wood_drill.svg"); }
+
+.hammers-engineers_hammer {
+  background-image: url("../img/icons/industry-storage/hammers-engineers_hammer.svg"); }
+
+.hammers-rubber_mallet {
+  background-image: url("../img/icons/industry-storage/hammers-rubber_mallet.svg"); }
+
+.hammers-sledgehammer {
+  background-image: url("../img/icons/industry-storage/hammers-sledgehammer.svg"); }
+
+.hydraulic_chuck {
+  background-image: url("../img/icons/industry-storage/hydraulic_chuck.svg"); }
+
+.hydro_centering_chuck {
+  background-image: url("../img/icons/industry-storage/hydro_centering_chuck.svg"); }
+
+.materials-brass {
+  background-image: url("../img/icons/industry-storage/materials-brass.svg"); }
+
+.materials-polyamide {
+  background-image: url("../img/icons/industry-storage/materials-polyamide.svg"); }
+
+.materials-stainless_steel {
+  background-image: url("../img/icons/industry-storage/materials-stainless_steel.svg"); }
+
+.mechanical_chuck {
+  background-image: url("../img/icons/industry-storage/mechanical_chuck.svg"); }
+
+.millingheads-angular_milling_cutter {
+  background-image: url("../img/icons/industry-storage/millingheads-angular_milling_cutter.svg"); }
+
+.millingheads-cotter_mill {
+  background-image: url("../img/icons/industry-storage/millingheads-cotter_mill.svg"); }
+
+.millingheads-end_mill {
+  background-image: url("../img/icons/industry-storage/millingheads-end_mill.svg"); }
+
+.millingheads-plain_cutter {
+  background-image: url("../img/icons/industry-storage/millingheads-plain_cutter.svg"); }
+
+.millingheads-slitting_cutter {
+  background-image: url("../img/icons/industry-storage/millingheads-slitting_cutter.svg"); }
+
+.millingheads-t_slot_cutter {
+  background-image: url("../img/icons/industry-storage/millingheads-t_slot_cutter.svg"); }
+
+.nuts-drive_in_nuts {
+  background-image: url("../img/icons/industry-storage/nuts-drive_in_nuts.svg"); }
+
+.nuts-hexagon_nuts {
+  background-image: url("../img/icons/industry-storage/nuts-hexagon_nuts.svg"); }
+
+.nuts-press_nuts {
+  background-image: url("../img/icons/industry-storage/nuts-press_nuts.svg"); }
+
+.nuts-ring_nuts {
+  background-image: url("../img/icons/industry-storage/nuts-ring_nuts.svg"); }
+
+.nuts-welding_nuts {
+  background-image: url("../img/icons/industry-storage/nuts-welding_nuts.svg"); }
+
+.nuts-wing_nuts {
+  background-image: url("../img/icons/industry-storage/nuts-wing_nuts.svg"); }
+
+.seals-pipe_sealing_cord {
+  background-image: url("../img/icons/industry-storage/seals-pipe_sealing_cord.svg"); }
+
+.seals-pipe_sealing_tape {
+  background-image: url("../img/icons/industry-storage/seals-pipe_sealing_tape.svg"); }
+
+.seals-profile_seal {
+  background-image: url("../img/icons/industry-storage/seals-profile_seal.svg"); }
+
+.seals-radial_shaft_seals {
+  background-image: url("../img/icons/industry-storage/seals-radial_shaft_seals.svg"); }
+
+.slidung_jaw_madrel {
+  background-image: url("../img/icons/industry-storage/slidung_jaw_madrel.svg"); }
+
+.wrenches-dumbbell_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-dumbbell_wrench.svg"); }
+
+.wrenches-face_pin_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-face_pin_wrench.svg"); }
+
+.wrenches-hook_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-hook_wrench.svg"); }
+
+.wrenches-open_jaw_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-open_jaw_wrench.svg"); }
+
+.wrenches-pipe_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-pipe_wrench.svg"); }
+
+.wrenches-ratchet_ring_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-ratchet_ring_wrench.svg"); }
+
+.wrenches-ring_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-ring_wrench.svg"); }
+
+.wrenches-socket_wrench {
+  background-image: url("../img/icons/industry-storage/wrenches-socket_wrench.svg"); }
+
+.wrenches-striking_face_pin {
+  background-image: url("../img/icons/industry-storage/wrenches-striking_face_pin.svg"); }
+
+/****************************
+ * Icons für ISAC Produkte  *
+ ****************************/
+.control-holding_member_control {
+  background-image: url("../img/icons/industry-products/ control-holding_member_control.svg"); }
+
+.cladding-alluminium_cladding {
+  background-image: url("../img/icons/industry-products/cladding-alluminium_cladding.svg"); }
+
+.cladding-glas-cladding {
+  background-image: url("../img/icons/industry-products/cladding-glas-cladding.svg"); }
+
+.cladding-metal_cladding {
+  background-image: url("../img/icons/industry-products/cladding-metal_cladding.svg"); }
+
+.cladding-no_cladding {
+  background-image: url("../img/icons/industry-products/cladding-no_cladding.svg"); }
+
+.cladding-plastic_cladding {
+  background-image: url("../img/icons/industry-products/cladding-plastic_cladding.svg"); }
+
+.cladding-wood-cladding {
+  background-image: url("../img/icons/industry-products/cladding-wood-cladding.svg"); }
+
+.condition-damaged {
+  background-image: url("../img/icons/industry-products/condition-damaged.svg"); }
+
+.condition-new {
+  background-image: url("../img/icons/industry-products/condition-new.svg"); }
+
+.condition-used {
+  background-image: url("../img/icons/industry-products/condition-used.svg"); }
+
+.control-contouring {
+  background-image: url("../img/icons/industry-products/control-contouring.svg"); }
+
+.control-distance_control {
+  background-image: url("../img/icons/industry-products/control-distance_control.svg"); }
+
+.control-management_control {
+  background-image: url("../img/icons/industry-products/control-management_control.svg"); }
+
+.control-point_control {
+  background-image: url("../img/icons/industry-products/control-point_control.svg"); }
+
+.control-program_control {
+  background-image: url("../img/icons/industry-products/control-program_control.svg"); }
+
+.cooling-air_cooling {
+  background-image: url("../img/icons/industry-products/cooling-air_cooling.svg"); }
+
+.cooling-nitrogen_cooling {
+  background-image: url("../img/icons/industry-products/cooling-nitrogen_cooling.svg"); }
+
+.cooling-oil-cooling {
+  background-image: url("../img/icons/industry-products/cooling-oil-cooling.svg"); }
+
+.cooling-water_cooling {
+  background-image: url("../img/icons/industry-products/cooling-water_cooling.svg"); }
+
+.data-analog {
+  background-image: url("../img/icons/industry-products/data-analog.svg"); }
+
+.data-digital {
+  background-image: url("../img/icons/industry-products/data-digital.svg"); }
+
+.data-dual {
+  background-image: url("../img/icons/industry-products/data-dual.svg"); }
+
+.material_in_use-aluminium {
+  background-image: url("../img/icons/industry-products/material_in_use-aluminium.svg"); }
+
+.material_in_use-brass {
+  background-image: url("../img/icons/industry-products/material_in_use-brass.svg"); }
+
+.material_in_use-cooper {
+  background-image: url("../img/icons/industry-products/material_in_use-cooper.svg"); }
+
+.material_in_use-gold {
+  background-image: url("../img/icons/industry-products/material_in_use-gold.svg"); }
+
+.material_in_use-silver {
+  background-image: url("../img/icons/industry-products/material_in_use-silver.svg"); }
+
+.material_in_use-steel {
+  background-image: url("../img/icons/industry-products/material_in_use-steel.svg"); }
+
+.material_in_use-stone {
+  background-image: url("../img/icons/industry-products/material_in_use-stone.svg"); }
+
+.material_in_use-wood {
+  background-image: url("../img/icons/industry-products/material_in_use-wood.svg"); }
+
+.material_in_use-zinc {
+  background-image: url("../img/icons/industry-products/material_in_use-zinc.svg"); }
+
+.mode-fully-automatic {
+  background-image: url("../img/icons/industry-products/mode-fully-automatic.svg"); }
+
+.mode-manual {
+  background-image: url("../img/icons/industry-products/mode-manual.svg"); }
+
+.mode-semi_automatic {
+  background-image: url("../img/icons/industry-products/mode-semi_automatic.svg"); }
+
+.operation-drill {
+  background-image: url("../img/icons/industry-products/operation-drill.svg"); }
+
+.operation-rolling-mill {
+  background-image: url("../img/icons/industry-products/operation-rolling-mill.svg"); }
+
+.operation_milling_maschine {
+  background-image: url("../img/icons/industry-products/operation_milling_maschine.svg"); }
+
+.protection-dust_protection {
+  background-image: url("../img/icons/industry-products/protection-dust_protection.svg"); }
+
+.protection-explosive_protection {
+  background-image: url("../img/icons/industry-products/protection-explosive_protection.svg"); }
+
+.protection-fire_protection {
+  background-image: url("../img/icons/industry-products/protection-fire_protection.svg"); }
+
+.protection-lubricating_protection {
+  background-image: url("../img/icons/industry-products/protection-lubricating_protection.svg"); }
+
+.protection-water_protection {
+  background-image: url("../img/icons/industry-products/protection-water_protection.svg"); }
+
+.protection-wind_protection {
+  background-image: url("../img/icons/industry-products/protection-wind_protection.svg"); }
+
+/***************************
+ * Icons für ISAC Machinen *
+ ***************************/
+.control-holding_member_control {
+  background-image: url("../img/icons/industry-machines/ control-holding_member_control.svg"); }
+
+.cladding-alluminium_cladding {
+  background-image: url("../img/icons/industry-machines/cladding-alluminium_cladding.svg"); }
+
+.cladding-glas-cladding {
+  background-image: url("../img/icons/industry-machines/cladding-glas-cladding.svg"); }
+
+.cladding-metal_cladding {
+  background-image: url("../img/icons/industry-machines/cladding-metal_cladding.svg"); }
+
+.cladding-no_cladding {
+  background-image: url("../img/icons/industry-machines/cladding-no_cladding.svg"); }
+
+.cladding-plastic_cladding {
+  background-image: url("../img/icons/industry-machines/cladding-plastic_cladding.svg"); }
+
+.cladding-wood-cladding {
+  background-image: url("../img/icons/industry-machines/cladding-wood-cladding.svg"); }
+
+.condition-damaged {
+  background-image: url("../img/icons/industry-machines/condition-damaged.svg"); }
+
+.condition-new {
+  background-image: url("../img/icons/industry-machines/condition-new.svg"); }
+
+.condition-used {
+  background-image: url("../img/icons/industry-machines/condition-used.svg"); }
+
+.control-contouring {
+  background-image: url("../img/icons/industry-machines/control-contouring.svg"); }
+
+.control-distance_control {
+  background-image: url("../img/icons/industry-machines/control-distance_control.svg"); }
+
+.control-management_control {
+  background-image: url("../img/icons/industry-machines/control-management_control.svg"); }
+
+.control-point_control {
+  background-image: url("../img/icons/industry-machines/control-point_control.svg"); }
+
+.control-program_control {
+  background-image: url("../img/icons/industry-machines/control-program_control.svg"); }
+
+.cooling-air_cooling {
+  background-image: url("../img/icons/industry-machines/cooling-air_cooling.svg"); }
+
+.cooling-nitrogen_cooling {
+  background-image: url("../img/icons/industry-machines/cooling-nitrogen_cooling.svg"); }
+
+.cooling-oil-cooling {
+  background-image: url("../img/icons/industry-machines/cooling-oil-cooling.svg"); }
+
+.cooling-water_cooling {
+  background-image: url("../img/icons/industry-machines/cooling-water_cooling.svg"); }
+
+.data-analog {
+  background-image: url("../img/icons/industry-machines/data-analog.svg"); }
+
+.data-digital {
+  background-image: url("../img/icons/industry-machines/data-digital.svg"); }
+
+.data-dual {
+  background-image: url("../img/icons/industry-machines/data-dual.svg"); }
+
+.material_in_use-aluminium {
+  background-image: url("../img/icons/industry-machines/material_in_use-aluminium.svg"); }
+
+.material_in_use-brass {
+  background-image: url("../img/icons/industry-machines/material_in_use-brass.svg"); }
+
+.material_in_use-cooper {
+  background-image: url("../img/icons/industry-machines/material_in_use-cooper.svg"); }
+
+.material_in_use-gold {
+  background-image: url("../img/icons/industry-machines/material_in_use-gold.svg"); }
+
+.material_in_use-silver {
+  background-image: url("../img/icons/industry-machines/material_in_use-silver.svg"); }
+
+.material_in_use-steel {
+  background-image: url("../img/icons/industry-machines/material_in_use-steel.svg"); }
+
+.material_in_use-stone {
+  background-image: url("../img/icons/industry-machines/material_in_use-stone.svg"); }
+
+.material_in_use-wood {
+  background-image: url("../img/icons/industry-machines/material_in_use-wood.svg"); }
+
+.material_in_use-zinc {
+  background-image: url("../img/icons/industry-machines/material_in_use-zinc.svg"); }
+
+.mode-fully-automatic {
+  background-image: url("../img/icons/industry-machines/mode-fully-automatic.svg"); }
+
+.mode-manual {
+  background-image: url("../img/icons/industry-machines/mode-manual.svg"); }
+
+.mode-semi_automatic {
+  background-image: url("../img/icons/industry-machines/mode-semi_automatic.svg"); }
+
+.operation-drill {
+  background-image: url("../img/icons/industry-machines/operation-drill.svg"); }
+
+.operation-rolling-mill {
+  background-image: url("../img/icons/industry-machines/operation-rolling-mill.svg"); }
+
+.operation_milling_maschine {
+  background-image: url("../img/icons/industry-machines/operation_milling_maschine.svg"); }
+
+.protection-dust_protection {
+  background-image: url("../img/icons/industry-machines/protection-dust_protection.svg"); }
+
+.protection-explosive_protection {
+  background-image: url("../img/icons/industry-machines/protection-explosive_protection.svg"); }
+
+.protection-fire_protection {
+  background-image: url("../img/icons/industry-machines/protection-fire_protection.svg"); }
+
+.protection-lubricating_protection {
+  background-image: url("../img/icons/industry-machines/protection-lubricating_protection.svg"); }
+
+.protection-water_protection {
+  background-image: url("../img/icons/industry-machines/protection-water_protection.svg"); }
+
+.protection-wind_protection {
+  background-image: url("../img/icons/industry-machines/protection-wind_protection.svg"); }
 
 /*
  * Loading Spinner Code found on http://tobiasahlin.com/spinkit/
