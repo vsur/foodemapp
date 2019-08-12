@@ -22,7 +22,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <?= $this->Html->image('wordcloud.png', ['alt' => 'Wordcloud von Themenfeldern dieser Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+    <?= $this->Html->image('isac-header.png', ['alt' => 'Wordcloud von Themenfeldern dieser Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
   </div>
 </div>
 
