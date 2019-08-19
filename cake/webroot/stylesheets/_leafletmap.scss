@@ -6,3 +6,27 @@
   position: relative;
   width: 100%;
 }
+
+.ypoiIcon {
+  background-image: url("../img/leaflet/marker-isac-with-shadow.png");
+  background-position: center;
+  background-size: cover;
+  overflow: visible;
+  position: relative;
+}
+.ypoiIcon > div {
+  width: 150px;
+  text-align: center;
+  position: absolute;
+  top: -23px;
+  left: calc(-75px + 16px); 
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+.ypoiIcon > div > span {
+  background: white;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 15px;
+}
