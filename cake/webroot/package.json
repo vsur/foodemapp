@@ -21,6 +21,7 @@
     "jshint-stylish": "^2.2.1"
   },
   "dependencies": {
-    "d3": "^5.9.7"
+    "d3": "^5.9.7",
+    "eslint": "^6.2.0"
   }
 }
