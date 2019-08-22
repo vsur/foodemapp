@@ -30,3 +30,12 @@
   border: 1px solid white;
   border-radius: 15px;
 }
+
+.infoPopup > div.leaflet-popup-content-wrapper {
+  background: adjust-color($urcd-color, $alpha: -0.25);
+}
+
+// #_____ Leaflet Manipulation _____ {}
+.leaflet-popup-tip-container {
+  display: none;
+}

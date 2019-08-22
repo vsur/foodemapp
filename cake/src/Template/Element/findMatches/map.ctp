@@ -1,11 +1,12 @@
 <div class="row">
     <div class="col-md-12">
         <h1>Ihre Egebnisse auf einer Karte</h1>
-         <div id="ypoisMap"></div>
+        <div id="ypoisMap"></div>
     </div>
 </div>
 <script type="text/javascript">
     var ypois = <?= json_encode($ypois) ?>;
+    var rankedSelection = <?= json_encode($rankedSelection) ?>;
 </script>
 <?= $this->Html->script('leaflet-map.js') ?>
 <div class="row">
