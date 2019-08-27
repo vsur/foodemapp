@@ -7567,5 +7567,20 @@ path.chord {
 .infoPopup > div.leaflet-popup-content-wrapper {
   background: rgba(125, 0, 60, 0.75); }
 
+.popUpComponentList .choosenStarAgregation {
+  margin-left: 8px;
+  font-size: 12px;
+  top: 0; }
+
+.popUpComponentList .choosenStarAgregationNumber {
+  font-size: 10px;
+  color: #ffc700;
+  top: 0px;
+  left: -8px; }
+
+.popUpComponentList .componentNameBinarySlider {
+  font-size: 12px;
+  padding-right: 0px; }
+
 .leaflet-popup-tip-container {
   display: none; }
