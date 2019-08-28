@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h1>Ihre Egebnisse auf einer Karte</h1>
+        <h1>Ihre Ergebnisse auf einer Karte</h1>
         <div id="ypoisMap"></div>
     </div>
 </div>

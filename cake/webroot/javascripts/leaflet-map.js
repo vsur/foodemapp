@@ -84,21 +84,6 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
 
             ratingString += '</li>';
         });
-        // Iteratre over ordinal attributes
-        // for (let rankedOrdinal in ratedComponents.ordinalAttributes) {
-        //     ratingString += '<li class="ordinalComponentContainer clearfix">';
-        //
-        //     ratingString +=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
-        //     ratingString +=    '<span class="componentNameOrdinalComponent' + (rankedOrdinal.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedOrdinal.ordinal_component.display_name != '' ? ( rankedOrdinal.ordinal_component.display_name) :  rankedOrdinal.ordinal_component.name) + '</span> <span class="attributeNameOrdinalAttribute ' + (rankedOrdinal.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (rankedOrdinal.display_name != '' ? rankedOrdinal.display_name : rankedOrdinal.name) + '</span> <br>';
-        //
-        //     let minRange = rankedOrdinal.ordinal_component.ordinal_attributes.meter.slice(1)[0];
-        //     let maxRange = rankedOrdinal.ordinal_component.ordinal_attributes.meter.slice(-1)[0];
-        //
-        //     ratingString +=    '<input type="range" min="' + minRange + '" max="' + maxRange + '" step="1" value="' + rankedOrdinal.meter + '" disabled>';
-        //
-        //
-        //     ratingString += '</li>';
-        // }
 
         return ratingString;
 }

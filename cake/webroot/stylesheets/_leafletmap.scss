@@ -38,8 +38,9 @@
 .popUpComponentList {
     .choosenStarAgregation {
         margin-left: 8px;
+        margin-right: 5px;
         font-size: 12px;
-        top: 0;
+        top: 0px;
     }
     .choosenStarAgregationNumber {
         font-size: 10px;
@@ -47,12 +48,34 @@
         top: 0px;
         left: -8px;
     }
-    .componentNameBinarySlider {
-        font-size: 12px;
+    .componentNameBinarySlider, .componentNameNominalComponent, .componentNameOrdinalComponent {
+        font-size: 12px !important;
+        line-height: 1em;
         padding-right: 0px;
+        top: 0px;
+        color: white;
+        width: 85px;
+        display: inline-block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
-    .switch {
-        // transform: scale(0.60);
+    .nominalComponentContainer {
+        .choosenStarAgregation {
+            top: 7px;
+        }
+        .componentNameNominalComponent {
+                line-height: 25px;
+        }
+    }
+    .switch, .nominalAttribute {
+        margin-top: -10px;
+        margin-right: -20px;
+        transform: scale(0.60);
+    }
+    .nominalAttribute {
+        margin-top: -10px;
+        transform: scale(0.60);
     }
 }
 

@@ -7569,8 +7569,9 @@ path.chord {
 
 .popUpComponentList .choosenStarAgregation {
   margin-left: 8px;
+  margin-right: 5px;
   font-size: 12px;
-  top: 0; }
+  top: 0px; }
 
 .popUpComponentList .choosenStarAgregationNumber {
   font-size: 10px;
@@ -7578,9 +7579,32 @@ path.chord {
   top: 0px;
   left: -8px; }
 
-.popUpComponentList .componentNameBinarySlider {
-  font-size: 12px;
-  padding-right: 0px; }
+.popUpComponentList .componentNameBinarySlider, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .componentNameOrdinalComponent {
+  font-size: 12px !important;
+  line-height: 1em;
+  padding-right: 0px;
+  top: 0px;
+  color: white;
+  width: 85px;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
+
+.popUpComponentList .nominalComponentContainer .choosenStarAgregation {
+  top: 7px; }
+
+.popUpComponentList .nominalComponentContainer .componentNameNominalComponent {
+  line-height: 25px; }
+
+.popUpComponentList .switch, .popUpComponentList .nominalAttribute {
+  margin-top: -10px;
+  margin-right: -20px;
+  transform: scale(0.6); }
+
+.popUpComponentList .nominalAttribute {
+  margin-top: -10px;
+  transform: scale(0.6); }
 
 .leaflet-popup-tip-container {
   display: none; }
