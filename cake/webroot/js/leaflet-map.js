@@ -64,7 +64,7 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
 
             ratingString +=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
             ratingString +=    '<div class="nominalAttribute pull-right"><figure class="attrIcons ' + (rankedNominal.icon_path != '' ? rankedNominal.icon_path : 'iconPlaceholder') + '"></figure></div>';
-            ratingString +=    '<span class="componentNameNominalComponent' + (rankedNominal.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedNominal.nominal_component.display_name != '' ? (rankedNominal.nominal_component.display_name) : rankedNominal.nominal_component.name) + '</span> <br><span class="attributeNameNominalAttribute ' + (rankedNominal.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (rankedNominal.display_name != '' ? rankedNominal.display_name : rankedNominal.name) + '</span>';
+            ratingString +=    '<span class="nominalNameCombo"><span class="componentNameNominalComponent' + (rankedNominal.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedNominal.nominal_component.display_name != '' ? (rankedNominal.nominal_component.display_name) : rankedNominal.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (rankedNominal.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (rankedNominal.display_name != '' ? rankedNominal.display_name : rankedNominal.name) + '</span></span>';
 
             ratingString += '</li>';
         });
@@ -73,7 +73,7 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
         ratedComponents.ordinalAttributes.forEach(function(rankedOrdinal, index) {
             ratingString += '<li class="ordinalComponentContainer clearfix">';
 
-            ratingString +=    '2x<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
+            ratingString +=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
             ratingString +=    '<span class="componentNameOrdinalComponent' + (rankedOrdinal.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedOrdinal.ordinal_component.display_name != '' ? ( rankedOrdinal.ordinal_component.display_name) :  rankedOrdinal.ordinal_component.name) + '</span> <span class="attributeNameOrdinalAttribute ' + (rankedOrdinal.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (rankedOrdinal.display_name != '' ? rankedOrdinal.display_name : rankedOrdinal.name) + '</span> <br>';
 
             let minRange = rankedOrdinal.ordinal_component.ordinal_attributes.slice(0)[0].meter;

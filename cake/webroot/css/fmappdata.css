@@ -7567,44 +7567,48 @@ path.chord {
 .infoPopup > div.leaflet-popup-content-wrapper {
   background: rgba(125, 0, 60, 0.75); }
 
-.popUpComponentList .choosenStarAgregation {
-  margin-left: 8px;
-  margin-right: 5px;
-  font-size: 12px;
-  top: 0px; }
-
-.popUpComponentList .choosenStarAgregationNumber {
-  font-size: 10px;
-  color: #ffc700;
-  top: 0px;
-  left: -8px; }
-
-.popUpComponentList .componentNameBinarySlider, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .componentNameOrdinalComponent {
-  font-size: 12px !important;
-  line-height: 1em;
-  padding-right: 0px;
-  top: 0px;
-  color: white;
-  width: 85px;
-  display: inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden; }
-
-.popUpComponentList .nominalComponentContainer .choosenStarAgregation {
-  top: 7px; }
-
-.popUpComponentList .nominalComponentContainer .componentNameNominalComponent {
-  line-height: 25px; }
-
-.popUpComponentList .switch, .popUpComponentList .nominalAttribute {
-  margin-top: -10px;
-  margin-right: -20px;
-  transform: scale(0.6); }
-
-.popUpComponentList .nominalAttribute {
-  margin-top: -10px;
-  transform: scale(0.6); }
+.popUpComponentList {
+  padding-bottom: 0px; }
+  .popUpComponentList .choosenStarAgregation {
+    margin-left: 8px;
+    margin-right: 5px;
+    font-size: 12px;
+    top: 3px; }
+  .popUpComponentList .choosenStarAgregationNumber {
+    font-size: 10px;
+    color: #ffc700;
+    top: 0px;
+    left: -8px; }
+  .popUpComponentList .componentNameBinarySlider, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .attributeNameNominalAttribute, .popUpComponentList .componentNameOrdinalComponent {
+    font-size: 12px !important;
+    line-height: 1.5em;
+    padding-right: 0px;
+    top: 0px;
+    color: white; }
+  .popUpComponentList .componentNameBinarySlider, .popUpComponentList .nominalNameCombo, .popUpComponentList .componentNameOrdinalComponent {
+    width: 85px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden; }
+  .popUpComponentList .nominalComponentContainer .choosenStarAgregation {
+    top: 7px; }
+  .popUpComponentList .nominalComponentContainer .componentNameNominalComponent {
+    line-height: 25px; }
+  .popUpComponentList .switch {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    width: 30px;
+    height: 17px; }
+  .popUpComponentList .slider:before {
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px; }
+  .popUpComponentList li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
+    width: 25px;
+    height: 25px; }
 
 .leaflet-popup-tip-container {
   display: none; }

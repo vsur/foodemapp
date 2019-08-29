@@ -36,11 +36,13 @@
 }
 
 .popUpComponentList {
+    // Just <ul>
+    padding-bottom: 0px;
     .choosenStarAgregation {
         margin-left: 8px;
         margin-right: 5px;
         font-size: 12px;
-        top: 0px;
+        top: 3px;
     }
     .choosenStarAgregationNumber {
         font-size: 10px;
@@ -48,12 +50,14 @@
         top: 0px;
         left: -8px;
     }
-    .componentNameBinarySlider, .componentNameNominalComponent, .componentNameOrdinalComponent {
+    .componentNameBinarySlider, .componentNameNominalComponent, .attributeNameNominalAttribute, .componentNameOrdinalComponent {
         font-size: 12px !important;
-        line-height: 1em;
+        line-height: 1.5em;
         padding-right: 0px;
         top: 0px;
         color: white;
+    }
+    .componentNameBinarySlider, .nominalNameCombo, .componentNameOrdinalComponent {
         width: 85px;
         display: inline-block;
         text-overflow: ellipsis;
@@ -68,14 +72,22 @@
                 line-height: 25px;
         }
     }
-    .switch, .nominalAttribute {
-        margin-top: -10px;
-        margin-right: -20px;
-        transform: scale(0.60);
+    .switch {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+        width: 30px;
+        height: 17px;
     }
-    .nominalAttribute {
-        margin-top: -10px;
-        transform: scale(0.60);
+    .slider:before {
+        height: 13px;
+        width: 13px;
+        left: 2px;
+        bottom: 2px;
+    }
+    li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
+        width: 25px;
+        height: 25px;
     }
 }
 
