@@ -6,23 +6,99 @@
  ////////////////// Input verarbeiten ///////////////////////
  ////////////////////////////////////////////////////////////
 
- var matrix_original = chordDiagramMatrixData["adjacencyMatrix"]
- var anzahl_elemente = chordDiagramMatrixData["adjacencyMatrix"].length + 1
- var anzahl_elemente_rechts = chordDiagramMatrixData["pois"].length
+var json = chordDiagramMatrixData;
+
+ var obj = chordDiagramMatrixData;
+ var matrix_original = json.adjacencyMatrix;
+
+ ////////////////////////////////////////////////////////////
+ //////////////// Skalierung der Bereiche ///////////////////
+ ////////////////////////////////////////////////////////////
+
+ /*
+  * Hilfsfunktion zum Berechnen der Summe
+  * aller Werte eines Arrays
+  */
+ function sum_array_values(arr) {
+ 	let sum = 0
+ 	for (var i = 0; i < arr.length; i++) {
+ 	  sum += arr[i]
+ 	}
+ 	return sum
+ }
+
+ /*
+  * Skaliert die Werte innerhalb der Matrix in Abhängigkeit von
+  * der Gewichtung, die diesem Bereich zugewiesen wird.
+  */
+ function computeScaling(matrix, start, end, weight) {
+
+ 	let sum_values = 0;
+
+ 	// Skalierungsfaktor berechnen
+ 	matrix.slice(start, end + 1).forEach(function(x) {
+ 		sum_values += sum_array_values(x)
+ 	})
+
+ 	let scale_by = weight / sum_values;
+
+ 	// Skalierung durchführen
+ 	for (var i = start; i <= end; i++) {
+ 		matrix[i] = matrix[i].map(function(x) {
+ 			return x * scale_by
+ 		})
+ 	}
+ }
+
+ // Skaliert die einzelnen Bereiche
+ // Tipp: Am besten in Prozenten denken, zusammen immer 100%
+
+ // POIs
+ computeScaling(obj["adjacencyMatrix"],
+ 				0,
+ 				obj["pois"].length - 1,
+ 				50000 // Skalierung
+ 				);
+ // Filtered Components
+ computeScaling(obj["adjacencyMatrix"],
+ 				obj["pois"].length,
+ 				obj["pois"].length + obj["rankedComponents"].length - 1,
+ 				25000 // Skalierung
+ 				);
+ // Other Components
+ computeScaling(obj["adjacencyMatrix"],
+ 				obj["pois"].length
+ 					+ obj["rankedComponents"].length,
+ 				obj["pois"].length
+ 					+ obj["rankedComponents"].length
+ 					+ obj["otherComponents"].length - 1,
+ 				25000 // Skalierung
+ 				);
+
+ ////////////////////////////////////////////////////////////
+ ///////////////// Beschreibungen erstellen /////////////////
+ ////////////////////////////////////////////////////////////
+
+ var matrix = obj["adjacencyMatrix"]
+ var anzahl_elemente = obj["adjacencyMatrix"].length + 1
+ var anzahl_elemente_rechts = obj["pois"].length
  var anzahl_elemente_links = anzahl_elemente - anzahl_elemente_rechts;
 
  // pois
  // -> name
  var header = []
- chordDiagramMatrixData["pois"].forEach(element => {
+ var header_type = []
+ obj["pois"].forEach(element => {
  	header.push(element.name)
+ 	header_type.push("poi")
  });
 
  // rankedComponents
  // -> name // Später: display_name
  // -> rating "5" (highest), ist bei 6 uhr, "1" (lowest) bei 9 uhr
- chordDiagramMatrixData["rankedComponents"].forEach(element => {
+ obj["rankedComponents"].forEach(element => {
  	header.push(element.name)
+ 	header_type.push("rankedComponents")
  	// Wenn display_name fertig:
  	// header.push(element.display_name)
  });
@@ -36,7 +112,8 @@
  //     -> this.nominal_component.name + ": " + this.name  // Später: display_name
  //   case:	"OC"
  //     -> this.ordinal_component.display_name + ": " + this.display_name
- chordDiagramMatrixData["otherComponents"].forEach(element => {
+ obj["otherComponents"].forEach(element => {
+ 	header_type.push("otherComponents")
  	if (element.componentType === "BC") {
  		header.push(element.name)
  	} else if (element.componentType === "NC") {
@@ -59,6 +136,8 @@
  // Wichtig für Margin links und rechts
  header.splice(anzahl_elemente_rechts, 0, "")
  header.splice(anzahl_elemente, 0, "")
+ header_type.splice(anzahl_elemente_rechts, 0, "")
+ header_type.splice(anzahl_elemente, 0, "")
 
  // Leere Dummy-Zeilen erzeugen
  leeres_array_first = []
@@ -69,22 +148,21 @@
  }
 
  // Dummy Zeilen einfügen
+ matrix.splice(anzahl_elemente_rechts, 0, leeres_array_first)
+ matrix.splice(anzahl_elemente + 1, 0, leeres_array_second)
  matrix_original.splice(anzahl_elemente_rechts, 0, leeres_array_first)
  matrix_original.splice(anzahl_elemente + 1, 0, leeres_array_second)
 
  // Dummy-Werte in die einzelnen Spalten der Adjazenzmatrix der originalen Matrix einfügen
  for (let i = 0; i < anzahl_elemente + 1; i++) {
+ 	matrix[i].splice(anzahl_elemente_rechts, 0, 0);
+ 	matrix[i].splice(anzahl_elemente, 0, 0);
  	matrix_original[i].splice(anzahl_elemente_rechts, 0, 0);
  	matrix_original[i].splice(anzahl_elemente, 0, 0);
  }
 
- // Dummy Verbindungswerte
- dummy_value = 50
- matrix_original[anzahl_elemente_rechts][anzahl_elemente] = dummy_value
- matrix_original[anzahl_elemente][anzahl_elemente_rechts] = dummy_value
-
  ////////////////////////////////////////////////////////////
- ////////////////// Dummy anzeigen //////////////////////////
+ ////////////////// Visualisierung Dummy ////////////////////
  ////////////////////////////////////////////////////////////
 
  let showDummy = false;
@@ -95,6 +173,27 @@
  	dummyColor = "#FF0000";
  	dummyOpacity = 0.8;
  }
+
+ respondents = 0
+
+ for(let i = 0; i < anzahl_elemente_rechts; i++) {
+ 	for(let j = anzahl_elemente_rechts + 1; j < anzahl_elemente; j++) {
+ 		respondents += matrix[i][j];
+ 	}
+ }
+
+ // Wieviel Platz soll der Dummy einnehmen
+ var emptyPerc = 0.3,
+ 	emptyStroke = Math.round(respondents * emptyPerc);
+
+ // Wert des Dummys-Chords (Bestimmt somit die Breite)
+ matrix[anzahl_elemente_rechts][anzahl_elemente]
+ 	= matrix[anzahl_elemente][anzahl_elemente_rechts]
+ 	= emptyStroke
+
+ // Calculate how far the Chord Diagram needs to be rotated clockwise to make the dummy
+ // invisible chord center vertically
+ var offset = (2 * Math.PI) * (emptyStroke / (respondents + emptyStroke)) / 4;
 
  ////////////////////////////////////////////////////////////
  //////////////////////// Set-up ////////////////////////////
@@ -115,66 +214,45 @@
  			.attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");;
 
  var outerRadius = Math.min(width, height) / 2  - (mobileScreen ? 80 : 100),
- 	innerRadius = outerRadius * 0.95,
+ 	innerRadius = outerRadius * 0.92,
  	pullOutSize = 0,
- 	opacityDefault = 0.7, //default opacity of chords
- 	opacityLow = 0.02; //hover opacity of those chords not hovered over
+ 	opacityDefault = 0.6, //default opacity of chords
+ 	opacityLow = 0.1; //hover opacity of those chords not hovered over
 
- ////////////////////////////////////////////////////////////
- ////////////////////////// Data ////////////////////////////
- ////////////////////////////////////////////////////////////
+ // http://paletton.com/#uid=32a0u0kw0w0jyC+oRxVy4oIDfjr
+ var colors = {
+ 	"poi": "#C3F500",
+ 	"rankedComponents": "#E9003A",
+ 	"otherComponents": "#580EAD"
+ 	};
 
- Names = header;
- matrix = matrix_original
- // console.log("amountOfElements: " + amountOfElements)
- // console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
- amountOfElements = anzahl_elemente + 1
- // anzahl_elemente_rechts = amountOfElements - anzahl_elemente_links - 1
- // console.log("amountOfElements: " + amountOfElements)
- // console.log("anzahl_elemente_rechts: " + anzahl_elemente_rechts)
- respondents = 0
+ var colors_dark = {
+ 	"poi": "#97BD00",
+ 	"rankedComponents": "#B4002D",
+ 	"otherComponents": "#440A85"
+ 	};
 
- for(let i = 0; i < anzahl_elemente_rechts; i++) {
- 	for(let j = anzahl_elemente_rechts + 1; j < anzahl_elemente; j++) {
- 		respondents += matrix_original[i][j];
- 	}
- }
-
- //What % of the circle should become empty
- var emptyPerc = 0.6,
- 	emptyStroke = Math.round(respondents * emptyPerc);
-
- // Dummy Stroke, damit wird es gerade gerichtet
- matrix[anzahl_elemente_rechts][amountOfElements - 1] = matrix[amountOfElements - 1][anzahl_elemente_rechts] = emptyStroke
-
- //Calculate how far the Chord Diagram needs to be rotated clockwise to make the dummy
- //invisible chord center vertically
- var offset = (2 * Math.PI) * (emptyStroke / (respondents + emptyStroke)) / 4;
-
- // anzahl_elemente_links = anzahl_elemente - anzahl_elemente_links - 1
- padding_between_arcs = 0.00 // Angabe in rad
- difference = anzahl_elemente_links - anzahl_elemente_rechts
-
- // HOW?
- rotate_by = 1
-
- var offset_test = 0.4;
+ // Finde ich zu dunkel
+ // var colors_dark = {
+ 	// "poi": "#769400",
+ 	// "rankedComponents": "#8D0023",
+ 	// "otherComponents": "#340669"
+ 	// };
 
  ////////////////////////////////////////////////////////////
  /////////////////// D3 Initialisierung /////////////////////
  ////////////////////////////////////////////////////////////
 
  var chord = d3.chord()
- 	.padAngle(padding_between_arcs)
- 	// .padding(1)
- 	// .sortSubgroups(d3.descending) //sort the chords inside an arc from high to low
- 	.sortSubgroups(d3.descending) //which chord should be shown on top when chords cross. Now the biggest chord is at the bottom
+ 	.padAngle(0.00)
+     .sortSubgroups(d3.descending)
  	(matrix);
 
  var arc = d3.arc()
+ 	.cornerRadius(7)
  	.innerRadius(innerRadius)
  	.outerRadius(outerRadius)
- 	.startAngle(startAngle) //startAngle and endAngle now include the offset in degrees
+ 	.startAngle(startAngle)
  	.endAngle(endAngle);
 
  var path = stretchedChord()
@@ -182,10 +260,6 @@
  	.startAngle(startAngle)
  	.endAngle(endAngle)
  	.pullOutSize(pullOutSize);
-
- var fill = d3.scaleOrdinal()
-     .domain(d3.range(Names.length))
-     .range(["#C4C4C4","#C4C4C4","#C4C4C4","#E0E0E0","#EDC951","#CC333F","#00A0B0","#E0E0E0"]);
 
  ////////////////////////////////////////////////////////////
  //////////////////// Draw outer Arcs ///////////////////////
@@ -199,9 +273,21 @@
  	.on("mouseout", fade(opacityDefault));
 
  g.append("path")
- 	.style("stroke", function(d,i) { return (Names[i] === "" ? dummyColor : "#00A1DE"); })
- 	.style("fill", function(d,i) { return (Names[i] === "" ? dummyColor : "#00A1DE"); })
- 	.style("pointer-events", function(d,i) { return (Names[i] === "" ? dummyColor : "auto"); })
+ 	.style("stroke", function(d,i) {
+ 			if (header[i] === "") {
+ 				return dummyColor
+ 			} else {
+ 				return colors_dark[header_type[i]]
+ 			}
+ 		})
+ 	.style("fill", function(d,i) {
+ 			if (header[i] === "") {
+ 				return dummyColor
+ 			} else {
+ 				return colors[header_type[i]]
+ 			}
+ 		})
+ 	.style("pointer-events", function(d,i) {return (header[i] === "" ? dummyColor : "auto"); })
  	.attr("d", arc)
  	.attr("transform", function(d, i) {
  		//Pull the two slices apart
@@ -210,11 +296,11 @@
  	});
 
  ////////////////////////////////////////////////////////////
- ////////////////////// Append Names ////////////////////////
+ //////////////// Beschreibungen anzeigen ///////////////////
  ////////////////////////////////////////////////////////////
 
- //The text also needs to be displaced in the horizontal directions
- //And also rotated with the offset in the clockwise direction
+ // The text also needs to be displaced in the horizontal directions
+ // And also rotated with the offset in the clockwise direction
  g.append("text")
  	.each(function(d) { d.angle = ((d.startAngle + d.endAngle) / 2) + offset;})
  	.attr("dy", ".35em")
@@ -227,34 +313,53 @@
  		+ "translate(" + 55 + ",0)"
  		+ (d.angle > Math.PI ? "rotate(180)" : "")
  	})
-   .text(function(d,i) { return Names[i]; });
+   .text(function(d,i) { return header[i]; });
 
  ////////////////////////////////////////////////////////////
  //////////////////// Draw inner chords /////////////////////
  ////////////////////////////////////////////////////////////
 
  var chords = wrapper.selectAll("path.chord")
-     .data(chord)
-     .enter().append("path")
-     .attr("class", "chord")
-     .style("stroke", "none")
-     .style("fill", "#C4C4C4")
-     .style("opacity", function(d) { return (Names[d.source.index] === "" ? dummyOpacity : opacityDefault); }) //Make the dummy strokes have a zero opacity (invisible)
-     .style("pointer-events", function(d,i) { return (Names[d.source.index] === "" ? "none" : "auto"); }) //Remove pointer events from dummy strokes
-     .attr("d", path);
-     
+ 	.data(chord)
+ 	.enter().append("path")
+ 	.attr("class", "chord")
+ 	.style("stroke", "none")
+ 	.style("fill", function(d){
+ 		if (header_type[d.source.index] === "poi") {
+ 			return "url(#chordGradient-" + d.source.index + "-" + d.target.index + ")";
+ 		} else {
+ 			return "url(#chordGradient-" + d.target.index + "-" + d.source.index + ")";
+ 		}
+     })
+ 	// .style("fill", function(d,i) {
+ 			// if (header_type[d.source.index] === "poi") {
+ 				// return colors[header_type[d.target.index]]
+ 			// } else {
+ 				// return colors[header_type[d.source.index]]
+ 			// }
+ 		// })
+ 	.style("opacity", function(d) { return (header[d.source.index] === "" ? dummyOpacity : opacityDefault); }) // Make the dummy strokes have a zero opacity (invisible)
+ 	.style("pointer-events", function(d,i) {
+ 		return "visiblePainted"
+ 		return (header[d.source.index] === "" ? "none" : "auto"); }) // Remove pointer events from dummy strokes
+ 	.attr("d", path);
+
  ////////////////////////////////////////////////////////////
  ///////////////////////// Tooltip //////////////////////////
  ////////////////////////////////////////////////////////////
 
- //Arcs
+ // Arcs
  g.append("title")
- 	.text(function(d, i) {return Math.round(d.value) + " people in " + Names[i];});
+ 	.text(function(d, i) {
+ 		return sum_array_values(matrix_original[i]) + " " + header[i]
+ 	});
 
- //Chords
+ // Chords
  chords.append("title")
  	.text(function(d) {
- 		return [Math.round(d.source.value), " people from ", Names[d.target.index], " to ", Names[d.source.index]].join("");
+ 		return header[d.source.index]
+ 			+ " + "
+ 			+ header[d.target.index];
  	});
 
  ////////////////////////////////////////////////////////////
@@ -263,8 +368,6 @@
 
  //Include the offset in de start and end angle to rotate the Chord diagram clockwise
  function startAngle(d) {
- 	// calc = d.startAngle + offset;
- 	// console.log("d.startAngle: " + d.startAngle + "  - offset: " + offset);
  	return d.startAngle + offset; }
  function endAngle(d) { return d.endAngle + offset; }
 
@@ -272,14 +375,14 @@
  function fade(opacity) {
    return function(d, i) {
  	svg.selectAll("path.chord")
- 		.filter(function(d) { return d.source.index !== i && d.target.index !== i && Names[d.source.index] !== ""; })
+ 		.filter(function(d) { return d.source.index !== i && d.target.index !== i && header[d.source.index] !== ""; })
  		.transition("fadeOnArc")
  		.style("opacity", opacity);
    };
- }//fade
+ } //fade
 
  ////////////////////////////////////////////////////////////
- //////// Draw Super Categories - By Faraz Shuja ////////////
+ /////////////// Draw Super Categories - ////////////////////
  ////////////////////////////////////////////////////////////
 
  // POIs
@@ -287,18 +390,36 @@
  poiEnd = anzahl_elemente_rechts - 1
 
  // Ranked Components
- filteredAttributesStart = poiEnd + 2 // 2 weil Dummy
- filteredAttributesEnd = filteredAttributesStart + chordDiagramMatrixData["rankedComponents"].length
+ filteredAttributesStart = poiEnd + 2 // 2 weil Dummy, +1 wäre index des Dummy
+ filteredAttributesEnd = filteredAttributesStart + obj["rankedComponents"].length - 1
 
  // Other Components
  otherAttributesStart = filteredAttributesEnd + 1
- otherAttributesEnd = otherAttributesStart + chordDiagramMatrixData["otherComponents"].length - 2 // 2 weil Dummy
+ otherAttributesEnd = otherAttributesStart + obj["otherComponents"].length - 1
 
  // Define grouping with colors
  var groups = [
- 	{sIndex: poiStart, eIndex: poiEnd, title: 'POIs', color: '#FF0000'},
- 	{sIndex: filteredAttributesStart, eIndex: filteredAttributesEnd, title: 'Filtered Components', color: '#00FF00'},
- 	{sIndex: otherAttributesStart, eIndex: otherAttributesEnd, title: 'Other Components', color: '#0000FF'}
+ 	{
+ 		sIndex: poiStart,
+ 		eIndex: poiEnd,
+ 		title: 'POIs',
+ 		color: colors['poi'],
+ 		color_dark: colors_dark['poi']
+ 	},
+ 	{
+ 		sIndex: filteredAttributesStart,
+ 		eIndex: filteredAttributesEnd,
+ 		title: 'Filtered Components',
+ 		color: colors['rankedComponents'],
+ 		color_dark: colors_dark['rankedComponents']
+ 	},
+ 	{
+ 		sIndex: otherAttributesStart,
+ 		eIndex: otherAttributesEnd,
+ 		title: 'Other Components',
+ 		color: colors['otherComponents'],
+ 		color_dark: colors_dark['otherComponents']
+ 	}
  ];
 
  var cD = chord.groups;
@@ -308,8 +429,9 @@
  	var __g = groups[i];
 
  	var arc1 = d3.arc()
- 		.innerRadius(innerRadius * 1.1)
- 		.outerRadius(outerRadius * 1.11)
+ 		.cornerRadius(15)
+ 		.innerRadius(innerRadius * 1.13)
+ 		.outerRadius(outerRadius * 1.12)
  		.startAngle(
 
  			cD[__g.sIndex].startAngle + offset
@@ -322,15 +444,22 @@
  	svg.append("path")
  		.attr("d", arc1)
  		.attr('fill', __g.color)
+ 		.attr("stroke", __g.color_dark)
  		.attr('id', 'groupId' + i)
-
  		.attr("transform",
  			  "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
 
  	// Add a text label.
  	var text = svg.append("text")
- 		.attr("x", 200)
- 		.attr("dy", 13);
+ 		.attr("x", function(d)
+ 		{
+ 			if (__g.title === 'POIs') {
+ 				return (width / 2)
+ 			} else {
+ 				return (width / 4)
+ 			}
+ 		})
+ 		.attr("dy", 16);
 
  	text.append("textPath")
  		.attr("stroke","#000")
@@ -338,3 +467,80 @@
  		.attr("xlink:href","#groupId" + i)
  		.text(__g.title);
  }
+
+ ////////////////////////////////////////////////////////////
+ ///////////////////////// TEST /////////////////////////////
+ ////////////////////////////////////////////////////////////
+ // https://www.visualcinnamon.com/2016/06/orientation-gradient-d3-chord-diagram
+ ////////////////////////////////////////////////////////////
+ ////////////////////////////////////////////////////////////
+
+ //Create a gradient definition for each chord
+ var grads = svg.append("defs").selectAll("linearGradient")
+     .data(chord)
+     .enter().append("linearGradient")
+     //Create a unique gradient id per chord: e.g. "chordGradient-0-4"
+     .attr("id", function(d) {
+ 		console.log(header_type[d.source.index])
+ 		if (header_type[d.source.index] === "rankedComponents") {
+ 			return "chordGradient-" + d.target.index + "-" + d.source.index;
+ 		} else if(header_type[d.target.index] === "otherComponents") {
+ 			return "chordGradient-" + d.source.index + "-" + d.target.index;
+ 		}
+     })
+     //Instead of the object bounding box, use the entire SVG for setting locations
+     //in pixel locations instead of percentages (which is more typical)
+     .attr("gradientUnits", "userSpaceOnUse")
+     //The full mathematical formula to find the x and y locations
+     //of the Avenger's source chord
+     .attr("x1", function(d,i) {
+         return innerRadius*Math.cos((d.source.endAngle-d.source.startAngle)/2 +
+         d.source.startAngle-Math.PI/2);
+     })
+     .attr("y1", function(d,i) {
+         return innerRadius*Math.sin((d.source.endAngle-d.source.startAngle)/2 +
+         d.source.startAngle-Math.PI/2);
+     })
+     //Find the location of the target Avenger's chord
+     .attr("x2", function(d,i) {
+         return innerRadius*Math.cos((d.target.endAngle-d.target.startAngle)/2 +
+         d.target.startAngle-Math.PI/2);
+     })
+     .attr("y2", function(d,i) {
+         return innerRadius*Math.sin((d.target.endAngle-d.target.startAngle)/2 +
+         d.target.startAngle-Math.PI/2);
+     })
+
+ //Set the starting color
+ grads.append("stop")
+     .attr("offset", function(d){
+ 		if (header_type[d.source.index] === "rankedComponents") {
+ 			return "70%"
+ 		} else if(header_type[d.target.index] === "otherComponents") {
+ 			return "0%"
+ 		}
+ 	})
+     .attr("stop-color", function(d){
+ 		if (header_type[d.source.index] === "rankedComponents") {
+ 			return colors[header_type[d.source.index]]
+ 		} else if(header_type[d.target.index] === "otherComponents") {
+ 			return colors[header_type[d.source.index]]
+ 		}
+ 	});
+
+ //Set the ending color
+ grads.append("stop")
+     .attr("offset", function(d){
+ 		if (header_type[d.source.index] === "rankedComponents") {
+ 			return "100%"
+ 		} else if(header_type[d.target.index] === "otherComponents") {
+ 			return "30%"
+ 		}
+ 	})
+     .attr("stop-color", function(d){
+ 		if (header_type[d.source.index] === "rankedComponents") {
+ 			return colors[header_type[d.target.index]]
+ 		} else if(header_type[d.target.index] === "otherComponents") {
+ 			return colors[header_type[d.target.index]]
+ 		}
+ 	});
