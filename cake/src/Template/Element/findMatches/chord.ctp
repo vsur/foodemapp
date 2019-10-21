@@ -7,12 +7,8 @@
   </div>
 </div> <!-- /.row -->
 <script type="text/javascript">
-    var matrix = <?= json_encode($chordDiagramMatrixData->adjacencyMatrix) ?>;
-    var rankedComponents = <?= json_encode($chordDiagramMatrixData->rankedComponents) ?>;
-    var otherComponents = <?= json_encode($chordDiagramMatrixData->otherComponents) ?>;
-    console.log("Alle ChorddigramMatrixData");
     var chordDiagramMatrixData = <?= json_encode($chordDiagramMatrixData) ?>;
-    console.log(chordDiagramMatrixData);
+    var matrix = <?= json_encode($chordDiagramMatrixData->adjacencyMatrix) ?>;
 </script>
 <?= $this->Html->script('d3.stretched.chord.js') ?>
 <?= $this->Html->script('d3.layout.chord.sort.js') ?>

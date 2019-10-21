@@ -6,10 +6,12 @@
  ////////////////// Input verarbeiten ///////////////////////
  ////////////////////////////////////////////////////////////
 
-var json = chordDiagramMatrixData;
-
+ var json = chordDiagramMatrixData;
+ 
  var obj = chordDiagramMatrixData;
- var matrix_original = json.adjacencyMatrix;
+ var matrix_original = matrix;
+ 
+ console.log(matrix_original);
 
  ////////////////////////////////////////////////////////////
  //////////////// Skalierung der Bereiche ///////////////////
@@ -97,10 +99,10 @@ var json = chordDiagramMatrixData;
  // -> name // Später: display_name
  // -> rating "5" (highest), ist bei 6 uhr, "1" (lowest) bei 9 uhr
  obj["rankedComponents"].forEach(element => {
- 	header.push(element.name)
+ 	// header.push(element.name)
  	header_type.push("rankedComponents")
  	// Wenn display_name fertig:
- 	// header.push(element.display_name)
+ 	header.push(element.display_name)
  });
 
  // otherComponents
