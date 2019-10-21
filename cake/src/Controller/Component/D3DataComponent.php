@@ -137,6 +137,7 @@ class D3DataComponent extends Component
         $selectionCleandComponentsNames = $this->removeRankedComponentsNames($allContainedComponentsNames, $rankedSelectionComponentsNames);
 
         $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponentsNames, $selectionCleandComponentsNames);
+        debug($adjacencyMatrixIndex);
 
         $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelectionComponentsNames, $selectionCleandComponentsNames, $adjacencyMatrixIndex);
         $matrixData->pois = $ypois->toArray();
@@ -504,6 +505,8 @@ class D3DataComponent extends Component
             }
         }
 
+        // TODO iterate over $rankedSelectionComponents and set self reference for NOT binaries
+
         return $adjacencyMatrix;
     }
 
@@ -512,6 +515,12 @@ class D3DataComponent extends Component
         $adjacencyMatrix[$currentYpoiIndex][$componentIndex] = 1;
         // Set adjacency in row for found component
         $adjacencyMatrix[$componentIndex][$currentYpoiIndex] = 1;
+        return $adjacencyMatrix;
+    }
+
+    protected function setNotBinaryAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex) {
+        // Set adjacency in in self reference
+        $adjacencyMatrix[$componentIndex][$componentIndex] = 99; // TODO: Number of POIs.
         return $adjacencyMatrix;
     }
 
