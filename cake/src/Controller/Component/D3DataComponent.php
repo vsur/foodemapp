@@ -137,9 +137,8 @@ class D3DataComponent extends Component
         $selectionCleandComponentsNames = $this->removeRankedComponentsNames($allContainedComponentsNames, $rankedSelectionComponentsNames);
 
         $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponentsNames, $selectionCleandComponentsNames);
-        debug($adjacencyMatrixIndex);
 
-        $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelectionComponentsNames, $selectionCleandComponentsNames, $adjacencyMatrixIndex);
+        $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelection, $rankedSelectionComponentsNames, $selectionCleandComponentsNames, $adjacencyMatrixIndex);
         $matrixData->pois = $ypois->toArray();
         $matrixData->rankedComponents = $this->buildRankedComponentsArray($rankedSelection);
         $matrixData->otherComponents =  $this->buildOtherComponentsArray($ypois, $rankedSelection);
@@ -463,7 +462,7 @@ class D3DataComponent extends Component
         return $rankedSelectionNames;
     }
 
-    protected function createAdjacencyMatrix($ypois, $rankedSelectionComponents, $selectionCleandComponentsNames, $adjacencyMatrixIndex)
+    protected function createAdjacencyMatrix($ypois, $rankedSelection, $rankedSelectionComponents, $selectionCleandComponentsNames, $adjacencyMatrixIndex)
     {
         $adjacencyMatrix = [];
         // Create adjacency column with blanks
@@ -505,8 +504,21 @@ class D3DataComponent extends Component
             }
         }
 
-        // TODO iterate over $rankedSelectionComponents and set self reference for NOT binaries
-
+        // Iterate over all rankedComponents and cehck $adjacencyMatrixIndex index to create adjacency for NOT binaryComponents
+        foreach ($rankedSelection as $rating => $ratedComponents) {
+            if (!empty($ratedComponents->binaryComponents)) {
+                foreach ($ratedComponents->binaryComponents as $binaryComponent) {
+                    if(!$binaryComponent->binaryComponentState) {
+                        // Concat component and id to prepare adjacency
+                        $binaryComponentConcatenation = $this->buildBinaryComponentConcatenationName($binaryComponent);
+                        // Get index in $adjacencyMatrixIndex for current component
+                        $componentIndex = array_search($binaryComponentConcatenation, $adjacencyMatrixIndex);
+                        debug($componentIndex);
+                        $adjacencyMatrix = $this->setNotBinaryAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex, $ypois);
+                    }
+                }
+            }
+        }
         return $adjacencyMatrix;
     }
 
@@ -518,9 +530,11 @@ class D3DataComponent extends Component
         return $adjacencyMatrix;
     }
 
-    protected function setNotBinaryAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex) {
+    protected function setNotBinaryAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex, $ypois) {
+        // Calculate self reference factor of ypois number
+        $selfReferenceFactor = count($ypois->toArray());
         // Set adjacency in in self reference
-        $adjacencyMatrix[$componentIndex][$componentIndex] = 99; // TODO: Number of POIs.
+        $adjacencyMatrix[$componentIndex][$componentIndex] = $selfReferenceFactor; 
         return $adjacencyMatrix;
     }
 
