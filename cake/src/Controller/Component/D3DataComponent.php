@@ -513,7 +513,6 @@ class D3DataComponent extends Component
                         $binaryComponentConcatenation = $this->buildBinaryComponentConcatenationName($binaryComponent);
                         // Get index in $adjacencyMatrixIndex for current component
                         $componentIndex = array_search($binaryComponentConcatenation, $adjacencyMatrixIndex);
-                        debug($componentIndex);
                         $adjacencyMatrix = $this->setNotBinaryAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex, $ypois);
                     }
                 }
