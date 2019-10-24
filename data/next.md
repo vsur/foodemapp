@@ -38,12 +38,16 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
         * Zoom später einbauen
 4. Chroddiagram
     1. ✓ Erste Version von Stephan einbauen
-    2. Überareitung
-    3. Erneuter Einbau
+    2. ✓ Überareitung
+    3. ✓ Erneuter Einbau
     4. Fine Tuning
 3. Karte
-  1. Mobile
-  2. Dekstop
+    1. Dekstop
+        1. Binary True werden falsch gesetzt
+        2. Kartenzusammenfassung muss realisiert werden
+        3. Umschalter zw. gewählt übrigen usw. 
+    1. Mobile
+        1. Test
 5. Weitere GUI-Elemente
 6. Zusammenspiel der GUIS, Selektion usw.
 7. Dann noch mal hübsch machen
