@@ -85,6 +85,11 @@
         left: 2px;
         bottom: 2px;
     }
+    input:checked + .slider:before {
+      -webkit-transform: translateX(12px);
+      -ms-transform: translateX(12px);
+      transform: translateX(12px);
+    } 
     li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
         width: 25px;
         height: 25px;

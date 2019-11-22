@@ -7606,9 +7606,15 @@ path.chord {
     width: 13px;
     left: 2px;
     bottom: 2px; }
+  .popUpComponentList input:checked + .slider:before {
+    -webkit-transform: translateX(12px);
+    -ms-transform: translateX(12px);
+    transform: translateX(12px); }
   .popUpComponentList li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
     width: 25px;
     height: 25px; }
 
 .leaflet-popup-tip-container {
   display: none; }
+
+/*# sourceMappingURL=fmappdata.css.map */
