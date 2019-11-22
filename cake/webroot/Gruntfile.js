@@ -1,5 +1,5 @@
 //Gruntfile.js
-
+const sass = require('node-sass');
 //our wrapper function (required by grunt and its plugins)
 //all configuration goes inside this function
 module.exports = function(grunt) {
@@ -25,7 +25,8 @@ module.exports = function(grunt) {
 		},
 
 		// Config sass
-		sass: {                              // Task
+		sass: {                             
+			options: { implementation: sass, sourceMap: true },
 			dist: {
 				files: [{
 					expand: true,
@@ -106,7 +107,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-html');
 	grunt.loadNpmTasks('grunt-sass');
-
+	
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);
 	grunt.registerTask('doJS', ['jshint', 'concat:noBoot']);
