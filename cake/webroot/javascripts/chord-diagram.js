@@ -312,7 +312,7 @@
  		var c = arc.centroid(d);
  		return "translate(" + (c[0] + d.pullOutSize) + "," + c[1] + ")"
  		+ "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
- 		+ "translate(" + 55 + ",0)"
+ 		+ "translate(" + 70 + ",0)"
  		+ (d.angle > Math.PI ? "rotate(180)" : "")
  	})
    .text(function(d,i) { return header[i]; });
