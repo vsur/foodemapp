@@ -117,9 +117,9 @@
  obj["otherComponents"].forEach(element => {
  	header_type.push("otherComponents")
  	if (element.componentType === "BC") {
- 		header.push(element.name)
+ 		header.push(element.display_name)
  	} else if (element.componentType === "NC") {
- 		header.push(element.nominal_component.name + ": " + element.name)
+ 		header.push(element.nominal_component.display_name + ": " + element.display_name)
  		// Wenn display_name fertig:
  		// header.push(element.nominal_component.display_name + ": " + element.display_name)
  	} else if (element.componentType === "OC") {
