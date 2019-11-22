@@ -1,5 +1,5 @@
 //Gruntfile.js
-const sass = require('node-sass');
+var sass = require('node-sass');
 //our wrapper function (required by grunt and its plugins)
 //all configuration goes inside this function
 module.exports = function(grunt) {
