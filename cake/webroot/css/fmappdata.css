@@ -7537,6 +7537,9 @@ path.chord {
 /***************************
  * Put here stuff for Map  *
  ***************************/
+#mapComponentsChoice {
+  margin-bottom: 1em; }
+
 #poisMap {
   position: relative;
   width: 100%; }

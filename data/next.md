@@ -43,7 +43,7 @@ Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
     4. Fine Tuning
 3. Karte
     1. Dekstop
-        1. Binary True werden falsch gesetzt
+        1. ✓ Binary True werden falsch gesetzt
         2. Kartenzusammenfassung muss realisiert werden
         3. Umschalter zw. gewählt übrigen usw. 
     1. Mobile

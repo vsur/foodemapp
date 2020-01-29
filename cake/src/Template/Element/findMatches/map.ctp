@@ -1,6 +1,11 @@
 <div class="row">
     <div class="col-md-12">
         <h1>Ihre Ergebnisse auf einer Karte</h1>
+        <ul id="mapComponentsChoice" class="nav nav-pills">
+            <li role="presentation" class="active"><a href="#" id="mapComponentsChosen" data-component-presentation="chosen">Gesuchte Komponenten</a></li>
+            <li role="presentation" ><a href="#" id="mapComponentsHide" data-component-presentation="none">Komponenten ausblenden</a></li>
+            <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="other">Übrige Komponenten</a></li>
+        </ul>
         <div id="ypoisMap"></div>
     </div>
 </div>

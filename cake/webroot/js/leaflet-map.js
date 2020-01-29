@@ -6,6 +6,7 @@ $("#ypoisMap").css("height", maxHeight/2);
 
 // Initalize LMap
 var mymap = L.map('ypoisMap').setView([49.01, 8.40806], 13);
+var markers = L.layerGroup([]);
 var myIcon = L.divIcon({
     iconSize: [32, 32],
     iconAnchor: [16, 16],
@@ -16,7 +17,7 @@ ypois.forEach(function(ypoi, i) {
     var newIcon = myIcon;
     newIcon.options.className = 'ypoiIcon';
     newIcon.options.html = '<div><span>' + ypoi.name + '</span></div>';
-    var marker = L.marker([ypoi.lat, ypoi.lng], {icon: newIcon}).addTo(mymap);
+    var marker = L.marker([ypoi.lat, ypoi.lng], {icon: newIcon});
     var popupOptions = {
         className: "infoPopup",
         maxWidth: 150,
@@ -26,10 +27,36 @@ ypois.forEach(function(ypoi, i) {
         closeOnEscapeKey: false,
         autoClose: false,
     };
-    var popupContentFromRankedSelcetion = buildRankedSelectionPopupContent();
-    marker.bindPopup(popupContentFromRankedSelcetion, popupOptions).openPopup();
+    let popupContent = "Keine Inhalte gesetzt";
+    marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
 });
+markers.addTo(mymap);
+
+// Update popup content
+updateMarkersContent(markers, "chosen");
+
+// Open all popups
+for (var markerProperty in markers._layers) {
+    markers._layers[markerProperty].openPopup();
+}
+
 mymap.setView([49.01, 8.40806], 13);
+
+function updateMarkersContent(markers, newContentType) {
+    for (var markerProperty in markers._layers) {
+        marker = markers._layers[markerProperty];
+
+        let popupContent = "";
+
+        switch (newContentType) {
+            case "chosen":
+                popupContent = buildRankedSelectionPopupContent();
+                break;
+        }
+
+        marker._popup.setContent(popupContent);
+    }
+}
 
 function buildRankedSelectionPopupContent() {
     let contentString = '<ul class="list-unstyled popUpComponentList">';
@@ -87,3 +114,17 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
 
         return ratingString;
 }
+
+function  updateShownComponents(componentsToPresent, clickedAncher) {
+    alert("Komopnent die anzuzeigen sind: " +  componentsToPresent );
+    $(clickedAncher).parent("li").addClass('active');
+} 
+
+
+$(document).ready(function() { 
+    $("#mapComponentsChoice a").click(function (event) {
+        var componentsToPresent = $(this).attr('data-component-presentation');
+        $("#mapComponentsChoice li").removeClass('active');
+        updateShownComponents(componentsToPresent, this);
+    });
+});
