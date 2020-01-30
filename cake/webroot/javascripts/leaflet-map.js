@@ -17,7 +17,12 @@ ypois.forEach(function(ypoi, i) {
     var newIcon = myIcon;
     newIcon.options.className = 'ypoiIcon';
     newIcon.options.html = '<div><span>' + ypoi.name + '</span></div>';
-    var marker = L.marker([ypoi.lat, ypoi.lng], {icon: newIcon});
+    var marker = L.marker([ypoi.lat, ypoi.lng], {
+        icon: newIcon,
+        binaryComponents: ypoi.binary_components,
+        nominalAttributes: ypoi.nominal_attributes,
+        ordinalAttributes: ypoi.ordinal_attributes
+    });
     var popupOptions = {
         className: "infoPopup",
         maxWidth: 150,
@@ -36,9 +41,7 @@ markers.addTo(mymap);
 updateMarkersContent(markers, "chosen");
 
 // Open all popups
-for (var markerProperty in markers._layers) {
-    markers._layers[markerProperty].openPopup();
-}
+openAllMarkersPopups(markers);
 
 mymap.setView([49.01, 8.40806], 13);
 
@@ -52,9 +55,41 @@ function updateMarkersContent(markers, newContentType) {
             case "chosen":
                 popupContent = buildRankedSelectionPopupContent();
                 break;
+
+            case "none":
+                popupContent = "Kein Inhalt gesetzt";
+                break;
+            
+            case "other":
+                popupContent = buildOtherComponentsPopupContent(marker, 'all');
+                break;
+            
+            case "justBinary":
+                popupContent = buildOtherComponentsPopupContent(marker, newContentType);
+                break;
+
+            case "justNominal":
+                popupContent = buildOtherComponentsPopupContent(marker, newContentType);
+                break;
+
+            case "justOrdinal":
+                popupContent = buildOtherComponentsPopupContent(marker, newContentType);
+                break;
         }
 
         marker._popup.setContent(popupContent);
+    }
+}
+
+function openAllMarkersPopups(markers) {
+    for (var markerProperty in markers._layers) {
+        markers._layers[markerProperty].openPopup();
+    }
+}
+
+function closeAllMarkersPopups(markers) {
+    for (var markerProperty in markers._layers) {
+        markers._layers[markerProperty].closePopup();
     }
 }
 
@@ -108,15 +143,72 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
 
             ratingString +=    '<input type="range" min="' + minRange + '" max="' + maxRange + '" step="1" value="' + rankedOrdinal.meter + '" disabled>';
 
-
             ratingString += '</li>';
         });
 
         return ratingString;
 }
 
+function buildOtherComponentsPopupContent(marker, componentTypes) {
+    let contentString = '<ul class="list-unstyled popUpComponentList">';
+
+    // Iterate over all components of ypoi
+    if(componentTypes == 'all' || componentTypes == 'justBinary') contentString += buildBinaryComponents(marker.options.binaryComponents);
+    if(componentTypes == 'all' || componentTypes == 'justNominal') contentString += buildNominalComponents(marker.options.nominalAttributes);
+    if(componentTypes == 'all' || componentTypes == 'justOrdinal') contentString += buildOrdinalComponents(marker.options.ordinalAttributes);
+
+    contentString += '</ul>';
+    return contentString;
+}
+
+function buildBinaryComponents(binaryComponents) {
+    var binaryComponentString = '';
+    binaryComponents.forEach(function(binaryComponent) {
+        binaryComponentString += '<li class="binaryComponentContainer clearfix">';
+
+        binaryComponentString +=    '<span class="componentNameBinarySlider' +  (binaryComponent.display_name != '' ? '' : ' text-muted') + '">' + (binaryComponent.display_name != '' ? binaryComponent.display_name : binaryComponent.name) + '</span><label class="switch pull-right"><input type="checkbox"' +  (binaryComponent.binaryComponentState == true ? 'checked' : '') + ' disabled><span class="slider round"></span></label>';
+            
+        binaryComponentString += '</li>';
+    });
+    return binaryComponentString;
+}
+function buildNominalComponents(nominalAttributes) {
+    var nominalComponentString = '';
+    nominalAttributes.forEach(function(nominalAttribute, index) {
+        nominalComponentString += '<li class="nominalComponentContainer clearfix">';
+
+        nominalComponentString +=    '<div class="nominalAttribute pull-right"><figure class="attrIcons ' + (nominalAttribute.icon_path != '' ? nominalAttribute.icon_path : 'iconPlaceholder') + '"></figure></div>';
+        nominalComponentString +=    '<span class="nominalNameCombo"><span class="componentNameNominalComponent' + (nominalAttribute.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (nominalAttribute.nominal_component.display_name != '' ? (nominalAttribute.nominal_component.display_name) : nominalAttribute.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (nominalAttribute.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (nominalAttribute.display_name != '' ? nominalAttribute.display_name : nominalAttribute.name) + '</span></span>';
+
+        nominalComponentString += '</li>';
+    });
+    return nominalComponentString;
+}
+function buildOrdinalComponents(ordinalAttributes) {
+    var ordinalComponentString = '';
+    ordinalAttributes.forEach(function(ordinalAttribute, index) {
+        ordinalComponentString += '<li class="ordinalComponentContainer clearfix">';
+
+        ordinalComponentString +=    '<span class="componentNameOrdinalComponent' + (ordinalAttribute.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (ordinalAttribute.ordinal_component.display_name != '' ? ( ordinalAttribute.ordinal_component.display_name) :  ordinalAttribute.ordinal_component.name) + '</span> <span class="attributeNameOrdinalAttribute ' + (ordinalAttribute.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (ordinalAttribute.display_name != '' ? ordinalAttribute.display_name : ordinalAttribute.name) + '</span> <br>';
+
+        let minRange = ordinalAttribute.ordinal_component.ordinal_attributes.slice(0)[0].meter;
+        let maxRange = ordinalAttribute.ordinal_component.ordinal_attributes.slice(-1)[0].meter;
+
+        ordinalComponentString +=    '<input type="range" min="' + minRange + '" max="' + maxRange + '" step="1" value="' + ordinalAttribute.meter + '" disabled>';
+
+        ordinalComponentString += '</li>';
+    });
+    return ordinalComponentString;
+}
+
 function  updateShownComponents(componentsToPresent, clickedAncher) {
-    alert("Komopnent die anzuzeigen sind: " +  componentsToPresent );
+    console.log("Komopnent die anzuzeigen sind: " +  componentsToPresent );
+    updateMarkersContent(markers, componentsToPresent);
+    if(componentsToPresent == "none") {
+        closeAllMarkersPopups(markers);
+    } else {
+        openAllMarkersPopups(markers);
+    }
     $(clickedAncher).parent("li").addClass('active');
 } 
 

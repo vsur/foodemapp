@@ -88,6 +88,7 @@
 <script type="text/javascript">
     var criteria = <?= json_encode($criteria) ?>;
     var configuredSelection = <?= json_encode($configuredSelection) ?>;
+    
 </script>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Criteria Block for JS ↑↑↑↑
