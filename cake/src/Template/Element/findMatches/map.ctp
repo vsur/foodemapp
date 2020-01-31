@@ -1,3 +1,8 @@
+<?php
+    echo $this->Html->css(['MarkerCluster', 'MarkerCluster.Default'], ['block' => true]);
+    echo $this->Html->script('leaflet.markercluster', ['block' => true]);
+?>
+
 <div class="row">
     <div class="col-md-12">
         <h1>Ihre Ergebnisse auf einer Karte</h1>

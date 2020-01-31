@@ -6,7 +6,8 @@ $("#ypoisMap").css("height", maxHeight/2);
 
 // Initalize LMap
 var mymap = L.map('ypoisMap').setView([49.01, 8.40806], 13);
-var markers = L.layerGroup([]);
+// var markers = L.layerGroup([]);
+var markers = L.markerClusterGroup([]);
 var myIcon = L.divIcon({
     iconSize: [32, 32],
     iconAnchor: [16, 16],
@@ -19,6 +20,7 @@ ypois.forEach(function(ypoi, i) {
     newIcon.options.html = '<div><span>' + ypoi.name + '</span></div>';
     var marker = L.marker([ypoi.lat, ypoi.lng], {
         icon: newIcon,
+        poiName: ypoi.name,
         binaryComponents: ypoi.binary_components,
         nominalAttributes: ypoi.nominal_attributes,
         ordinalAttributes: ypoi.ordinal_attributes
@@ -35,6 +37,13 @@ ypois.forEach(function(ypoi, i) {
     let popupContent = "Keine Inhalte gesetzt";
     marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
 });
+
+markers.on('animationend', function (a) {
+    console.log('animatied fired ');
+    console.log(a);
+    reopenLastSelectedPopupcontent();
+});
+
 markers.addTo(mymap);
 
 // Update popup content
@@ -46,8 +55,8 @@ openAllMarkersPopups(markers);
 mymap.setView([49.01, 8.40806], 13);
 
 function updateMarkersContent(markers, newContentType) {
-    for (var markerProperty in markers._layers) {
-        marker = markers._layers[markerProperty];
+    for (var markerProperty in markers._featureGroup._layers) {
+        marker = markers._featureGroup._layers[markerProperty];
 
         let popupContent = "";
 
@@ -82,14 +91,25 @@ function updateMarkersContent(markers, newContentType) {
 }
 
 function openAllMarkersPopups(markers) {
-    for (var markerProperty in markers._layers) {
-        markers._layers[markerProperty].openPopup();
+    for (var markerProperty in markers._featureGroup._layers) {
+        markers._featureGroup._layers[markerProperty].openPopup();
     }
 }
 
 function closeAllMarkersPopups(markers) {
-    for (var markerProperty in markers._layers) {
-        markers._layers[markerProperty].closePopup();
+    for (var markerProperty in markers._featureGroup._layers) {
+        markers._featureGroup._layers[markerProperty].closePopup();
+    }
+}
+function reopenLastSelectedPopupcontent() {
+    let lastSelectedPopupContent = "";
+    $("#mapComponentsChoice li").each(function() {
+        if( $( this ).hasClass('active') ) {
+            lastSelectedPopupContent = $(this).children("a").attr('data-component-presentation');
+        }
+      }); 
+    if(lastSelectedPopupContent != "none") {
+        openAllMarkersPopups(markers) ;
     }
 }
 
