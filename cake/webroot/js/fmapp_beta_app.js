@@ -17,7 +17,7 @@ var fmApp = {
     nominalAttributeIdPrefix: '_NCATTR-ID_',
     ordinalAttributeIdPrefix: '_OCATTR-ID_',
     standardRating: 3, // Out of 3
-
+    
     // Main Controls
     checks: {
         input: function() {
@@ -299,6 +299,10 @@ var fmApp = {
             var foundOrdinalAttributeId = findOrdinalAttributeIdIn.slice(findOrdinalAttributeIdIn.indexOf(fmApp.ordinalAttributeIdPrefix) + fmApp.ordinalAttributeIdPrefix.length);
             return parseInt(foundOrdinalAttributeId);
         },
+        criteriaListOffString: function(findCriteriaListIn) {
+            var slicedIdentifier = findCriteriaListIn.slice(13);
+            return slicedIdentifier;
+        },
     },
 
     // Main Functions
@@ -349,6 +353,8 @@ var fmApp = {
         // Prepend choosen component
         this.currentComponent = '<p id="criteriaList' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
         $("#criteriaChoice").append(this.currentComponent);
+        this.currentComponent = null;
+        // Add deletion action
         $(".throwComponent").click(function() {
             var componentToDelete = $(this).parent().attr("id");
             $(this).parent().remove();
@@ -439,13 +445,39 @@ var fmApp = {
         window.location = url + paramString;
     },
     deleteComponent: function(delName) {
-        $("#" + delName).remove();
-        $("#" + delName + "Gauge").remove();
-        var i = this.chosenSelection.indexOf(delName);
-        this.chosenSelection.splice(i, 1);
-        console.log("Eintrag aus Array gelöscht");
-        console.log("Noch Einträge:  " + this.chosenSelection.length);
-        console.log(this.chosenSelection);
+        /**************************
+         * TODO ERST MAL AUS HTML *
+         *     DANN AUS LIST      *
+         **************************/
+        // $("#" + delName + "Gauge").remove(); 
+        console.log(delName); // criteriaList_C-MODEL_BinaryComponents_C-ID_101
+        // Slice Information 
+        var cleanedIdentifier = fmApp.slices.criteriaListOffString(delName);
+        var deletionDOMID = "#criteriaOptions_" + cleanedIdentifier;
+        var deletionComponentType = fmApp.slices.componentModelTypeOffString(cleanedIdentifier); 
+        var deletionComponentId = fmApp.slices.componentIdOffString(cleanedIdentifier);
+
+        // * nominalAttributeId
+
+/*********************************************************
+ *                         TODO                          *
+ *                   HAUT SO NICHT HIN                   *
+ *         ATTR ID STEHEN NICHT IM LÖSCH STRING          *
+ *            DAS STEHT IN DEM SELECTION HTML            *
+ * MUSS AM BESTEN ALLES UMSPEICHERN ALS FMAPP SUB OBJECT *
+ *********************************************************/
+
+        var deletionNominalAttributeId = fmApp.slices.nominalAttributeIdOffString(cleanedIdentifier);
+        console.log("Nominal ATTR ID");
+        console.log(deletionNominalAttributeId);
+        // * ordinalAttributeId
+        var deletionOrdinalAttributeId = "";
+
+        // Find DOM elem to delete 
+        $(deletionDOMID).remove();
+        // Find elem in choosenSelction object
+
+        // Delette JS object elem
 
     },
     showInputError: function() {
