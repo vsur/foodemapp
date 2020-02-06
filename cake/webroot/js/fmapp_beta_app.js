@@ -521,6 +521,9 @@ $(document).ready(function() {
 
     $(".addFromList").click(function() {
         // alert( $(this).attr("name") );
+/***************
+ * HIER WEITER *
+ ***************/
         $("#criteriaInput").val($(this).attr("name"));
         fmApp.addComponent();
     });
