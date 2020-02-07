@@ -447,7 +447,6 @@ var fmApp = {
     deleteComponent: function(delName) {
         // Delete entry from criteria list
         $("#" + delName).remove(); 
-        console.log(delName); // criteriaList_C-MODEL_BinaryComponents_C-ID_101
         // Slice Information 
         var cleanedIdentifier = fmApp.slices.criteriaListOffString(delName);
         var deletionDOMID = "#criteriaOptions_" + cleanedIdentifier;
@@ -459,12 +458,8 @@ var fmApp = {
         // Find elem in choosenSelction object
         var deletionChosenSelectionIndexconsole = fmApp.finds.indexOfChosenComponent(deletionComponentType, deletionComponentId);
         // Delette JS object elem
-        console.log("Vor löschen");
-        console.log(fmApp.chosenSelection);
         
         fmApp.chosenSelection.splice(deletionChosenSelectionIndexconsole, 1);
-        console.log("Dananch");
-        console.log(fmApp.chosenSelection);
 
         // Update params for future routing
         // Temporarly not necessary because on #showAction click will build everything based on chosenSelection
@@ -520,12 +515,10 @@ $(document).ready(function() {
     });
 
     $(".addFromList").click(function() {
-        // alert( $(this).attr("name") );
-/***************
- * HIER WEITER *
- ***************/
-        $("#criteriaInput").val($(this).attr("name"));
-        fmApp.addComponent();
+        event.preventDefault();
+        var criteronToken = $(this).attr('id');
+        var componentDataLikeFromURL = {"identifierString": criteronToken, "rating": "3"};
+        fmApp.addComponent(componentDataLikeFromURL);
     });
 
     var listDisplayState = true;

@@ -95,12 +95,29 @@ awesomplete.list = criterionNames;
             </thead>
             <tbody>
                 <?php foreach ($criteria as $criterion): ?>
+                <?php 
+                  $criterionToken = "";
+                  switch ($criterion->modelType) {
+                    case 'BinaryComponents':
+                      $criterionToken += "BC"; 
+                      $criterionToken += "_C-ID_" . $criterion->id . "_BC-STATE_1";
+                    break;
+                    case 'NominalComponents':
+                      $criterionToken += "NC";
+                      $criterionToken += "_C-ID_" . $criterion->id . "_NCATTR-ID_" . $criterion->nominal_attributes[0]->id;
+                    break;
+                    case 'OrdinalComponents':
+                      $criterionToken += "OC";
+                      $criterionToken += "_C-ID_" . $criterion->id . "_OCATTR_" . $criterion->ordinal_attributes[0]->id;
+                      break;
+                  }
+                ?>
                 <tr>
                     <td><?= h($criterion->name) ?></td>
                     <td><?= h($criterion->modified) ?></td>
                     <td><?= h($criterion->source()) ?></td>
                     <td class="actions">
-                        <a href="#" class="addFromList" name="<?= h($criterion->display_name) ?>">Kriterium auswählen</a>
+                        <a href="#" class="addFromList" name="<?= h($criterion->display_name) ?>" id="allCriteriaList_<?= $criterionToken ?>">Kriterium auswählen</a>
                         <!--
                         <?= $this->Html->link(__('View'), ['action' => 'view', $criterion->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $criterion->id]) ?>
