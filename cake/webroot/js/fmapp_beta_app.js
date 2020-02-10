@@ -303,6 +303,10 @@ var fmApp = {
             var slicedIdentifier = findCriteriaListIn.slice(13);
             return slicedIdentifier;
         },
+        allCriteriaListOffString: function(findAllCriteriaListIn) {
+            var slicedIdentifier = findAllCriteriaListIn.slice(16);
+            return slicedIdentifier;
+        },
     },
 
     // Main Functions
@@ -316,6 +320,8 @@ var fmApp = {
         // Called direclty by URL or by Input
         if (componentDataFromURL) {
             inputValue = componentDataFromURL.identifierString;
+            console.log(inputValue);
+            
             selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
             cRating = componentDataFromURL.rating;
             bcState = selectedCriterion.type == 'BC' ? fmApp.slices.binaryStateOffStringAsBoolean(inputValue) : null;
@@ -323,6 +329,7 @@ var fmApp = {
             ocAttrId = selectedCriterion.type == 'OC' ? fmApp.slices.ordinalAttributeIdOffString(inputValue) : null;
         } else {
             inputValue = $("#criteriaInput").val();
+            console.log(inputValue);
             cRating = this.standardRating;
             selectedCriterion = fmApp.sets.criterionByInputChoice(inputValue);
             bcState = selectedCriterion.type == 'BC' ? true : null;
@@ -517,7 +524,7 @@ $(document).ready(function() {
     $(".addFromList").click(function() {
         event.preventDefault();
         var criteronToken = $(this).attr('id');
-        var componentDataLikeFromURL = {"identifierString": criteronToken, "rating": "3"};
+        var componentDataLikeFromURL = {"identifierString": fmApp.slices.allCriteriaListOffString(criteronToken), "rating": "3"};
         fmApp.addComponent(componentDataLikeFromURL);
     });
 
