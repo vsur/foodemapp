@@ -99,17 +99,17 @@ awesomplete.list = criterionNames;
                   $criterionToken = "";
                   switch ($criterion->modelType) {
                     case 'BinaryComponents':
-                      $criterionToken += "BC"; 
-                      $criterionToken += "_C-ID_" . $criterion->id . "_BC-STATE_1";
+                      $criterionToken .= "BC"; 
+                      $criterionToken .= "_C-ID_" . $criterion->id . "_BC-STATE_1";
                     break;
                     case 'NominalComponents':
-                      $criterionToken += "NC";
-                      $criterionToken += "_C-ID_" . $criterion->id . "_NCATTR-ID_" . $criterion->nominal_attributes[0]->id;
+                      $criterionToken .= "NC";
+                      $criterionToken .= "_C-ID_" . $criterion->id . "_NCATTR-ID_" . $criterion->nominal_attributes[0]->id;
                     break;
                     case 'OrdinalComponents':
-                      $criterionToken += "OC";
-                      $criterionToken += "_C-ID_" . $criterion->id . "_OCATTR_" . $criterion->ordinal_attributes[0]->id;
-                      break;
+                      $criterionToken .= "OC";
+                      $criterionToken .= "_C-ID_" . $criterion->id . "_OCATTR_" . $criterion->ordinal_attributes[0]->id;
+                    break;
                   }
                 ?>
                 <tr>
