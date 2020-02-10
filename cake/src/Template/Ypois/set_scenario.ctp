@@ -88,7 +88,7 @@ awesomplete.list = criterionNames;
             <thead>
                 <tr>
                     <th><?= __('Name') ?></th>
-                    <th><?= __('Erstellungsdatum')  ?></th>
+                    <!-- <th><?= __('Erstellungsdatum')  ?></th> -->
                     <th><?= __('Art')  ?></th>
                     <th class="actions"><?= __('Wählen') ?></th>
                 </tr>
@@ -113,8 +113,8 @@ awesomplete.list = criterionNames;
                   }
                 ?>
                 <tr>
-                    <td><?= h($criterion->name) ?></td>
-                    <td><?= h($criterion->modified) ?></td>
+                    <td><?= h($criterion->display_name) ?></td>
+                    <!-- <td><?= h($criterion->modified) ?></td> -->
                     <td><?= h($criterion->source()) ?></td>
                     <td class="actions">
                         <a href="#" class="addFromList" name="<?= h($criterion->display_name) ?>" id="allCriteriaList_<?= $criterionToken ?>">Kriterium auswählen</a>
