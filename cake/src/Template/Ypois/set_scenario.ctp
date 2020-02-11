@@ -100,15 +100,15 @@ awesomplete.list = criterionNames;
                   switch ($criterion->modelType) {
                     case 'BinaryComponents':
                       $criterionToken .= "BC"; 
-                      $criterionToken .= "_C-ID_" . $criterion->id . "_BC-STATE_1";
+                      $criterionToken .= "_C-ID_" . $criterion->id;
                     break;
                     case 'NominalComponents':
                       $criterionToken .= "NC";
-                      $criterionToken .= "_C-ID_" . $criterion->id . "_NCATTR-ID_" . $criterion->nominal_attributes[0]->id;
+                      $criterionToken .= "_C-ID_" . $criterion->id;
                     break;
                     case 'OrdinalComponents':
                       $criterionToken .= "OC";
-                      $criterionToken .= "_C-ID_" . $criterion->id . "_OCATTR_" . $criterion->ordinal_attributes[0]->id;
+                      $criterionToken .= "_C-ID_" . $criterion->id;
                     break;
                   }
                 ?>

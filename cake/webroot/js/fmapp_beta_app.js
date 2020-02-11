@@ -106,6 +106,11 @@ var fmApp = {
             });
             return foundIndex;
         },
+        matchingComponentInAllCriteriaList: function(componentKey) {
+            var componentKeyInAllCriteriaList = "#allCriteriaList_" + componentKey;
+            var matchingComponentInAllCriteriaList = $(componentKeyInAllCriteriaList);
+            return matchingComponentInAllCriteriaList;
+        }
     },
     gets: {
         rating: function(modelType, id) {
@@ -141,7 +146,6 @@ var fmApp = {
                 nominalAttributeToPaste += '<input type="radio" id="nominalAttribute' + fmApp.nominalAttributeIdPrefix + nominalAttribute.id + '" name="attribues' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" value="' + nominalAttribute.id + '" ' + (nominalAttribute.id == attributeToSet ? 'checked' : '') + '/>';
                 nominalAttributeToPaste += '<label for="nominalAttribute' + fmApp.nominalAttributeIdPrefix + nominalAttribute.id + '" title="text">';
                 nominalAttributeToPaste += '<figure class="attrIcons ' + nominalAttribute.icon_path + '"></figure>';
-                console.log(nominalAttribute.icon_path ? nominalAttribute.icon_path : "NOPiu" );
                 nominalAttributeToPaste += '<figcaption>' + nominalAttribute.display_name + '</figcaption>';
                 nominalAttributeToPaste += '</label>';
                 nominalAttributeToPaste += '</div>';
@@ -310,29 +314,48 @@ var fmApp = {
     },
 
     // Main Functions
-    addComponent: function(componentDataFromURL) {
+    addComponent: function(componentDataFromURL, componentDataFromCriteriaList) {
         var chosenComponent;
         var selectedCriterion;
         var inputValue;
         var bcState = null;
         var ncAttrId = null;
         var ocAttrId = null;
-        // Called direclty by URL or by Input
+        var matchingComponentInAllCriteriaList;
+        // Set Component Data
         if (componentDataFromURL) {
             inputValue = componentDataFromURL.identifierString;
-            console.log(inputValue);
-            
             selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
             cRating = componentDataFromURL.rating;
             bcState = selectedCriterion.type == 'BC' ? fmApp.slices.binaryStateOffStringAsBoolean(inputValue) : null;
             ncAttrId = selectedCriterion.type == 'NC' ? fmApp.slices.nominalAttributeIdOffString(inputValue) : null;
             ocAttrId = selectedCriterion.type == 'OC' ? fmApp.slices.ordinalAttributeIdOffString(inputValue) : null;
+            console.log("Coming from URL");
+            console.log("selectedCriterion is: ");
+            console.log(selectedCriterion);
+            console.log("Input Value: " + inputValue);
+            console.log("");
+        } else if (componentDataFromCriteriaList) {
+            console.log("Value from List ID: " + componentDataFromCriteriaList);
+            inputValue = componentDataFromCriteriaList;
+            cRating = this.standardRating;
+            selectedCriterion = fmApp.sets.criterionByURLData(inputValue);
+            console.log("Coming from AllCriteriaList");
+            console.log("selectedCriterion is: ");
+            console.log(selectedCriterion);
+            console.log("Input Value: " + inputValue);
+            console.log("");
+            bcState = selectedCriterion.type == 'BC' ? true : null;
         } else {
             inputValue = $("#criteriaInput").val();
-            console.log(inputValue);
             cRating = this.standardRating;
             selectedCriterion = fmApp.sets.criterionByInputChoice(inputValue);
             bcState = selectedCriterion.type == 'BC' ? true : null;
+            console.log("Coming from Input");
+            console.log("selectedCriterion is: ");
+            console.log(selectedCriterion);
+            console.log("Input Value: " + inputValue);
+            console.log("");
         }
         // Check Data
         if (this.checks.dataMatching(selectedCriterion)) {
@@ -346,6 +369,9 @@ var fmApp = {
         setTimeout(function() {
             $("#criteriaInput").attr('placeholder', 'Weitere wählen').toggleClass("chosen");
         }, 2000);
+
+        // Hide Component in allCriteriaList
+        // matchingComponentInAllCriteriaList = fmApp.finds.matchingComponentInAllCriteriaList(inputValue);
 
         // Add Component to selection
         this.chosenSelection.push({
@@ -489,8 +515,6 @@ $(document).ready(function() {
         $("#loadingSpinnerContainer").fadeIn(500, function(event) {
             for (var configuredComponentKey in configuredSelection) {
                 var componentDataFromURL = {identifierString : configuredComponentKey, rating : configuredSelection[configuredComponentKey] };
-                console.log(componentDataFromURL);
-                console.log(componentDataFromURL.identifierString);
                 fmApp.addComponent(componentDataFromURL);
             }
             setTimeout(function(){
@@ -523,9 +547,10 @@ $(document).ready(function() {
 
     $(".addFromList").click(function() {
         event.preventDefault();
-        var criteronToken = $(this).attr('id');
-        var componentDataLikeFromURL = {"identifierString": fmApp.slices.allCriteriaListOffString(criteronToken), "rating": "3"};
-        fmApp.addComponent(componentDataLikeFromURL);
+        var criterionListID = $(this).attr('id');
+        var criteronToken = fmApp.slices.allCriteriaListOffString( criterionListID );
+        // var componentDataLikeFromURL = {"identifierString": fmApp.slices.allCriteriaListOffString(criteronToken), "rating": "3"};
+        fmApp.addComponent(null, criteronToken);
     });
 
     var listDisplayState = true;
