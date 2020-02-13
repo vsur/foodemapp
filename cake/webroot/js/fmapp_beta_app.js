@@ -29,6 +29,17 @@ var fmApp = {
             }
 
         },
+        isComponentAlreadyChoosen: function(selectedCriterion) {
+            var componentChoosenState = false;
+            
+            fmApp.chosenSelection.forEach(function(componentInSelection) {
+                if(selectedCriterion.id == componentInSelection.componentId ) {
+                    componentChoosenState = true;
+                }
+            });
+
+            return componentChoosenState;
+        },
         dataMatching: function(criterionToCheck) {
             var machtingCorrect = true;
             // Check names
@@ -370,70 +381,73 @@ var fmApp = {
             $("#criteriaInput").attr('placeholder', 'Weitere wählen').toggleClass("chosen");
         }, 2000);
 
-        // Hide Component in allCriteriaList
-        // matchingComponentInAllCriteriaList = fmApp.finds.matchingComponentInAllCriteriaList(inputValue);
+        // Check if selected component is not already chosen
+        var componentAlreadyChoosen = fmApp.checks.isComponentAlreadyChoosen(selectedCriterion);
+        if(componentAlreadyChoosen) {
+            fmApp.alertMessage("Die Komponente <strong>" + chosenComponent.display_name + "</strong> wurde bereitsausgewählt.<br> Sie können diese Komponente nicht erneut auswählen.", "alert-danger"); 
+        } else {
+            // Add Component to selection
+            this.chosenSelection.push({
+                'componentName': chosenComponent.display_name,
+                'componentType': chosenComponent.modelType,
+                'componentId': chosenComponent.id,
+                'rating': cRating,
+                'binaryState': bcState,
+                'nominalAttributeId': ncAttrId,
+                'ordinalAttributeId': ocAttrId
+            });
+            var criteriaListIdentifier = "criteriaList" + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id;
+            // Prepend choosen component
+            this.currentComponent = '<p id="' + criteriaListIdentifier + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
+            $("#criteriaChoice").append(this.currentComponent);
+            this.currentComponent = null;
+            // Add deletion action
+            $("#" + criteriaListIdentifier + " .throwComponent").click(function() {
+                var componentToDelete = $(this).parent().attr("id");
+                fmApp.deleteComponent(componentToDelete);
+            });
+            var labelRow = "";
+            if (this.chosenSelection.length <= 1) {
+                // Add labels to areas
+                labelRow += '<div class="row hidden-sm hidden-xs">';
+                labelRow += '<div class="col-md-6">';
+                labelRow += '<label class="text-info">Kategorien einstellen</label>';
+                labelRow += '</div>';
+                labelRow += '<div class="col-md-6">';
+                labelRow += '<label class="text-info">Gewichtung einstellen</label>';
+                labelRow += '</div>';
+                labelRow += '</div>';
+            }
 
-        // Add Component to selection
-        this.chosenSelection.push({
-            'componentName': chosenComponent.display_name,
-            'componentType': chosenComponent.modelType,
-            'componentId': chosenComponent.id,
-            'rating': cRating,
-            'binaryState': bcState,
-            'nominalAttributeId': ncAttrId,
-            'ordinalAttributeId': ocAttrId
-        });
-        var criteriaListIdentifier = "criteriaList" + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id;
-        // Prepend choosen component
-        this.currentComponent = '<p id="' + criteriaListIdentifier + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
-        $("#criteriaChoice").append(this.currentComponent);
-        this.currentComponent = null;
-        // Add deletion action
-        $("#" + criteriaListIdentifier + " .throwComponent").click(function() {
-            var componentToDelete = $(this).parent().attr("id");
-            fmApp.deleteComponent(componentToDelete);
-        });
-        var labelRow = "";
-        if (this.chosenSelection.length <= 1) {
-            // Add labels to areas
-            labelRow += '<div class="row hidden-sm hidden-xs">';
-            labelRow += '<div class="col-md-6">';
-            labelRow += '<label class="text-info">Kategorien einstellen</label>';
-            labelRow += '</div>';
-            labelRow += '<div class="col-md-6">';
-            labelRow += '<label class="text-info">Gewichtung einstellen</label>';
-            labelRow += '</div>';
-            labelRow += '</div>';
-        }
+            var chosenComponentToPaste = "";
+            chosenComponentToPaste += '<div id="criteriaOptions' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="row">';
+            chosenComponentToPaste += '<div class="col-md-6">';
+            chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
+            if (chosenComponent.modelType == 'BinaryComponents') {
+                chosenComponentToPaste += this.pastes.binarySwitch(chosenComponent, bcState);
+                this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
+            }
+            if (chosenComponent.modelType == 'NominalComponents') {
+                chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
+            }
+            if (chosenComponent.modelType == 'OrdinalComponents') {
+                chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, ocAttrId);
+            }
 
-        var chosenComponentToPaste = "";
-        chosenComponentToPaste += '<div id="criteriaOptions' + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id + '" class="row">';
-        chosenComponentToPaste += '<div class="col-md-6">';
-        chosenComponentToPaste += '<p class="componentNameHeader">' + chosenComponent.display_name + '</p>';
-        if (chosenComponent.modelType == 'BinaryComponents') {
-            chosenComponentToPaste += this.pastes.binarySwitch(chosenComponent, bcState);
-            this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
-        }
-        if (chosenComponent.modelType == 'NominalComponents') {
-            chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
-        }
-        if (chosenComponent.modelType == 'OrdinalComponents') {
-            chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, ocAttrId);
-        }
+            chosenComponentToPaste += '</div>';
 
-        chosenComponentToPaste += '</div>';
+            var chosenComponentToPasteRating = "";
+            chosenComponentToPasteRating += '<div class="col-md-6">';
+            chosenComponentToPasteRating += this.pastes.builds.ratingRadio(chosenComponent.modelType, chosenComponent.id);
+            chosenComponentToPasteRating += '</div>';
+            chosenComponentToPasteRating += '</div>';
 
-        var chosenComponentToPasteRating = "";
-        chosenComponentToPasteRating += '<div class="col-md-6">';
-        chosenComponentToPasteRating += this.pastes.builds.ratingRadio(chosenComponent.modelType, chosenComponent.id);
-        chosenComponentToPasteRating += '</div>';
-        chosenComponentToPasteRating += '</div>';
+            $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
 
-        $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
-
-        // Set ordinal attribute choice string initialy
-        if (chosenComponent.modelType == 'OrdinalComponents') {
-            this.sets.current_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
+            // Set ordinal attribute choice string initialy
+            if (chosenComponent.modelType == 'OrdinalComponents') {
+                this.sets.current_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
+            }
         }
     },
     alertMessage: function(alertText, alertState) {
