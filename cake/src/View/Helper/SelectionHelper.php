@@ -36,6 +36,17 @@ class SelectionHelper extends Helper {
 
     }
 
+    public function getNStarAggregatedItemsNumber($ratedComponents = null) {
+
+        $binaryComponents = $ratedComponents->binaryComponents;
+        $nominalAttributes = $ratedComponents->nominalAttributes;
+        $ordinalAttributes = $ratedComponents->ordinalAttributes;
+
+        $aggregationSum = count($binaryComponents) + count($nominalAttributes) + count($ordinalAttributes);
+
+        return $aggregationSum;
+    } 
+
     protected function buildNStarRatingListItems($ratedComponents = null, $N_StarRating = null) {
         $ratingString = '';
 

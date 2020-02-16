@@ -164,12 +164,26 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
  * Matches Codes
  */
  button#filter, button#componentWheel {
-    margin-right: 15px;
-    float: left;
-    @media screen and (max-width: $screen-xs-max) {
-        float: right;
+   margin-right: 15px;
+   float: left;
+   @media screen and (max-width: $screen-xs-max) {
+     float: right;
     }
- }
+  }
+  #poiCount {
+    margin: 0 25%;
+    padding: 25px 25px;
+    display: block;
+    font-size: 18px;
+    background-color: $brand-success;
+    border-radius: 30px;
+    
+    .actualPoiNumber {
+      font-size: 36px;
+      line-height: 1.5em;
+    }
+  }
+
  #compnentWheelContainer {
    display: none;
    margin: 0;
@@ -209,6 +223,30 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
     height: 50%;
     font-size: 2em;
     color: white;
+}
+
+.viewLinkBlock a, 
+.viewLinkBlock a:visited,
+.viewLinkBlock a h2, 
+.viewLinkBlock a:visited h2, 
+.viewLinkBlock a .thumbnail, 
+.viewLinkBlock a:visited .thumbnail {
+  text-decoration: none;
+  color: $urcd-color;
+  border-color: $urcd-color;  
+}
+.viewLinkBlock a:active, 
+.viewLinkBlock a:hover,
+.viewLinkBlock a:focus,
+.viewLinkBlock a:active h2, 
+.viewLinkBlock a:hover h2,
+.viewLinkBlock a:focus h2,
+.viewLinkBlock a:active .thumbnail, 
+.viewLinkBlock a:hover .thumbnail,
+.viewLinkBlock a:focus .thumbnail {
+  text-decoration: none;
+  color: lighten($urcd-color, 13.5%);
+  border-color: lighten($urcd-color, 13.5%);
 }
 
 #listView .panel-heading {

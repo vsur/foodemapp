@@ -472,7 +472,7 @@ var fmApp = {
     },
     comparePois: function() {
         var paramString = "?";
-        var url = 'findMatches';
+        var url = 'findMatches/selectViz';
         this.chosenSelection.forEach(function(component, index) {
             switch (component.componentType) {
                 case 'BinaryComponents':
@@ -554,9 +554,6 @@ $(document).ready(function() {
     // Handler for compare button
     $("#showAction").click(function() {
         fmApp.comparePois();
-    });
-    $("#showBars").click(function() {
-        window.location = '../matchesBar/' + window.location.search;
     });
 
     $(".addFromList").click(function() {

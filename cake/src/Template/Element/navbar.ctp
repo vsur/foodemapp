@@ -22,7 +22,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <?= $vizElement; ?>
-        <li class=""><a id="testFunc" href="#">Comp-Wheel-Test</a></li>
       </ul>
     </div>
     <!--/.nav-collapse -->

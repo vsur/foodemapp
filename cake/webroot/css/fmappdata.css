@@ -7380,6 +7380,17 @@ button#filter, button#componentWheel {
     button#filter, button#componentWheel {
       float: right; } }
 
+#poiCount {
+  margin: 0 25%;
+  padding: 25px 25px;
+  display: block;
+  font-size: 18px;
+  background-color: #4CAF50;
+  border-radius: 30px; }
+  #poiCount .actualPoiNumber {
+    font-size: 36px;
+    line-height: 1.5em; }
+
 #compnentWheelContainer {
   display: none;
   margin: 0;
@@ -7422,6 +7433,29 @@ button#filter, button#componentWheel {
   height: 50%;
   font-size: 2em;
   color: white; }
+
+.viewLinkBlock a,
+.viewLinkBlock a:visited,
+.viewLinkBlock a h2,
+.viewLinkBlock a:visited h2,
+.viewLinkBlock a .thumbnail,
+.viewLinkBlock a:visited .thumbnail {
+  text-decoration: none;
+  color: #7d003c;
+  border-color: #7d003c; }
+
+.viewLinkBlock a:active,
+.viewLinkBlock a:hover,
+.viewLinkBlock a:focus,
+.viewLinkBlock a:active h2,
+.viewLinkBlock a:hover h2,
+.viewLinkBlock a:focus h2,
+.viewLinkBlock a:active .thumbnail,
+.viewLinkBlock a:hover .thumbnail,
+.viewLinkBlock a:focus .thumbnail {
+  text-decoration: none;
+  color: #c2005d;
+  border-color: #c2005d; }
 
 #listView .panel-heading {
   cursor: pointer; }

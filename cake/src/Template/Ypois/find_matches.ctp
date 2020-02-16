@@ -61,6 +61,9 @@
     if($displayVariant == 'debug' || is_null($displayVariant) ) {
         echo $this->element('findMatches/debug');
     }
+    if($displayVariant == 'selectViz' ) {
+        echo $this->element('findMatches/select_viz');
+    }
     if($displayVariant == 'list' ) {
         echo $this->element('findMatches/list');
     }
@@ -71,19 +74,6 @@
         echo $this->element('findMatches/chord');
     }
 ?>
-
-<script type="text/javascript">
-    /*
-    var criterionNames = <?= json_encode($criterionNames) ?>;
-    var input = document.getElementById("criteriaInput");
-    var awesomplete = new Awesomplete(input, {
-      minChars: 1,
-      autoFirst: true,
-      maxItems: 10
-    });
-    awesomplete.list = criterionNames;
-    */
-</script>
 
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Criteria Block for JS ↓↓↓

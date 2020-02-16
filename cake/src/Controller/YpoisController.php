@@ -17,6 +17,7 @@ class YpoisController extends AppController
     {
         parent::initialize();
         $this->loadComponent('D3Data');
+        $this->loadComponent('PoisNComponents');
     }
     /**
      * Index method
@@ -158,7 +159,23 @@ class YpoisController extends AppController
             */
         }
 
-        $this->set(compact('ypois','criteria', 'criterionNames', 'displayVariant', 'configuredSelection', 'filterSelection', 'rankedSelection', 'componentWheelJSONData', 'chordDiagramMatrixData'));
+        $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
+        
+        $componentTypesComponentsCount = $this->PoisNComponents->allComponentTypeComponentsCount($ypois);
+
+        $this->set(compact(
+            'ypois',
+            'criteria', 
+            'criterionNames', 
+            'displayVariant', 
+            'configuredSelection', 
+            'filterSelection', 
+            'rankedSelection', 
+            'componentWheelJSONData', 
+            'chordDiagramMatrixData', 
+            'overallComponentCount',
+            'componentTypesComponentsCount'
+        ));
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)
