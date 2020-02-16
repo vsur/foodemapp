@@ -7373,11 +7373,11 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 /*
  * Matches Codes
  */
-button#filter, button#componentWheel {
+a#filter, button#componentWheel {
   margin-right: 15px;
   float: left; }
   @media screen and (max-width: 767px) {
-    button#filter, button#componentWheel {
+    a#filter, button#componentWheel {
       float: right; } }
 
 #poiCount {

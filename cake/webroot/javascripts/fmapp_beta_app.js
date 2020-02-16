@@ -661,12 +661,6 @@ $(document).ready(function() {
         $(this).find(".listMoreInfo").toggleClass("showMore");
     });
 
-    // Go Back to setScenario-view
-    $("button#filter").click(function() {
-        // fmApp.goToFilterSelection();
-        window.location = '../setScenario' + window.location.search;
-    });
-
     // Toggle compnentWheel
     $("#componentWheel").click(function() {
         var compnentWheelContainer = $("#compnentWheelContainer");

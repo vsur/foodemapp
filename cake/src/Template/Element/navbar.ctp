@@ -4,9 +4,18 @@
     <div class="navbar-header">
         <?php
         if($this->request->action == 'findMatches' && !empty($this->request->query)) {
-            echo '<button id="filter" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie die Filter"><span class="hidden-xs">Filterung anpassen</span> <span class="glyphicon glyphicon-filter" aria-hidden="true"></span></button>';
+            echo $this->Html->link(
+                '<span class="hidden-xs">Filterung anpassen</span> <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>',
+                ["controller" => "ypois", "action" => "setScenario", "?" => $this->request->query],
+                [
+                  'class' => 'btn btn-default navbar-btn', 
+                  'id' => 'filter', 
+                  'escape' => false
+                ]
+            );
+            // echo '<button id="filter" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie die Filter"></button>';
         }
-        if($this->request->action) {
+        if($this->request->action  != 'setScenario' && !empty($this->request->query)) {
             echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Komonenten Rad"><span class="hidden-xs">Komponenten browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
           }
           ?>
