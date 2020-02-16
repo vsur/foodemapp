@@ -672,7 +672,15 @@ $(document).ready(function() {
 
     // Toggle compnentWheel
     $("#componentWheel").click(function() {
-        $("#compnentWheelContainer").fadeToggle();
+        var compnentWheelContainer = $("#compnentWheelContainer");
+        compnentWheelContainer.toggleClass("showComponentWheel");
+        if( compnentWheelContainer.hasClass("showComponentWheel") ) {
+            compnentWheelContainer.fadeIn(function(event) {
+                drawCompnentWheel();
+            });
+        } else {
+            compnentWheelContainer.fadeOut();
+        }
     });
 
 });

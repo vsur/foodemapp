@@ -8,8 +8,8 @@
         }
         if($this->request->action) {
             echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Komonenten Rad"><span class="hidden-xs">Komponenten browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
-        }
-        ?>
+          }
+          ?>
       <button type="button" class="navbar-toggle collapsed"
         data-toggle="collapse" data-target="#navbar" aria-expanded="false"
         aria-controls="navbar">
@@ -22,6 +22,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <?= $vizElement; ?>
+        <li class=""><a id="testFunc" href="#">Comp-Wheel-Test</a></li>
       </ul>
     </div>
     <!--/.nav-collapse -->
