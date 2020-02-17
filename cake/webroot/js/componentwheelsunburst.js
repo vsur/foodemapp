@@ -42,7 +42,6 @@ function drawCompnentWheel() {
         .append("g")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
         
-        console.log(svg);
     partition = d3.partition()
         .size([2 * Math.PI, radius]);
     
