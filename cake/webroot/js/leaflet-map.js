@@ -8,14 +8,18 @@ $("#ypoisMap").css("height", maxHeight/2);
 var mymap = L.map('ypoisMap').setView([49.01, 8.40806], 13);
 // var markers = L.layerGroup([]);
 var markers = L.markerClusterGroup([]);
-var myIcon = L.divIcon({
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -35],
-});
+
 L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(mymap);
+
 ypois.forEach(function(ypoi, i) {
-    var newIcon = myIcon;
+    var newIcon = L.divIcon({
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+        popupAnchor: [0, -35],
+    });;
+    console.log("POI");
+    console.log(ypoi.name);
+    
     newIcon.options.className = 'ypoiIcon';
     newIcon.options.html = '<div><span>' + ypoi.name + '</span></div>';
     var marker = L.marker([ypoi.lat, ypoi.lng], {
@@ -35,8 +39,14 @@ ypois.forEach(function(ypoi, i) {
         autoClose: false,
     };
     let popupContent = "Keine Inhalte gesetzt";
+    console.log("Marker: ");
+    console.log(marker.options.poiName);
+
+    
+    // marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
     marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
 });
+console.log(markers);
 
 markers.on('animationend', function (a) {
     console.log('animatied fired ');
