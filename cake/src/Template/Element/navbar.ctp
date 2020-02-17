@@ -9,13 +9,25 @@
                 ["controller" => "ypois", "action" => "setScenario", "?" => $this->request->query],
                 [
                   'class' => 'btn btn-default navbar-btn', 
-                  'id' => 'filter', 
+                  'id' => 'filter',
+                  'aria-label' => 'Öffnen Sie die Filter', 
                   'escape' => false
                 ]
             );
-            // echo '<button id="filter" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie die Filter"></button>';
         }
         if($this->request->action  != 'setScenario' && !empty($this->request->query)) {
+            if( $this->request->pass[0] != 'selectViz' ) {
+              echo $this->Html->link(
+                '<span class="hidden-xs">Ansicht ändern</span> <span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>',
+                ["controller" => "ypois", "action" => "findMatches", "selectViz", "?" => $this->request->query],
+                [
+                  'class' => 'btn btn-default navbar-btn', 
+                  'id' => 'filter',
+                  'aria-label' => 'Passen Sie die Ansicht an', 
+                  'escape' => false
+                ]
+              );
+            }
             echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Komonenten Rad"><span class="hidden-xs">Komponenten browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
           }
           ?>
