@@ -5,7 +5,7 @@ var maxHeight = window.innerHeight;
 $("#ypoisMap").css("height", maxHeight/2);
 
 // Initalize LMap
-var mymap = L.map('ypoisMap').setView([49.01, 8.40806], 13);
+var mymap = L.map('ypoisMap');
 // var markers = L.layerGroup([]);
 var markers = L.markerClusterGroup([]);
 
@@ -17,11 +17,10 @@ ypois.forEach(function(ypoi, i) {
         iconAnchor: [16, 16],
         popupAnchor: [0, -35],
     });;
-    console.log("POI");
-    console.log(ypoi.name);
     
     newIcon.options.className = 'ypoiIcon';
-    newIcon.options.html = '<div><span>' + ypoi.name + '</span></div>';
+    newIcon.options.html = '<div><span>' + ypoi.name + ' ' + i +'</span></div>';
+    
     var marker = L.marker([ypoi.lat, ypoi.lng], {
         icon: newIcon,
         poiName: ypoi.name,
@@ -29,6 +28,7 @@ ypois.forEach(function(ypoi, i) {
         nominalAttributes: ypoi.nominal_attributes,
         ordinalAttributes: ypoi.ordinal_attributes
     });
+    
     var popupOptions = {
         className: "infoPopup",
         maxWidth: 150,
@@ -38,22 +38,17 @@ ypois.forEach(function(ypoi, i) {
         closeOnEscapeKey: false,
         autoClose: false,
     };
-    let popupContent = "Keine Inhalte gesetzt";
-    console.log("Marker: ");
-    console.log(marker.options.poiName);
-
+    var popupContent = "Keine Inhalte gesetzt";
     
-    // marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
     marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
+    
 });
-console.log(markers);
 
 markers.on('animationend', function (a) {
-    console.log('animatied fired ');
-    console.log(a);
     reopenLastSelectedPopupcontent();
 });
 
+console.log( markers);
 markers.addTo(mymap);
 
 // Update popup content
@@ -65,43 +60,55 @@ openAllMarkersPopups(markers);
 mymap.setView([49.01, 8.40806], 13);
 
 function updateMarkersContent(markers, newContentType) {
+    
     for (var markerProperty in markers._featureGroup._layers) {
         marker = markers._featureGroup._layers[markerProperty];
+        
+        if(marker.hasOwnProperty("_popup")) {
 
-        let popupContent = "";
+            let popupContent = "";
 
-        switch (newContentType) {
-            case "chosen":
-                popupContent = buildRankedSelectionPopupContent();
-                break;
+            switch (newContentType) {
+                case "chosen":
+                    popupContent = buildRankedSelectionPopupContent();
+                    break;
 
-            case "none":
-                popupContent = "Kein Inhalt gesetzt";
-                break;
-            
-            case "other":
-                popupContent = buildOtherComponentsPopupContent(marker, 'all');
-                break;
-            
-            case "justBinary":
-                popupContent = buildOtherComponentsPopupContent(marker, newContentType);
-                break;
+                case "none":
+                    popupContent = "Kein Inhalt gesetzt";
+                    break;
+                
+                case "other":
+                    popupContent = buildOtherComponentsPopupContent(marker, 'all');
+                    break;
+                
+                case "justBinary":
+                    popupContent = buildOtherComponentsPopupContent(marker, newContentType);
+                    break;
 
-            case "justNominal":
-                popupContent = buildOtherComponentsPopupContent(marker, newContentType);
-                break;
+                case "justNominal":
+                    popupContent = buildOtherComponentsPopupContent(marker, newContentType);
+                    break;
 
-            case "justOrdinal":
-                popupContent = buildOtherComponentsPopupContent(marker, newContentType);
-                break;
+                case "justOrdinal":
+                    popupContent = buildOtherComponentsPopupContent(marker, newContentType);
+                    break;
+            }
+
+            marker._popup.setContent(popupContent);
         }
-
-        marker._popup.setContent(popupContent);
     }
 }
 
 function openAllMarkersPopups(markers) {
+    console.log(markers);
+/***********************
+ * HERE WEITER IRGENWO *
+ *     DA HÄNGT ES     *
+ ***********************/
+    
     for (var markerProperty in markers._featureGroup._layers) {
+        console.log(markers._featureGroup._layers[markerProperty]);  
+        
         markers._featureGroup._layers[markerProperty].openPopup();
     }
 }
@@ -232,7 +239,7 @@ function buildOrdinalComponents(ordinalAttributes) {
 }
 
 function  updateShownComponents(componentsToPresent, clickedAncher) {
-    console.log("Komopnent die anzuzeigen sind: " +  componentsToPresent );
+    console.log("Komponenten die anzuzeigen sind: " +  componentsToPresent );
     updateMarkersContent(markers, componentsToPresent);
     if(componentsToPresent == "none") {
         closeAllMarkersPopups(markers);
