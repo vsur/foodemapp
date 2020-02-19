@@ -44,7 +44,7 @@ class YpoisController extends AppController
 
     public function setScenario()
     {
-        $this->viewBuilder()->layout('Fmappbeta');
+        $this->viewBuilder()->layout('fmappbeta');
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
