@@ -7,12 +7,7 @@ $("#ypoisMap").css("height", maxHeight/2);
 // Initalize LMap
 var mymap = L.map('ypoisMap');
 // var markers = L.layerGroup([]);
-var markers = L.markerClusterGroup({
-    // spiderfyOnMaxZoom: false, 
-    // showCoverageOnHover: false, 
-    // zoomToBoundsOnClick: false,
-    // animate: false
-});
+var markers = L.markerClusterGroup();
 
 L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(mymap);
 
@@ -42,6 +37,7 @@ ypois.forEach(function(ypoi, i) {
         closeOnClick: false,
         closeOnEscapeKey: false,
         autoClose: false,
+        autoPan: false,
     };
     var popupContent = "Keine Inhalte gesetzt";
     
