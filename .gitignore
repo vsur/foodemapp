@@ -16,3 +16,5 @@ cake/webroot/node_modules/*/*
 node_modules
 
 .idea/
+
+deploy
