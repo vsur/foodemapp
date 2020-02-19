@@ -7,7 +7,7 @@ $("#ypoisMap").css("height", maxHeight/2);
 // Initalize LMap
 var mymap = L.map('ypoisMap');
 // var markers = L.layerGroup([]);
-var markers = L.markerClusterGroup([]);
+var markers = L.markerClusterGroup({spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false});
 
 L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(mymap);
 
@@ -48,16 +48,15 @@ markers.on('animationend', function (a) {
     reopenLastSelectedPopupcontent();
 });
 
-console.log( markers);
+
 markers.addTo(mymap);
+mymap.setView([49.01, 8.40806], 13);
 
 // Update popup content
 updateMarkersContent(markers, "chosen");
 
 // Open all popups
 openAllMarkersPopups(markers);
-
-mymap.setView([49.01, 8.40806], 13);
 
 function updateMarkersContent(markers, newContentType) {
     
@@ -100,15 +99,7 @@ function updateMarkersContent(markers, newContentType) {
 }
 
 function openAllMarkersPopups(markers) {
-    console.log(markers);
-/***********************
- * HERE WEITER IRGENWO *
- *     DA HÄNGT ES     *
- ***********************/
-    
     for (var markerProperty in markers._featureGroup._layers) {
-        console.log(markers._featureGroup._layers[markerProperty]);  
-        
         markers._featureGroup._layers[markerProperty].openPopup();
     }
 }
@@ -124,7 +115,8 @@ function reopenLastSelectedPopupcontent() {
         if( $( this ).hasClass('active') ) {
             lastSelectedPopupContent = $(this).children("a").attr('data-component-presentation');
         }
-      }); 
+    }); 
+    updateMarkersContent(markers, lastSelectedPopupContent);
     if(lastSelectedPopupContent != "none") {
         openAllMarkersPopups(markers) ;
     }
