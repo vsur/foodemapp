@@ -47,28 +47,36 @@ rsync -r cake/src/Model/Table/YpoisTable.php deploy/src/Model/Table/
 
 rsync -r cake/src/Shell deploy/src
 
-rsync -r cake/src/Template/BinaryComponents deploy/src/Template
-rsync -r cake/src/Template/BinaryComponentsYpois deploy/src/Template
-rsync -r cake/src/Template/Element deploy/src/Template
-rsync -r cake/src/Template/Email deploy/src/Template
-rsync -r cake/src/Template/Error deploy/src/Template
-rsync -r cake/src/Template/Layout deploy/src/Template
-rsync -r cake/src/Template/NominalAttributes deploy/src/Template
-rsync -r cake/src/Template/NominalAttributesYpois deploy/src/Template
-rsync -r cake/src/Template/NominalComponents deploy/src/Template
-rsync -r cake/src/Template/OrdinalAttributes deploy/src/Template
-rsync -r cake/src/Template/OrdinalAttributesYpois deploy/src/Template
-rsync -r cake/src/Template/OrdinalComponents deploy/src/Template
-rsync -r cake/src/Template/Pages deploy/src/Template
-rsync -r cake/src/Template/Ypois deploy/src/Template
+rsync -r cake/src/Template/BinaryComponents deploy/src/Template/
+rsync -r cake/src/Template/BinaryComponentsYpois deploy/src/Template/
+rsync -r cake/src/Template/Element deploy/src/Template/
+rsync -r cake/src/Template/Email deploy/src/Template/
+rsync -r cake/src/Template/Error deploy/src/Template/
+rsync -r cake/src/Template/Layout deploy/src/Template/
+rsync -r cake/src/Template/NominalAttributes deploy/src/Template/
+rsync -r cake/src/Template/NominalAttributesYpois deploy/src/Template/
+rsync -r cake/src/Template/NominalComponents deploy/src/Template/
+rsync -r cake/src/Template/OrdinalAttributes deploy/src/Template/
+rsync -r cake/src/Template/OrdinalAttributesYpois deploy/src/Template/
+rsync -r cake/src/Template/OrdinalComponents deploy/src/Template/
+if [ ! -d "deploy/src/Template/Pages" ]; then
+  mkdir deploy/src/Template/Pages
+fi
+# Aktuell keine Pages aktiv
+# rsync -r cake/src/Template/Pages deploy/src/Template/
+rsync -r cake/src/Template/Ypois deploy/src/Template/
 
 rsync -r cake/src/View deploy/src/
 #rsync -r cake/src deploy/
 
 rsync -r cake/tests deploy/
 
-rm -R deploy/tmp 
-mkdir deploy/tmp
+if [ -d "deploy/tmp" ]; then
+  rm -R deploy/tmp/*
+fi
+if [ ! -d "deploy/tmp" ]; then
+  mkdir deploy/tmp
+fi
 
 rsync -r cake/vendor deploy/
 
