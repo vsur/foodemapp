@@ -19,13 +19,23 @@ class YpoisController extends AppController
         $this->loadComponent('D3Data');
         $this->loadComponent('PoisNComponents');
     }
+
+    protected $actionKey = "doStuff";
+
+    protected function checkAccess($key) 
+    {
+        if($key != $this->actionKey) {
+            return $this->redirect(['action' => 'setScenario']);
+        }
+    }
     /**
      * Index method
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
+    public function index($key = null)
     {
+        $this->checkAccess($key);   
         $ypois = $this->paginate($this->Ypois);
 
         $this->set(compact('ypois'));
@@ -512,8 +522,9 @@ class YpoisController extends AppController
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($key = null)
     {
+        $this->checkAccess($key);   
         $ypois = $this->Ypois->newEntity();
         if ($this->request->is('post')) {
             $ypois = $this->Ypois->patchEntity($ypois, $this->request->getData());
@@ -538,8 +549,9 @@ class YpoisController extends AppController
      * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($id = null, $key = null)
     {
+        $this->checkAccess($key);   
         $ypois = $this->Ypois->get($id, [
             'contain' => ['BinaryComponents', 'NominalAttributes', 'OrdinalAttributes']
         ]);
@@ -566,8 +578,9 @@ class YpoisController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($id = null, $key = null)
     {
+        $this->checkAccess($key);   
         $this->request->allowMethod(['post', 'delete']);
         $ypois = $this->Ypois->get($id);
         if ($this->Ypois->delete($ypois)) {
