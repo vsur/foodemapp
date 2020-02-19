@@ -19,7 +19,7 @@ ypois.forEach(function(ypoi, i) {
     });;
     
     newIcon.options.className = 'ypoiIcon';
-    newIcon.options.html = '<div><span>' + ypoi.name + ' ' + i +'</span></div>';
+    newIcon.options.html = '<div><span>' + ypoi.name + '</span></div>';
     
     var marker = L.marker([ypoi.lat, ypoi.lng], {
         icon: newIcon,
