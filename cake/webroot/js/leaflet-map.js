@@ -7,7 +7,12 @@ $("#ypoisMap").css("height", maxHeight/2);
 // Initalize LMap
 var mymap = L.map('ypoisMap');
 // var markers = L.layerGroup([]);
-var markers = L.markerClusterGroup({spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false});
+var markers = L.markerClusterGroup({
+    // spiderfyOnMaxZoom: false, 
+    // showCoverageOnHover: false, 
+    // zoomToBoundsOnClick: false,
+    // animate: false
+});
 
 L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(mymap);
 
@@ -50,7 +55,8 @@ markers.on('animationend', function (a) {
 
 
 markers.addTo(mymap);
-mymap.setView([49.01, 8.40806], 13);
+// mymap.setView([49.01, 8.40806], 13);
+mymap.fitBounds(markers.getBounds());
 
 // Update popup content
 updateMarkersContent(markers, "chosen");
