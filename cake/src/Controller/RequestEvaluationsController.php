@@ -10,6 +10,11 @@ use App\Controller\AppController;
  */
 class RequestEvaluationsController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('PoisNComponents');
+    }
 
     /**
      * Index method
@@ -48,8 +53,8 @@ class RequestEvaluationsController extends AppController
      */
     public function add()
     {
-        $this->viewBuilder()->layout('fmappbeta');
-        debug($this->request->data());
+        // $this->viewBuilder()->layout('fmappbeta');
+
         $requestEvaluation = $this->RequestEvaluations->newEntity();
         if ($this->request->is('post')) {
             $requestEvaluation = $this->RequestEvaluations->patchEntity($requestEvaluation, $this->request->getData());
@@ -67,7 +72,12 @@ class RequestEvaluationsController extends AppController
     public function new()
     {
         $this->viewBuilder()->layout('fmappbeta');
-        debug($this->request->data());
+        
+        $this->loadModel('Ypois');
+        $filterSelection = $this->Ypois->buildFilterObject($this->request->query);
+        $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection);
+        $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
+        
         $requestEvaluation = $this->RequestEvaluations->newEntity();
         if ($this->request->is('post')) {
             $requestEvaluation = $this->RequestEvaluations->patchEntity($requestEvaluation, $this->request->getData());
@@ -78,8 +88,7 @@ class RequestEvaluationsController extends AppController
             }
             $this->Flash->error(__('The request evaluation could not be saved. Please, try again.'));
         }
-        $this->set(compact('requestEvaluation'));
-        $this->set('_serialize', ['requestEvaluation']);
+        $this->set(compact('requestEvaluation', 'ypois', 'overallComponentCount'));
     }
 
     /**

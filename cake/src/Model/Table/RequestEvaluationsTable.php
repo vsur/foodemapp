@@ -79,9 +79,10 @@ class RequestEvaluationsTable extends Table
 
         $validator
             ->email('email')
-            ->requirePresence('email', 'create')
+            ->requirePresence('email', 'update')
             ->notEmpty('email');
-
+            
+        
         $validator
             ->integer('grade')
             ->requirePresence('grade', 'create')
@@ -103,7 +104,8 @@ class RequestEvaluationsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        // $rules->add($rules->isUnique(['email']));
+        $rules;
 
         return $rules;
     }

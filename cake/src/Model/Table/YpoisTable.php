@@ -169,7 +169,202 @@ class YpoisTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->isUnique(['businessid']));
-
+        
         return $rules;
+    }
+    
+    public function buildFilterObject($configuredSelection = null) {
+        /* Example $confugredSelection
+            [
+                'BC_C-ID_79_BC-STATE_1' => '5',
+                'NC_C-ID_1_NCATTR-ID_2' => '4',
+                'OC_C-ID_2_OCATTR-ID_6' => '2'
+            ]
+        */
+        $filters = (object)[];
+        $filters->notMatchingBinaries = [];
+        $filters->matchingBinaries = [];
+        $filters->matchingNominals = [];
+        $filters->matchingOrdinals = [];
+
+        foreach ($configuredSelection as $combinedComponentString => $componentRating) {
+            switch (true) {
+                case strstr($combinedComponentString,'BC_C-ID_'):
+                    // Build and fill matchingBinaries and notMatchingBinaries
+                    $settedComponent = $this->rebuildIdsFromString($combinedComponentString, 'BC_C-ID_');
+                    $settedComponent->rating = $componentRating;
+                    if ($settedComponent->binaryComponentState) {
+                        array_push($filters->matchingBinaries, $settedComponent);
+                    } else {
+                        array_push($filters->notMatchingBinaries, $settedComponent);
+                    }
+                    break;
+                case strstr($combinedComponentString,'_NCATTR-ID_'):
+                    // Build and fill matchingNominals
+                    $settedComponent = $this->rebuildIdsFromString($combinedComponentString, 'NC_C-ID_');
+                    $settedComponent->rating = $componentRating;
+                    array_push($filters->matchingNominals, $settedComponent);
+                    break;
+                case strstr($combinedComponentString,'_OCATTR-ID_'):
+                    // Build and fill matchingOrdinals
+                    $settedComponent = $this->rebuildIdsFromString($combinedComponentString, 'OC_C-ID_');
+                    $settedComponent->rating = $componentRating;
+                    array_push($filters->matchingOrdinals, $settedComponent);
+                    break;
+            }
+
+        }
+
+        return $filters;
+    }
+
+    protected function rebuildIdsFromString($combinedComponentString = null, $componentIdentifierString = null) {
+        // Set string position of id-identifier
+        $idStart = strlen($componentIdentifierString);
+        // Create object to store reslults
+        $currentSettedComponent = (object) [];
+
+        switch ($componentIdentifierString) {
+            case 'BC_C-ID_':
+                // Set sting position after id
+                $idEnd = strrpos($combinedComponentString, '_BC-STATE_');
+                // Set length of current id
+                $idLength = $idEnd - $idStart;
+                // Slice id from string
+                $compnentId = substr($combinedComponentString, $idStart, $idLength);
+                // Set sting position of state-identifier
+                $stateEnd = $idEnd + strlen('_BC-STATE_');
+                // Slice state value from string
+                $bcState = substr($combinedComponentString, $stateEnd) === '1' ? true : false;
+                // Set properties
+                $currentSettedComponent->id = $compnentId;
+                $currentSettedComponent->binaryComponentState = $bcState;
+                break;
+
+            case 'NC_C-ID_':
+                // Set sting position after component id
+                $idEnd = strrpos($combinedComponentString, '_NCATTR-ID_');
+                // Set length of current component id
+                $idLength = $idEnd - $idStart;
+                // Slice id from string
+                $compnentId = substr($combinedComponentString, $idStart, $idLength);
+                // Set sting position of state-identifier
+                $attributeStart = $idEnd + strlen('_NCATTR-ID_');
+                // Slice attribute id from string
+                $attributeId = substr($combinedComponentString, $attributeStart);
+                // Set properties
+                $currentSettedComponent->id = $compnentId;
+                $currentSettedComponent->attribute = (object)['id' => $attributeId];
+                break;
+
+            case 'OC_C-ID_':
+                // Set sting position after component id
+                $idEnd = strrpos($combinedComponentString, '_OCATTR-ID_');
+                // Set length of current component id
+                $idLength = $idEnd - $idStart;
+                // Slice id from string
+                $compnentId = substr($combinedComponentString, $idStart, $idLength);
+                // Set sting position of state-identifier
+                $attributeStart = $idEnd + strlen('_OCATTR-ID_');
+                // Slice attribute id from string
+                $attributeId = substr($combinedComponentString, $attributeStart);
+                // Set properties
+                $currentSettedComponent->id = $compnentId;
+                $currentSettedComponent->attribute = (object)['id' => $attributeId];
+                break;
+
+        }
+        return $currentSettedComponent;
+    }
+
+    public function findYpoisByConfiguredSelection($filterSelection = null) {
+        $ypois = $this->find()->contain(
+            [
+                'BinaryComponents' => [  'sort' => ['display_name' => 'ASC', 'name' => 'ASC']    ],
+                'NominalAttributes.NominalComponents',
+                'NominalAttributes' => [  'sort' => ['NominalComponents.display_name' => 'ASC', 'NominalComponents.name' => 'ASC']    ],
+                'OrdinalAttributes' => [  'sort' => ['meter' => 'ASC']   ],
+                'OrdinalAttributes.OrdinalComponents',
+                'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ]
+            ]);
+
+        // Add not matching binary filters
+        if(!empty($filterSelection->notMatchingBinaries)) {
+            $ypois = $this->applyNotMatchingBinariesFilter($ypois, $filterSelection);
+        }
+
+        // Add matching binray filters
+        $binaryJoinConditions = $this->buildBinaryJoinConditions($filterSelection);
+        $ypois->join($binaryJoinConditions);
+
+        // Add matching nominal filters
+        $nominalJoinConditions = $this->buildNominalJoinConditions($filterSelection);
+        $ypois->join($nominalJoinConditions);
+
+        // Add matching ordinal filters
+        $ordinalJoinConditions = $this->buildOrdinalJoinConditions($filterSelection);
+        $ypois->join($ordinalJoinConditions);
+
+        // Set autoFields for correct joins syntax
+        $ypois->enableAutoFields(true);
+
+        return $ypois;
+    }
+
+    protected function applyNotMatchingBinariesFilter($ypois = null, $filterSelection = null) {
+        $orNotMatchingBinaryConditions = ['OR' => []];
+        foreach ($filterSelection->notMatchingBinaries as $notMatchingBinary) {
+            $newOrCondition = ['BinaryComponents.id' => $notMatchingBinary->id];
+            array_push($orNotMatchingBinaryConditions['OR'], $newOrCondition);
+        }
+        $ypois->notMatching('BinaryComponents', function ($q) use ($orNotMatchingBinaryConditions){
+            return $q->where($orNotMatchingBinaryConditions);
+        });
+        return $ypois;
+    }
+
+    protected function buildBinaryJoinConditions($filterSelection = null) {
+        $binaryJoinConditions = [];
+        foreach ($filterSelection->matchingBinaries as $matchingBinary) {
+            $currentAlias = 'bccid_' . $matchingBinary->id;
+            $binaryJoinConditions[$currentAlias] = [
+                'table' => 'binary_components_ypois',
+                'conditions' => [
+                    $currentAlias . '.ypoi_id = Ypois.id',
+                    $currentAlias  . '.binary_component_id = ' . $matchingBinary->id
+                ]
+            ];
+        }
+        return $binaryJoinConditions;
+    }
+
+    protected function buildNominalJoinConditions($filterSelection = null) {
+        $nominalJoinConditions = [];
+        foreach ($filterSelection->matchingNominals as $matchingNominal) {
+            $currentAlias = 'ncattrid_' . $matchingNominal->attribute->id;
+            $nominalJoinConditions[$currentAlias] = [
+                'table' => 'nominal_attributes_ypois',
+                'conditions' => [
+                    $currentAlias . '.ypoi_id = Ypois.id',
+                    $currentAlias  . '.nominal_attribute_id = ' . $matchingNominal->attribute->id
+                ]
+            ];
+        }
+        return $nominalJoinConditions;
+    }
+
+    protected function buildOrdinalJoinConditions($filterSelection = null) {
+        $ordinalJoinConditions = [];
+        foreach ($filterSelection->matchingOrdinals as $matchingOrdinal) {
+            $currentAlias = 'ncattrid_' . $matchingOrdinal->attribute->id;
+            $ordinalJoinConditions[$currentAlias] = [
+                'table' => 'ordinal_attributes_ypois',
+                'conditions' => [
+                    $currentAlias . '.ypoi_id = Ypois.id',
+                    $currentAlias  . '.ordinal_attribute_id = ' . $matchingOrdinal->attribute->id
+                ]
+            ];
+        }
+        return $ordinalJoinConditions;
     }
 }

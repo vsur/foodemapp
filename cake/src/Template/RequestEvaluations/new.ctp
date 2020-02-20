@@ -16,21 +16,31 @@
 
 <div class="row">
   <div class="col-md-12">
-
+        <?php 
+             $url =  $this->Url->build([
+                "?" => $this->request->query,
+            ]);
+            if(strpos($url, '?') > -1) {
+                $queryString =  html_entity_decode( substr($url, strpos($url, '?')+1 ) );
+            } else {
+                $queryString =  "NULL";
+            }
+        ?>
         <?= $this->Form->create($requestEvaluation) ?>
             <legend><?= __('Add Request Evaluation') ?></legend>
             <fieldset disabled>
                 <div class="form-group">
                     <?php
-                        echo $this->Form->label('query_parameters', 'Paraemter Ihrer Suchanfrage');
-                        echo $this->Form->text('query_parameters', ['class' => 'form-control', 'value' => 'sdjkhfg']); 
-                    ?>
+                        echo $this->Form->label('parameters', 'Paraemter Ihrer Suchanfrage');
+                        echo $this->Form->text('parameters', ['class' => 'form-control', 'value' => $queryString]); 
+                        ?>
                 </div>
             </fieldset>
 
+            <?=  $this->Form->hidden('query_parameters', ['value' => $queryString]); ?>
             <?=  $this->Form->hidden('ypois_count', ['value' => 5]); ?>
-            <?=  $this->Form->hidden('choosen_components_count', ['value' => 10]); ?>
-            <?=  $this->Form->hidden('other_components_count', ['value' => 15]); ?>
+            <?=  $this->Form->hidden('choosen_components_count', ['value' => count($this->request->query)]); ?>
+            <?=  $this->Form->hidden('other_components_count', ['value' => ( $overallComponentCount - count($this->request->query) ) ]); ?>
 
             <?=  $this->Form->hidden('comming_from_view', ['value' => 'list']); ?>
                         
@@ -50,13 +60,20 @@
             </div>
             <div class="form-group">
                 <?php
-                    echo $this->Form->control('name', ['label' => 'E-Mail-Adresse', 'class' => 'form-control']); 
+                    echo $this->Form->control('email', ['label' => 'E-Mail-Adresse', 'class' => 'form-control']); 
                 ?>
             </div>
             <?php
-                echo $this->Form->label('grade', 'Vergeben Sie eine Schulnote für die Qualität der Suchanfrage');
-                $options = [1, 2, 3, 4, 5, 6];
-                echo $this->Form->select('grade', $options, ['class' => 'form-control', 'empty' => true]);
+                echo $this->Form->label('grade', 'Note');
+                $options = [
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                    '6' => '6',
+                ];
+                echo $this->Form->select('grade', $options, ['class' => 'form-control', 'empty' => 'Vergeben Sie eine Schulnote für die Qualität der Suchanfrage']);
             ?>
             <div class="form-group">
                 <?php
