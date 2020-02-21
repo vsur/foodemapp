@@ -10,7 +10,9 @@
     </div>
     <div class="col-md-4">
         <h3>Aktuelle Auswahl an Komponenten</h3>
-        <?= $this->element('findMatches/ranked_selection_list'); ?>
+        <div id="selectViz-rankedSelectionList">
+            <?= $this->element('findMatches/ranked_selection_list'); ?>
+        </div>
     </div>
     <div class="col-md-4">
         <h3>Faktoren Übersicht</h3>

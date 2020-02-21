@@ -7434,6 +7434,9 @@ a#filter, button#componentWheel {
   font-size: 2em;
   color: white; }
 
+#selectViz-rankedSelectionList .choosenStarAgregation {
+  top: -5px; }
+
 .viewLinkBlock a,
 .viewLinkBlock a:visited,
 .viewLinkBlock a h2,

@@ -225,6 +225,10 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
     color: white;
 }
 
+#selectViz-rankedSelectionList .choosenStarAgregation {
+  top: -5px;
+}
+
 .viewLinkBlock a, 
 .viewLinkBlock a:visited,
 .viewLinkBlock a h2, 
