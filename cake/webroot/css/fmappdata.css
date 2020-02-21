@@ -7658,4 +7658,12 @@ path.chord {
 .leaflet-popup-tip-container {
   display: none; }
 
+/*
+ * Styling for Query Evaluation
+ */
+label[for=view-to-evaluate-list],
+label[for=view-to-evaluate-chord],
+label[for=view-to-evaluate-map] {
+  margin-right: 25px; }
+
 /*# sourceMappingURL=fmappdata.css.map */

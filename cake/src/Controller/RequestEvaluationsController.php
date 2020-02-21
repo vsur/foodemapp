@@ -21,8 +21,9 @@ class RequestEvaluationsController extends AppController
      *
      * @return \Cake\Network\Response|null
      */
-    public function index()
+    public function index($key = null)
     {
+        $this->checkAccess($key);   
         $requestEvaluations = $this->paginate($this->RequestEvaluations);
 
         $this->set(compact('requestEvaluations'));
@@ -36,8 +37,9 @@ class RequestEvaluationsController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null, $key = null)
     {
+        $this->checkAccess($key);   
         $requestEvaluation = $this->RequestEvaluations->get($id, [
             'contain' => []
         ]);
@@ -46,30 +48,7 @@ class RequestEvaluationsController extends AppController
         $this->set('_serialize', ['requestEvaluation']);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        // $this->viewBuilder()->layout('fmappbeta');
-
-        $requestEvaluation = $this->RequestEvaluations->newEntity();
-        if ($this->request->is('post')) {
-            $requestEvaluation = $this->RequestEvaluations->patchEntity($requestEvaluation, $this->request->getData());
-            if ($this->RequestEvaluations->save($requestEvaluation)) {
-                $this->Flash->success(__('The request evaluation has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The request evaluation could not be saved. Please, try again.'));
-        }
-        $this->set(compact('requestEvaluation'));
-        $this->set('_serialize', ['requestEvaluation']);
-    }
-
-    public function new()
+    public function new($commingFromView = null)
     {
         $this->viewBuilder()->layout('fmappbeta');
         
@@ -82,13 +61,13 @@ class RequestEvaluationsController extends AppController
         if ($this->request->is('post')) {
             $requestEvaluation = $this->RequestEvaluations->patchEntity($requestEvaluation, $this->request->getData());
             if ($this->RequestEvaluations->save($requestEvaluation)) {
-                $this->Flash->success(__('The request evaluation has been saved.'));
+                $this->Flash->success(__('Ihre Bewerrung wurde gespeichert'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect( ["controller" => "ypois", "action" => "findMatches", "selectViz", "?" => $this->request->query] );
             }
             $this->Flash->error(__('The request evaluation could not be saved. Please, try again.'));
         }
-        $this->set(compact('requestEvaluation', 'ypois', 'overallComponentCount'));
+        $this->set(compact('requestEvaluation', 'ypois', 'overallComponentCount', 'commingFromView'));
     }
 
     /**
@@ -98,8 +77,9 @@ class RequestEvaluationsController extends AppController
      * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($id = null, $key = null)
     {
+        $this->checkAccess($key);   
         $requestEvaluation = $this->RequestEvaluations->get($id, [
             'contain' => []
         ]);
@@ -123,8 +103,9 @@ class RequestEvaluationsController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($id = null, $key = null)
     {
+        $this->checkAccess($key);   
         $this->request->allowMethod(['post', 'delete']);
         $requestEvaluation = $this->RequestEvaluations->get($id);
         if ($this->RequestEvaluations->delete($requestEvaluation)) {

@@ -38,19 +38,20 @@
             </fieldset>
 
             <?=  $this->Form->hidden('query_parameters', ['value' => $queryString]); ?>
-            <?=  $this->Form->hidden('ypois_count', ['value' => 5]); ?>
+            <?=  $this->Form->hidden('ypois_count', ['value' => $ypois->count()]); ?>
             <?=  $this->Form->hidden('choosen_components_count', ['value' => count($this->request->query)]); ?>
             <?=  $this->Form->hidden('other_components_count', ['value' => ( $overallComponentCount - count($this->request->query) ) ]); ?>
 
-            <?=  $this->Form->hidden('comming_from_view', ['value' => 'list']); ?>
+            <?=  $this->Form->hidden('comming_from_view', ['value' => $commingFromView]); ?>
                         
-                <?= $this->Form->radio('view_to_evaluate', [
+            <?=  $this->Form->label('view_to_evaluate', 'Zu bewertende Ansicht'); ?>
+            <?= $this->Form->radio('view_to_evaluate', [
+            
+                ['value' => 'list', 'text' => 'Listenansicht', 'class' => 'viewRadio'],
+                ['value' => 'chord', 'text' => 'Chord-Diagramm', 'class' => 'viewRadio'],
+                ['value' => 'map', 'text' => 'Kartenansicht', 'class' => 'viewRadio'],
                 
-                    ['value' => 'list', 'text' => 'Listenansicht', 'class' => 'viewRadio'],
-                    ['value' => 'chord', 'text' => 'Chord-Diagramm', 'class' => 'viewRadio'],
-                    ['value' => 'map', 'text' => 'Kartenansicht', 'class' => 'viewRadio'],
-                    
-                ]); ?>
+            ]); ?>
 
             <div class="form-group">
                 <?php

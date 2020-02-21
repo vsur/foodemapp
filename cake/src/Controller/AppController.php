@@ -59,4 +59,13 @@ class AppController extends Controller
             $this->set('_serialize', true);
         }
     }
+
+    protected $actionKey = "doStuff";
+
+    public function checkAccess($key) 
+    {
+        if($key != $this->actionKey) {
+            return $this->redirect(['controller' => 'Ypois', 'action' => 'setScenario']);
+        }
+    }
 }

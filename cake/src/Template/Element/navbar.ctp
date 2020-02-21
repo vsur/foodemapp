@@ -15,9 +15,9 @@
                 ]
             );
         }
-        if($this->request->action  != 'setScenario' && !empty($this->request->query)) {
+        if( $this->request->action  != 'setScenario' && !empty($this->request->query)) {
             if(!empty($this->request->pass)) {
-              if( $this->request->pass[0] != 'selectViz' ) {
+              if( $this->request->pass[0] != 'selectViz' || $this->request->controller  == 'RequestEvaluations' ) {
                 echo $this->Html->link(
                   '<span class="hidden-xs">Ansicht ändern</span> <span class="glyphicon glyphicon-modal-window" aria-hidden="true"></span>',
                   ["controller" => "ypois", "action" => "findMatches", "selectViz", "?" => $this->request->query],
@@ -29,8 +29,10 @@
                   ]
                 );
               }
-            } 
-            echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Komonenten Rad"><span class="hidden-xs">Komponenten browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
+            }
+            if ($this->request->controller == 'Ypois') {
+              echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Komonenten Rad"><span class="hidden-xs">Komponenten browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
+            }  
           }
           ?>
       <!-- <button type="button" class="navbar-toggle collapsed"
@@ -41,6 +43,23 @@
           class="icon-bar"></span>
       </button> -->
       <a class="navbar-brand hidden-xs hidden-sm" href="#"><?= $step; ?></a >
+      <?php
+      if($this->request->controller  != 'RequestEvaluations' && $this->request->action  != 'setScenario' && !empty($this->request->query)) {
+            if(!empty($this->request->pass)) {
+
+              echo $this->Html->link(
+                '<span class="hidden-xs hidden-sm hidden-md">Query bewerten </span> <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>',
+                ["controller" => "RequestEvaluations", "action" => "new", $this->request->pass[0], "?" => $this->request->query],
+                [
+                  'class' => 'btn btn-default navbar-btn', 
+                  'id' => 'filter',
+                  'aria-label' => 'Bewerften Sie die aktuelle Suchanfrage', 
+                  'escape' => false
+                ]
+              );
+            }
+      }
+      ?>
     </div>
     <!-- <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">

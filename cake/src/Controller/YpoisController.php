@@ -20,14 +20,7 @@ class YpoisController extends AppController
         $this->loadComponent('PoisNComponents');
     }
 
-    protected $actionKey = "doStuff";
-
-    protected function checkAccess($key) 
-    {
-        if($key != $this->actionKey) {
-            return $this->redirect(['action' => 'setScenario']);
-        }
-    }
+   
     /**
      * Index method
      *
