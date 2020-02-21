@@ -22,6 +22,7 @@ rsync -r cake/src/Controller/NominalComponentsController.php deploy/src/Controll
 rsync -r cake/src/Controller/OrdinalAttributesController.php deploy/src/Controller/
 rsync -r cake/src/Controller/OrdinalAttributesYpoisController.php deploy/src/Controller/
 rsync -r cake/src/Controller/OrdinalComponentsController.php deploy/src/Controller/
+rsync -r cake/src/Controller/RequestEvaluationsController.php deploy/src/Controller/
 rsync -r cake/src/Controller/PagesController.php deploy/src/Controller/
 rsync -r cake/src/Controller/YpoisController.php deploy/src/Controller/
 
@@ -34,6 +35,7 @@ rsync -r cake/src/Model/Entity/NominalComponent.php deploy/src/Model/Entity/
 rsync -r cake/src/Model/Entity/OrdinalAttribute.php deploy/src/Model/Entity/
 rsync -r cake/src/Model/Entity/OrdinalAttributesYpois.php deploy/src/Model/Entity/
 rsync -r cake/src/Model/Entity/OrdinalComponent.php deploy/src/Model/Entity/
+rsync -r cake/src/Model/Entity/RequestEvaluation.php deploy/src/Model/Entity/
 rsync -r cake/src/Model/Entity/Ypois.php deploy/src/Model/Entity/
 rsync -r cake/src/Model/Table/BinaryComponentsTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/BinaryComponentsYpoisTable.php deploy/src/Model/Table/
@@ -43,6 +45,7 @@ rsync -r cake/src/Model/Table/NominalComponentsTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/OrdinalAttributesTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/OrdinalAttributesYpoisTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/OrdinalComponentsTable.php deploy/src/Model/Table/
+rsync -r cake/src/Model/Table/RequestEvaluationTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/YpoisTable.php deploy/src/Model/Table/
 
 rsync -r cake/src/Shell deploy/src
@@ -64,6 +67,7 @@ if [ ! -d "deploy/src/Template/Pages" ]; then
 fi
 # Aktuell keine Pages aktiv
 # rsync -r cake/src/Template/Pages deploy/src/Template/
+rsync -r cake/src/Template/RequestEvaluations deploy/src/Template/
 rsync -r cake/src/Template/Ypois deploy/src/Template/
 
 rsync -r cake/src/View deploy/src/
