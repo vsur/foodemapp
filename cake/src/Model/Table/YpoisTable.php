@@ -217,6 +217,97 @@ class YpoisTable extends Table
 
         return $filters;
     }
+    public function buildRankedSelection($filterSelection = null) {
+        $ratingStructure = (object) [
+            'binaryComponents' => [],
+            'nominalAttributes' => [],
+            'ordinalAttributes' => [],
+        ];
+
+        $rankedSelection = (object) [];
+        $rankedSelection->rating5 = clone $ratingStructure;
+        $rankedSelection->rating4 = clone $ratingStructure;
+        $rankedSelection->rating3 = clone $ratingStructure;
+        $rankedSelection->rating2 = clone $ratingStructure;
+        $rankedSelection->rating1 = clone $ratingStructure;
+        $rankedSelection->binaryComponentIDs = [];
+        $rankedSelection->nominalAttributeIDs = [];
+        $rankedSelection->ordinalAttributeIDs = [];
+
+        foreach ($filterSelection->notMatchingBinaries as $notMatchingBinary) {
+            $this->ratingBasedAssignment($notMatchingBinary, $rankedSelection, 'binaryComponents');
+            array_push($rankedSelection->binaryComponentIDs,$notMatchingBinary->id);
+        }
+
+        foreach ($filterSelection->matchingBinaries as $matchingBinary) {
+            $this->ratingBasedAssignment($matchingBinary, $rankedSelection, 'binaryComponents');
+            array_push($rankedSelection->binaryComponentIDs,$matchingBinary->id);
+        }
+
+        foreach ($filterSelection->matchingNominals as $matchingNominalComponent) {
+            $matchingNominalAttribute = $matchingNominalComponent->attribute;
+            $matchingNominalAttribute->rating = $matchingNominalComponent->rating;
+            $this->ratingBasedAssignment($matchingNominalAttribute, $rankedSelection, 'nominalAttributes');
+            array_push($rankedSelection->nominalAttributeIDs,$matchingNominalAttribute->id);
+        }
+
+        foreach ($filterSelection->matchingOrdinals as $matchingOrdinalComponent) {
+            $matchingOrdinalAttribute = $matchingOrdinalComponent->attribute;
+            $matchingOrdinalAttribute->rating = $matchingOrdinalComponent->rating;
+            $this->ratingBasedAssignment($matchingOrdinalAttribute, $rankedSelection, 'ordinalAttributes');
+            array_push($rankedSelection->ordinalAttributeIDs,$matchingOrdinalAttribute->id);
+        }
+
+        return $rankedSelection;
+    }
+
+    protected function ratingBasedAssignment ($objectToAssign = null, $rankedSelection = null, $type = null) {
+        switch ($objectToAssign->rating) {
+            case 5:
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating5->{$type}, $queryObejct);
+                break;
+            case 4:
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating4->{$type}, $queryObejct);
+                break;
+            case 3:
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating3->{$type}, $queryObejct);
+                break;
+            case 2:
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating2->{$type}, $queryObejct);
+                break;
+            case 1:
+                $queryObejct = $this->getSingleQueryObject($objectToAssign, $type);
+                array_push($rankedSelection->rating1->{$type}, $queryObejct);
+                break;
+        }
+    }
+
+    protected function getSingleQueryObject ($objectToAssign = null, $type = null) {
+        $queryObject = (object)[];
+        switch($type) {
+            case 'binaryComponents':
+                $queryObject = $this->BinaryComponents->get($objectToAssign->id);
+                $queryObject->rating = $objectToAssign->rating;
+                $queryObject->binaryComponentState = $objectToAssign->binaryComponentState;
+                break;
+
+            case 'nominalAttributes':
+                $queryObject = $this->NominalAttributes->get($objectToAssign->id, [  'contain' => ['NominalComponents'] ]);
+                $queryObject->rating = $objectToAssign->rating;
+                break;
+
+            case 'ordinalAttributes':
+                $queryObject = $this->OrdinalAttributes->get($objectToAssign->id, [  'contain' => ['OrdinalComponents.OrdinalAttributes'] ]);
+                $queryObject->rating = $objectToAssign->rating;
+                break;
+
+        }
+        return $queryObject;
+    }
 
     protected function rebuildIdsFromString($combinedComponentString = null, $componentIdentifierString = null) {
         // Set string position of id-identifier
