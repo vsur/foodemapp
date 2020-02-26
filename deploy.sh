@@ -45,7 +45,7 @@ rsync -r cake/src/Model/Table/NominalComponentsTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/OrdinalAttributesTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/OrdinalAttributesYpoisTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/OrdinalComponentsTable.php deploy/src/Model/Table/
-rsync -r cake/src/Model/Table/RequestEvaluationTable.php deploy/src/Model/Table/
+rsync -r cake/src/Model/Table/RequestEvaluationsTable.php deploy/src/Model/Table/
 rsync -r cake/src/Model/Table/YpoisTable.php deploy/src/Model/Table/
 
 rsync -r cake/src/Shell deploy/src
