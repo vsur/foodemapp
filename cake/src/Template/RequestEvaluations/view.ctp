@@ -6,10 +6,8 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Request Evaluation'), ['action' => 'edit', $requestEvaluation->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Request Evaluation'), ['action' => 'delete', $requestEvaluation->id], ['confirm' => __('Are you sure you want to delete # {0}?', $requestEvaluation->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Request Evaluations'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Request Evaluation'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Form->postLink(__('Delete Request Evaluation'), ['action' => 'delete', $requestEvaluation->id, 'doStuff'], ['confirm' => __('Are you sure you want to delete # {0}?', $requestEvaluation->id)]) ?> </li>
+        <li><?= $this->Html->link(__('List Request Evaluations'), ['action' => 'index', 'doStuff']) ?> </li>
     </ul>
 </nav>
 <div class="requestEvaluations view large-9 medium-8 columns content">

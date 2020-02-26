@@ -23,7 +23,8 @@ class RequestEvaluationsController extends AppController
      */
     public function index($key = null)
     {
-        $this->checkAccess($key);   
+        $this->checkAccess($key);  
+        $this->viewBuilder()->layout('fmappbeta'); 
         $requestEvaluations = $this->paginate($this->RequestEvaluations);
 
         $this->set(compact('requestEvaluations'));
@@ -71,32 +72,6 @@ class RequestEvaluationsController extends AppController
     }
 
     /**
-     * Edit method
-     *
-     * @param string|null $id Request Evaluation id.
-     * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null, $key = null)
-    {
-        $this->checkAccess($key);   
-        $requestEvaluation = $this->RequestEvaluations->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $requestEvaluation = $this->RequestEvaluations->patchEntity($requestEvaluation, $this->request->getData());
-            if ($this->RequestEvaluations->save($requestEvaluation)) {
-                $this->Flash->success(__('The request evaluation has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The request evaluation could not be saved. Please, try again.'));
-        }
-        $this->set(compact('requestEvaluation'));
-        $this->set('_serialize', ['requestEvaluation']);
-    }
-
-    /**
      * Delete method
      *
      * @param string|null $id Request Evaluation id.
@@ -114,6 +89,6 @@ class RequestEvaluationsController extends AppController
             $this->Flash->error(__('The request evaluation could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index', 'doStuff']);
     }
 }
