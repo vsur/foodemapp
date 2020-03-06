@@ -1,4 +1,8 @@
 # Deploy Script
+
+# Delete all old fils 
+rm -R deploy/*
+
 # Copies Files one in deploy Folder 
 rsync -r cake/.htaccess deploy/
 rsync -r cake/index.php deploy/
