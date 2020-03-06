@@ -396,6 +396,9 @@ var fmApp = {
                 'nominalAttributeId': ncAttrId,
                 'ordinalAttributeId': ocAttrId
             });
+            // Show Labels and Button
+            $(".areaLabel").show();
+            $("#showAction").show();
             var criteriaListIdentifier = "criteriaList" + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id;
             // Prepend choosen component
             this.currentComponent = '<p id="' + criteriaListIdentifier + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
@@ -442,7 +445,8 @@ var fmApp = {
             chosenComponentToPasteRating += '</div>';
             chosenComponentToPasteRating += '</div>';
 
-            $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
+            // $("#criteriaOutput").append(labelRow + chosenComponentToPaste + chosenComponentToPasteRating);
+            $("#criteriaOutput").append(chosenComponentToPaste + chosenComponentToPasteRating);
 
             // Set ordinal attribute choice string initialy
             if (chosenComponent.modelType == 'OrdinalComponents') {

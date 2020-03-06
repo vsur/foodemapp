@@ -45,14 +45,22 @@
 
   <div class="col-md-4">
     <div id="criteriaChoice">
-      <label class="text-success" for="criteriaChoice"><?= __('Ihre Auswahl an Kategorien') ?></label>
+      <label class="areaLabel text-success" for="criteriaChoice"><?= __('Ihre Auswahl an Kategorien') ?></label>
 
     </div>
   </div>
 
   <div class="col-md-6">
     <div id="criteriaOutput">
-      <label class="text-info hidden-md hidden-lg"><?= __('Einstellen und Werten der Kategorien') ?></label>
+      <label class="areaLabel text-info hidden-md hidden-lg"><?= __('Einstellen und Werten der Kategorien') ?></label>
+      <div class="row hidden-sm hidden-xs">
+        <div class="col-md-6">
+          <label class="areaLabel text-info">Kategorien einstellen</label>
+        </div>
+        <div class="col-md-6">
+          <label class="areaLabel text-info">Gewichtung einstellen</label>
+        </div>
+    </div>
     </div>
   </div>
 </div> <!-- /.row -->
