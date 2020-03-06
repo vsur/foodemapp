@@ -146,7 +146,10 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
             ratingString += '<li class="binaryComponentContainer clearfix">';
 
             ratingString +=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
-            ratingString +=    '<span class="componentNameBinarySlider' +  (rankedBinary.display_name != '' ? '' : ' text-muted') + '">' + (rankedBinary.display_name != '' ? rankedBinary.display_name : rankedBinary.name) + '</span><label class="switch pull-right"><input type="checkbox"' +  (rankedBinary.binaryComponentState == true ? 'checked' : '') + ' disabled><span class="slider round"></span></label>';
+            ratingString +=    '<span class="binaryComponentInfo">'
+            ratingString +=    '    <span>' + ( rankedBinary.display_name != '' ? rankedBinary.display_name : rankedBinary.name ) + '</span>'
+            ratingString +=    '    <span class="pull-right"><span class="glyphicon ' + ( rankedBinary.binaryComponentState ? 'glyphicon-ok' : 'glyphicon-remove' ) + ' ' + ( rankedBinary.binaryComponentState ? 'text-success' : 'text-danger' ) + '" aria-hidden="true"></span></span>'
+            ratingString +=    '</span>'
             
             ratingString += '</li>';
         });

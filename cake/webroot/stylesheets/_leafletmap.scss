@@ -55,14 +55,17 @@
         top: 0px;
         left: -8px;
     }
-    .componentNameBinarySlider, .componentNameNominalComponent, .attributeNameNominalAttribute, .componentNameOrdinalComponent {
+    .binaryComponentInfo, .componentNameNominalComponent, .attributeNameNominalAttribute, .componentNameOrdinalComponent {
         font-size: 12px !important;
         line-height: 1.5em;
         padding-right: 0px;
         top: 0px;
         color: white;
     }
-    .componentNameBinarySlider, .nominalNameCombo, .componentNameOrdinalComponent {
+    .binaryComponentInfo span.glyphicon {
+      font-size: 18px;
+    }
+    .nominalNameCombo, .componentNameOrdinalComponent {
         width: 85px;
         display: inline-block;
         text-overflow: ellipsis;

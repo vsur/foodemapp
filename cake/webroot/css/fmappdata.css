@@ -7281,6 +7281,15 @@ body {
   padding-right: 15px;
   vertical-align: top; }
 
+.binaryComponentInfo {
+  font-size: 15px;
+  line-height: 35px;
+  padding-right: 15px;
+  vertical-align: top; }
+
+.binaryComponentInfo span.glyphicon {
+  font-size: 35px; }
+
 .nominalAttributesContainer {
   position: relative;
   width: 100%; }
@@ -7466,6 +7475,16 @@ a#filter, button#componentWheel {
 #listView .panel-heading {
   cursor: pointer; }
 
+#listView .choosenSelection .binaryComponentInfo {
+  display: block; }
+
+#listView .choosenSelection .binaryComponentInfo > span {
+  position: relative;
+  top: 12px; }
+
+#listView .choosenSelection .binaryComponentInfo > span:first-child {
+  margin-left: 5px; }
+
 .listMoreInfo > span.caret {
   transition: all 1s ease; }
 
@@ -7623,13 +7642,15 @@ path.chord {
     color: #ffc700;
     top: 0px;
     left: -8px; }
-  .popUpComponentList .componentNameBinarySlider, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .attributeNameNominalAttribute, .popUpComponentList .componentNameOrdinalComponent {
+  .popUpComponentList .binaryComponentInfo, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .attributeNameNominalAttribute, .popUpComponentList .componentNameOrdinalComponent {
     font-size: 12px !important;
     line-height: 1.5em;
     padding-right: 0px;
     top: 0px;
     color: white; }
-  .popUpComponentList .componentNameBinarySlider, .popUpComponentList .nominalNameCombo, .popUpComponentList .componentNameOrdinalComponent {
+  .popUpComponentList .binaryComponentInfo span.glyphicon {
+    font-size: 18px; }
+  .popUpComponentList .nominalNameCombo, .popUpComponentList .componentNameOrdinalComponent {
     width: 85px;
     display: inline-block;
     text-overflow: ellipsis;

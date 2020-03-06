@@ -4,7 +4,12 @@
     <?php foreach ($rankedSelection->rating5->binaryComponents as $rankedBinary): ?>
         <li class="binaryComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">5</span></span>
-            <span class="componentNameBinarySlider<?= $rankedBinary->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?></span><label class="switch pull-right"><input type="checkbox" <?= $rankedBinary->binaryComponentState ? 'checked' : '' ?> disabled><span class="slider round"></span></label>
+            <span class="binaryComponentInfo">
+                <span>
+                    <?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?>
+                </span>
+                <span class="pull-right"><span class="glyphicon <?= $rankedBinary->binaryComponentState ? 'glyphicon-ok' : 'glyphicon-remove' ?> <?= $rankedBinary->binaryComponentState ? 'text-success' : 'text-danger' ?>" aria-hidden="true"></span></span>
+            </span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating5->nominalAttributes as $rankedNominal): ?>
@@ -30,7 +35,12 @@
     <?php foreach ($rankedSelection->rating4->binaryComponents as $rankedBinary): ?>
         <li class="binaryComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">4</span></span>
-            <span class="componentNameBinarySlider<?= $rankedBinary->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?></span><label class="switch pull-right"><input type="checkbox" <?= $rankedBinary->binaryComponentState ? 'checked' : '' ?> disabled><span class="slider round"></span></label>
+            <span class="binaryComponentInfo">
+                <span>
+                    <?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?>
+                </span>
+                <span class="pull-right"><span class="glyphicon <?= $rankedBinary->binaryComponentState ? 'glyphicon-ok' : 'glyphicon-remove' ?> <?= $rankedBinary->binaryComponentState ? 'text-success' : 'text-danger' ?>" aria-hidden="true"></span></span>
+            </span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating4->nominalAttributes as $rankedNominal): ?>
@@ -56,7 +66,12 @@
     <?php foreach ($rankedSelection->rating3->binaryComponents as $rankedBinary): ?>
         <li class="binaryComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">3</span></span>
-            <span class="componentNameBinarySlider<?= $rankedBinary->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?></span><label class="switch pull-right"><input type="checkbox" <?= $rankedBinary->binaryComponentState ? 'checked' : '' ?> disabled><span class="slider round"></span></label>
+            <span class="binaryComponentInfo">
+                <span>
+                    <?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?>
+                </span>
+                <span class="pull-right"><span class="glyphicon <?= $rankedBinary->binaryComponentState ? 'glyphicon-ok' : 'glyphicon-remove' ?> <?= $rankedBinary->binaryComponentState ? 'text-success' : 'text-danger' ?>" aria-hidden="true"></span></span>
+            </span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating3->nominalAttributes as $rankedNominal): ?>
@@ -82,7 +97,12 @@
     <?php foreach ($rankedSelection->rating2->binaryComponents as $rankedBinary): ?>
         <li class="binaryComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">2</span></span>
-            <span class="componentNameBinarySlider<?= $rankedBinary->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?></span><label class="switch pull-right"><input type="checkbox" <?= $rankedBinary->binaryComponentState ? 'checked' : '' ?> disabled><span class="slider round"></span></label>
+            <span class="binaryComponentInfo">
+                <span>
+                    <?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?>
+                </span>
+                <span class="pull-right"><span class="glyphicon <?= $rankedBinary->binaryComponentState ? 'glyphicon-ok' : 'glyphicon-remove' ?> <?= $rankedBinary->binaryComponentState ? 'text-success' : 'text-danger' ?>" aria-hidden="true"></span></span>
+            </span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating2->nominalAttributes as $rankedNominal): ?>
@@ -108,7 +128,12 @@
     <?php foreach ($rankedSelection->rating1->binaryComponents as $rankedBinary): ?>
         <li class="binaryComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">1</span></span>
-            <span class="componentNameBinarySlider<?= $rankedBinary->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?></span><label class="switch pull-right"><input type="checkbox" <?= $rankedBinary->binaryComponentState ? 'checked' : '' ?> disabled><span class="slider round"></span></label>
+            <span class="binaryComponentInfo">
+                <span>
+                    <?= $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name ?>
+                </span>
+                <span class="pull-right"><span class="glyphicon <?= $rankedBinary->binaryComponentState ? 'glyphicon-ok' : 'glyphicon-remove' ?> <?= $rankedBinary->binaryComponentState ? 'text-success' : 'text-danger' ?>" aria-hidden="true"></span></span>
+            </span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating1->nominalAttributes as $rankedNominal): ?>
@@ -129,6 +154,5 @@
             <input type="range" min="<?= $minRange ?>" max="<?= $maxRange ?>" step="1" value="<?= $rankedOrdinal->meter ?>" disabled>
         </li>
     <?php endforeach; ?>
-
-
+    
 </ul>

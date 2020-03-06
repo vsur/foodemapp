@@ -68,6 +68,15 @@ body {
   padding-right: 15px;
   vertical-align: top;
 }
+.binaryComponentInfo {
+  font-size: 15px;
+  line-height: 35px;
+  padding-right: 15px;
+  vertical-align: top;
+}
+.binaryComponentInfo span.glyphicon {
+  font-size: 35px;
+}
 .nominalAttributesContainer {
   position: relative;
   width: 100%;
@@ -258,6 +267,16 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 
 #listView .panel-heading {
   cursor: pointer;
+}
+#listView .choosenSelection .binaryComponentInfo {
+  display: block;
+}
+#listView .choosenSelection .binaryComponentInfo > span {
+  position: relative;
+  top: 12px;
+}
+#listView .choosenSelection .binaryComponentInfo > span:first-child {
+  margin-left: 5px;
 }
 .listMoreInfo > span.caret {
   transition: all 1s ease;

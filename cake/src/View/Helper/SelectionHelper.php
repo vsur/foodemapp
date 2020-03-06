@@ -55,7 +55,15 @@ class SelectionHelper extends Helper {
             $ratingString .= '<li class="binaryComponentContainer clearfix">';
 
             $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
-            $ratingString .=    '<span class="componentNameBinarySlider' .  ($rankedBinary->display_name != '' ? '' : ' text-muted') . '">' . ($rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name) .'</span><label class="switch pull-right"><input type="checkbox"' .  ($rankedBinary->binaryComponentState == 'checked' ? 'checked' : '') . ' disabled><span class="slider round"></span></label>';
+            // $ratingString .=    '<span class="componentNameBinarySlider' .  ($rankedBinary->display_name != '' ? '' : ' text-muted') . '">' . ($rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name) .'</span><label class="switch pull-right"><input type="checkbox"' .  ($rankedBinary->binaryComponentState == 'checked' ? 'checked' : '') . ' disabled><span class="slider round"></span></label>';
+            $ratingString .=    '<span class="binaryComponentInfo">';
+            $ratingString .=    '   <span>';
+            $ratingString .=    '       ' . $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name;
+            $ratingString .=    '   </span>';
+            $ratingString .=    '   <span class="pull-right">';
+            $ratingString .=    '       <span class="glyphicon ' . ( $rankedBinary->binaryComponentState ? 'glyphicon-ok text-success' : 'glyphicon-remove text-danger' ) . '" aria-hidden="true"></span>';
+            $ratingString .=    '   </span>';
+            $ratingString .=    '</span>';
 
             $ratingString .= '</li>';
         }
