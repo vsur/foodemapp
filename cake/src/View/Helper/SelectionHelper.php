@@ -55,7 +55,6 @@ class SelectionHelper extends Helper {
             $ratingString .= '<li class="binaryComponentContainer clearfix">';
 
             $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
-            // $ratingString .=    '<span class="componentNameBinarySlider' .  ($rankedBinary->display_name != '' ? '' : ' text-muted') . '">' . ($rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name) .'</span><label class="switch pull-right"><input type="checkbox"' .  ($rankedBinary->binaryComponentState == 'checked' ? 'checked' : '') . ' disabled><span class="slider round"></span></label>';
             $ratingString .=    '<span class="binaryComponentInfo">';
             $ratingString .=    '   <span>';
             $ratingString .=    '       ' . $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name;
@@ -74,7 +73,7 @@ class SelectionHelper extends Helper {
 
             $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
             $ratingString .=    '<div class="nominalAttribute pull-right"><figure class="attrIcons ' . ($rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder') . '"></figure></div>';
-            $ratingString .=    '<span class="componentNameNominalComponent' . ($rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted') . '">' . ($rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name) . '</span> <br><span class="attributeNameNominalAttribute ' . ($rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted') . '">' . ($rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name) . '</span>';
+            $ratingString .=    '<span class="componentNameNominalComponent' . ($rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted') . '">' . ($rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name) . '</span> <span class="attributeNameNominalAttribute ' . ($rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted') . '">' . ($rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name) . '</span>';
 
             $ratingString .= '</li>';
         }

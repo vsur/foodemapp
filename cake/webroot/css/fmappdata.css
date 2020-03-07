@@ -7227,6 +7227,9 @@ input:checked + .slider:before {
 .textURcolor {
   color: #7d003c; }
 
+.textURcolorSuperLight {
+  color: #ff4da2 !important; }
+
 /*
  * Main Stuff
  */
@@ -7447,7 +7450,7 @@ a#filter, button#componentWheel {
   color: white; }
 
 #selectViz-rankedSelectionList .choosenStarAgregation {
-  top: -5px; }
+  top: 5px; }
 
 .viewLinkBlock a,
 .viewLinkBlock a:visited,
@@ -7655,9 +7658,18 @@ path.chord {
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden; }
+    overflow: hidden;
+    cursor: help; }
+  .popUpComponentList .nominalNameCombo {
+    color: #ff4da2 !important; }
+  .popUpComponentList .componentNameOrdinalComponent {
+    color: white; }
   .popUpComponentList .nominalComponentContainer .choosenStarAgregation {
     top: 7px; }
+  .popUpComponentList .nominalComponentContainer .nominalAttribute {
+    padding: 1px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px; }
   .popUpComponentList .nominalComponentContainer .componentNameNominalComponent {
     line-height: 25px; }
   .popUpComponentList .switch {

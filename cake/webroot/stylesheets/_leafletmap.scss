@@ -66,15 +66,27 @@
       font-size: 18px;
     }
     .nominalNameCombo, .componentNameOrdinalComponent {
-        width: 85px;
-        display: inline-block;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+      width: 85px;
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: help;
+    }
+    .nominalNameCombo {
+      color: lighten($urcd-color, 40.5%) !important;
+    } 
+    .componentNameOrdinalComponent {
+      color: white;
     }
     .nominalComponentContainer {
         .choosenStarAgregation {
             top: 7px;
+        }
+        .nominalAttribute {
+          padding: 1px;
+          background:rgba(255, 255, 255, 0.85);
+          border-radius: 12px;
         }
         .componentNameNominalComponent {
                 line-height: 25px;

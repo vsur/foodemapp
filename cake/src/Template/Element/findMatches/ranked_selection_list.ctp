@@ -16,7 +16,7 @@
         <li class="nominalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">5</span></span>
             <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder' ?>"></figure></div>
-            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
+            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating5->ordinalAttributes as $rankedOrdinal): ?>
@@ -47,7 +47,7 @@
         <li class="nominalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">4</span></span>
             <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder' ?>"></figure></div>
-            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
+            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating4->ordinalAttributes as $rankedOrdinal): ?>
@@ -78,7 +78,7 @@
         <li class="nominalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">3</span></span>
             <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder' ?>"></figure></div>
-            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
+            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating3->ordinalAttributes as $rankedOrdinal): ?>
@@ -109,7 +109,7 @@
         <li class="nominalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">2</span></span>
             <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder' ?>"></figure></div>
-            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
+            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating2->ordinalAttributes as $rankedOrdinal): ?>
@@ -140,7 +140,7 @@
         <li class="nominalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">1</span></span>
             <div class="nominalAttribute pull-right"><figure class="attrIcons <?= $rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder' ?>"></figure></div>
-            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <br><span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
+            <span class="componentNameNominalComponent<?= $rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name ?></span> <span class="attributeNameNominalAttribute <?= $rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name ?></span>
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating1->ordinalAttributes as $rankedOrdinal): ?>
