@@ -170,12 +170,10 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
             ratingString += '<li class="ordinalComponentContainer clearfix">';
 
             ratingString +=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
-            ratingString +=    '<span class="componentNameOrdinalComponent' + (rankedOrdinal.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedOrdinal.ordinal_component.display_name != '' ? ( rankedOrdinal.ordinal_component.display_name) :  rankedOrdinal.ordinal_component.name) + '</span> <span class="attributeNameOrdinalAttribute ' + (rankedOrdinal.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (rankedOrdinal.display_name != '' ? rankedOrdinal.display_name : rankedOrdinal.name) + '</span> <br>';
-
-            let minRange = rankedOrdinal.ordinal_component.ordinal_attributes.slice(0)[0].meter;
-            let maxRange = rankedOrdinal.ordinal_component.ordinal_attributes.slice(-1)[0].meter;
-
-            ratingString +=    '<input type="range" min="' + minRange + '" max="' + maxRange + '" step="1" value="' + rankedOrdinal.meter + '" disabled>';
+            ratingString +=    '<span class="ordinalComponentInfo">';
+            ratingString +=         '<span class="componentNameOrdinalComponent' + (rankedOrdinal.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedOrdinal.ordinal_component.display_name != '' ? ( rankedOrdinal.ordinal_component.display_name) :  rankedOrdinal.ordinal_component.name) + '</span>';
+            ratingString +=         '<span class="attributeNameOrdinalAttribute pull-right ' + (rankedOrdinal.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (rankedOrdinal.display_name != '' ? rankedOrdinal.display_name : rankedOrdinal.name) + '</span>';
+            ratingString +=    '</span>'
 
             ratingString += '</li>';
         });
@@ -223,12 +221,8 @@ function buildOrdinalComponents(ordinalAttributes) {
     ordinalAttributes.forEach(function(ordinalAttribute, index) {
         ordinalComponentString += '<li class="ordinalComponentContainer clearfix">';
 
-        ordinalComponentString +=    '<span class="componentNameOrdinalComponent' + (ordinalAttribute.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (ordinalAttribute.ordinal_component.display_name != '' ? ( ordinalAttribute.ordinal_component.display_name) :  ordinalAttribute.ordinal_component.name) + '</span> <span class="attributeNameOrdinalAttribute ' + (ordinalAttribute.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (ordinalAttribute.display_name != '' ? ordinalAttribute.display_name : ordinalAttribute.name) + '</span> <br>';
-
-        let minRange = ordinalAttribute.ordinal_component.ordinal_attributes.slice(0)[0].meter;
-        let maxRange = ordinalAttribute.ordinal_component.ordinal_attributes.slice(-1)[0].meter;
-
-        ordinalComponentString +=    '<input type="range" min="' + minRange + '" max="' + maxRange + '" step="1" value="' + ordinalAttribute.meter + '" disabled>';
+        ordinalComponentString +=    '<span class="componentNameOrdinalComponent' + (ordinalAttribute.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (ordinalAttribute.ordinal_component.display_name != '' ? ( ordinalAttribute.ordinal_component.display_name) :  ordinalAttribute.ordinal_component.name) + '</span>';
+        ordinalComponentString +=    '<span class="attributeNameOrdinalAttribute pull-right ' + (ordinalAttribute.display_name != '' ? 'textURcolor' : 'text-muted') + '">' + (ordinalAttribute.display_name != '' ? ordinalAttribute.display_name : ordinalAttribute.name) + '</span> <br>';
 
         ordinalComponentString += '</li>';
     });

@@ -20,14 +20,13 @@
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating5->ordinalAttributes as $rankedOrdinal): ?>
-        <li class="ordianalComponentContainer">
+        <li class="ordianalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">5</span></span>
-            <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span> <br>
-            <?php
-            $minRange = reset($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            $maxRange = end($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            ?>
-            <input type="range" min="<?= $minRange ?>" max="<?= $maxRange ?>" step="1" value="<?= $rankedOrdinal->meter ?>" disabled>
+            <div class="ordinalComponentInfo">
+
+                <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> 
+                <span class="attributeNameOrdinalAttribute pull-right <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span>
+            </div>
         </li>
     <?php endforeach; ?>
 
@@ -51,14 +50,13 @@
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating4->ordinalAttributes as $rankedOrdinal): ?>
-        <li class="ordianalComponentContainer">
+        <li class="ordianalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">4</span></span>
-            <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span> <br>
-            <?php
-            $minRange = reset($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            $maxRange = end($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            ?>
-            <input type="range" min="<?= $minRange ?>" max="<?= $maxRange ?>" step="1" value="<?= $rankedOrdinal->meter ?>" disabled>
+            <div class="ordinalComponentInfo">
+
+                <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> 
+                <span class="attributeNameOrdinalAttribute pull-right <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span>
+            </div>
         </li>
     <?php endforeach; ?>
 
@@ -82,14 +80,13 @@
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating3->ordinalAttributes as $rankedOrdinal): ?>
-        <li class="ordianalComponentContainer">
+        <li class="ordianalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">3</span></span>
-            <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span> <br>
-            <?php
-            $minRange = reset($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            $maxRange = end($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            ?>
-            <input type="range" min="<?= $minRange ?>" max="<?= $maxRange ?>" step="1" value="<?= $rankedOrdinal->meter ?>" disabled>
+            <div class="ordinalComponentInfo">
+
+                <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> 
+                <span class="attributeNameOrdinalAttribute pull-right <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span>
+            </div>
         </li>
     <?php endforeach; ?>
 
@@ -113,14 +110,13 @@
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating2->ordinalAttributes as $rankedOrdinal): ?>
-        <li class="ordianalComponentContainer">
+        <li class="ordianalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">2</span></span>
-            <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span> <br>
-            <?php
-            $minRange = reset($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            $maxRange = end($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            ?>
-            <input type="range" min="<?= $minRange ?>" max="<?= $maxRange ?>" step="1" value="<?= $rankedOrdinal->meter ?>" disabled>
+            <div class="ordinalComponentInfo">
+
+                <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> 
+                <span class="attributeNameOrdinalAttribute pull-right <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span>
+            </div>
         </li>
     <?php endforeach; ?>
 
@@ -144,14 +140,13 @@
         </li>
     <?php endforeach; ?>
     <?php foreach ($rankedSelection->rating1->ordinalAttributes as $rankedOrdinal): ?>
-        <li class="ordianalComponentContainer">
+        <li class="ordianalComponentContainer clearfix">
             <span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">1</span></span>
-            <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span> <br>
-            <?php
-            $minRange = reset($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            $maxRange = end($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            ?>
-            <input type="range" min="<?= $minRange ?>" max="<?= $maxRange ?>" step="1" value="<?= $rankedOrdinal->meter ?>" disabled>
+            <div class="ordinalComponentInfo">
+
+                <span class="componentNameOrdinalComponent<?= $rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?=  $rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name ?></span> 
+                <span class="attributeNameOrdinalAttribute pull-right <?= $rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name ?></span>
+            </div>
         </li>
     <?php endforeach; ?>
     

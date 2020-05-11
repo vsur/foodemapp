@@ -81,15 +81,12 @@ class SelectionHelper extends Helper {
         // Iteratre over ordinal attributes
         foreach($ratedComponents->ordinalAttributes as $rankedOrdinal) {
             $ratingString .= '<li class="ordinalComponentContainer clearfix">';
-
+            
             $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
-            $ratingString .=    '<span class="componentNameOrdinalComponent' . ($rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted') . '">' . ($rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name) . '</span> <span class="attributeNameOrdinalAttribute ' . ($rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted') . '">' . ($rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name) . '</span> <br>';
-
-            $minRange = reset($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-            $maxRange = end($rankedOrdinal->ordinal_component->ordinal_attributes)->meter;
-
-            $ratingString .=    '<input type="range" min="' . $minRange . '" max="' . $maxRange . '" step="1" value="' . $rankedOrdinal->meter . '" disabled>';
-
+            $ratingString .=    '<div class="ordinalComponentInfo">';
+            $ratingString .=        '<span class="componentNameOrdinalComponent' . ($rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted') . '">' . ($rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name) . '</span>'; 
+            $ratingString .=        '<span class="attributeNameOrdinalAttribute pull-right ' . ($rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted') . '">' . ($rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name) . '</span> <br>';
+            $ratingString .=    '</div>';
 
             $ratingString .= '</li>';
         }

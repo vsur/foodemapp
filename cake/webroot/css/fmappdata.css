@@ -7284,7 +7284,7 @@ body {
   padding-right: 15px;
   vertical-align: top; }
 
-.binaryComponentInfo {
+.binaryComponentInfo, .ordinalComponentInfo {
   font-size: 15px;
   line-height: 35px;
   padding-right: 15px;
@@ -7478,14 +7478,17 @@ a#filter, button#componentWheel {
 #listView .panel-heading {
   cursor: pointer; }
 
-#listView .choosenSelection .binaryComponentInfo {
+#listView .choosenSelection .binaryComponentInfo,
+#listView .choosenSelection .ordinalComponentInfo {
   display: block; }
 
-#listView .choosenSelection .binaryComponentInfo > span {
+#listView .choosenSelection .binaryComponentInfo > span,
+#listView .choosenSelection .ordinalComponentInfo > span {
   position: relative;
   top: 12px; }
 
-#listView .choosenSelection .binaryComponentInfo > span:first-child {
+#listView .choosenSelection .binaryComponentInfo > span:first-child,
+#listView .choosenSelection .ordinalComponentInfo > span:first-child {
   margin-left: 5px; }
 
 .listMoreInfo > span.caret {
@@ -7645,7 +7648,7 @@ path.chord {
     color: #ffc700;
     top: 0px;
     left: -8px; }
-  .popUpComponentList .binaryComponentInfo, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .attributeNameNominalAttribute, .popUpComponentList .componentNameOrdinalComponent {
+  .popUpComponentList .binaryComponentInfo, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .attributeNameNominalAttribute, .popUpComponentList .componentNameOrdinalComponent, .popUpComponentList .ordinalComponentInfo {
     font-size: 12px !important;
     line-height: 1.5em;
     padding-right: 0px;
@@ -7667,9 +7670,9 @@ path.chord {
   .popUpComponentList .nominalComponentContainer .choosenStarAgregation {
     top: 7px; }
   .popUpComponentList .nominalComponentContainer .nominalAttribute {
-    padding: 1px;
+    padding: 5px;
     background: rgba(255, 255, 255, 0.85);
-    border-radius: 12px; }
+    border-radius: 5px; }
   .popUpComponentList .nominalComponentContainer .componentNameNominalComponent {
     line-height: 25px; }
   .popUpComponentList .switch {
@@ -7688,8 +7691,8 @@ path.chord {
     -ms-transform: translateX(12px);
     transform: translateX(12px); }
   .popUpComponentList li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
-    width: 25px;
-    height: 25px; }
+    width: 20px;
+    height: 20px; }
 
 .leaflet-popup-tip-container {
   display: none; }

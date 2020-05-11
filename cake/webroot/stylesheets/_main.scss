@@ -71,7 +71,7 @@ body {
   padding-right: 15px;
   vertical-align: top;
 }
-.binaryComponentInfo {
+.binaryComponentInfo, .ordinalComponentInfo {
   font-size: 15px;
   line-height: 35px;
   padding-right: 15px;
@@ -271,14 +271,17 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 #listView .panel-heading {
   cursor: pointer;
 }
-#listView .choosenSelection .binaryComponentInfo {
+#listView .choosenSelection .binaryComponentInfo, 
+#listView .choosenSelection .ordinalComponentInfo {
   display: block;
 }
-#listView .choosenSelection .binaryComponentInfo > span {
+#listView .choosenSelection .binaryComponentInfo > span, 
+#listView .choosenSelection .ordinalComponentInfo > span {
   position: relative;
   top: 12px;
 }
-#listView .choosenSelection .binaryComponentInfo > span:first-child {
+#listView .choosenSelection .binaryComponentInfo > span:first-child, 
+#listView .choosenSelection .ordinalComponentInfo > span:first-child {
   margin-left: 5px;
 }
 .listMoreInfo > span.caret {
