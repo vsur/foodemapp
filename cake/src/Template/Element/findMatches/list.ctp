@@ -21,8 +21,15 @@
                         <ul class="list-unstyled">
                             <?php foreach ($ypoi->binary_components as $binaryComponent): ?>
                                 <?php if (!in_array($binaryComponent->id, $rankedSelection->binaryComponentIDs)): ?>
-                                    <li class="binaryComponentContainer clearfix">
-                                        <span class="componentNameBinarySlider<?= $binaryComponent->display_name != '' ? '' : ' text-muted' ?>"><?= $binaryComponent->display_name != '' ? $binaryComponent->display_name : $binaryComponent->name ?></span><label class="switch pull-right"><input type="checkbox" checked disabled><span class="slider round"></span></label>
+                                    <li class="binaryComponentContainer componentNameBinarySlider clearfix">
+                                        <span class="binaryComponentInfo">
+                                            <span>
+                                                <?= $binaryComponent->display_name != '' ? $binaryComponent->display_name : $binaryComponent->name; ?>
+                                            </span>
+                                            <span class="pull-right">
+                                                <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+                                            </span>
+                                        </span>
                                     </li>
                                 <?php endif; ?>
                             <?php endforeach; ?>
