@@ -284,6 +284,10 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
 #listView .choosenSelection .ordinalComponentInfo > span:first-child {
   margin-left: 5px;
 }
+#listView .otherComponents .binaryComponentInfo span.glyphicon {
+  font-size: 18px;
+  color: black; 
+}
 .listMoreInfo > span.caret {
   transition: all 1s ease;
 }
@@ -308,6 +312,23 @@ li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
 }
 li.ordinalComponentContainer > input[type="range"] {
   width: calc(100% - 45px);
+}
+
+.choosenSelection {
+  .nominalComponentInfo {
+    line-height: 4.2em;
+  }
+}
+.otherComponents{
+  .nominalComponentInfo {
+    line-height: 4.2em;
+  }
+  .ordianalComponentContainer {
+    min-height: 35px;
+  }
+  .ordianalComponentInfo {
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 991px) {
