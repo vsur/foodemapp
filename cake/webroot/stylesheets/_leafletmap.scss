@@ -65,13 +65,36 @@
     .binaryComponentInfo span.glyphicon {
       font-size: 18px;
     }
-    .nominalNameCombo, .componentNameOrdinalComponent {
+    .binaryComponentInfo>span:first-child, .nominalNameCombo, .componentNameOrdinalComponent {
       width: 85px;
       display: inline-block;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
       cursor: help;
+    }
+    .componentNameOrdinalComponent,
+    .attributeNameOrdinalAttribute {
+      display: inline-block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      cursor: help;
+    }
+    .ordinalComponentInfo>.componentNameOrdinalComponent {
+      width: 40px;
+    }
+    .ordinalComponentInfo>.attributeNameOrdinalAttribute {
+      width: 80px;
+      text-align: right;
+    }
+    // Not Choosen Popup
+    .componentNameOrdinalComponent {
+      width: 70px;
+    }
+    .attributeNameOrdinalAttribute {
+      width: 80px;
+      text-align: right;
     }
     .nominalNameCombo {
       color: lighten($urcd-color, 40.5%) !important;
@@ -84,7 +107,7 @@
             top: 7px;
         }
         .nominalAttribute {
-          padding: 5px;
+          padding: 1px;
           background:rgba(255, 255, 255, 0.85);
           border-radius: 5px;
         }

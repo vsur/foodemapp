@@ -7672,13 +7672,30 @@ path.chord {
     color: white; }
   .popUpComponentList .binaryComponentInfo span.glyphicon {
     font-size: 18px; }
-  .popUpComponentList .nominalNameCombo, .popUpComponentList .componentNameOrdinalComponent {
+  .popUpComponentList .binaryComponentInfo > span:first-child, .popUpComponentList .nominalNameCombo, .popUpComponentList .componentNameOrdinalComponent {
     width: 85px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     cursor: help; }
+  .popUpComponentList .componentNameOrdinalComponent,
+  .popUpComponentList .attributeNameOrdinalAttribute {
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: help; }
+  .popUpComponentList .ordinalComponentInfo > .componentNameOrdinalComponent {
+    width: 40px; }
+  .popUpComponentList .ordinalComponentInfo > .attributeNameOrdinalAttribute {
+    width: 80px;
+    text-align: right; }
+  .popUpComponentList .componentNameOrdinalComponent {
+    width: 70px; }
+  .popUpComponentList .attributeNameOrdinalAttribute {
+    width: 80px;
+    text-align: right; }
   .popUpComponentList .nominalNameCombo {
     color: #ff4da2 !important; }
   .popUpComponentList .componentNameOrdinalComponent {
@@ -7686,7 +7703,7 @@ path.chord {
   .popUpComponentList .nominalComponentContainer .choosenStarAgregation {
     top: 7px; }
   .popUpComponentList .nominalComponentContainer .nominalAttribute {
-    padding: 5px;
+    padding: 1px;
     background: rgba(255, 255, 255, 0.85);
     border-radius: 5px; }
   .popUpComponentList .nominalComponentContainer .componentNameNominalComponent {
