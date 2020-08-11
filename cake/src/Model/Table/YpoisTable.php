@@ -399,6 +399,12 @@ class YpoisTable extends Table
         // Set autoFields for correct joins syntax
         $ypois->enableAutoFields(true);
 
+        // Order Results
+        $ypois->order([
+            'name' => 'ASC', 
+            
+        ]);
+
         return $ypois;
     }
 
