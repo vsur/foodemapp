@@ -405,7 +405,14 @@ class YpoisTable extends Table
             
         ]);
 
-        return $ypois;
+        // $ypoisOrderedOnAssocCount = $ypois->toArray();
+        $ypoisOrderedOnAssocCount = $this->orderOnAssocCounts($ypois->toArray());
+
+        
+        debug($ypoisOrderedOnAssocCount[0]);
+        
+
+        return $ypoisOrderedOnAssocCount;
     }
 
     protected function applyNotMatchingBinariesFilter($ypois = null, $filterSelection = null) {
@@ -463,5 +470,21 @@ class YpoisTable extends Table
             ];
         }
         return $ordinalJoinConditions;
+    }
+
+    protected function orderOnAssocCounts($data) {
+
+        $binary_components  = array_column($data, 'binary_components');
+        $nominal_attributes  = array_column($data, 'nominal_attributes');
+        $ordinal_attributes  = array_column($data, 'ordinal_attributes');
+
+        array_multisort(
+            $binary_components, SORT_DESC, SORT_NUMERIC, 
+            $nominal_attributes, SORT_DESC, SORT_NUMERIC, 
+            $ordinal_attributes, SORT_DESC, SORT_NUMERIC, 
+            $data)
+            ;
+        
+        return $data;
     }
 }

@@ -140,7 +140,7 @@ class YpoisController extends AppController
         $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
         
         $componentTypesComponentsCount = $this->PoisNComponents->allComponentTypeComponentsCount($ypois);
-
+        
         $this->set(compact(
             'ypois',
             'criteria', 

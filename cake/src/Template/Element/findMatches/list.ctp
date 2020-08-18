@@ -17,7 +17,10 @@
                         <?= $rankedSelection ? $this->Selection->createRankedSelectionList($rankedSelection) : '<div class="alert alert-danger" role="alert"><strong>Keine Filerauswahl getroffen</strong></div>' ?>
                     </div>
                     <div class="col-sm-6 otherComponents">
-                        <h4><span class="label label-default">Übrige</span></h4>
+                        <?php
+                            $componentCount = count($ypoi->binary_components) + count($ypoi->nominal_attributes) + count($ypoi->ordinal_attributes);
+                        ?>
+                        <h4><span class="label label-default">Übrige <?= $componentCount ?></span></h4>
                         <ul class="list-unstyled">
                             <?php foreach ($ypoi->binary_components as $binaryComponent): ?>
                                 <?php if (!in_array($binaryComponent->id, $rankedSelection->binaryComponentIDs)): ?>
