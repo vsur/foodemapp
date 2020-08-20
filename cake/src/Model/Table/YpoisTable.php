@@ -404,14 +404,62 @@ class YpoisTable extends Table
             'name' => 'ASC', 
             
         ]);
+     
 
-        // $ypoisOrderedOnAssocCount = $ypois->toArray();
-        $ypoisOrderedOnAssocCount = $this->orderOnAssocCounts($ypois->toArray());
+        $ypoisOrderedOnAssocCount = $ypois->toArray();
 
+        usort($ypoisOrderedOnAssocCount, function($a, $b) {
+            // Set counts for A
+            $aBinaryCount = $a->binary_components;
+            $aNominalCount = $a->nominal_attributes;
+            $aOrdinalCount = $a->ordinal_attributes;
+            // Set counts for B
+            $bBinaryCount = $b->binary_components;
+            $bNominalCount = $b->nominal_attributes;
+            $bOrdinalCount = $b->ordinal_attributes;
+
+            // Sort by sums of components
+            $componentSumCountA = count($aBinaryCount) + count($aNominalCount) + count($aOrdinalCount);
+            $componentSumCountB = count($bBinaryCount) + count($bNominalCount) + count($bOrdinalCount);
+
+            if ($componentSumCountA == $componentSumCountB) {
+            /*****************************************************
+             * WHEN COMPONENTSUMCOUNTA EUQALS COMPONENTSUMCOUNTB *
+             *       THIS MEANS WE NEED TO LOOK DEEPER IN        *
+             *           SINGLE COMPONENT TYPE COUNTS            *
+             *****************************************************/
+                
+                // Check if all counts equal 
+                if(
+                    $aBinaryCount == $bBinaryCount &&
+                    $aNominalCount == $bNominalCount &&
+                    $aOrdinalCount == $bOrdinalCount 
+                ) {
+                    return 0;
+                }
+
+                // Otherwise check if one of a is lower
+                if(
+                    $aBinaryCount < $bBinaryCount &&
+                    $aNominalCount < $bNominalCount &&
+                    $aOrdinalCount < $bOrdinalCount 
+                ) {
+                    return 1;
+                }
+                
+                // Or if one of a is grater 
+                if(
+                    $aBinaryCount > $bBinaryCount &&
+                    $aNominalCount > $bNominalCount &&
+                    $aOrdinalCount > $bOrdinalCount 
+                ) {
+                    return -1;
+                }
+            }
+            // Sums do not equal, it can be sorted on it
+            return ($componentSumCountA < $componentSumCountB) ? 1 : -1;
+        });
         
-        debug($ypoisOrderedOnAssocCount[0]);
-        
-
         return $ypoisOrderedOnAssocCount;
     }
 
@@ -487,4 +535,7 @@ class YpoisTable extends Table
         
         return $data;
     }
+
+    
+
 }

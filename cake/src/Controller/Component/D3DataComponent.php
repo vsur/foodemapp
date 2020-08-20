@@ -139,7 +139,7 @@ class D3DataComponent extends Component
         $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponentsNames, $selectionCleandComponentsNames);
 
         $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelection, $rankedSelectionComponentsNames, $selectionCleandComponentsNames, $adjacencyMatrixIndex);
-        $matrixData->pois = $ypois->toArray();
+        $matrixData->pois = $ypois;
         $matrixData->rankedComponents = $this->buildRankedComponentsArray($rankedSelection);
         $matrixData->otherComponents =  $this->buildOtherComponentsArray($ypois, $rankedSelection);
         return $matrixData;
@@ -531,7 +531,7 @@ class D3DataComponent extends Component
 
     protected function setNotBinaryAdjecencies($adjacencyMatrix, $currentYpoiIndex, $componentIndex, $ypois) {
         // Calculate self reference factor of ypois number
-        $selfReferenceFactor = count($ypois->toArray());
+        $selfReferenceFactor = count($ypois);
         // Set adjacency in in self reference
         $adjacencyMatrix[$componentIndex][$componentIndex] = $selfReferenceFactor; 
         return $adjacencyMatrix;

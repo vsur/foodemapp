@@ -4,7 +4,7 @@
             
             <span id="poiCount" class="badge success">
                 Gefundene Orte <br>
-                <span class="actualPoiNumber"><?= $ypois->count() ?></span>
+                <span class="actualPoiNumber"><?= count($ypois) ?></span>
             </span>
         </h3>
     </div>
@@ -20,7 +20,7 @@
             <tbody>
                 <tr>
                     <td>Gefundene Orte</td>
-                    <td><?= $ypois->count() ?></td>
+                    <td><?= count($ypois) ?></td>
                 </tr>
                 <tr>
                     <td>Insgesamt vorhandene Komponenten</td>

@@ -95,7 +95,6 @@ class YpoisController extends AppController
         $ypois = (object)[];
         if ($configuredSelection) {
 
-
             $filterSelection = $this->Ypois->buildFilterObject($configuredSelection);
            
             $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection);
