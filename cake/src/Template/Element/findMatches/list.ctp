@@ -20,7 +20,15 @@
                         <?php
                             $componentCount = count($ypoi->binary_components) + count($ypoi->nominal_attributes) + count($ypoi->ordinal_attributes);
                         ?>
-                        <h4><span class="label label-default">Übrige <?= $componentCount ?></span></h4>
+                        <h4>
+                            <span class="label label-default">
+                                Übrige 
+                                <?= $componentCount ?> | 
+                                B<?= count($ypoi->binary_components)?> | 
+                                N<?= count($ypoi->nominal_attributes)?> | 
+                                O<?= count($ypoi->ordinal_attributes)?> ·
+                            </span>
+                        </h4>
                         <ul class="list-unstyled">
                             <?php foreach ($ypoi->binary_components as $binaryComponent): ?>
                                 <?php if (!in_array($binaryComponent->id, $rankedSelection->binaryComponentIDs)): ?>
