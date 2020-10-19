@@ -99,9 +99,16 @@ class YpoisController extends AppController
            
             $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection);
 
+            $ypois = $this->Ypois->getYpoisOrderedOnAssocCount($ypois);
+            
         } else {
             $ypois = $this->Ypois->find("all")
-                ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']);
+            ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
+            ->order([
+                'name' => 'ASC', 
+                
+                ]);
+            $ypois = $this->Ypois->getYpoisOrderedOnAssocCount($ypois);
         }
 
         // Build ranked selection from filters
