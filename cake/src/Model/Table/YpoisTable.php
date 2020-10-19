@@ -233,29 +233,37 @@ class YpoisTable extends Table
         $rankedSelection->binaryComponentIDs = [];
         $rankedSelection->nominalAttributeIDs = [];
         $rankedSelection->ordinalAttributeIDs = [];
+        
+        if (
+            isset($filterSelection->notMatchingBinaries) &&  
+            isset($filterSelection->matchingBinaries) &&  
+            isset($filterSelection->matchingNominals) &&  
+            isset($filterSelection->matchingOrdinals)
+        ) {
 
-        foreach ($filterSelection->notMatchingBinaries as $notMatchingBinary) {
-            $this->ratingBasedAssignment($notMatchingBinary, $rankedSelection, 'binaryComponents');
-            array_push($rankedSelection->binaryComponentIDs,$notMatchingBinary->id);
-        }
-
-        foreach ($filterSelection->matchingBinaries as $matchingBinary) {
-            $this->ratingBasedAssignment($matchingBinary, $rankedSelection, 'binaryComponents');
-            array_push($rankedSelection->binaryComponentIDs,$matchingBinary->id);
-        }
-
-        foreach ($filterSelection->matchingNominals as $matchingNominalComponent) {
-            $matchingNominalAttribute = $matchingNominalComponent->attribute;
-            $matchingNominalAttribute->rating = $matchingNominalComponent->rating;
-            $this->ratingBasedAssignment($matchingNominalAttribute, $rankedSelection, 'nominalAttributes');
-            array_push($rankedSelection->nominalAttributeIDs,$matchingNominalAttribute->id);
-        }
-
-        foreach ($filterSelection->matchingOrdinals as $matchingOrdinalComponent) {
-            $matchingOrdinalAttribute = $matchingOrdinalComponent->attribute;
-            $matchingOrdinalAttribute->rating = $matchingOrdinalComponent->rating;
-            $this->ratingBasedAssignment($matchingOrdinalAttribute, $rankedSelection, 'ordinalAttributes');
-            array_push($rankedSelection->ordinalAttributeIDs,$matchingOrdinalAttribute->id);
+            foreach ($filterSelection->notMatchingBinaries as $notMatchingBinary) {
+                $this->ratingBasedAssignment($notMatchingBinary, $rankedSelection, 'binaryComponents');
+                array_push($rankedSelection->binaryComponentIDs,$notMatchingBinary->id);
+            }
+            
+            foreach ($filterSelection->matchingBinaries as $matchingBinary) {
+                $this->ratingBasedAssignment($matchingBinary, $rankedSelection, 'binaryComponents');
+                array_push($rankedSelection->binaryComponentIDs,$matchingBinary->id);
+            }
+            
+            foreach ($filterSelection->matchingNominals as $matchingNominalComponent) {
+                $matchingNominalAttribute = $matchingNominalComponent->attribute;
+                $matchingNominalAttribute->rating = $matchingNominalComponent->rating;
+                $this->ratingBasedAssignment($matchingNominalAttribute, $rankedSelection, 'nominalAttributes');
+                array_push($rankedSelection->nominalAttributeIDs,$matchingNominalAttribute->id);
+            }
+            
+            foreach ($filterSelection->matchingOrdinals as $matchingOrdinalComponent) {
+                $matchingOrdinalAttribute = $matchingOrdinalComponent->attribute;
+                $matchingOrdinalAttribute->rating = $matchingOrdinalComponent->rating;
+                $this->ratingBasedAssignment($matchingOrdinalAttribute, $rankedSelection, 'ordinalAttributes');
+                array_push($rankedSelection->ordinalAttributeIDs,$matchingOrdinalAttribute->id);
+            }
         }
 
         return $rankedSelection;
@@ -405,7 +413,6 @@ class YpoisTable extends Table
             
         ]);
      
-
         $ypoisOrderedOnAssocCount = $ypois->toArray();
 
         usort($ypoisOrderedOnAssocCount, function($a, $b) {
