@@ -38,7 +38,9 @@
             </fieldset>
 
             <?=  $this->Form->hidden('query_parameters', ['value' => $queryString]); ?>
-            <?=  $this->Form->hidden('ypois_count', ['value' => $ypois->count()]); ?>
+            <?php  
+                echo $this->Form->hidden('ypois_count', ['value' => count($ypois)]); 
+            ?>
             <?=  $this->Form->hidden('choosen_components_count', ['value' => count($this->request->query)]); ?>
             <?=  $this->Form->hidden('other_components_count', ['value' => ( $overallComponentCount - count($this->request->query) ) ]); ?>
 
