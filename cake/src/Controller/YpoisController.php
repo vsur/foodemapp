@@ -103,11 +103,19 @@ class YpoisController extends AppController
             
         } else {
             $ypois = $this->Ypois->find("all")
-            ->contain(['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents'])
-            ->order([
-                'name' => 'ASC', 
-                
-                ]);
+                ->contain(
+                    [
+                        'BinaryComponents' => [  'sort' => ['display_name' => 'ASC', 'name' => 'ASC']    ],
+                        'NominalAttributes.NominalComponents',
+                        'NominalAttributes' => [  'sort' => ['NominalComponents.display_name' => 'ASC', 'NominalComponents.name' => 'ASC']    ],
+                        'OrdinalAttributes' => [  'sort' => ['meter' => 'ASC']   ],
+                        'OrdinalAttributes.OrdinalComponents',
+                        'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ]
+                    ])
+                ->order([
+                    'name' => 'ASC', 
+                    
+                    ]);
             $ypois = $this->Ypois->getYpoisOrderedOnAssocCount($ypois);
         }
 
