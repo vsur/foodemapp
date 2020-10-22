@@ -132,12 +132,12 @@ class D3DataComponent extends Component
         $adjacencyMatrixIndex = [];
 
         $ypoisNames = $this->buildYpoisNamesArray($ypois);
-        $allContainedComponentsNames = $this->getAllComponentNames($ypois);
+        $allContainedComponentsNamesSortedByTypeAndOccurance = $this->getAllComponentNamesSortedByTypeAndOccurance($ypois);
         $rankedSelectionComponentsNames = $this->getOnlyRankedComponentNames($rankedSelection);
-        $selectionCleandComponentsNames = $this->removeRankedComponentsNames($allContainedComponentsNames, $rankedSelectionComponentsNames);
+        $selectionCleandComponentsNames = $this->removeRankedComponentsNames($allContainedComponentsNamesSortedByTypeAndOccurance, $rankedSelectionComponentsNames);
 
         $adjacencyMatrixIndex = array_merge($ypoisNames, $rankedSelectionComponentsNames, $selectionCleandComponentsNames);
-
+        
         $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelection, $rankedSelectionComponentsNames, $selectionCleandComponentsNames, $adjacencyMatrixIndex);
         $matrixData->pois = $ypois;
         $matrixData->rankedComponents = $this->buildRankedComponentsArray($rankedSelection);
@@ -292,22 +292,37 @@ class D3DataComponent extends Component
         return $ypoisNames;
     }
 
-    protected function getAllComponentNames($ypois)
+    protected function getAllComponentNamesSortedByTypeAndOccurance($ypois)
     {
         $allComponentsNamesFromYpois = [];
+        $allComponentsNamesWithOccurencesFromYpois = [ 
+            "binaryComponents" => [],
+            "nominalComponents" => [],
+            "ordinalComponents" => []
+            
+        ];
+        $allComponentsNamesFromYpoisSortedByOccurance = [];
+
         foreach ($ypois as $ypoi) {
             foreach ($ypoi->binary_components as $binaryComponent) {
                 // Concat component and id to check if display names are present
                 $binaryComponentConcatenation = $this->buildBinaryComponentConcatenationName($binaryComponent);
                 if (!in_array($binaryComponentConcatenation, $allComponentsNamesFromYpois)) {
                     array_push($allComponentsNamesFromYpois, $binaryComponentConcatenation);
+                    $allComponentsNamesWithOccurencesFromYpois["binaryComponents"][$binaryComponentConcatenation] = 1;
+                } else {
+                    $allComponentsNamesWithOccurencesFromYpois["binaryComponents"][$binaryComponentConcatenation] += 1;
                 }
+            
             }
             foreach ($ypoi->nominal_attributes as $nominal_attribute) {
                 // Concat attribute and component and ids to check if display names are present
                 $nominalComponentAttributeConcatenation = $this->buildNominalComponentAttributeConcatenationName($nominal_attribute);
                 if (!in_array($nominalComponentAttributeConcatenation, $allComponentsNamesFromYpois)) {
                     array_push($allComponentsNamesFromYpois, $nominalComponentAttributeConcatenation);
+                    $allComponentsNamesWithOccurencesFromYpois["nominalComponents"][$nominalComponentAttributeConcatenation] = 1;
+                } else {
+                    $allComponentsNamesWithOccurencesFromYpois["nominalComponents"][$nominalComponentAttributeConcatenation] += 1;
                 }
             }
             foreach ($ypoi->ordinal_attributes as $ordinal_attribute) {
@@ -316,21 +331,35 @@ class D3DataComponent extends Component
 
                 if (!in_array($ordinalComponentAttributeConcatenation, $allComponentsNamesFromYpois)) {
                     array_push($allComponentsNamesFromYpois, $ordinalComponentAttributeConcatenation);
+                    $allComponentsNamesWithOccurencesFromYpois["ordinalComponents"][$ordinalComponentAttributeConcatenation] = 1;
+                } else {
+                    $allComponentsNamesWithOccurencesFromYpois["ordinalComponents"][$ordinalComponentAttributeConcatenation] += 1;
                 }
             }
         }
-        return $allComponentsNamesFromYpois;
-    }
+        // Sort count arrays DESC
+        arsort($allComponentsNamesWithOccurencesFromYpois["binaryComponents"]);
+        arsort($allComponentsNamesWithOccurencesFromYpois["nominalComponents"]);
+        arsort($allComponentsNamesWithOccurencesFromYpois["ordinalComponents"]);
 
-    protected function removeRankedComponentsNames($allContainedComponentsNames, $rankedSelectionComponents)
-    {
-        foreach ($rankedSelectionComponents as $rankedSelectionComponent) {
-            if (in_array($rankedSelectionComponent, $allContainedComponentsNames)) {
-                $currentIndexToDelete = array_search($rankedSelectionComponent, $allContainedComponentsNames);
-                array_splice($allContainedComponentsNames, $currentIndexToDelete, 1);
+        // Build final sorted array
+        foreach ($allComponentsNamesWithOccurencesFromYpois as $sortedComponentTypeNames) {
+            foreach ($sortedComponentTypeNames as $componentConcatenationName => $occurance) {
+                array_push($allComponentsNamesFromYpoisSortedByOccurance, $componentConcatenationName);
             }
         }
-        return $allContainedComponentsNames;
+        return $allComponentsNamesFromYpoisSortedByOccurance;
+    }
+
+    protected function removeRankedComponentsNames($allContainedComponentsNamesSortedByTypeAndOccurance, $rankedSelectionComponents)
+    {
+        foreach ($rankedSelectionComponents as $rankedSelectionComponent) {
+            if (in_array($rankedSelectionComponent, $allContainedComponentsNamesSortedByTypeAndOccurance)) {
+                $currentIndexToDelete = array_search($rankedSelectionComponent, $allContainedComponentsNamesSortedByTypeAndOccurance);
+                array_splice($allContainedComponentsNamesSortedByTypeAndOccurance, $currentIndexToDelete, 1);
+            }
+        }
+        return $allContainedComponentsNamesSortedByTypeAndOccurance;
     }
     protected function buildRankedComponentsArray($rankedSelection)
     {
