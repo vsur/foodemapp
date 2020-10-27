@@ -21,6 +21,14 @@ const componentTypeColors =  d3.scaleOrdinal()
 const urTriadeColors = d3.scaleOrdinal().range(["#0AB0C9", "#07414A", "#7D003C", "#8A7C0E", "#C9146C"]);
 const urCdColorPalette = d3.scaleOrdinal().range(["#ecbc00", "#cdd30f", "#aea700", "#00556a", "#ec6200", "#bf002a", "#9c004b", "#009b77", "#008993", "#4fb800", "#0087b2"]);
 
+// Count variables 
+var sizeOfChoosen  = 0;
+var sizeOfOthers = 0;
+var sizeOfOtherBinaries = 0; 
+var sizeOfOtherNominals = 0; 
+var sizeOfOtherOrdinals = 0; 
+
+
 // Necessary for draw routine to delete before drawing
 d3.select("#wheelBlock").append("svg");
 
@@ -47,7 +55,15 @@ function drawCompnentWheel() {
     
     root = d3.hierarchy(componentWheelJSONData)
         .count();
-    
+
+    // Set component counts
+    console.log(componentWheelJSONData);
+    // TODO: Choosen richtig zählen muss aus segmenten kommmen da in configured selection auch False Binaries sind 
+    sizeOfChoosen =  Object.keys(configuredSelection).length;
+    sizeOfOtherBinaries = componentWheelJSONData.children[1].children[0].children.length;
+    sizeOfOtherNominals = componentWheelJSONData.children[1].children[1].children.length;
+    sizeOfOtherOrdinals = componentWheelJSONData.children[1].children[2].children.length;
+
     partition(root);
         
     arc = d3.arc()
@@ -149,7 +165,7 @@ function computeTextRotation(d) {
 
 // Darken all but the current sequence, and show it in the breadcrumb trail.
 function mouseover(d) {
-    let pathName = d.data.name;
+    
     let infoString = setInfoString(d);
     d3.select("#coponentTextInfo span").style("visibility", "").html(infoString);
 
@@ -177,16 +193,39 @@ function mouseleave(d) {
 function setInfoString(d) {
     let infoString = "";
     let isCategory = false;
+    console.log(d);
     let namesTranslationNeeded = Object.keys(sunburstInfoTranslations);
     if (namesTranslationNeeded.includes( d.data.name)) {
         isCategory = true;
     }
     if (isCategory) {
+        console.log("is Cat");
         infoString = sunburstInfoTranslations[d.data.name];
     } else {
+        console.log("is Esle ");
         let componentPrefix = sunburstInfoTranslations[d.parent.data.name] +  ": "
         infoString = componentPrefix + "<u>" + d.data.name + "</u>";
     }
+
+    // Get current count of nested components
+    let currentComponentCount = 0;
+    console.log(d);
+    // TODO: Zähler Einblendeungen Richtig bauen 
+    if (d.depth == 0) {
+        // Current selected sum 
+        currentComponentCount = sizeOfChoosen +  sizeOfOtherBinaries + sizeOfOtherNominals + sizeOfOtherOrdinals;
+        infoString += ": " + currentComponentCount + " Komponenten"
+    }
+    if (d.depth == 1) { 
+        if (d.data.name == "choosenComponents") {
+            currentComponentCount = sizeOfChoosen;
+        } else {
+            
+        }
+        infoString += ": " + currentComponentCount + " Komponenten"
+    }
+    
+
     return infoString;
 }
 

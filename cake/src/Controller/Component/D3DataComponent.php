@@ -122,6 +122,7 @@ class D3DataComponent extends Component
         $componentWheelData = $this->buildOtherSegmentData($componentWheelData, $otherComponents);
 
         $componentWheelJSONData = json_encode($componentWheelData);
+        debug($componentWheelData);
         return $componentWheelJSONData;
     }
 
@@ -156,9 +157,17 @@ class D3DataComponent extends Component
                 "children" => $this->buildComponentTypeFields()
             ]
         ];
-        foreach ($this->buildrankedComponentFields() as $rankedComponentFieldData) {
-            array_push($componentTypeFields, $rankedComponentFieldData);
-        }
+
+        /********************************************
+         * NO ADDITIONAL RANKED SEGMENTS IN DEPTH 1 *
+         *    THEREFOR THIS PART IS DEACTIVETED     *
+         ********************************************/
+
+        /*
+            foreach ($this->buildrankedComponentFields() as $rankedComponentFieldData) {
+                array_push($componentTypeFields, $rankedComponentFieldData);
+            }
+        */
 
         return $componentTypeFields;
 
@@ -216,6 +225,11 @@ class D3DataComponent extends Component
 
     protected function buildSingleRankedSegmentData($rating, $ratedComponents, $componentWheelData, $ratingIndexToPutComponetTo)
     {
+         /********************************************
+         * NO ADDITIONAL RANKED SEGMENTS IN DEPTH 1 *
+         *    THEREFOR THIS PART IS DEACTIVETED     *
+         ********************************************/
+
         // $componentWheelData->children[0][0]->children[$ratingIndexToPutComponetTo]
         // Check and paste ranked binaryComponents as single child
         if (!empty($ratedComponents->binaryComponents)) {
@@ -224,8 +238,10 @@ class D3DataComponent extends Component
             }
             // Add in choosen group
             array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
-            // Add in single rating group
-            array_push($componentWheelData->children[$ratingIndexToPutComponetTo +2]->children[0]->children, $binaryChild);
+            /*
+                // Add in single rating group
+                array_push($componentWheelData->children[$ratingIndexToPutComponetTo +2]->children[0]->children, $binaryChild);
+            */
         }
         // Check and paste ranked nominalAttributes as single child
         if (!empty($ratedComponents->nominalAttributes)) {
@@ -234,8 +250,10 @@ class D3DataComponent extends Component
             }
             // Add in choosen group
             array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
-            // Add in single rating group
-            array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[1]->children, $nominalChild);
+            /* 
+                // Add in single rating group
+                array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[1]->children, $nominalChild);
+            */
         }
 
         // Check and paste ranked ordinalAttributes as single child
@@ -245,8 +263,10 @@ class D3DataComponent extends Component
             }
             // Add in choosen group
             array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
-            // Add in single rating group
-            array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[2]->children, $ordinalChild);
+            /* 
+                // Add in single rating group
+                array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[2]->children, $ordinalChild);
+            */
         }
         return $componentWheelData;
     }
