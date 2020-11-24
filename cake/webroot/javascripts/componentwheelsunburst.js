@@ -22,6 +22,11 @@ const urTriadeColors = d3.scaleOrdinal().range(["#0AB0C9", "#07414A", "#7D003C",
 const urCdColorPalette = d3.scaleOrdinal().range(["#ecbc00", "#cdd30f", "#aea700", "#00556a", "#ec6200", "#bf002a", "#9c004b", "#009b77", "#008993", "#4fb800", "#0087b2"]);
 
 // Count variables 
+var sizeOf5Star = 0;
+var sizeOf4Star = 0;
+var sizeOf3Star = 0;
+var sizeOf2Star = 0;
+var sizeOf1Star = 0;
 var sizeOfChoosen  = 0;
 var sizeOfOthers = 0;
 var sizeOfOtherBinaries = 0; 
@@ -59,7 +64,12 @@ function drawCompnentWheel() {
     // Set component counts
     console.log(componentWheelJSONData);
     // TODO: Choosen richtig zählen muss aus segmenten kommmen da in configured selection auch False Binaries sind 
-    sizeOfChoosen =  Object.keys(configuredSelection).length;
+    sizeOf5Star = countChoosenComponentinSegments(5);
+    sizeOf4Star = countChoosenComponentinSegments(4);
+    sizeOf3Star = countChoosenComponentinSegments(3);
+    sizeOf2Star = countChoosenComponentinSegments(2);
+    sizeOf1Star = countChoosenComponentinSegments(1);
+    sizeOfChoosen =  sizeOf5Star + sizeOf4Star + sizeOf3Star + sizeOf2Star + sizeOf1Star;
     sizeOfOtherBinaries = componentWheelJSONData.children[1].children[0].children.length;
     sizeOfOtherNominals = componentWheelJSONData.children[1].children[1].children.length;
     sizeOfOtherOrdinals = componentWheelJSONData.children[1].children[2].children.length;
@@ -202,7 +212,7 @@ function setInfoString(d) {
         console.log("is Cat");
         infoString = sunburstInfoTranslations[d.data.name];
     } else {
-        console.log("is Esle ");
+        console.log("is Component ");
         let componentPrefix = sunburstInfoTranslations[d.parent.data.name] +  ": "
         infoString = componentPrefix + "<u>" + d.data.name + "</u>";
     }
@@ -210,21 +220,69 @@ function setInfoString(d) {
     // Get current count of nested components
     let currentComponentCount = 0;
     console.log(d);
-    // TODO: Zähler Einblendeungen Richtig bauen 
+    
     if (d.depth == 0) {
         // Current selected sum 
         currentComponentCount = sizeOfChoosen +  sizeOfOtherBinaries + sizeOfOtherNominals + sizeOfOtherOrdinals;
         infoString += ": " + currentComponentCount + " Komponenten"
     }
-    if (d.depth == 1) { 
-        if (d.data.name == "choosenComponents") {
+    if (d.depth == 1) {
+        // Main choosenComponents segment
+        if (d.data.name == "choosenComponents") { 
             currentComponentCount = sizeOfChoosen;
         } else {
-            
+            // Other Components in sum
+            currentComponentCount = sizeOfOtherBinaries + sizeOfOtherNominals + sizeOfOtherOrdinals;
         }
-        infoString += ": " + currentComponentCount + " Komponenten"
+    } 
+
+     // Star-Rating and other component type segments
+     if(d.depth == 2) {
+        console.log(d.data.name);
+        switch (d.data.name) {
+            case "rating5":
+                currentComponentCount = sizeOf5Star;
+                break;
+            case "rating4":
+                currentComponentCount = sizeOf4Star;
+                break;
+            case "rating3":
+                currentComponentCount = sizeOf3Star;
+                break;
+            case "rating2":
+                currentComponentCount = sizeOf2Star;
+                break;
+            case "rating1":
+                currentComponentCount = sizeOf1Star;
+                break;
+            case "binaryComponents":
+                currentComponentCount = sizeOfOtherBinaries;
+                break;
+            case "nominalComponents":
+                currentComponentCount = sizeOfOtherNominals;
+                break;
+            case "ordinalComponents":
+                currentComponentCount = sizeOfOtherOrdinals;
+                break;
+        
+            default:
+                break;
+        }
     }
-    
+
+    // Component type segment in choosen › star rating
+    if(d.depth == 3 && isCategory) {
+        currentComponentCount = d.data.children.length;
+    }
+
+    if(isCategory) {
+        infoString += ": " + currentComponentCount;
+        if (currentComponentCount == 1) {
+            infoString += " Komponente";
+        } else {
+            infoString += " Komponenten";
+        }
+    }
 
     return infoString;
 }
@@ -242,6 +300,17 @@ function setLabelString(d) {
     return labelString;
 }
 
+function countChoosenComponentinSegments(starSegmentToCount) {
+    let nStarSegmentCountOfAllComponentTypes = 0;
+    let childrenIndex = 5 - starSegmentToCount;
+
+    nStarSegmentCountOfAllComponentTypes = 
+        componentWheelJSONData.children[0].children[childrenIndex].children[0].children.length + 
+        componentWheelJSONData.children[0].children[childrenIndex].children[1].children.length + 
+        componentWheelJSONData.children[0].children[childrenIndex].children[2].children.length;
+    
+    return nStarSegmentCountOfAllComponentTypes;
+}
 
 // Redraw based on the new size whenever the browser window is resized.
 window.addEventListener("resize", drawCompnentWheel);
