@@ -203,23 +203,20 @@ function mouseleave(d) {
 function setInfoString(d) {
     let infoString = "";
     let isCategory = false;
-    console.log(d);
     let namesTranslationNeeded = Object.keys(sunburstInfoTranslations);
+
     if (namesTranslationNeeded.includes( d.data.name)) {
         isCategory = true;
     }
     if (isCategory) {
-        console.log("is Cat");
         infoString = sunburstInfoTranslations[d.data.name];
     } else {
-        console.log("is Component ");
         let componentPrefix = sunburstInfoTranslations[d.parent.data.name] +  ": "
         infoString = componentPrefix + "<u>" + d.data.name + "</u>";
     }
 
     // Get current count of nested components
     let currentComponentCount = 0;
-    console.log(d);
     
     if (d.depth == 0) {
         // Current selected sum 
@@ -238,7 +235,6 @@ function setInfoString(d) {
 
      // Star-Rating and other component type segments
      if(d.depth == 2) {
-        console.log(d.data.name);
         switch (d.data.name) {
             case "rating5":
                 currentComponentCount = sizeOf5Star;
