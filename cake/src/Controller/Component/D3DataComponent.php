@@ -235,9 +235,9 @@ class D3DataComponent extends Component
         if (!empty($ratedComponents->binaryComponents)) {
             foreach ($ratedComponents->binaryComponents as $binaryComponent) {
                 $binaryChild = $this->buildTransformedComponentDataForSunburstChildItem("BC", $binaryComponent, $withRating = TRUE);
+                // Add in choosen group
+                array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
             }
-            // Add in choosen group
-            array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[0]->children, $binaryChild);
             /*
                 // Add in single rating group
                 array_push($componentWheelData->children[$ratingIndexToPutComponetTo +2]->children[0]->children, $binaryChild);
@@ -247,9 +247,9 @@ class D3DataComponent extends Component
         if (!empty($ratedComponents->nominalAttributes)) {
             foreach ($ratedComponents->nominalAttributes as $nominalAttribute) {
                 $nominalChild = $this->buildTransformedComponentDataForSunburstChildItem("NC", $nominalAttribute, $withRating = TRUE);
+                // Add in choosen group
+                array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
             }
-            // Add in choosen group
-            array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[1]->children, $nominalChild);
             /* 
                 // Add in single rating group
                 array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[1]->children, $nominalChild);
@@ -260,9 +260,9 @@ class D3DataComponent extends Component
         if (!empty($ratedComponents->ordinalAttributes)) {
             foreach ($ratedComponents->ordinalAttributes as $ordinalAttribute) {
                 $ordinalChild = $this->buildTransformedComponentDataForSunburstChildItem("OC", $ordinalAttribute, $withRating = TRUE);
+                // Add in choosen group
+                array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
             }
-            // Add in choosen group
-            array_push($componentWheelData->children[0]->children[$ratingIndexToPutComponetTo]->children[2]->children, $ordinalChild);
             /* 
                 // Add in single rating group
                 array_push($componentWheelData->children[$ratingIndexToPutComponetTo + 2]->children[2]->children, $ordinalChild);
