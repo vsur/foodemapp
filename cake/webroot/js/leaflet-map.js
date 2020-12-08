@@ -6,6 +6,7 @@ $("#ypoisMap").css("height", maxHeight/2);
 
 // Static user position when no device values are available
 var staticUserPosition =  L.latLng(49.01, 8.40806);
+var userPositionLayer = L.layerGroup();
 
 // Initalize LMap
 var mymap = L.map('ypoisMap');
@@ -44,7 +45,10 @@ ypois.forEach(function(ypoi, i) {
     };
     var popupContent = "Keine Inhalte gesetzt";
     
-    marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
+    // marker.addTo(markers).bindPopup(popupContent, popupOptions).openPopup();
+    markers.addLayer(
+        marker.bindPopup(popupContent, popupOptions).openPopup()
+    );
     
 });
 
@@ -53,7 +57,7 @@ markers.on('animationend', function (a) {
 });
 
 
-markers.addTo(mymap);
+mymap.addLayer(markers);
 // mymap.setView([49.01, 8.40806], 13);
 mymap.fitBounds(markers.getBounds());
 
@@ -74,7 +78,8 @@ function onLocationFound(e) {
 
 function onLocationError(e) {
     console.log(e);
-    alert(e.message);
+    // alert(e.message);
+    showUserPosition(staticUserPosition, 50);
 }
 
 mymap.on('locationfound', onLocationFound);
@@ -82,12 +87,25 @@ mymap.on('locationerror', onLocationError);
 
 mymap.locate({setView: true, maxZoom: 16});
 
+mymap.addLayer(userPositionLayer);
+
 function showUserPosition(latLng, radius) {
     
-    L.marker(latLng).addTo(mymap)
+    var userMarker = L.marker(latLng)
         .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-    L.circle(latLng, radius).addTo(mymap);
+    var userAccuracyArea = L.circle(latLng, radius);
+
+    userPositionLayer.addLayer(userAccuracyArea);
+    userPositionLayer.addLayer(userMarker);
+
+    let animationDuration = 3;
+    setTimeout( () => 
+        mymap.flyTo(latLng, 13, {
+            animate: true,
+            duration: animationDuration
+        }), 2000
+    );
 }
 
 function updateMarkersContent(markers, newContentType) {
