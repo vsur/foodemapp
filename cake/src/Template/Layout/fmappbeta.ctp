@@ -35,7 +35,7 @@ $cakeDescription = 'Food_M_App';
     <!-- Bootstrap core CSS -->
     <?= $this->Html->css('fmappdata.css') ?>
     <!-- Leaflet CSS -->
-    <?= $this->Html->css('leaflet.css') ?>
+    <?= $this->Html->css('leaflet.1.6.0.css') ?>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -49,7 +49,7 @@ $cakeDescription = 'Food_M_App';
 
     <?= $this->Html->script('d3.v5.js') ?>
 
-    <?= $this->Html->script('leaflet.1.5.1') ?>
+    <?= $this->Html->script('leaflet.1.6.0') ?>
     <?= $this->Html->script('leaflet-providers.js') ?>
 
     <?= $this->fetch('meta') ?>
