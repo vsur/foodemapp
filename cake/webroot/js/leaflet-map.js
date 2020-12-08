@@ -63,6 +63,33 @@ updateMarkersContent(markers, "chosen");
 // Open all popups
 openAllMarkersPopups(markers);
 
+/**************************
+ * HANDLING USER POSITION *
+ **************************/
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+    console.log("User position detected by device");
+    showUserPosition(e.latLng, radius);
+}
+
+function onLocationError(e) {
+    console.log(e);
+    alert(e.message);
+}
+
+mymap.on('locationfound', onLocationFound);
+mymap.on('locationerror', onLocationError);
+
+mymap.locate({setView: true, maxZoom: 16});
+
+function showUserPosition(latLng, radius) {
+    
+    L.marker(latLng).addTo(mymap)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(latLng, radius).addTo(mymap);
+}
+
 function updateMarkersContent(markers, newContentType) {
     
     for (var markerProperty in markers._featureGroup._layers) {
