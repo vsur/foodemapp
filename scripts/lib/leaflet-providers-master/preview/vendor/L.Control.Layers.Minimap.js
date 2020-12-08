@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 /*
  * Leaflet.layerscontrol-minimap
  *
@@ -45,24 +45,33 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
         return !L.DomUtil.hasClass(this._container, 'leaflet-control-layers-expanded');
     },
 
-    _expand: function () {
-        L.Control.Layers.prototype._expand.call(this);
+    expand: function () {
+        L.Control.Layers.prototype.expand.call(this);
         this._onListScroll();
+    },
+
+    _expand: function () {
+        // backwards compatibility, should be removed when leaflet 1.1 arrives.
+        this.expand();
     },
 
     _initLayout: function () {
         L.Control.Layers.prototype._initLayout.call(this);
-
         L.DomUtil.addClass(this._container, 'leaflet-control-layers-minimap');
-        L.DomEvent.on(this._container, 'scroll', this._onListScroll, this);
+
+        var scrollContainer = this._scrollContainer();
+        L.DomEvent.on(scrollContainer, 'scroll', this._onListScroll, this);
+        // disable scroll propagation, Leaflet is going to do this too
+        // https://github.com/Leaflet/Leaflet/issues/5277
+        L.DomEvent.disableScrollPropagation(scrollContainer)
     },
 
     _update: function () {
         L.Control.Layers.prototype._update.call(this);
 
+        if (!this._map) { return; }
         this._map.on('resize', this._onResize, this);
         this._onResize();
-
         this._map.whenReady(this._onListScroll, this);
     },
 
@@ -88,6 +97,7 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
         } else {
             input = this._createRadioElement('leaflet-base-layers', checked);
         }
+        this._layerControlInputs.push(input)
         input.layerId = L.stamp(obj.layer);
         span.appendChild(input);
 
@@ -109,23 +119,35 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
         this._container.style.maxHeight = (mapHeight - this.options.bottomPadding - this.options.topPadding) + 'px';
     },
 
+    _scrollContainer: function () {
+        if (this.options.collapsed) {
+            return this._container.querySelectorAll('.leaflet-control-layers-list')[0];
+        } else {
+            return this._container;
+        }
+    },
+
     _onListScroll: function () {
-        var minimaps = document.querySelectorAll('label[class="leaflet-minimap-container"]');
+        if (!this._map) {
+            return;
+        }
+
+        var minimaps = this._map._container.querySelectorAll('label[class="leaflet-minimap-container"]');
         if (minimaps.length === 0) {
             return;
         }
 
+        // compute indexes of first and last minimap in view
         var first, last;
         if (this.isCollapsed()) {
             first = last = -1;
         } else {
             var minimapHeight = minimaps.item(0).clientHeight;
             var container = this._container;
-            var listHeight = container.clientHeight;
-            var scrollTop = container.scrollTop;
+            var scrollTop = this._scrollContainer().scrollTop;
 
             first = Math.floor(scrollTop / minimapHeight);
-            last = Math.ceil((scrollTop + listHeight) / minimapHeight);
+            last = Math.ceil((scrollTop + container.clientHeight) / minimapHeight);
         }
 
         for (var i = 0; i < minimaps.length; ++i) {
@@ -151,16 +173,18 @@ L.Control.Layers.Minimap = L.Control.Layers.extend({
     _createMinimap: function (mapContainer, originalLayer, isOverlay) {
         var minimap = mapContainer._miniMap = L.map(mapContainer, {
             attributionControl: false,
-            zoomControl: false
+            zoomControl: false,
+            scrollWheelZoom: false
         });
 
-        // disable interaction.
+        // disable minimap interaction.
         minimap.dragging.disable();
         minimap.touchZoom.disable();
         minimap.doubleClickZoom.disable();
         minimap.scrollWheelZoom.disable();
 
-        // create tilelayer, but do not add it to the map yet.
+        // create tilelayer, but do not add it to the map yet
+        // (only after it's scrolled into view).
         if (isOverlay && this.options.overlayBackgroundLayer) {
             // add a background for overlays if a background layer is defined.
             minimap._layer = L.layerGroup([
@@ -186,60 +210,108 @@ L.control.layers.minimap = function (baseLayers, overlays, options) {
 };
 
 },{"leaflet-clonelayer":2,"leaflet.sync":3}],2:[function(require,module,exports){
-function cloneLayer(layer) {
-	var options = layer.options;
-
-	// Tile layers
-	if (layer instanceof L.TileLayer) {
-		return L.tileLayer(layer._url, options);
-	}
-	if (layer instanceof L.ImageOverlay) {
-		return L.imageOverlay(layer._url, layer._bounds, options);
-	}
-
-	// Marker layers
-	if (layer instanceof L.Marker) {
-		return L.marker(layer.getLatLng(), options);
-	}
-	if (layer instanceof L.circleMarker) {
-		return L.circleMarker(layer.getLatLng(), options);
-	}
-
-	// Vector layers
-	if (layer instanceof L.Polygon || layer instanceof L.Rectangle) {
-		return L.polygon(layer.getLatLngs(), options);
-	}
-	if (layer instanceof L.Polyline) {
-		return L.polyline(layer.getLatLngs(), options);
-	}
-	// MultiPolyline is removed in leaflet 0.8-dev
-	if (L.MultiPolyline && layer instanceof L.MultiPolyline) {
-		return L.polyline(layer.getLatLngs(), options);
-	}
-	// MultiPolygon is removed in leaflet 0.8-dev
-	if (L.MultiPolygon && layer instanceof L.MultiPolygon) {
-		return L.multiPolygon(layer.getLatLngs(), options);
-	}
-	if (layer instanceof L.Circle) {
-		return L.circle(layer.getLatLng(), layer.getRadius(), options);
-	}
-	if (layer instanceof L.GeoJSON) {
-		return L.geoJson(layer.toGeoJSON(), options);
-	}
-
-	// layer/feature groups
-	if (layer instanceof L.LayerGroup || layer instanceof L.FeatureGroup) {
-		var layergroup = L.layerGroup();
-		layer.eachLayer(function (inner) {
-			layergroup.addLayer(cloneLayer(inner));
-		});
-		return layergroup;
-	}
-
-	throw 'Unknown layer, cannot clone this layer';
+function cloneOptions (options) {
+    var ret = {};
+    for (var i in options) {
+        var item = options[i];
+        if (item && item.clone) {
+            ret[i] = item.clone();
+        } else if (item instanceof L.Layer) {
+            ret[i] = cloneLayer(item);
+        } else {
+            ret[i] = item;
+        }
+    }
+    return ret;
 }
 
-module.exports = cloneLayer;
+function cloneInnerLayers (layer) {
+    var layers = [];
+    layer.eachLayer(function (inner) {
+        layers.push(cloneLayer(inner));
+    });
+    return layers;
+}
+
+function cloneLayer (layer) {
+    var options = cloneOptions(layer.options);
+
+    // we need to test for the most specific class first, i.e.
+    // Circle before CircleMarker
+
+    // Renderers
+    if (layer instanceof L.SVG) {
+        return L.svg(options);
+    }
+    if (layer instanceof L.Canvas) {
+        return L.canvas(options);
+    }
+
+    // GoogleMutant GridLayer
+    if (L.GridLayer.GoogleMutant && layer instanceof L.GridLayer.GoogleMutant) {
+        var googleLayer = L.gridLayer.googleMutant(options);
+
+        layer._GAPIPromise.then(function () {
+            var subLayers = Object.keys(layer._subLayers); 
+     
+            for (var i in subLayers) {
+                googleLayer.addGoogleLayer(subLayers[i]);
+            }
+        });
+
+        return googleLayer;
+    }
+
+    // Tile layers
+    if (layer instanceof L.TileLayer.WMS) {
+        return L.tileLayer.wms(layer._url, options);
+    }
+    if (layer instanceof L.TileLayer) {
+        return L.tileLayer(layer._url, options);
+    }
+    if (layer instanceof L.ImageOverlay) {
+        return L.imageOverlay(layer._url, layer._bounds, options);
+    }
+
+    // Marker layers
+    if (layer instanceof L.Marker) {
+        return L.marker(layer.getLatLng(), options);
+    }
+
+    if (layer instanceof L.Circle) {
+        return L.circle(layer.getLatLng(), layer.getRadius(), options);
+    }
+    if (layer instanceof L.CircleMarker) {
+        return L.circleMarker(layer.getLatLng(), options);
+    }
+
+    if (layer instanceof L.Rectangle) {
+        return L.rectangle(layer.getBounds(), options);
+    }
+    if (layer instanceof L.Polygon) {
+        return L.polygon(layer.getLatLngs(), options);
+    }
+    if (layer instanceof L.Polyline) {
+        return L.polyline(layer.getLatLngs(), options);
+    }
+
+    if (layer instanceof L.GeoJSON) {
+        return L.geoJson(layer.toGeoJSON(), options);
+    }
+
+    if (layer instanceof L.FeatureGroup) {
+        return L.featureGroup(cloneInnerLayers(layer));
+    }
+    if (layer instanceof L.LayerGroup) {
+        return L.layerGroup(cloneInnerLayers(layer));
+    }
+
+    throw 'Unknown layer, cannot clone this layer. Leaflet-version: ' + L.version;
+}
+
+if (typeof exports === 'object') {
+    module.exports = cloneLayer;
+}
 
 },{}],3:[function(require,module,exports){
 /*
@@ -247,50 +319,173 @@ module.exports = cloneLayer;
  */
 
 (function () {
-    'use strict';
+    var NO_ANIMATION = {
+        animate: false,
+        reset: true,
+        disableViewprereset: true
+    };
 
-    L.Map = L.Map.extend({
+    L.Sync = function () {};
+    /*
+     * Helper function to compute the offset easily.
+     *
+     * The arguments are relative positions with respect to reference and target maps of
+     * the point to sync. If you provide ratioRef=[0, 1], ratioTarget=[1, 0] will sync the
+     * bottom left corner of the reference map with the top right corner of the target map.
+     * The values can be less than 0 or greater than 1. It will sync points out of the map.
+     */
+    L.Sync.offsetHelper = function (ratioRef, ratioTarget) {
+        var or = L.Util.isArray(ratioRef) ? ratioRef : [0.5, 0.5];
+        var ot = L.Util.isArray(ratioTarget) ? ratioTarget : [0.5, 0.5];
+        return function (center, zoom, refMap, targetMap) {
+            var rs = refMap.getSize();
+            var ts = targetMap.getSize();
+            var pt = refMap.project(center, zoom)
+                           .subtract([(0.5 - or[0]) * rs.x, (0.5 - or[1]) * rs.y])
+                           .add([(0.5 - ot[0]) * ts.x, (0.5 - ot[1]) * ts.y]);
+            return refMap.unproject(pt, zoom);
+        };
+    };
+
+
+    L.Map.include({
         sync: function (map, options) {
             this._initSync();
-            options = options || {};
+            options = L.extend({
+                noInitialSync: false,
+                syncCursor: false,
+                syncCursorMarkerOptions: {
+                    radius: 10,
+                    fillOpacity: 0.3,
+                    color: '#da291c',
+                    fillColor: '#fff'
+                },
+                offsetFn: function (center, zoom, refMap, targetMap) {
+                    // no transformation at all
+                    return center;
+                }
+            }, options);
 
             // prevent double-syncing the map:
-            var present = false;
-            this._syncMaps.forEach(function (other) {
-                if (map === other) {
-                    present = true;
-                }
-            });
-
-            if (!present) {
+            if (this._syncMaps.indexOf(map) === -1) {
                 this._syncMaps.push(map);
+                this._syncOffsetFns[L.Util.stamp(map)] = options.offsetFn;
             }
 
             if (!options.noInitialSync) {
-                map.setView(this.getCenter(), this.getZoom(), {
-                    animate: false,
-                    reset: true
-                });
+                map.setView(
+                    options.offsetFn(this.getCenter(), this.getZoom(), this, map),
+                    this.getZoom(), NO_ANIMATION);
             }
+            if (options.syncCursor) {
+                if (typeof map.cursor === 'undefined') {
+                    map.cursor = L.circleMarker([0, 0], options.syncCursorMarkerOptions).addTo(map);
+                }
+
+                this._cursors.push(map.cursor);
+
+                this.on('mousemove', this._cursorSyncMove, this);
+                this.on('mouseout', this._cursorSyncOut, this);
+            }
+
+            // on these events, we should reset the view on every synced map
+            // dragstart is due to inertia
+            this.on('resize zoomend', this._selfSetView);
+            this.on('moveend', this._syncOnMoveend);
+            this.on('dragend', this._syncOnDragend);
             return this;
         },
+
 
         // unsync maps from each other
         unsync: function (map) {
             var self = this;
 
+            if (this._cursors) {
+                this._cursors.forEach(function (cursor, indx, _cursors) {
+                    if (cursor === map.cursor) {
+                        _cursors.splice(indx, 1);
+                    }
+                });
+            }
+
+            // TODO: hide cursor in stead of moving to 0, 0
+            if (map.cursor) {
+                map.cursor.setLatLng([0, 0]);
+            }
+
             if (this._syncMaps) {
                 this._syncMaps.forEach(function (synced, id) {
                     if (map === synced) {
+                        delete self._syncOffsetFns[L.Util.stamp(map)];
                         self._syncMaps.splice(id, 1);
                     }
                 });
             }
 
+            if (!this._syncMaps || this._syncMaps.length == 0) {
+                // no more synced maps, so these events are not needed.
+                this.off('resize zoomend', this._selfSetView);
+                this.off('moveend', this._syncOnMoveend);
+                this.off('dragend', this._syncOnDragend);
+            }
+
             return this;
         },
 
-        // overload methods on originalMap to replay on _syncMaps;
+        // Checks if the map is synced with anything or a specifyc map
+        isSynced: function (otherMap) {
+            var has = (this.hasOwnProperty('_syncMaps') && Object.keys(this._syncMaps).length > 0);
+            if (has && otherMap) {
+                // Look for this specific map
+                has = false;
+                this._syncMaps.forEach(function (synced) {
+                    if (otherMap == synced) { has = true; }
+                });
+            }
+            return has;
+        },
+
+
+        // Callbacks for events...
+        _cursorSyncMove: function (e) {
+            this._cursors.forEach(function (cursor) {
+                cursor.setLatLng(e.latlng);
+            });
+        },
+
+        _cursorSyncOut: function (e) {
+            this._cursors.forEach(function (cursor) {
+                // TODO: hide cursor in stead of moving to 0, 0
+                cursor.setLatLng([0, 0]);
+            });
+        },
+
+        _selfSetView: function (e) {
+            // reset the map, and let setView synchronize the others.
+            this.setView(this.getCenter(), this.getZoom(), NO_ANIMATION);
+        },
+
+        _syncOnMoveend: function (e) {
+            if (this._syncDragend) {
+                // This is 'the moveend' after the dragend.
+                // Without inertia, it will be right after,
+                // but when inertia is on, we need this to detect that.
+                this._syncDragend = false; // before calling setView!
+                this._selfSetView(e);
+                this._syncMaps.forEach(function (toSync) {
+                    toSync.fire('moveend');
+                });
+            }
+        },
+
+        _syncOnDragend: function (e) {
+            // It is ugly to have state, but we need it in case of inertia.
+            this._syncDragend = true;
+        },
+
+
+        // overload methods on originalMap to replay interactions on _syncMaps;
         _initSync: function () {
             if (this._syncMaps) {
                 return;
@@ -298,15 +493,48 @@ module.exports = cloneLayer;
             var originalMap = this;
 
             this._syncMaps = [];
+            this._cursors = [];
+            this._syncOffsetFns = {};
 
             L.extend(originalMap, {
                 setView: function (center, zoom, options, sync) {
+                    // Use this sandwich to disable and enable viewprereset
+                    // around setView call
+                    function sandwich (obj, fn) {
+                        var viewpreresets = [];
+                        var doit = options && options.disableViewprereset && obj && obj._events;
+                        if (doit) {
+                            // The event viewpreresets does an invalidateAll,
+                            // that reloads all the tiles.
+                            // That causes an annoying flicker.
+                            viewpreresets = obj._events.viewprereset;
+                            obj._events.viewprereset = [];
+                        }
+                        var ret = fn(obj);
+                        if (doit) {
+                            // restore viewpreresets event to its previous values
+                            obj._events.viewprereset = viewpreresets;
+                        }
+                        return ret;
+                    }
+
+                    // Looks better if the other maps 'follow' the active one,
+                    // so call this before _syncMaps
+                    var ret = sandwich(this, function (obj) {
+                        return L.Map.prototype.setView.call(obj, center, zoom, options);
+                    });
+
                     if (!sync) {
                         originalMap._syncMaps.forEach(function (toSync) {
-                            toSync.setView(center, zoom, options, true);
+                            sandwich(toSync, function (obj) {
+                                return toSync.setView(
+                                    originalMap._syncOffsetFns[L.Util.stamp(toSync)](center, zoom, originalMap, toSync),
+                                    zoom, options, true);
+                            });
                         });
                     }
-                    return L.Map.prototype.setView.call(this, center, zoom, options);
+
+                    return ret;
                 },
 
                 panBy: function (offset, options, sync) {
@@ -325,24 +553,31 @@ module.exports = cloneLayer;
                         });
                     }
                     return L.Map.prototype._onResize.call(this, event);
+                },
+
+                _stop: function (sync) {
+                    L.Map.prototype._stop.call(this);
+                    if (!sync) {
+                        originalMap._syncMaps.forEach(function (toSync) {
+                            toSync._stop(true);
+                        });
+                    }
                 }
             });
-
-            originalMap.on('zoomend', function () {
-                originalMap._syncMaps.forEach(function (toSync) {
-                    toSync.setView(originalMap.getCenter(), originalMap.getZoom(), {
-                        animate: false,
-                        reset: false
-                    });
-                });
-            }, this);
 
             originalMap.dragging._draggable._updatePosition = function () {
                 L.Draggable.prototype._updatePosition.call(this);
                 var self = this;
                 originalMap._syncMaps.forEach(function (toSync) {
                     L.DomUtil.setPosition(toSync.dragging._draggable._element, self._newPos);
-                    toSync.fire('moveend');
+                    toSync.eachLayer(function (layer) {
+                        if (layer._google !== undefined) {
+                            var offsetFn = originalMap._syncOffsetFns[L.Util.stamp(toSync)];
+                            var center = offsetFn(originalMap.getCenter(), originalMap.getZoom(), originalMap, toSync);
+                            layer._google.setCenter(center);
+                        }
+                    });
+                    toSync.fire('move');
                 });
             };
         }

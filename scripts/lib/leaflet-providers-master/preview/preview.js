@@ -1,11 +1,9 @@
 (function () {
 	'use strict';
 
-	var map = new L.Map('map', {
+	var map = L.map('map', {
 		zoomControl: false,
-		center: [48, -3],
-		zoom: 5
-	});
+	}).setView([48, -3], 5);
 
 	function escapeHtml (string) {
 		return string
@@ -38,12 +36,7 @@
 				delete options.variant;
 			}
 
-			var code = '';
-			if (url.indexOf('//') === 0) {
-				code += '// https: also suppported.\n';
-				url = 'http:' + url;
-			}
-			code += 'var ' + layerName + ' = L.tileLayer(\'' + url + '\', {\n';
+			var code = 'var ' + layerName + ' = L.tileLayer(\'' + url + '\', {\n';
 
 			var first = true;
 			for (var option in options) {
@@ -66,10 +59,15 @@
 		}
 		var overlayPatterns = [
 			'^(OpenWeatherMap|OpenSeaMap)',
-			'OpenMapSurfer.AdminBounds',
+			'OpenMapSurfer.(Hybrid|AdminBounds|ContourLines|Hillshade|ElementsAtRisk)',
 			'Stamen.Toner(Hybrid|Lines|Labels)',
-			'Acetate.(foreground|labels|roads)',
-			'Hydda.RoadsAndLabels'
+			'Hydda.RoadsAndLabels',
+			'^JusticeMap',
+			'OpenPtMap',
+			'OpenRailwayMap',
+			'OpenFireMap',
+			'SafeCast',
+			'WaymarkedTrails.(hiking|cycling|mtb|slopes|riding|skating)'
 		];
 
 		return providerName.match('(' + overlayPatterns.join('|') + ')') !== null;
@@ -81,11 +79,10 @@
 			return true;
 		}
 		// reduce the number of layers previewed for some providers
-		if (providerName.startsWith('HERE') || providerName.startsWith('OpenWeatherMap')) {
+		if (providerName.startsWith('HERE') || providerName.startsWith('OpenWeatherMap') || providerName.startsWith('MapBox') || providerName.startsWith('MapTiler')) {
 			var whitelist = [
-				'HERE.normalDay',
-				'HERE.basicMap',
-				'HERE.hybridDay',
+				// API threshold almost reached, disabling for now.
+				// 'HERE.normalDay',
 				'OpenWeatherMap.Clouds',
 				'OpenWeatherMap.Pressure',
 				'OpenWeatherMap.Wind'
@@ -204,7 +201,9 @@
 					if (event && event.type === 'layerremove' && layer === event.layer) {
 						continue;
 					}
-					names.push(layer._providerName);
+					names.push(L.Util.template('<a href="#filter={name}">{name}</a>', {
+						name: layer._providerName
+					}));
 					code.innerHTML += layer.getExampleJS();
 				}
 				providerNames.innerHTML = names.join(', ');
