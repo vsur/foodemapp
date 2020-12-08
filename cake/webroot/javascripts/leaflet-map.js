@@ -4,12 +4,15 @@
 var maxHeight = window.innerHeight;
 $("#ypoisMap").css("height", maxHeight/2);
 
+// Static user position when no device values are available
+var staticUserPosition =  L.latLng(49.01, 8.40806);
+
 // Initalize LMap
 var mymap = L.map('ypoisMap');
 // var markers = L.layerGroup([]);
 var markers = L.markerClusterGroup();
 
-L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(mymap);
+L.tileLayer.provider('OpenStreetMap.HOT').addTo(mymap);
 
 ypois.forEach(function(ypoi, i) {
     var newIcon = L.divIcon({
