@@ -122,7 +122,7 @@ class D3DataComponent extends Component
         $componentWheelData = $this->buildOtherSegmentData($componentWheelData, $otherComponents);
 
         $componentWheelJSONData = json_encode($componentWheelData);
-        debug($componentWheelData);
+        
         return $componentWheelJSONData;
     }
 
