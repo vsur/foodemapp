@@ -7,6 +7,12 @@ $("#ypoisMap").css("height", maxHeight/2);
 // Static user position when no device values are available
 var staticUserPosition =  L.latLng(49.01, 8.40806);
 var userPositionLayer = L.layerGroup();
+var pulsingIcon = L.icon.pulse({
+    iconSize: [18,18],
+    fillColor: '#2196F3',
+    color: '#2196F3',
+    heartbeat: 3,
+});
 
 // Initalize LMap
 var mymap = L.map('ypoisMap');
@@ -67,9 +73,7 @@ updateMarkersContent(markers, "chosen");
 // Open all popups
 openAllMarkersPopups(markers);
 
-/**************************
- * HANDLING USER POSITION *
- **************************/
+// Handling user position
 function onLocationFound(e) {
     var radius = e.accuracy / 2;
     console.log("User position detected by device");
@@ -78,7 +82,6 @@ function onLocationFound(e) {
 
 function onLocationError(e) {
     console.log(e);
-    // alert(e.message);
     showUserPosition(staticUserPosition, 50);
 }
 
@@ -89,22 +92,28 @@ mymap.locate({setView: true, maxZoom: 16});
 
 mymap.addLayer(userPositionLayer);
 
+
 function showUserPosition(latLng, radius) {
     
-    var userMarker = L.marker(latLng)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+    var userMarker = L.marker(latLng,{icon: pulsingIcon});
 
-    var userAccuracyArea = L.circle(latLng, radius);
+    var userAccuracyArea = L.circle(latLng, {
+        radius: radius,
+        color: '#ffffff',
+        weight: 3,
+        opacity: 0.75,
+        fillColor: '#2196F3' 
+    });
 
-    userPositionLayer.addLayer(userAccuracyArea);
     userPositionLayer.addLayer(userMarker);
+    userPositionLayer.addLayer(userAccuracyArea);
 
     let animationDuration = 3;
     setTimeout( () => 
         mymap.flyTo(latLng, 13, {
             animate: true,
             duration: animationDuration
-        }), 2000
+        }), 1250
     );
 }
 
