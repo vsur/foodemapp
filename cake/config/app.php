@@ -328,6 +328,5 @@ return [
      */
     'Session' => [
         'defaults' => 'php',
-        'timeout' => 20
     ],
 ];

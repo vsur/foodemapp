@@ -58,11 +58,6 @@ class YpoisController extends AppController
             $configuredSelection = $this->request->query;
         }
 
-        // Preparing session for storing geolocation later
-        $session = $this->request->session();
-        $session->destroy();
-        $session->write('Config.language', 'de');
-
         $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
     }
 
