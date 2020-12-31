@@ -23,4 +23,4 @@
 </script>
 <?= $this->Html->css('L.Icon.Pulse.css') ?>
 <?= $this->Html->script('L.Icon.Pulse.js') ?>
-<?= $this->Html->script('leaflet-map.js') ?>
+<?= $this->Html->script('leaflet-map.js', ['block' => 'scriptAfterfmApp']) ?>
