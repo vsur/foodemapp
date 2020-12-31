@@ -175,6 +175,18 @@ class YpoisController extends AppController
         ));
     }
 
+    public function setGeoInSession() {
+        $this->autoRender = false;
+
+        if ( $this->request->is('ajax') && $this->request->is('post')) {
+
+            echo json_encode($this->request->data); 
+            return;
+        }
+        
+        return; 
+    }
+
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)
     {
         $criteria = [];
