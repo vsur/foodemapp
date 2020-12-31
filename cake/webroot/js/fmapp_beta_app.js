@@ -16,7 +16,12 @@ var fmApp = {
     currentComponent: "",
     nominalAttributeIdPrefix: '_NCATTR-ID_',
     ordinalAttributeIdPrefix: '_OCATTR-ID_',
-    standardRating: 3, // Out of 3
+    standardRating: 3, // Out of 5
+    geoLocation: {
+        latLong: [49.01, 8.40806],
+        accuracy: 50
+    },
+
     
     // Main Controls
     checks: {
@@ -70,6 +75,33 @@ var fmApp = {
             }
             return machtingCorrect;
         },
+        usersPosition: function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(fmApp.sets.usersPosition, (error) => {
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                          console.log("User denied the request for Geolocation. Maybe cause your are using no SSL connection?");
+                          break;
+                        case error.POSITION_UNAVAILABLE:
+                          console.log("Location information is unavailable.");
+                          break;
+                        case error.TIMEOUT:
+                          console.log("The request to get user location timed out.");
+                          break;
+                        case error.UNKNOWN_ERROR:
+                          console.log("An unknown error occurred.");
+                          break;
+                      }
+                    // Set manualy by init
+                    fmApp.gets.staticUserPosition();
+                    
+                });
+            } else {
+                console.log("No Geolocator available");
+                fmApp.gets.staticUserPosition();
+            }
+            return;
+        } 
     },
     finds: {
         displayNameOfChoosenOrdinalAttribute: function(cssSelector, currentMeter) {
@@ -136,6 +168,10 @@ var fmApp = {
             var rating = fmApp.chosenSelection[selectionIndex].rating;
             return rating;
         },
+        staticUserPosition: function() {
+            console.log("User position is set by static init values:");
+            console.log(fmApp.geoLocation);
+        }
     },
     pastes: {
         builds: {
@@ -287,6 +323,15 @@ var fmApp = {
         rating: function(indexOfChosenSelection, newRating) {
             var componentToSetRating = fmApp.chosenSelection[indexOfChosenSelection];
             componentToSetRating.rating = newRating;
+        },
+        usersPosition: function(position) {
+           fmApp.geoLocation.latLong = [ 
+               position.coords.latitude, 
+               position.coords.longitude 
+            ];
+            fmApp.geoLocation.accuracy = position.coords.accuracy;
+            console.log(fmApp.geoLocation);
+            alert("GEO is: " +  JSON.stringify(fmApp.geoLocation) );
         },
     },
     slices: {
@@ -493,7 +538,39 @@ var fmApp = {
             }
             paramString += index < (fmApp.chosenSelection.length - 1) ? "&" : "";
         });
-        window.location = url + paramString;
+        
+        
+        var jqxhr = $.ajax({
+            method: "POST",
+            url: storeUserPositionInSessionURL,
+            data: {
+                latitude: $("#latitude").val(),
+                longitude: $("#longitude").val(),
+                accuracy: $("#accuracy").val()
+            },
+            beforeSend: function(){
+                fmApp.checks.usersPosition();
+                // Set values in Input fields
+                $("#latitude").val( fmApp.geoLocation.latLong[0] );
+                $("#longitude").val( fmApp.geoLocation.latLong[1] );
+                $("#accuracy").val( fmApp.geoLocation.accuracy );
+            }
+        })
+        .done(function() {
+            console.log( "Data Sent to API" );
+        })
+        .fail(function() {
+            alert( "An error occured results will not be sorted by distance" );
+        });
+        
+        // Set another completion function for the request above
+        jqxhr.always(function() {
+            alert( "YOU WILL LAND HERE: " + url + paramString);
+            console.log("YOU WILL LAND HERE: " + url + paramString);
+            // window.location = url + paramString;
+        });
+        
+        
     },
     deleteComponent: function(delName) {
         // Delete entry from criteria list

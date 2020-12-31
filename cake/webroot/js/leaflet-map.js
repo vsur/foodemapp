@@ -4,7 +4,9 @@
 var maxHeight = window.innerHeight;
 $("#ypoisMap").css("height", maxHeight/2);
 
-// Static user position when no device values are available
+// Static user position 
+// console.log("Coming from MAP: ");
+// console.log(fmApp.geoLocation);
 var staticUserPosition =  L.latLng(49.01, 8.40806);
 var userPositionLayer = L.layerGroup();
 var pulsingIcon = L.icon.pulse({

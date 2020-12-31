@@ -31,6 +31,30 @@
 
 <?php $this->assign('title', 'Auswahl'); ?>
 
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+↓↓↓ GEO Location Data Storage for later sorting ↓↓↓
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+
+<!-- <div class="row hidden"> -->
+<div class="row ">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="latitude"><?= __('Latitude') ?></label>
+      <?= $this->Form->hidden('latitude', ['id' => 'latitude', 'value' => '0.0']); ?>
+      
+      <label for="longitude"><?= __('Longitude') ?></label>
+      <?= $this->Form->hidden('longitude', ['id' => 'longitude', 'value' => '0.0']); ?>
+      
+      <label for="accuracy"><?= __('Accuracy') ?></label>
+      <?= $this->Form->hidden('accuracy', ['id' => 'accuracy', 'value' => '1000.0']); ?>
+    </div>
+  </div>
+</div>
+
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+↑↑↑ GEO Location Data Storage for later sorting ↑↑↑
+↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Step 2  Block ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
@@ -152,6 +176,16 @@ awesomplete.list = criterionNames;
 <script type="text/javascript">
     var criteria = <?= json_encode($criteria) ?>;
     var configuredSelection = <?= json_encode($configuredSelection) ?>;
+    
+    var storeUserPositionInSessionURL = "<?= $this->Url->build(["controller" => "Ypois", "action" => "setGeoInSession"]) ?>";
+
+    $(document).ready(function() {
+      fmApp.checks.usersPosition();
+      // Set values in Input fields
+      $("#latitude").val( fmApp.geoLocation.latLong[0] );
+      $("#longitude").val( fmApp.geoLocation.latLong[1] );
+      $("#accuracy").val( fmApp.geoLocation.accuracy );
+    });
 </script>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Criteria Block for JS ↑↑↑↑
