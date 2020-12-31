@@ -40,7 +40,8 @@ module.exports = function(grunt) {
 
 		jshint: {
 			options: {
-				reporter: require('jshint-stylish') // use jshint-stylish to make our errors look and read good
+				reporter: require('jshint-stylish'),
+				"esversion": 6
 			},
 
 			// when this task is run, lint the Gruntfile and all js files in src
