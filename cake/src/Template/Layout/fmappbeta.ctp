@@ -69,5 +69,8 @@ $cakeDescription = 'Food_M_App';
   <?= $this->Html->script('bootstrap.js') ?>
   <?= $this->Html->script('fmapp_beta_app.js') ?>
 
+  <!-- Block for post fmApp init -->
+  <?= $this->fetch('scriptAfterfmApp'); ?>
+
 </body>
 </html>
