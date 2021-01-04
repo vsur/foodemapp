@@ -565,9 +565,7 @@ var fmApp = {
         
         // Set another completion function for the request above
         jqxhr.always(function() {
-            alert( "YOU WILL LAND HERE: " + url + paramString);
-            console.log("YOU WILL LAND HERE: " + url + paramString);
-            // window.location = url + paramString;
+            window.location = url + paramString;
         });
         
         

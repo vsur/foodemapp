@@ -179,8 +179,17 @@ class YpoisController extends AppController
         $this->autoRender = false;
 
         if ( $this->request->is('ajax') && $this->request->is('post')) {
-
-            echo json_encode($this->request->data); 
+            $geoData = json_decode(json_encode($this->request->data), FALSE);
+            
+            $session = $this->request->session();
+            $session->write('Config.geolocation.latitude', $geoData->latitude);
+            $session->write('Config.geolocation.longitude', $geoData->longitude);
+            $session->write('Config.geolocation.accuracy', $geoData->accuracy);
+            $response =  (object) [
+                'message' => 'Data saved to session',
+                'data' => $session->read('Config.geolocation')
+            ];
+            echo json_encode($response); 
             return;
         }
         
