@@ -550,10 +550,12 @@ var fmApp = {
             },
             beforeSend: function(){
                 fmApp.checks.usersPosition();
-                // Set values in Input fields
-                $("#latitude").val( fmApp.geoLocation.latLong[0] );
-                $("#longitude").val( fmApp.geoLocation.latLong[1] );
-                $("#accuracy").val( fmApp.geoLocation.accuracy );
+                $("#loadingSpinnerContainer").fadeIn(500, function(event) {
+                    // Set values in Input fields
+                    $("#latitude").val( fmApp.geoLocation.latLong[0] );
+                    $("#longitude").val( fmApp.geoLocation.latLong[1] );
+                    $("#accuracy").val( fmApp.geoLocation.accuracy );
+                });
             }
         })
         .done(function() {
@@ -565,9 +567,10 @@ var fmApp = {
         
         // Set another completion function for the request above
         jqxhr.always(function() {
-            window.location = url + paramString;
+            setTimeout(function(){
+                window.location = url + paramString;
+            }, 500);
         });
-        
         
     },
     deleteComponent: function(delName) {
