@@ -92,6 +92,24 @@ class YpoisController extends AppController
         // Store filter component sorte by ranking for filter group assignment
         $rankedSelection = NULL;
 
+        // Use geoloction for sorting
+        $sortByGeo = false;
+        $distanceSelectQueryString = '';
+
+        // Check if geolocation is set
+        $session = $this->request->session();
+        // $session->destroy();
+        if ($session->check('Config.geolocation')) {
+            $sortByGeo = true;
+            $distanceSelectQueryString = '6371 * acos (
+                cos ( radians(' . $session->read("Config.geolocation.latitude") . ') )
+                * cos( radians( lat ) )
+                * cos( radians( lng ) - radians(' . $session->read("Config.geolocation.longitude") . ') )
+                + sin ( radians(' .  $session->read("Config.geolocation.latitude") . ') )
+                * sin( radians( lat ) )
+              )';
+        }
+
         if (!empty($this->request->query)) {
             $configuredSelection = $this->request->query;
         }
@@ -102,9 +120,9 @@ class YpoisController extends AppController
 
             $filterSelection = $this->Ypois->buildFilterObject($configuredSelection);
            
-            $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection);
+            $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection, $sortByGeo, $distanceSelectQueryString);
 
-            $ypois = $this->Ypois->getYpoisOrderedOnAssocCount($ypois);
+            $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
             
         } else {
             $ypois = $this->Ypois->find("all")
@@ -116,12 +134,32 @@ class YpoisController extends AppController
                         'OrdinalAttributes' => [  'sort' => ['meter' => 'ASC']   ],
                         'OrdinalAttributes.OrdinalComponents',
                         'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ]
-                    ])
-                ->order([
-                    'name' => 'ASC', 
-                    
                     ]);
-            $ypois = $this->Ypois->getYpoisOrderedOnAssocCount($ypois);
+            // Check geolocation for sorting
+            if($sortByGeo) {
+                $ypois->select(
+                        ['distance' => $distanceSelectQueryString]
+                    )
+                ->autoFields(true)
+                ->order([
+                    'distance' => 'ASC', 
+                    'name' => 'ASC', 
+                ]);
+            } else {
+                $ypois->order([
+                    'name' => 'ASC', 
+                ]);
+            }
+
+            // For Debug only
+            $ypois->limit(50);
+
+            $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
+            
+        }
+        if($sortByGeo) {
+            // Sort manually by distance
+            $ypois = $this->Ypois->getYpoisOrderedByDistance($ypois);
         }
 
         // Build ranked selection from filters

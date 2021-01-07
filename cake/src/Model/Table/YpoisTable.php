@@ -376,7 +376,7 @@ class YpoisTable extends Table
         return $currentSettedComponent;
     }
 
-    public function findYpoisByConfiguredSelection($filterSelection = null) {
+    public function findYpoisByConfiguredSelection($filterSelection = null, $sortByGeo = null, $distanceSelectQueryString = null)  {
         $ypois = $this->find()->contain(
             [
                 'BinaryComponents' => [  'sort' => ['display_name' => 'ASC', 'name' => 'ASC']    ],
@@ -407,16 +407,25 @@ class YpoisTable extends Table
         // Set autoFields for correct joins syntax
         $ypois->enableAutoFields(true);
 
-        // Order Results
-        $ypois->order([
-            'name' => 'ASC', 
-            
-        ]);
-        
+        // Check geolocation for sorting
+        if($sortByGeo) {
+            $ypois->select(
+                    ['distance' => $distanceSelectQueryString]
+                )
+            ->order([
+                'distance' => 'ASC', 
+                'name' => 'ASC', 
+            ]);
+        } else {
+            $ypois->order([
+                'name' => 'ASC', 
+            ]);
+        }
+    
         return $ypois;
     }
     
-    public function getYpoisOrderedOnAssocCount($ypois) {
+    public function getYpoisOrderedByAssocCount($ypois) {
 
         $ypoisOrderedOnAssocCount = $ypois->toArray();
 
@@ -473,6 +482,13 @@ class YpoisTable extends Table
         });
 
         return $ypoisOrderedOnAssocCount;
+    }
+
+    public function getYpoisOrderedByDistance($ypois) {
+        usort($ypois, function ($a, $b) {
+            return ($a["distance"] <= $b["distance"]) ? -1 : 1;
+        });
+        return $ypois;
     }
 
     protected function applyNotMatchingBinariesFilter($ypois = null, $filterSelection = null) {
