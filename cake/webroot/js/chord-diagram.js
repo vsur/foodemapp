@@ -91,7 +91,7 @@
  var header = []
  var header_type = []
  obj["pois"].forEach(element => {
- 	header.push(element.name)
+	header.push(element.name + (element.distance ? (' \u2794 ' + ( Math.round( element.distance * 100) / 100 ) + ' km').replace('.', ',') : '') )
  	header_type.push("poi")
  });
 
@@ -101,7 +101,7 @@
  obj["rankedComponents"].forEach(element => {
  	// header.push(element.name)
  	header_type.push("rankedComponents")
- 	// Wenn display_name fertig:
+	 // Wenn display_name fertig:
  	header.push(element.display_name)
  });
 
@@ -353,7 +353,7 @@
  // Arcs
  g.append("title")
  	.text(function(d, i) {
- 		return sum_array_values(matrix_original[i]) + " " + header[i]
+ 		return sum_array_values(matrix_original[i]) + " Verbindungen " + header[i]
  	});
 
  // Chords

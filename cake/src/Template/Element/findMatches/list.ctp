@@ -3,7 +3,21 @@
     <?php foreach ($ypois as $nr => $ypoi): ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title clearfix"><strong><?= $this->Number->format($nr + 1) . '.' ?> <?= h($ypoi->name) ?></strong> <div class="listMoreInfo pull-right">Mehr Infos anzeigen <span class="caret"></span></div></h3>
+                <h3 class="panel-title clearfix">
+                    <strong>
+                        <?= $this->Number->format($nr + 1) . '.' ?> <?= h($ypoi->name) ?>
+                    </strong> 
+                    <?php 
+                        if ($ypoi->has("distance")) {
+                            echo '&#10132; ';
+                            echo ' Entfernung ';
+                            echo $this->Number->format($ypoi->distance) . " km ";
+                        }
+                    ?>
+                    <div class="listMoreInfo pull-right">
+                        Mehr Infos anzeigen <span class="caret"></span>
+                    </div>
+                </h3>
             </div>
             <div class="panel-body">
                 <div class="row chosenAgregation">

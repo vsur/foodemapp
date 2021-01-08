@@ -36,6 +36,7 @@ ypois.forEach(function(ypoi, i) {
     var marker = L.marker([ypoi.lat, ypoi.lng], {
         icon: newIcon,
         poiName: ypoi.name,
+        poiDistance: (ypoi.distance ? ( ( Math.round( ypoi.distance * 1000) / 1000 )+ ' km').replace('.', ',') : 'Nicht verfügbar, da keine GEO Position gesetzt') ,
         binaryComponents: ypoi.binary_components,
         nominalAttributes: ypoi.nominal_attributes,
         ordinalAttributes: ypoi.ordinal_attributes
@@ -131,6 +132,10 @@ function updateMarkersContent(markers, newContentType) {
             switch (newContentType) {
                 case "chosen":
                     popupContent = buildRankedSelectionPopupContent();
+                    break;
+
+                case "distance":
+                    popupContent = buildDistancePopupContent(marker);
                     break;
 
                 case "none":
@@ -238,6 +243,23 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
         });
 
         return ratingString;
+}
+function buildDistancePopupContent(marker) {
+    
+    let contentString = '<ul class="list-unstyled popUpComponentList">';
+    
+    contentString += '<li class="distanceInfo clearfix">';
+
+    contentString +=    '<strong>';
+    contentString +=        '&#10132; Entfernung: ';
+    contentString +=        marker.options.poiDistance;
+    contentString +=    '</strong>';
+            
+    contentString += '</li>';
+
+    contentString += '</ul>';
+
+    return contentString;
 }
 
 function buildOtherComponentsPopupContent(marker, componentTypes) {

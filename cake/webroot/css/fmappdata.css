@@ -7664,7 +7664,7 @@ path.chord {
     color: #ffc700;
     top: 0px;
     left: -8px; }
-  .popUpComponentList .binaryComponentInfo, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .attributeNameNominalAttribute, .popUpComponentList .componentNameOrdinalComponent, .popUpComponentList .ordinalComponentInfo {
+  .popUpComponentList .distanceInfo, .popUpComponentList .binaryComponentInfo, .popUpComponentList .componentNameNominalComponent, .popUpComponentList .attributeNameNominalAttribute, .popUpComponentList .componentNameOrdinalComponent, .popUpComponentList .ordinalComponentInfo {
     font-size: 12px !important;
     line-height: 1.5em;
     padding-right: 0px;

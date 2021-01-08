@@ -8,11 +8,16 @@
         <h1>Ihre Ergebnisse auf einer Karte</h1>
         <ul id="mapComponentsChoice" class="nav nav-pills">
             <li role="presentation" class="active"><a href="#" id="mapComponentsChosen" data-component-presentation="chosen">Gesuchte Komponenten</a></li>
+
+            <?php if ( $this->request->session()->check('Config.geolocation')) : ?>
+                <li role="presentation" ><a href="#" id="mapComponentsOther" data-component-presentation="distance">Entfernung Anzeigen</a></li>
+            <?php endif;?>
+
             <li role="presentation" ><a href="#" id="mapComponentsHide" data-component-presentation="none">Komponenten ausblenden</a></li>
             <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="other">Übrige Komponenten</a></li>
-            <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="justBinary">Nur Binär</a></li>
-            <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="justNominal">Nur Nominal</a></li>
-            <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="justOrdinal">Nur Ordinal</a></li>
+            <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="justBinary">Binär</a></li>
+            <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="justNominal">Nominal</a></li>
+            <li role="presentation"><a href="#" id="mapComponentsOther" data-component-presentation="justOrdinal">Ordinal</a></li>
         </ul>
         <div id="ypoisMap"></div>
     </div>
