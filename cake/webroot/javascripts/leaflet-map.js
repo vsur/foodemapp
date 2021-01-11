@@ -74,7 +74,7 @@ mymap.fitBounds(markers.getBounds());
 updateMarkersContent(markers, "chosen");
 
 // Open all popups
-openAllMarkersPopups(markers);
+if(!!configuredSelection) openAllMarkersPopups(markers);
 
 // Handling user position
 function onLocationFound(e) {

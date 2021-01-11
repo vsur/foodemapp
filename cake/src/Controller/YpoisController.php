@@ -98,7 +98,7 @@ class YpoisController extends AppController
 
         // Check if geolocation is set
         $session = $this->request->session();
-        // $session->destroy();
+        // $session->destroy();  // Uncoment for Debug Purposes 
         if ($session->check('Config.geolocation')) {
             $sortByGeo = true;
             $distanceSelectQueryString = '6371 * acos (
@@ -197,6 +197,14 @@ class YpoisController extends AppController
         $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
         
         $componentTypesComponentsCount = $this->PoisNComponents->allComponentTypeComponentsCount($ypois);
+
+        if($displayVariant != 'selectViz' && count($ypois) == 0) {
+            return $this->redirect([
+                'action' => 'findMatches',
+                'selectViz', 
+                '?' => $this->request->query
+            ]);
+        }
         
         $this->set(compact(
             'ypois',

@@ -7400,11 +7400,25 @@ a#filter, button#componentWheel {
   padding: 25px 25px;
   display: block;
   font-size: 18px;
-  background-color: #4CAF50;
   border-radius: 30px; }
+  @media screen and (max-width: 1199px) {
+    #poiCount {
+      font-size: 15px; } }
   #poiCount .actualPoiNumber {
     font-size: 36px;
     line-height: 1.5em; }
+
+#poiCount.badge.success {
+  background-color: #4CAF50; }
+
+#poiCount.badge.danger {
+  background-color: #e51c23; }
+
+#noResultButton {
+  width: 100%;
+  font-size: 1.5em;
+  white-space: normal;
+  padding: 1em; }
 
 #compnentWheelContainer {
   display: none;

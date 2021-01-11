@@ -190,14 +190,30 @@ input#componentInput.chosen:-ms-input-placeholder, input#criteriaInput.chosen:-m
     padding: 25px 25px;
     display: block;
     font-size: 18px;
-    background-color: $brand-success;
     border-radius: 30px;
+    @media screen and (max-width: $screen-md-max) {
+      font-size: 15px;
+     }
     
     .actualPoiNumber {
       font-size: 36px;
       line-height: 1.5em;
     }
   }
+
+  #poiCount.badge.success {
+      background-color: $brand-success;
+    }
+  #poiCount.badge.danger {
+      background-color: $brand-danger;
+    }
+  
+  #noResultButton {
+    width: 100%;
+    font-size: 1.5em;
+    white-space: normal;
+    padding: 1em;
+  } 
 
  #compnentWheelContainer {
    display: none;
