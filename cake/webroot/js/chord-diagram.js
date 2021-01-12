@@ -2,6 +2,8 @@
  * Data script for Chord Diagramm Viz
  */
 
+// 2196F3
+
  ////////////////////////////////////////////////////////////
  ////////////////// Input verarbeiten ///////////////////////
  ////////////////////////////////////////////////////////////
@@ -223,15 +225,15 @@
 
  // http://paletton.com/#uid=32a0u0kw0w0jyC+oRxVy4oIDfjr
  var colors = {
- 	"poi": "#C3F500",
- 	"rankedComponents": "#E9003A",
- 	"otherComponents": "#580EAD"
+ 	"poi": "#2196f3",
+ 	"rankedComponents": "#7d003c",
+ 	"otherComponents": "#4CAF50"
  	};
 
  var colors_dark = {
- 	"poi": "#97BD00",
- 	"rankedComponents": "#B4002D",
- 	"otherComponents": "#440A85"
+ 	"poi": "#0a6fc2",
+ 	"rankedComponents": "#4d0025",
+ 	"otherComponents": "#367c39"
  	};
 
  // Finde ich zu dunkel
@@ -286,6 +288,7 @@
  			if (header[i] === "") {
  				return dummyColor
  			} else {
+				 console.log(i);
  				return colors[header_type[i]]
  			}
  		})
