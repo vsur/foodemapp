@@ -18,11 +18,11 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-html": "^14.2.1",
     "grunt-sass": "^3.1.0",
-    "jshint-stylish": "^2.2.1"
+    "jshint-stylish": "^2.2.1",
+    "node-sass": "^5.0.0"
   },
   "dependencies": {
     "d3": "^5.9.7",
-    "eslint": "^6.2.0",
-    "node-sass": "^5.0.0"
+    "eslint": "^6.2.0"
   }
 }
