@@ -36,7 +36,9 @@ var fmApp = {
         },
         isComponentAlreadyChoosen: function(selectedCriterion) {
             var componentChoosenState = false;
-            
+            console.log("\nAktuell gewählt", selectedCriterion);
+            console.log("\nSchon in auswahl", fmApp.chosenSelection);
+
             fmApp.chosenSelection.forEach(function(componentInSelection) {
                 if(selectedCriterion.id == componentInSelection.componentId ) {
                     componentChoosenState = true;
@@ -156,6 +158,23 @@ var fmApp = {
         }
     },
     gets: {
+        componentTypeByIdentifier: function(componentIdentifier) {
+            let componentType = "";
+            switch (componentIdentifier) {
+                case 'BC':
+                    componentType = "BinaryComponents";
+                    break;
+
+                case 'NC':
+                    componentType = "NominalComponents";
+                    break;
+
+                case 'OC':
+                    componentType = "OrdinalComponents";
+                    break;
+            }
+            return componentType; 
+        },
         rating: function(modelType, id) {
             var selectionIndex;
             for (var i = 0; i < fmApp.chosenSelection.length; i++) {
@@ -280,28 +299,15 @@ var fmApp = {
             return selectedCriterion;
         },
         criterionByURLData: function(inputValue) {
-            var componentModelIdentifier = inputValue.slice(0, 2);
-            var componentModelType = "";
-            switch (componentModelIdentifier) {
-                case 'BC':
-                    componentModelType = "BinaryComponents";
-                    break;
-
-                case 'NC':
-                    componentModelType = "NominalComponents";
-                    break;
-
-                case 'OC':
-                    componentModelType = "OrdinalComponents";
-                    break;
-            }
+            var componentIdentifier = inputValue.slice(0, 2);
+            var componentType = fmApp.gets.componentTypeByIdentifier(componentIdentifier);
             var componentId = fmApp.slices.componentIdOffString(inputValue);
             selectedCriterion = {
-                type: componentModelIdentifier,
+                type: componentIdentifier,
                 // Get ID between prefixes out of string
                 id: componentId,
                 // Get Index position in array after last prefix out of string
-                index: fmApp.finds.indexOfComponentInCriteria(componentModelType, componentId)
+                index: fmApp.finds.indexOfComponentInCriteria(componentType, componentId)
             };
             return selectedCriterion;
         },
