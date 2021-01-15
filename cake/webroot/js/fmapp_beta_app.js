@@ -36,12 +36,13 @@ var fmApp = {
         },
         isComponentAlreadyChoosen: function(selectedCriterion) {
             var componentChoosenState = false;
-            console.log("\nAktuell gewählt", selectedCriterion);
-            console.log("\nSchon in auswahl", fmApp.chosenSelection);
+            let componentType = fmApp.gets.componentTypeByIdentifier(selectedCriterion.type);
 
             fmApp.chosenSelection.forEach(function(componentInSelection) {
-                if(selectedCriterion.id == componentInSelection.componentId ) {
-                    componentChoosenState = true;
+                if(componentType == componentInSelection.componentType) {
+                    if(selectedCriterion.id == componentInSelection.componentId ) {
+                        componentChoosenState = true;
+                    }
                 }
             });
 
