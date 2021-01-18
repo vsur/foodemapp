@@ -36,6 +36,7 @@
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 
 <!-- <div class="row hidden"> -->
+<div class="row hidden">
   <div class="col-md-12">
     <div class="form-group">
       <label for="latitude"><?= __('Latitude') ?></label>
