@@ -31,7 +31,7 @@
               }
             }
             if ($this->request->controller == 'Ypois') {
-              echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Komonenten Rad"><span class="hidden-xs">Komponenten browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
+              echo '<button id="componentWheel" type="button" class="btn btn-default navbar-btn" aria-label="Öffnen Sie das Kategorien-Rad"><span class="hidden-xs">Kategorien browsen</span> <span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span></button>';
             }  
           }
           ?>
@@ -53,7 +53,7 @@
                 [
                   'class' => 'btn btn-default navbar-btn', 
                   'id' => 'filter',
-                  'aria-label' => 'Bewerften Sie die aktuelle Suchanfrage', 
+                  'aria-label' => 'Bewerten Sie die aktuelle Suchanfrage', 
                   'escape' => false
                 ]
               );

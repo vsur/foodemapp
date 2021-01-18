@@ -1,15 +1,15 @@
 const sunburstInfoTranslations = {
     "componentWheel"        :       "Alle",
-    "choosenComponents"     :       "Gewählte Komponenten",
-    "otherComponents"       :       "Übrige Komponenten",
+    "choosenComponents"     :       "Gewählte Kategorien",
+    "otherComponents"       :       "Übrige Kategorien",
     "rating5"               :       "★★★★★ Kategorie",
     "rating4"               :       "★★★★ Kategorie",
     "rating3"               :       "★★★ Kategorie",
     "rating2"               :       "★★ Kategorie",
     "rating1"               :       "★ Kategorie",
-    "binaryComponents"      :       "On/Off Binäre Komponenten",
-    "nominalComponents"     :       "Nominale Komponenten",
-    "ordinalComponents"     :       "Ordinale Komponenten in aufsteigender Reihe",
+    "binaryComponents"      :       "On/Off Binäre Kategorien",
+    "nominalComponents"     :       "Nominale Kategorien",
+    "ordinalComponents"     :       "Ordinale Kategorien in aufsteigender Reihe",
 }
 
 const sunburstLabelTranslations = {

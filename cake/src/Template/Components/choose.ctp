@@ -2,7 +2,7 @@
   $this->element('navbar',
   [
     "step" => "Auswahl der Kategorien",
-    "vizElement" => "<li class=\"active\"><a href=\"#\">Komponenten</a></li>"
+    "vizElement" => "<li class=\"active\"><a href=\"#\">Kategorien</a></li>"
   ]);
 ?>
 
@@ -95,7 +95,7 @@ awesomplete.list = componentsNames;
   <div class="col-md-12">
     <div class="components choose content">
       <div id="showAllComponents">
-        <h3>Alle Komponenten <span id="compnentListDisplayState">einblenden ↓</span><h3>
+        <h3>Alle Kategorien <span id="compnentListDisplayState">einblenden ↓</span><h3>
       </div>
         <table id="componentsListView" class="table" cellpadding="0" cellspacing="0">
             <thead>

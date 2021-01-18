@@ -35,7 +35,6 @@
 ↓↓↓ GEO Location Data Storage for later sorting ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 
-<!-- <div class="row hidden"> -->
 <div class="row hidden">
   <div class="col-md-12">
     <div class="form-group">
@@ -117,7 +116,7 @@ awesomplete.list = criterionNames;
   <div class="col-md-12">
     <div class="criteria choose content">
       <div id="showAllCriteria">
-        <h3>Alle Kriterien <span id="compnentListDisplayState">einblenden ↓</span><h3>
+        <h3>Alle Kategorien <span id="compnentListDisplayState">einblenden ↓</span><h3>
       </div>
         <table id="criteriaListView" class="table" cellpadding="0" cellspacing="0">
             <thead>

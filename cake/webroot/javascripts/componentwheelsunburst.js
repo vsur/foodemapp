@@ -221,7 +221,7 @@ function setInfoString(d) {
     if (d.depth == 0) {
         // Current selected sum 
         currentComponentCount = sizeOfChoosen +  sizeOfOtherBinaries + sizeOfOtherNominals + sizeOfOtherOrdinals;
-        infoString += ": " + currentComponentCount + " Komponenten"
+        infoString += ": " + currentComponentCount + " Kategorien"
     }
     if (d.depth == 1) {
         // Main choosenComponents segment
@@ -274,9 +274,9 @@ function setInfoString(d) {
     if(isCategory) {
         infoString += ": " + currentComponentCount;
         if (currentComponentCount == 1) {
-            infoString += " Komponente";
+            infoString += " Kategorie";
         } else {
-            infoString += " Komponenten";
+            infoString += " Kategorien";
         }
     }
 

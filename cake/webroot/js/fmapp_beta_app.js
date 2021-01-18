@@ -436,7 +436,7 @@ var fmApp = {
         // Check if selected component is not already chosen
         var componentAlreadyChoosen = fmApp.checks.isComponentAlreadyChoosen(selectedCriterion);
         if(componentAlreadyChoosen) {
-            fmApp.alertMessage("Die Komponente <strong>" + chosenComponent.display_name + "</strong> wurde bereitsausgewählt.<br> Sie können diese Komponente nicht erneut auswählen.", "alert-danger"); 
+            fmApp.alertMessage("Die Kategorie <strong>" + chosenComponent.display_name + "</strong> wurde bereitsausgewählt.<br> Sie können diese Komponente nicht erneut auswählen.", "alert-danger"); 
         } else {
             // Add Component to selection
             this.chosenSelection.push({

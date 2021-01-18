@@ -70,7 +70,7 @@ $cakeDescription = 'Food_M_App';
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Komponenten</a></li>
+        <li class="active"><a href="#">Kategorien</a></li>
       </ul>
     </div> -->
     <!-- /.nav-collapse -->

@@ -2,7 +2,7 @@
   $this->element('navbar',
   [
     "step" => "Trefferanzeige",
-    "vizElement" => '<li>' . $this->Html->link(__('‹ Komponenten'), ['controller' => 'Components', 'action' => 'choose', '_full' => true]) . "</li>\n" .
+    "vizElement" => '<li>' . $this->Html->link(__('‹ Kategorien'), ['controller' => 'Components', 'action' => 'choose', '_full' => true]) . "</li>\n" .
                     '<li><a href="../matchesPie/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Donutdiagramme">‹ Donut</a>' . "</li>\n" .
                     '<li><a href="../matchesAster/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Aster-Plot-Diagramme">‹ Aster</a>' . "</li>\n" .
                     '<li><a href="../matchesBar/?' . $_SERVER['QUERY_STRING'] .  '" title="Anzeige als Balkendiagramme">‹ Balken</a>' . "</li>\n" .

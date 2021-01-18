@@ -315,7 +315,7 @@ function buildOrdinalComponents(ordinalAttributes) {
 }
 
 function  updateShownComponents(componentsToPresent, clickedAncher) {
-    console.log("Komponenten die anzuzeigen sind: " +  componentsToPresent );
+    console.log("Kategorien die anzuzeigen sind: " +  componentsToPresent );
     updateMarkersContent(markers, componentsToPresent);
     if(componentsToPresent == "none") {
         closeAllMarkersPopups(markers);

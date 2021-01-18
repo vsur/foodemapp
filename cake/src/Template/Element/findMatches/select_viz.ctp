@@ -9,13 +9,13 @@
         </h3>
     </div>
     <div class="col-md-4">
-        <h3>Aktuelle Auswahl an Komponenten</h3>
+        <h3>Aktuelle Auswahl an Kategorien</h3>
         <div id="selectViz-rankedSelectionList">
             <?= $this->element('findMatches/ranked_selection_list'); ?>
         </div>
     </div>
     <div class="col-md-4">
-        <h3>Faktoren Übersicht</h3>
+        <h3>Kategorien-Übersicht</h3>
         <table class="table table-hover">
             <tbody>
                 <tr>
@@ -23,15 +23,15 @@
                     <td><?= count($ypois) ?></td>
                 </tr>
                 <tr>
-                    <td>Insgesamt vorhandene Komponenten</td>
+                    <td>Insgesamt vorhandene Kategorien</td>
                     <td><?= $overallComponentCount ?></td>
                 </tr>
                 <tr>
-                    <td>Summe gewählter Komponenten</td>
+                    <td>Summe gewählter Kategorien</td>
                     <td><?= count($configuredSelection) ?></td>
                 </tr>
                 <tr>
-                    <td>Summe übriger Komponenten</td>
+                    <td>Summe übriger Kategorien</td>
                     <td><?= (count($ypois) == 0) ? 0 : ( $overallComponentCount - count($configuredSelection) ) ?></td>
                 </tr>
                 <tr>
@@ -55,15 +55,15 @@
                     <td><?= $this->Selection->getNStarAggregatedItemsNumber($rankedSelection->rating1) ?></td>
                 </tr>
                 <tr>
-                    <td>Alle Binären Komponenten</td>
+                    <td>Alle Binären Kategorien</td>
                     <td><?= $componentTypesComponentsCount->binaryCount ?></td>
                 </tr>
                 <tr>
-                    <td>Alle Nominalen Komponenten</td>
+                    <td>Alle Nominalen Kategorien</td>
                     <td><?= $componentTypesComponentsCount->nominalCount ?></td>
                 </tr>
                 <tr>
-                    <td>Alle Ordinalen Komponenten</td>
+                    <td>Alle Ordinalen Kategorien</td>
                     <td><?= $componentTypesComponentsCount->ordinalCount ?></td>
                 </tr>
                 </tbody>
