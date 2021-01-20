@@ -1,3 +1,29 @@
+
+
+<!-- ↓↓↓↓↓↓↓↓↓↓↓↓
+↓↓↓ Hint Area ↓↓↓
+↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
+<?php 
+  $session = $this->request->session();
+?>
+
+<?php if (!$session->check('Config.hasSeenMatchesHint')) : ?>
+<div class="row">
+  <div class="col-md-12">
+    <?php
+      echo $this->element('hints/findMatches/selectViz');
+      $session->write([
+        'Config.hasSeenMatchesHint' => true
+      ]);
+    ?>
+  </div>
+</div>
+<?php endif; ?>
+<!-- ↑↑↑↑↑↑↑↑↑↑↑↑
+↑↑↑ Hint Area ↑↑↑
+↑↑↑↑↑↑↑↑↑↑↑↑↑ -->
+
+
 <div class="row">
     <div class="col-md-4">
         <h3>
