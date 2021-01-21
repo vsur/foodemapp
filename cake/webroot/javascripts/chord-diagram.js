@@ -377,14 +377,26 @@
  function endAngle(d) { return d.endAngle + offset; }
 
  // Returns an event handler for fading a given chord group
- function fade(opacity) {
-   return function(d, i) {
- 	svg.selectAll("path.chord")
- 		.filter(function(d) { return d.source.index !== i && d.target.index !== i && header[d.source.index] !== ""; })
- 		.transition("fadeOnArc")
- 		.style("opacity", opacity);
-   };
- } //fade
+function fade(opacity) {
+	return function (d, i) {
+		let connectedArcs = [];
+		svg.selectAll("path.chord")
+			.filter(function (d) {
+				if (d.source.index === i) connectedArcs.push(d.target.index);
+				if (d.target.index === i) connectedArcs.push(d.source.index);
+				return d.source.index !== i && d.target.index !== i && header[d.source.index] !== "";
+			})
+			.transition("fadeOnArc")
+			.style("opacity", opacity);
+		svg.selectAll("g.group")
+			.filter(function (d) {
+				return  d.index !== i && !connectedArcs.includes(d.index);
+			})
+			.transition("fadeOnArc")
+			.style("opacity", (opacity == opacityDefault ? 1 : opacity));
+		console.log("indiz", connectedArcs);
+	};
+} //fade
 
  ////////////////////////////////////////////////////////////
  /////////////// Draw Super Categories - ////////////////////
@@ -407,21 +419,21 @@
  	{
  		sIndex: poiStart,
  		eIndex: poiEnd,
- 		title: 'POIs',
+ 		title: 'Gefundene Orte',
  		color: colors['poi'],
  		color_dark: colors_dark['poi']
  	},
  	{
  		sIndex: filteredAttributesStart,
  		eIndex: filteredAttributesEnd,
- 		title: 'Filtered Components',
+ 		title: 'Gesuchte Kategorien',
  		color: colors['rankedComponents'],
  		color_dark: colors_dark['rankedComponents']
  	},
  	{
  		sIndex: otherAttributesStart,
  		eIndex: otherAttributesEnd,
- 		title: 'Other Components',
+ 		title: 'Übrige Kategorien',
  		color: colors['otherComponents'],
  		color_dark: colors_dark['otherComponents']
  	}
@@ -458,17 +470,19 @@
  	var text = svg.append("text")
  		.attr("x", function(d)
  		{
- 			if (__g.title === 'POIs') {
- 				return (width / 2)
+ 			if (__g.title === 'Gefundene Orte') {
+				 console.log("Pos", __g.title.length*3  );
+ 				return ( (width / 2) - (__g.title.length*4) )
  			} else {
- 				return (width / 4)
+ 				return ( (width / 4) - (__g.title.length*3.25) )
  			}
  		})
- 		.attr("dy", 16);
+ 		.attr("dy", 20);
 
  	text.append("textPath")
- 		.attr("stroke","#000")
- 		.attr('fill', '#000')
+ 		.attr('fill', '#fff')
+ 		.attr('font-size', '12px')
+ 		.attr('font-weight', '500')
  		.attr("xlink:href","#groupId" + i)
  		.text(__g.title);
  }
