@@ -575,6 +575,8 @@ var fmApp = {
         // Set another completion function for the request above
         jqxhr.always(function() {
             setTimeout(function(){
+                history.pushState({'setHistoryWithParams' : true}, document.title, paramString);
+                $("#loadingSpinnerContainer").hide();
                 window.location = url + paramString;
             }, 500);
         });
