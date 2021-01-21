@@ -318,7 +318,22 @@
  		+ "translate(" + 70 + ",0)"
  		+ (d.angle > Math.PI ? "rotate(180)" : "")
  	})
-   .text(function(d,i) { return header[i]; });
+   .text(function(d,i) { 
+	   let label = header[i];
+		chordDiagramMatrixData.rankedComponents.map(c => {
+			if(c.display_name == label) {
+				console.log(c);
+				if(c.componentType == "NC") {
+					label = c.nominal_component.display_name + ": " + label;
+				}
+				if(c.componentType == "OC") {
+					label = c.ordinal_component.display_name + ": " + label;
+				}
+				label = c.rating + ' ★ ' + label;
+			}
+		});
+	   return label; 
+	});
 
  ////////////////////////////////////////////////////////////
  //////////////////// Draw inner chords /////////////////////
@@ -394,7 +409,6 @@ function fade(opacity) {
 			})
 			.transition("fadeOnArc")
 			.style("opacity", (opacity == opacityDefault ? 1 : opacity));
-		console.log("indiz", connectedArcs);
 	};
 } //fade
 
