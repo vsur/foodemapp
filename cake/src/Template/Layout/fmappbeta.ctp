@@ -57,7 +57,6 @@ $cakeDescription = 'Food_M_App';
     <?= $this->fetch('script') ?>
 </head>
 <body role="document">
-
   <div class="container" role="main">
     <?= $this->fetch('content') ?>
   </div> <!-- /.container -->

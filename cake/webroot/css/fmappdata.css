@@ -7633,12 +7633,34 @@ path.chord {
 /***************************
  * Put here stuff for Map  *
  ***************************/
-#mapComponentsChoice {
-  margin-bottom: 1em; }
+#mapNavbar {
+  top: 64px; }
 
-#poisMap {
-  position: relative;
-  width: 100%; }
+#mapNavbar.navbar {
+  min-height: 35px; }
+
+#mapNavbar.navbar-default {
+  background: #c2005d;
+  border-color: #ff087e; }
+  #mapNavbar.navbar-default .navbar-toggle {
+    margin-top: 0px;
+    margin-bottom: 0px; }
+    #mapNavbar.navbar-default .navbar-toggle .icon-bar {
+      background-color: rgba(255, 255, 255, 0.5); }
+  #mapNavbar.navbar-default .navbar-text {
+    color: white;
+    margin-top: 6px;
+    margin-bottom: 6px; }
+  #mapNavbar.navbar-default .navbar-nav > li > a {
+    padding-top: 6px;
+    padding-bottom: 6px; }
+
+#ypoisMap {
+  position: absolute;
+  top: 99px;
+  left: 0;
+  right: 0;
+  bottom: 0; }
 
 .ypoiIcon {
   background-image: url("../img/leaflet/marker-food-with-shadow.png");

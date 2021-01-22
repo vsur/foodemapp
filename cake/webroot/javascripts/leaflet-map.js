@@ -1,8 +1,8 @@
 // Put here Stuff for Leaflet
 
-// First set height for LMap
-var maxHeight = window.innerHeight;
-$("#ypoisMap").css("height", maxHeight/2);
+// First set height for LMap set via CSS (Full Viewport)
+// var maxHeight = window.innerHeight;
+// $("#ypoisMap").css("height", maxHeight/2);
 
 // Static user position 
 // console.log("Coming from MAP: ");
@@ -331,5 +331,6 @@ $(document).ready(function() {
         var componentsToPresent = $(this).attr('data-component-presentation');
         $("#mapComponentsChoice li").removeClass('active');
         updateShownComponents(componentsToPresent, this);
+        $('#collapse-mapComponentsChoice').collapse("hide");
     });
 });

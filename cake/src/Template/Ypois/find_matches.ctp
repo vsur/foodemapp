@@ -1,9 +1,16 @@
-<?=
-  $this->element('navbar',
+<?php 
+  echo $this->element('navbar',
   [
     "step" => "Anzeige der Ergebnisse",
     "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
   ]);
+  if($displayVariant == 'map' ) {
+      echo $this->element('mapnavbar',
+      [
+        "step" => "Anzeige der Ergebnisse",
+        "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
+      ]);
+    }
 ?>
 
 <!-- ↑↑↑↑↑↑↑↑↑
@@ -45,15 +52,16 @@
     </div>
 </div>
 
-
+<?php if($displayVariant != 'map' ) : ?>
 <div class="row">
   <div class="col-md-12">
     <?= 
-        // echo $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
+        // $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
         $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
     ?>
   </div>
 </div>
+<?php endif; ?>
 
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 

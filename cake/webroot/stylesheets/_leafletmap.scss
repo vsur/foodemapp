@@ -1,14 +1,39 @@
 /***************************
  * Put here stuff for Map  *
  ***************************/
-
-#mapComponentsChoice {
-  margin-bottom: 1em;
+#mapNavbar {
+  top: 64px;
+}
+#mapNavbar.navbar { 
+  min-height: 35px;
+}
+#mapNavbar.navbar-default {
+  background: lighten($urcd-color, 13.5%);
+  border-color: lighten($urcd-color, 27%);
+  .navbar-toggle {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    .icon-bar {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+  .navbar-text {
+    color: white;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+  .navbar-nav > li > a {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  }
 }
 
-#poisMap {
-  position: relative;
-  width: 100%;
+#ypoisMap {
+  position: absolute;
+  top: 99px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .ypoiIcon {
