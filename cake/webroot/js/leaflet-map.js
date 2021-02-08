@@ -58,7 +58,6 @@ ypois.forEach(function(ypoi, i) {
     markers.addLayer(
         marker.bindPopup(popupContent, popupOptions).openPopup()
     );
-    
 });
 
 markers.on('animationend', function (a) {
@@ -75,6 +74,9 @@ updateMarkersContent(markers, "chosen");
 
 // Open all popups
 if(!!configuredSelection) openAllMarkersPopups(markers);
+
+// Make marker draggable 
+// makeMarkersDraggable(markers);
 
 // Handling user position
 function onLocationFound(e) {
@@ -112,11 +114,16 @@ function showUserPosition(latLng, radius) {
     userPositionLayer.addLayer(userAccuracyArea);
 
     let animationDuration = 3;
-    setTimeout( () => 
-        mymap.flyTo(latLng, 13, {
-            animate: true,
-            duration: animationDuration
-        }), 1250
+    setTimeout( () => {
+            mymap.flyTo(latLng, 13, {
+                animate: true,
+                duration: animationDuration
+            });
+            for (var markerProperty in markers._featureGroup._layers) {
+                let popup = markers._featureGroup._layers[markerProperty]._popup;
+                if(popup  !== undefined) makePopupDraggable(popup);
+            }
+        }, 1250
     );
 }
 
@@ -158,7 +165,6 @@ function updateMarkersContent(markers, newContentType) {
                     popupContent = buildOtherComponentsPopupContent(marker, newContentType);
                     break;
             }
-
             marker._popup.setContent(popupContent);
         }
     }
@@ -184,7 +190,42 @@ function reopenLastSelectedPopupcontent() {
     }); 
     updateMarkersContent(markers, lastSelectedPopupContent);
     if(lastSelectedPopupContent != "none") {
-        openAllMarkersPopups(markers) ;
+        openAllMarkersPopups(markers);
+    }
+}
+
+mymap.on('popupopen', function(e) {
+    var marker = e.popup._source;
+    setTimeout( () => { 
+        makePopupDraggable(marker._popup);
+    }, 500);
+  });
+
+function makePopupDraggable(popup) {
+    var pos = mymap.latLngToLayerPoint(popup.getLatLng());
+    L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
+    var draggable = new L.Draggable(popup._container, popup._wrapper);
+    draggable.enable();
+    draggable.on('dragend', function() {
+        var pos = mymap.layerPointToLatLng(this._newPos);
+        popup.setLatLng(pos);
+    });
+}
+
+function makeMarkersDraggable(markers) {
+    for (var markerProperty in markers._featureGroup._layers) {
+        let marker = markers._featureGroup._layers[markerProperty];
+        let popup = marker._popup;
+        if(popup  !== undefined) {
+            var pos = mymap.latLngToLayerPoint(popup.getLatLng());
+            L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
+            var draggable = new L.Draggable(popup._container, popup._wrapper);
+            draggable.enable();
+            draggable.on('dragend', function() {
+                var pos = mymap.layerPointToLatLng(this._newPos);
+                popup.setLatLng(pos);
+            });
+        }
     }
 }
 
