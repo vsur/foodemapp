@@ -60,7 +60,7 @@ ypois.forEach(function(ypoi, i) {
     );
 });
 
-markers.on('animationend', function (a) {
+markers.on('animationend', function (e) {
     reopenLastSelectedPopupcontent();
 });
 
@@ -119,10 +119,6 @@ function showUserPosition(latLng, radius) {
                 animate: true,
                 duration: animationDuration
             });
-            for (var markerProperty in markers._featureGroup._layers) {
-                let popup = markers._featureGroup._layers[markerProperty]._popup;
-                if(popup  !== undefined) makePopupDraggable(popup);
-            }
         }, 1250
     );
 }
@@ -173,6 +169,10 @@ function updateMarkersContent(markers, newContentType) {
 function openAllMarkersPopups(markers) {
     for (var markerProperty in markers._featureGroup._layers) {
         markers._featureGroup._layers[markerProperty].openPopup();
+        let popup = markers._featureGroup._layers[markerProperty]._popup;
+        if(popup  !== undefined) {
+            popup.update(makePopupDraggable(popup));
+        }
     }
 }
 
@@ -196,9 +196,8 @@ function reopenLastSelectedPopupcontent() {
 
 mymap.on('popupopen', function(e) {
     var marker = e.popup._source;
-    setTimeout( () => { 
-        makePopupDraggable(marker._popup);
-    }, 500);
+
+    // makePopupDraggable(marker._popup);
   });
 
 function makePopupDraggable(popup) {
@@ -206,27 +205,12 @@ function makePopupDraggable(popup) {
     L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
     var draggable = new L.Draggable(popup._container, popup._wrapper);
     draggable.enable();
-    draggable.on('dragend', function() {
-        var pos = mymap.layerPointToLatLng(this._newPos);
-        popup.setLatLng(pos);
-    });
-}
-
-function makeMarkersDraggable(markers) {
-    for (var markerProperty in markers._featureGroup._layers) {
-        let marker = markers._featureGroup._layers[markerProperty];
-        let popup = marker._popup;
-        if(popup  !== undefined) {
-            var pos = mymap.latLngToLayerPoint(popup.getLatLng());
-            L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
-            var draggable = new L.Draggable(popup._container, popup._wrapper);
-            draggable.enable();
-            draggable.on('dragend', function() {
-                var pos = mymap.layerPointToLatLng(this._newPos);
-                popup.setLatLng(pos);
-            });
-        }
-    }
+    // draggable.on('dragend', function() {
+    //     console.log(this);
+    //     var newPos = mymap.layerPointToLatLng(this._newPos);
+    //     console.log("ToLayerPoint newPos", newPos);
+    //     popup.setLatLng(newPos);
+    // });
 }
 
 function buildRankedSelectionPopupContent() {
