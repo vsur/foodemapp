@@ -1,6 +1,8 @@
 <?php
     echo $this->Html->css(['MarkerCluster', 'MarkerCluster.Default'], ['block' => true]);
     echo $this->Html->script('leaflet.markercluster', ['block' => true]);
+    echo $this->Html->script('snap.svg-min', ['block' => true]);
+    echo $this->Html->script('leaflet.bezier', ['block' => true]);
 ?>
 
 <div id="ypoisMap"></div>

@@ -63,8 +63,33 @@ ypois.forEach(function(ypoi, i) {
 markers.on('animationend', function (e) {
     reopenLastSelectedPopupcontent();
 });
+var options = {
+    color: 'rgb(145, 146, 150)',
+    fillColor: 'rgb(145, 146, 150)',
+    dashArray: 8,
+    opacity: 0.8,
+    weight: '1',
+    iconTravelLength: 0.5, //How far icon should go. 0.5 = 50%
+    iconMaxWidth: 50,
+    iconMaxHeight: 50,
+    fullAnimatedTime: 7000,// animation time in ms
+    easeOutPiece: 4, // animation easy ou time in ms
+    easeOutTime: 2500, // animation easy ou time in ms
+};
+var curve = L.bezier({
+    path: [
+        [
+            {lat: 49.1, lng: 8.6},
+            {lat: 49.8, lng: 9.5},
+        ]
+    ],
 
+    icon: {
+        path: "http://localhost:8888/foodemapp/cake/img/icons/ambience-classy.svg"
+    }
+}, options);
 
+mymap.addLayer(curve);
 mymap.addLayer(markers);
 // mymap.setView([49.01, 8.40806], 13);
 mymap.fitBounds(markers.getBounds());
