@@ -1,8 +1,9 @@
 // Put here Stuff for Leaflet
 
-// First set height for LMap set via CSS (Full Viewport)
-// var maxHeight = window.innerHeight;
-// $("#ypoisMap").css("height", maxHeight/2);
+var debugPath = {
+    start: {lat: 49.015355983769666, lng: 8.346004486083986},
+    end: {lat: 49.01107755966365, lng: 8.436985015869142}
+}
 
 // Static user position 
 // console.log("Coming from MAP: ");
@@ -20,6 +21,7 @@ var pulsingIcon = L.icon.pulse({
 var mymap = L.map('ypoisMap');
 // var markers = L.layerGroup([]);
 var markers = L.markerClusterGroup();
+var connectionLines = L.layerGroup();
 
 L.tileLayer.provider('OpenStreetMap.HOT').addTo(mymap);
 
@@ -63,36 +65,12 @@ ypois.forEach(function(ypoi, i) {
 markers.on('animationend', function (e) {
     reopenLastSelectedPopupcontent();
 });
-var options = {
-    color: 'rgb(145, 146, 150)',
-    fillColor: 'rgb(145, 146, 150)',
-    dashArray: 8,
-    opacity: 0.8,
-    weight: '1',
-    iconTravelLength: 0.5, //How far icon should go. 0.5 = 50%
-    iconMaxWidth: 50,
-    iconMaxHeight: 50,
-    fullAnimatedTime: 7000,// animation time in ms
-    easeOutPiece: 4, // animation easy ou time in ms
-    easeOutTime: 2500, // animation easy ou time in ms
-};
-var curve = L.bezier({
-    path: [
-        [
-            {lat: 49.1, lng: 8.6},
-            {lat: 49.8, lng: 9.5},
-        ]
-    ],
 
-    icon: {
-        path: "http://localhost:8888/foodemapp/cake/img/icons/ambience-classy.svg"
-    }
-}, options);
-
-mymap.addLayer(curve);
 mymap.addLayer(markers);
 // mymap.setView([49.01, 8.40806], 13);
 mymap.fitBounds(markers.getBounds());
+// Prepare layer for connection lines between popups and markers
+mymap.addLayer(connectionLines);
 
 // Update popup content
 updateMarkersContent(markers, "chosen");
@@ -230,12 +208,47 @@ function makePopupDraggable(popup) {
     L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
     var draggable = new L.Draggable(popup._container, popup._wrapper);
     draggable.enable();
-    // draggable.on('dragend', function() {
-    //     console.log(this);
-    //     var newPos = mymap.layerPointToLatLng(this._newPos);
-    //     console.log("ToLayerPoint newPos", newPos);
-    //     popup.setLatLng(newPos);
-    // });
+    draggable.on('dragend', function() {
+        let pixelXYValueOfMarkerCenter = mymap.latLngToLayerPoint(popup._source._latlng);
+        pixelXYValueOfMarkerCenter.y += 0;
+        let connectionLinePositions = {
+            start: mymap.layerPointToLatLng(this._newPos),
+            end: mymap.layerPointToLatLng(pixelXYValueOfMarkerCenter)
+        };
+        drawConncetionLine(connectionLinePositions);
+        // console.log("ToLayerPoint newPos", newPos);
+        // popup.setLatLng(newPos);
+    });
+}
+
+function drawConncetionLine(path) {
+    // connectionLines.clearLayers();
+    let options = {
+        color: 'rgba(125, 0, 60)',
+        opacity: 0.75,
+        weight: '5',
+        lineCap: 'round',
+        iconTravelLength: 1, //How far icon should go. 0.5 = 50%
+        iconMaxWidth: 25,
+        iconMaxHeight: 25,
+        fullAnimatedTime: 1500, // animation time in ms
+        className: 'poiPopUpConnectionLine',
+    
+    };
+    var connectionLine = L.bezier({
+        path: [
+            [
+                {lat: path.start.lat, lng: path.start.lng},
+                {lat: path.end.lat, lng: path.end.lng},
+            ]
+        ],
+    
+        icon: {
+            path: "http://localhost:8888/foodemapp/cake/img/chevron-up-ur.svg"
+        }
+    }, options);
+
+    connectionLines.addLayer(connectionLine);
 }
 
 function buildRankedSelectionPopupContent() {
