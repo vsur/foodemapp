@@ -7763,6 +7763,21 @@ path.chord {
     width: 20px;
     height: 20px; }
 
+.leaflet-pane g > image {
+  opacity: 0;
+  animation-name: fadeOutConnectionLineIcon;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-duration: 3s; }
+
+@keyframes fadeOutConnectionLineIcon {
+  0% {
+    opacity: 1; }
+  70% {
+    opacity: 1; }
+  90% {
+    opacity: 0; } }
+
 .leaflet-popup-tip-container {
   display: none; }
 
