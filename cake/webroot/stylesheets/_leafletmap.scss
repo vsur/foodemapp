@@ -163,7 +163,26 @@
         height: 20px;
     }
 }
+// #_____ Connection Lines _____ {}
+.leaflet-pane g > image {
+	opacity: 0;
+	animation-name: fadeOutConnectionLineIcon;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-duration: 3s;
+}
 
+@keyframes fadeOutConnectionLineIcon {
+	0% {
+		opacity: 1;
+	}
+	70% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 0;
+	}
+}
 // #_____ Leaflet Manipulation _____ {}
 .leaflet-popup-tip-container {
   display: none;

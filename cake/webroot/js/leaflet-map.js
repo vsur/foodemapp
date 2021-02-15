@@ -53,6 +53,7 @@ ypois.forEach(function(ypoi, i) {
         closeOnEscapeKey: false,
         autoClose: false,
         autoPan: false,
+        hasConnectionLine: false
     };
     var popupContent = "Keine Inhalte gesetzt";
     
@@ -197,32 +198,28 @@ function reopenLastSelectedPopupcontent() {
     }
 }
 
-mymap.on('popupopen', function(e) {
-    var marker = e.popup._source;
-
-    // makePopupDraggable(marker._popup);
-  });
-
 function makePopupDraggable(popup) {
     var pos = mymap.latLngToLayerPoint(popup.getLatLng());
     L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
     var draggable = new L.Draggable(popup._container, popup._wrapper);
     draggable.enable();
+    draggable.on('dragstart', function() {
+        deleteDrawnLine(popup);
+    });
     draggable.on('dragend', function() {
         let pixelXYValueOfMarkerCenter = mymap.latLngToLayerPoint(popup._source._latlng);
+        popup.options.tuedeli = false;
         pixelXYValueOfMarkerCenter.y += 0;
         let connectionLinePositions = {
             start: mymap.layerPointToLatLng(this._newPos),
             end: mymap.layerPointToLatLng(pixelXYValueOfMarkerCenter)
         };
-        drawConncetionLine(connectionLinePositions);
-        // console.log("ToLayerPoint newPos", newPos);
-        // popup.setLatLng(newPos);
+        drawConncetionLine(connectionLinePositions, popup);
     });
 }
 
-function drawConncetionLine(path) {
-    // connectionLines.clearLayers();
+function drawConncetionLine(path, popup) {
+    
     let options = {
         color: 'rgba(125, 0, 60)',
         opacity: 0.75,
@@ -233,8 +230,13 @@ function drawConncetionLine(path) {
         iconMaxHeight: 25,
         fullAnimatedTime: 1500, // animation time in ms
         className: 'poiPopUpConnectionLine',
-    
+        connectedPopup: popup._leaflet_id
     };
+    let iconPathString = window.location.origin;
+    var pathname = window.location.pathname;
+    var cutIndex = pathname.indexOf("ypois/find-matches/map");
+    iconPathString += pathname.substring(0, cutIndex);
+    iconPathString += "img/chevron-up-ur.svg";
     var connectionLine = L.bezier({
         path: [
             [
@@ -244,11 +246,22 @@ function drawConncetionLine(path) {
         ],
     
         icon: {
-            path: "http://localhost:8888/foodemapp/cake/img/chevron-up-ur.svg"
+            path: iconPathString
         }
     }, options);
 
     connectionLines.addLayer(connectionLine);
+    popup.options.hasConnectionLine = true;
+}
+
+function deleteDrawnLine(connectedPopup) {
+    let layerIndexToDelete = -1;
+    for (const [layerIndex, layer] of Object.entries(connectionLines._layers)) {
+        if(layer._layers[Object.keys(layer._layers)[0]].options.connectedPopup == connectedPopup._leaflet_id) {
+            layerIndexToDelete = layerIndex;
+        }
+    }
+    if(layerIndexToDelete >= 0) connectionLines.removeLayer(layerIndexToDelete);
 }
 
 function buildRankedSelectionPopupContent() {
