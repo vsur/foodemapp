@@ -22,7 +22,7 @@
             <div class="panel-body">
                 <div class="row chosenAgregation">
                     <div class="col-md-12">
-                        <?= $rankedSelection ? $this->Selection->createAggregatedSelectionRow($rankedSelection) : '<div class="alert alert-danger" role="alert"><strong>Keine Filerauswahl getroffen, nur Detailansicht möglich</strong></div>' ?>
+                        <?= $rankedSelection ? $this->Selection->createAggregatedSelectionRow($rankedSelection, $ypoi) : '<div class="alert alert-danger" role="alert"><strong>Keine Filerauswahl getroffen, nur Detailansicht möglich</strong></div>' ?>
                     </div>
                 </div>
                 <div class="row componentOverview">
@@ -31,16 +31,9 @@
                         <?= $rankedSelection ? $this->Selection->createRankedSelectionList($rankedSelection) : '<div class="alert alert-danger" role="alert"><strong>Keine Filerauswahl getroffen</strong></div>' ?>
                     </div>
                     <div class="col-sm-6 otherComponents">
-                        <?php
-                            $componentCount = count($ypoi->binary_components) + count($ypoi->nominal_attributes) + count($ypoi->ordinal_attributes);
-                        ?>
                         <h4>
                             <span class="label label-default">
                                 Übrige 
-                                <?= $componentCount ?> | 
-                                B<?= count($ypoi->binary_components)?> | 
-                                N<?= count($ypoi->nominal_attributes)?> | 
-                                O<?= count($ypoi->ordinal_attributes)?> ·
                             </span>
                         </h4>
                         <ul class="list-unstyled">

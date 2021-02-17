@@ -7556,7 +7556,7 @@ li.ordinalComponentContainer > input[type="range"] {
   margin-bottom: 0px; }
 
 .chosenAgregation ul li {
-  width: 20%; }
+  width: 11.11%; }
 
 .choosenStarAgregation {
   font-size: 42px;
@@ -7604,6 +7604,12 @@ li.ordinalComponentContainer > input[type="range"] {
 .aggregationNumber.muted {
   border: 2px solid #ccc;
   color: #ccc; }
+
+abbr.otherAgregation {
+  font-size: 1.75em; }
+  @media (max-width: 768px) {
+    abbr.otherAgregation {
+      font-size: 1.25em; } }
 
 .componentOverview {
   display: none; }

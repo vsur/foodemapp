@@ -20,7 +20,7 @@ class SelectionHelper extends Helper {
         return $selectionList;
     }
 
-    public function createAggregatedSelectionRow($rankedSelection) {
+    public function createAggregatedSelectionRow($rankedSelection, $ypoi) {
         $selectionAggregation = '<ul class="list-inline">';
 
         // Iterate over rated components
@@ -29,6 +29,10 @@ class SelectionHelper extends Helper {
         $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating3, 3);
         $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating4, 4);
         $selectionAggregation .= $this->buildNStarAggregatedItems($rankedSelection->rating5, 5);
+        $selectionAggregation .= $this->buildOtherAggregatedItems($ypoi);
+        // $selectionAggregation .= $this->buildBinadAggregatedItems($ypoi);
+        // $selectionAggregation .= $this->buildOtherAggregatedItems($ypoi);
+        // $selectionAggregation .= $this->buildOtherAggregatedItems($ypoi);
 
         $selectionAggregation .= '</ul>';
 
@@ -112,6 +116,37 @@ class SelectionHelper extends Helper {
         $aggregationString .=       '<span class="aggregationNumber' . ($aggregationSum == 0 ? ' muted' : '') . '">' . $aggregationSum . '</span>';
         $aggregationString .= '</li>';
 
+
+        return $aggregationString;
+    }
+
+    protected function buildOtherAggregatedItems($ypoi) {
+        $componentCount = count($ypoi->binary_components) + count($ypoi->nominal_attributes) + count($ypoi->ordinal_attributes);
+
+        $aggregationString = '';
+        $aggregationString .= '<li class="clearfix text-center">';
+        $aggregationString .=       '<abbr title="Übrige Kategorien" class="otherAgregation">Ü</abbr>';
+        $aggregationString .=       ' ';
+        $aggregationString .=       '<span class="aggregationNumber">' . $componentCount . '</span>';
+        $aggregationString .= '</li>';
+
+        $aggregationString .= '<li class="clearfix text-center">';
+        $aggregationString .=       '<abbr title="Binäre Kategorien" class="otherAgregation">B</abbr>';
+        $aggregationString .=       ' ';
+        $aggregationString .=       '<span class="aggregationNumber">' . count($ypoi->binary_components) . '</span>';
+        $aggregationString .= '</li>';
+
+        $aggregationString .= '<li class="clearfix text-center">';
+        $aggregationString .=       '<abbr title="Nominale Kategorien" class="otherAgregation">N</abbr>';
+        $aggregationString .=       ' ';
+        $aggregationString .=       '<span class="aggregationNumber">' . count($ypoi->nominal_attributes) . '</span>';
+        $aggregationString .= '</li>';
+
+        $aggregationString .= '<li class="clearfix text-center">';
+        $aggregationString .=       '<abbr title="Ordinale Kategorien" class="otherAgregation">O</abbr>';
+        $aggregationString .=       ' ';
+        $aggregationString .=       '<span class="aggregationNumber">' . count($ypoi->ordinal_attributes) . '</span>';
+        $aggregationString .= '</li>';
 
         return $aggregationString;
     }
