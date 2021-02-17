@@ -122,7 +122,7 @@ function showUserPosition(latLng, radius) {
 }
 
 function updateMarkersContent(markers, newContentType) {
-    
+    connectionLines.clearLayers();
     for (var markerProperty in markers._featureGroup._layers) {
         marker = markers._featureGroup._layers[markerProperty];
         
@@ -202,12 +202,32 @@ function makePopupDraggable(popup) {
     });
     draggable.on('dragend', function() {
         let pixelXYValueOfMarkerCenter = mymap.latLngToLayerPoint(popup._source._latlng);
-        popup.options.tuedeli = false;
-        pixelXYValueOfMarkerCenter.y += 0;
+        
+        // Standard-Offset -2 < X < 2 | 32 < Y < 34 
+        let xPosCorrection = 0; // Popup-X-Mitte
+        let yPosCorrection = 0; // Popup-Y-Unten
+
+        let popupToMarkerPosDelta = {
+            x:  pixelXYValueOfMarkerCenter.x - this._newPos.x,
+            y:  pixelXYValueOfMarkerCenter.y -this._newPos.y
+        }
+
+        // Set Offset based on Position
+        if (popupToMarkerPosDelta.x < -500 || (popupToMarkerPosDelta.x < -125 && popupToMarkerPosDelta.y < -75 ) ) xPosCorrection = -15 - (this._element.offsetWidth/2); // Popup-X-Links
+        if (popupToMarkerPosDelta.x > 75) xPosCorrection = +15 + (this._element.offsetWidth/2); // Popup-X-Rechts
+        if (popupToMarkerPosDelta.y < -180 || popupToMarkerPosDelta.x > 500) yPosCorrection = -15 - (this._element.offsetHeight/2); // Popup-Y-Mitte
+        if (popupToMarkerPosDelta.y < -250) yPosCorrection = -30 - (this._element.offsetHeight); // Popup-Y-Oben
+
+        let newStartPos = {
+            x:  this._newPos.x + xPosCorrection,
+            y:  this._newPos.y + yPosCorrection
+        }
+
         let connectionLinePositions = {
-            start: mymap.layerPointToLatLng(this._newPos),
+            start: mymap.layerPointToLatLng(newStartPos),
             end: mymap.layerPointToLatLng(pixelXYValueOfMarkerCenter)
         };
+
         drawConncetionLine(connectionLinePositions, popup);
     });
 }
