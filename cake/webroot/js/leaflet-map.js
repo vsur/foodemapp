@@ -1,10 +1,5 @@
 // Put here Stuff for Leaflet
 
-var debugPath = {
-    start: {lat: 49.015355983769666, lng: 8.346004486083986},
-    end: {lat: 49.01107755966365, lng: 8.436985015869142}
-}
-
 // Static user position 
 // console.log("Coming from MAP: ");
 // console.log(fmApp.geoLocation);
@@ -79,8 +74,7 @@ updateMarkersContent(markers, "chosen");
 // Open all popups
 if(!!configuredSelection) openAllMarkersPopups(markers);
 
-// Make marker draggable 
-// makeMarkersDraggable(markers);
+mymap.on('zoomstart', (e) => connectionLines.clearLayers() );
 
 // Handling user position
 function onLocationFound(e) {
