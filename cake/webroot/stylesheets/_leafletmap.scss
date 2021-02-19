@@ -1,6 +1,13 @@
 /***************************
  * Put here stuff for Map  *
  ***************************/
+
+ // SetUp Vars 
+ $iconPath : "../img/leaflet/marker-food-dark-with-shadow.png"; 
+//  $iconPath : "../img/leaflet/marker-isac-dark-with-shadow.png";
+//  $iconPath : "../img/leaflet/marker-food-light-with-shadow.png"; 
+//  $iconPath : "../img/leaflet/marker-isac-light-with-shadow.png";
+
 #mapNavbar {
   top: 64px;
 }
@@ -37,8 +44,7 @@
 }
 
 .ypoiIcon {
-  // background-image: url("../img/leaflet/marker-isac-with-shadow.png");
-  background-image: url("../img/leaflet/marker-food-with-shadow.png");
+  background-image: url($iconPath);
   background-position: center;
   background-size: cover;
   overflow: visible;
