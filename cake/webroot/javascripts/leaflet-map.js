@@ -56,6 +56,10 @@ ypois.forEach(function(ypoi, i) {
     markers.addLayer(
         marker.bindPopup(popupContent, popupOptions).openPopup()
     );
+    marker.on('remove', (e) => {
+        deleteDrawnLine(e.sourceTarget._popup);
+    })
+    marker.on('add', (e) => {console.log("Marker Added", e.sourceTarget.openPopup());})
 });
 
 markers.on('animationend', function (e) {
