@@ -7691,6 +7691,10 @@ path.chord {
   border: 1px solid white;
   border-radius: 15px; }
 
+.infoPopup {
+  cursor: move;
+  cursor: -webkit-move; }
+
 .infoPopup > div.leaflet-popup-content-wrapper {
   background: rgba(125, 0, 60, 0.75); }
 
