@@ -58,8 +58,10 @@ ypois.forEach(function(ypoi, i) {
     );
     marker.on('remove', (e) => {
         deleteDrawnLine(e.sourceTarget._popup);
-    })
-    marker.on('add', (e) => {console.log("Marker Added", e.sourceTarget.openPopup());})
+    });
+    marker.on('add', (e) => {
+        e.sourceTarget.openPopup();
+    });
 });
 
 markers.on('animationend', function (e) {
