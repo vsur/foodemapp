@@ -382,9 +382,10 @@ class YpoisTable extends Table
                 'BinaryComponents' => [  'sort' => ['display_name' => 'ASC', 'name' => 'ASC']    ],
                 'NominalAttributes.NominalComponents',
                 'NominalAttributes' => [  'sort' => ['NominalComponents.display_name' => 'ASC', 'NominalComponents.name' => 'ASC']    ],
-                'OrdinalAttributes' => [  'sort' => ['meter' => 'ASC']   ],
                 'OrdinalAttributes.OrdinalComponents',
-                'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ]
+                'OrdinalAttributes' => [  'sort' => ['meter' => 'ASC']   ],
+                // Wird vermutlich nicht gebraucht
+                // 'OrdinalAttributes.OrdinalComponents.OrdinalAttributes' => [  'sort' => ['OrdinalAttributes.meter' => 'ASC']   ]
             ]);
 
         // Add not matching binary filters
@@ -536,7 +537,7 @@ class YpoisTable extends Table
     protected function buildOrdinalJoinConditions($filterSelection = null) {
         $ordinalJoinConditions = [];
         foreach ($filterSelection->matchingOrdinals as $matchingOrdinal) {
-            $currentAlias = 'ncattrid_' . $matchingOrdinal->attribute->id;
+            $currentAlias = 'ocattrid_' . $matchingOrdinal->attribute->id;
             $ordinalJoinConditions[$currentAlias] = [
                 'table' => 'ordinal_attributes_ypois',
                 'conditions' => [
