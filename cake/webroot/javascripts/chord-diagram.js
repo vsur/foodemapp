@@ -2,18 +2,14 @@
  * Data script for Chord Diagramm Viz
  */
 
-// 2196F3
-
  ////////////////////////////////////////////////////////////
  ////////////////// Input verarbeiten ///////////////////////
  ////////////////////////////////////////////////////////////
 
- var json = chordDiagramMatrixData;
- 
  var obj = chordDiagramMatrixData;
  var matrix_original = matrix;
  
- console.log(matrix_original);
+ console.log("chordDiagramMatrixData", chordDiagramMatrixData);
 
  ////////////////////////////////////////////////////////////
  //////////////// Skalierung der Bereiche ///////////////////
@@ -93,7 +89,7 @@
  var header = []
  var header_type = []
  obj["pois"].forEach(element => {
-	header.push(element.name + (element.distance ? (' \u2794 ' + ( Math.round( element.distance * 100) / 100 ) + ' km').replace('.', ',') : '') )
+	header.push(element.id + ":" + element.name + (element.distance ? (' \u2794 ' + ( Math.round( element.distance * 100) / 100 ) + ' km').replace('.', ',') : '') )
  	header_type.push("poi")
  });
 
@@ -288,7 +284,6 @@
  			if (header[i] === "") {
  				return dummyColor
  			} else {
-				 console.log(i);
  				return colors[header_type[i]]
  			}
  		})
@@ -322,7 +317,6 @@
 	   let label = header[i];
 		chordDiagramMatrixData.rankedComponents.map(c => {
 			if(c.display_name == label) {
-				console.log(c);
 				if(c.componentType == "NC") {
 					label = c.nominal_component.display_name + ": " + label;
 				}
@@ -485,7 +479,6 @@ function fade(opacity) {
  		.attr("x", function(d)
  		{
  			if (__g.title === 'Gefundene Orte') {
-				 console.log("Pos", __g.title.length*3  );
  				return ( (width / 2) - (__g.title.length*4) )
  			} else {
  				return ( (width / 4) - (__g.title.length*3.25) )
@@ -514,7 +507,6 @@ function fade(opacity) {
      .enter().append("linearGradient")
      //Create a unique gradient id per chord: e.g. "chordGradient-0-4"
      .attr("id", function(d) {
- 		console.log(header_type[d.source.index])
  		if (header_type[d.source.index] === "rankedComponents") {
  			return "chordGradient-" + d.target.index + "-" + d.source.index;
  		} else if(header_type[d.target.index] === "otherComponents") {
