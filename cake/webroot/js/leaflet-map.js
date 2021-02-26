@@ -59,6 +59,9 @@ ypois.forEach(function(ypoi, i) {
     marker.on('remove', (e) => {
         deleteDrawnLine(e.sourceTarget._popup);
     });
+    marker.getPopup().on('remove', function(e) {
+        deleteDrawnLine(e.sourceTarget);
+    });
     marker.on('add', (e) => {
         e.sourceTarget.openPopup();
     });
