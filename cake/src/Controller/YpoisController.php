@@ -71,7 +71,6 @@ class YpoisController extends AppController
         $this->viewBuilder()->layout('fmappbeta');
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
-        // debug($binaryComponents->toArray());
 
         // Get all $nominalComponents with associated Attributes
         $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNamesAndIconsPaths($withNominalAttr = true);
@@ -151,8 +150,7 @@ class YpoisController extends AppController
                 ]);
             }
 
-            // For Debug only
-            $ypois->limit(50);
+            $ypois->limit(200); // For Debug only
 
             $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
             

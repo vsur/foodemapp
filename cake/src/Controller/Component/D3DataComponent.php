@@ -142,7 +142,10 @@ class D3DataComponent extends Component
         $matrixData->adjacencyMatrix = $this->createAdjacencyMatrix($ypois, $rankedSelection, $rankedSelectionComponentsNames, $selectionCleandComponentsNames, $adjacencyMatrixIndex);
         $matrixData->pois = $ypois;
         $matrixData->rankedComponents = $this->buildRankedComponentsArray($rankedSelection);
-        $matrixData->otherComponents =  $this->buildOtherComponentsArray($ypois, $rankedSelection);
+        
+        $otherComponents = $this->buildOtherComponentsArray($ypois, $rankedSelection);
+        
+        $matrixData->otherComponents =  $this->sortOtherComponentsArrayByNamesSortedByTypeAndOccuranceArray($otherComponents, $allContainedComponentsNamesSortedByTypeAndOccurance);
         return $matrixData;
     }
 
@@ -371,6 +374,7 @@ class D3DataComponent extends Component
         return $allComponentsNamesFromYpoisSortedByOccurance;
     }
 
+
     protected function removeRankedComponentsNames($allContainedComponentsNamesSortedByTypeAndOccurance, $rankedSelectionComponents)
     {
         foreach ($rankedSelectionComponents as $rankedSelectionComponent) {
@@ -410,9 +414,13 @@ class D3DataComponent extends Component
         }
         return $rankedComponents;
     }
+
     protected function buildOtherComponentsArray($ypois, $rankedSelection)
     {
         $selectionCleandComponents = [];
+        $binaryComponentsStore = [];
+        $nominalAttributesStore = [];
+        $ordinalAttributesStore = [];
         $selectionCleandComponentsIds = (object) [];
         $selectionCleandComponentsIds->binaryComponentsIds = [];
         $selectionCleandComponentsIds->nominalAttributesIds = [];
@@ -448,7 +456,7 @@ class D3DataComponent extends Component
                     if(!in_array($binaryComponent->id, $selcetedComponentsIds->binaryComponentsIds)) {
                         array_push($selectionCleandComponentsIds->binaryComponentsIds, $binaryComponent->id);
                         $binaryComponent->componentType = 'BC';
-                        array_push($selectionCleandComponents, $binaryComponent);
+                        array_push($binaryComponentsStore, $binaryComponent);
                     }
                 }
             }
@@ -461,7 +469,7 @@ class D3DataComponent extends Component
                         $nominal_attribute->componentType = 'NC';
                         $nominal_attribute->attributeType = 'NCATTR';
                         $nominal_attribute->nominal_component->componentType = 'NC';
-                        array_push($selectionCleandComponents, $nominal_attribute);
+                        array_push($nominalAttributesStore, $nominal_attribute);
                     }
                 }
             }
@@ -471,17 +479,59 @@ class D3DataComponent extends Component
                     // Not a ranked Component
                     if(!in_array($ordinal_attribute->id, $selcetedComponentsIds->ordinalAttributesIds)) {
                         array_push($selcetedComponentsIds->ordinalAttributesIds, $ordinal_attribute->id);
-                        // debug($ordinal_attribute);
                         $ordinal_attribute->componentType = 'OC';
                         $ordinal_attribute->attributeType = 'OCATTR';
                         $ordinal_attribute->ordinal_component->componentType = 'OC';
-                        array_push($selectionCleandComponents, $ordinal_attribute);
+                        array_push($ordinalAttributesStore, $ordinal_attribute);
                     }
                 }
             }
         }
+
+        // Sort component store array by display names
+        foreach ($binaryComponentsStore as $key => $row) {
+            $binaryDisplayName[$key] = $row['display_name'];
+        }
+        array_multisort($binaryDisplayName, SORT_ASC, $binaryComponentsStore);
+        
+        foreach ($nominalAttributesStore as $key => $row) {
+            $nominalComponentDisplayName[$key] = $row['nominal_component']['display_name'];
+        }
+        array_multisort($nominalComponentDisplayName, SORT_ASC, $nominalAttributesStore);
+
+        foreach ($ordinalAttributesStore as $key => $row) {
+            $ordinalComponentDisplayName[$key] = $row['ordinal_component']['display_name'];
+        }
+        array_multisort($ordinalComponentDisplayName, SORT_ASC, $ordinalAttributesStore);
+
+        $selectionCleandComponents = array_merge($binaryComponentsStore, $nominalAttributesStore, $ordinalAttributesStore);
+
         return $selectionCleandComponents;
     }
+
+    protected function sortOtherComponentsArrayByNamesSortedByTypeAndOccuranceArray($selectionCleandComponents, $allContainedComponentsNamesSortedByTypeAndOccurance) {
+        $sortedSelectionCleandComponentsByTypeAndOccurcance = [];
+        // Sort cleaned selection by Type and Ocrurance
+        foreach ($selectionCleandComponents as $key => $selectionCleandComponent) {
+            $componentConcatedNameForComparison = '';
+            switch ($selectionCleandComponent->componentType) {
+                case 'BC':
+                    $componentConcatedNameForComparison = $this->buildBinaryComponentConcatenationName($selectionCleandComponent);
+                    break;
+                case 'NC':
+                    $componentConcatedNameForComparison = $this->buildNominalComponentAttributeConcatenationName($selectionCleandComponent);
+                    break;
+                case 'OC':
+                    $componentConcatedNameForComparison = $this->buildOrdinalComponentAttributeConcatenationName($selectionCleandComponent);
+                    break;
+            }
+            $sortedSelectionCleandComponentsByTypeAndOccurcance[array_search($componentConcatedNameForComparison, $allContainedComponentsNamesSortedByTypeAndOccurance)] = $selectionCleandComponent;
+        }
+        ksort($sortedSelectionCleandComponentsByTypeAndOccurcance);
+        $sortedSelectionCleandComponentsByTypeAndOccurcance = array_values($sortedSelectionCleandComponentsByTypeAndOccurcance);
+        return $sortedSelectionCleandComponentsByTypeAndOccurcance;
+    }
+
     protected function getOnlyRankedComponentNames($rankedSelection)
     {
         $rankedSelectionNames = [];

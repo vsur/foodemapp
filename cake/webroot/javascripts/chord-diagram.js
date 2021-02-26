@@ -89,7 +89,7 @@
  var header = []
  var header_type = []
  obj["pois"].forEach(element => {
-	header.push(element.id + ":" + element.name + (element.distance ? (' \u2794 ' + ( Math.round( element.distance * 100) / 100 ) + ' km').replace('.', ',') : '') )
+	header.push(element.name + (element.distance ? (' \u2794 ' + ( Math.round( element.distance * 100) / 100 ) + ' km').replace('.', ',') : '') )
  	header_type.push("poi")
  });
 
