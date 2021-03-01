@@ -338,7 +338,6 @@ var fmApp = {
             ];
             fmApp.geoLocation.accuracy = position.coords.accuracy;
             console.log(fmApp.geoLocation);
-            alert("GEO is: " +  JSON.stringify(fmApp.geoLocation) );
         },
     },
     slices: {

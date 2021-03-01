@@ -88,8 +88,9 @@ mymap.on('zoomstart', (e) => connectionLines.clearLayers() );
 // Handling user position
 function onLocationFound(e) {
     var radius = e.accuracy / 2;
-    console.log("User position detected by device");
-    showUserPosition(e.latLng, radius);
+    console.log("User position detected by device", e);
+    // showUserPosition(e.latLng, radius); // For evaluation the position musst be set by static properties
+    showUserPosition(staticUserPosition, 50);
 }
 
 function onLocationError(e) {
@@ -100,7 +101,7 @@ function onLocationError(e) {
 mymap.on('locationfound', onLocationFound);
 mymap.on('locationerror', onLocationError);
 
-mymap.locate({setView: true, maxZoom: 16});
+mymap.locate({setView: false, maxZoom: 16});
 
 mymap.addLayer(userPositionLayer);
 
