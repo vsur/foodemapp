@@ -487,22 +487,28 @@ class D3DataComponent extends Component
                 }
             }
         }
-
         // Sort component store array by display names
-        foreach ($binaryComponentsStore as $key => $row) {
-            $binaryDisplayName[$key] = $row['display_name'];
+        if(!empty($binaryComponentsStore)) {
+            
+            foreach ($binaryComponentsStore as $key => $row) {
+                $binaryDisplayName[$key] = $row['display_name'];
+            }
+            array_multisort($binaryDisplayName, SORT_ASC, $binaryComponentsStore);
         }
-        array_multisort($binaryDisplayName, SORT_ASC, $binaryComponentsStore);
         
-        foreach ($nominalAttributesStore as $key => $row) {
-            $nominalComponentDisplayName[$key] = $row['nominal_component']['display_name'];
+        if(!empty($nominalAttributesStore)) {
+            foreach ($nominalAttributesStore as $key => $row) {
+                $nominalComponentDisplayName[$key] = $row['nominal_component']['display_name'];
+            }
+            array_multisort($nominalComponentDisplayName, SORT_ASC, $nominalAttributesStore);
         }
-        array_multisort($nominalComponentDisplayName, SORT_ASC, $nominalAttributesStore);
-
-        foreach ($ordinalAttributesStore as $key => $row) {
-            $ordinalComponentDisplayName[$key] = $row['ordinal_component']['display_name'];
+        
+        if(!empty($ordinalAttributesStore)) {
+            foreach ($ordinalAttributesStore as $key => $row) {
+                $ordinalComponentDisplayName[$key] = $row['ordinal_component']['display_name'];
+            }
+            array_multisort($ordinalComponentDisplayName, SORT_ASC, $ordinalAttributesStore);
         }
-        array_multisort($ordinalComponentDisplayName, SORT_ASC, $ordinalAttributesStore);
 
         $selectionCleandComponents = array_merge($binaryComponentsStore, $nominalAttributesStore, $ordinalAttributesStore);
 
