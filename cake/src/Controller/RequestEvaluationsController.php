@@ -52,10 +52,26 @@ class RequestEvaluationsController extends AppController
     public function new($commingFromView = null)
     {
         $this->viewBuilder()->layout('fmappbeta');
+
+        // Check if geolocation is set
+        $session = $this->request->session();
+        // $session->destroy();  // Uncoment for Debug Purposes 
+        if ($session->check('Config.geolocation')) {
+            $sortByGeo = true;
+            $distanceSelectQueryString = '6371 * acos (
+                cos ( radians(' . $session->read("Config.geolocation.latitude") . ') )
+                * cos( radians( lat ) )
+                * cos( radians( lng ) - radians(' . $session->read("Config.geolocation.longitude") . ') )
+                + sin ( radians(' .  $session->read("Config.geolocation.latitude") . ') )
+                * sin( radians( lat ) )
+              )';
+        }
         
         $this->loadModel('Ypois');
         $filterSelection = $this->Ypois->buildFilterObject($this->request->query);
+        // $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection, $sortByGeo, $distanceSelectQueryString);
         $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection);
+        $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
         $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
         
         $requestEvaluation = $this->RequestEvaluations->newEntity();
