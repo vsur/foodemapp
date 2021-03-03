@@ -11,6 +11,12 @@ var pulsingIcon = L.icon.pulse({
     color: '#2196F3',
     heartbeat: 3,
 });
+var connectionLineProps = {
+    // color: '#7d003c', // UR
+    // lineIconPath: 'img/chevron-up-ur.svg' // UR
+    color: '#31A3DD', // ISAC
+    lineIconPath: 'img/chevron-up-isac.svg' // ISAC
+};
 
 // Initalize LMap
 var mymap = L.map('ypoisMap');
@@ -245,7 +251,7 @@ function makePopupDraggable(popup) {
 function drawConncetionLine(path, popup) {
     
     let options = {
-        color: 'rgba(125, 0, 60)',
+        color: connectionLineProps.color,
         opacity: 0.75,
         weight: '5',
         lineCap: 'round',
@@ -260,7 +266,7 @@ function drawConncetionLine(path, popup) {
     var pathname = window.location.pathname;
     var cutIndex = pathname.indexOf("ypois/find-matches/map");
     iconPathString += pathname.substring(0, cutIndex);
-    iconPathString += "img/chevron-up-ur.svg";
+    iconPathString += connectionLineProps.lineIconPath;
     var connectionLine = L.bezier({
         path: [
             [
