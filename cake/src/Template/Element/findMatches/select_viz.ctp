@@ -101,19 +101,28 @@
         <div class="col-md-4 viewLinkBlock">
             <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "list", "?" => $this->request->query]);?>">
                 <h2>Listenanzeige</h2>
-                <?= $this->Html->image('list-view.png', ['alt' => 'Ihre Ergebnisse als Listenansicht', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <!-- UR List Image -->
+                <?php // echo $this->Html->image('list-view-ur.png', ['alt' => 'Ihre Ergebnisse als Listenansicht', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <!-- ISAC List Image -->
+                <?php echo $this->Html->image('list-view-isac.png', ['alt' => 'Ihre Ergebnisse als Listenansicht', 'class' => 'thumbnail img-rounded img-responsive']); ?>
             </a>
         </div>
         <div class="col-md-4 viewLinkBlock">
             <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "chord", "?" => $this->request->query]);?>">
                 <h2>Chord-Diagram</h2>
-                <?= $this->Html->image('chord-view.png', ['alt' => 'Ihre Ergebnisse als Chord-Diagramm', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <!-- UR Chord Image -->
+                <?php //  echo $this->Html->image('chord-view-ur.png', ['alt' => 'Ihre Ergebnisse als Chord-Diagramm', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <!-- ISAC Chord Image -->
+                <?php echo $this->Html->image('chord-view-isac.png', ['alt' => 'Ihre Ergebnisse als Chord-Diagramm', 'class' => 'thumbnail img-rounded img-responsive']); ?>
             </a>
         </div>
         <div class="col-md-4 viewLinkBlock">
             <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "map", "?" => $this->request->query]);?>">
                 <h2>Kartendarstellung</h2>
-                <?= $this->Html->image('map-view.png', ['alt' => 'Ihre Ergebnisse als Kartendarstellung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <!-- UR Map Image -->
+                <?php // echo $this->Html->image('map-view-ur.png', ['alt' => 'Ihre Ergebnisse als Kartendarstellung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <!-- ISAC Map Image -->
+                <?php echo $this->Html->image('map-view-isac.png', ['alt' => 'Ihre Ergebnisse als Kartendarstellung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
             </a>
         </div>
     </div>
