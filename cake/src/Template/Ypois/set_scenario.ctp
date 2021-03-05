@@ -88,7 +88,7 @@ $this->element(
   <div class="col-md-2">
     <div class="form-group">
       <label for="criteriaInput"><?= __('Kategorie') ?></label>
-      <input style="width: 100%;" type="text" class="awesomplete" id="criteriaInput" placeholder="Essen">
+      <input style="width: 100%;" type="text" class="awesomplete" id="criteriaInput" placeholder="Tippen und wählen">
     </div>
     <button id="chooseAction" style="width: 100%;" type="button" class="btn btn-default" onclick="fmApp.checks.input()"><?= __('Auswählen') ?></button>
   </div>
