@@ -383,39 +383,44 @@ function buildOtherComponentsPopupContent(marker, componentTypes) {
 function buildBinaryComponents(binaryComponents) {
     var binaryComponentString = '';
     binaryComponents.forEach(function(binaryComponent) {
-        binaryComponentString += '<li class="binaryComponentContainer clearfix">';
-        binaryComponentString +=    '<span class="binaryComponentInfo">';
-        binaryComponentString +=    '    <span>' + ( binaryComponent.display_name != '' ? binaryComponent.display_name : binaryComponent.name ) + '</span>'
-        binaryComponentString +=    '    <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>';
-        binaryComponentString +=    '</span>';
+        if(!rankedSelection.binaryComponentIDs.includes(binaryComponent.id.toString())) {
+            binaryComponentString += '<li class="binaryComponentContainer clearfix">';
 
-        // binaryComponentString +=    '<span class="componentNameBinarySlider' +  (binaryComponent.display_name != '' ? '' : ' text-muted') + '">' + (binaryComponent.display_name != '' ? binaryComponent.display_name : binaryComponent.name) + '</span><label class="switch pull-right"><input type="checkbox"' +  (binaryComponent.binaryComponentState == true ? 'checked' : '') + ' disabled><span class="slider round"></span></label>';
-            
-        binaryComponentString += '</li>';
+            binaryComponentString +=    '<span class="binaryComponentInfo">';
+            binaryComponentString +=    '    <span>' + ( binaryComponent.display_name != '' ? binaryComponent.display_name : binaryComponent.name ) + '</span>'
+            binaryComponentString +=    '    <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>';
+            binaryComponentString +=    '</span>';
+
+            binaryComponentString += '</li>';
+        }
     });
     return binaryComponentString;
 }
 function buildNominalComponents(nominalAttributes) {
     var nominalComponentString = '';
     nominalAttributes.forEach(function(nominalAttribute, index) {
-        nominalComponentString += '<li class="nominalComponentContainer clearfix">';
+        if(!rankedSelection.nominalAttributeIDs.includes(nominalAttribute.id.toString())) {
+            nominalComponentString += '<li class="nominalComponentContainer clearfix">';
 
-        nominalComponentString +=    '<div class="nominalAttribute pull-right"><figure class="attrIcons ' + (nominalAttribute.icon_path != '' ? nominalAttribute.icon_path : 'iconPlaceholder') + '"></figure></div>';
-        nominalComponentString +=    '<span class="nominalNameCombo"><span class="componentNameNominalComponent' + (nominalAttribute.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (nominalAttribute.nominal_component.display_name != '' ? (nominalAttribute.nominal_component.display_name) : nominalAttribute.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (nominalAttribute.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (nominalAttribute.display_name != '' ? nominalAttribute.display_name : nominalAttribute.name) + '</span></span>';
+            nominalComponentString +=    '<div class="nominalAttribute pull-right"><figure class="attrIcons ' + (nominalAttribute.icon_path != '' ? nominalAttribute.icon_path : 'iconPlaceholder') + '"></figure></div>';
+            nominalComponentString +=    '<span class="nominalNameCombo"><span class="componentNameNominalComponent' + (nominalAttribute.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (nominalAttribute.nominal_component.display_name != '' ? (nominalAttribute.nominal_component.display_name) : nominalAttribute.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (nominalAttribute.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (nominalAttribute.display_name != '' ? nominalAttribute.display_name : nominalAttribute.name) + '</span></span>';
 
-        nominalComponentString += '</li>';
+            nominalComponentString += '</li>';
+        }
     });
     return nominalComponentString;
 }
 function buildOrdinalComponents(ordinalAttributes) {
     var ordinalComponentString = '';
     ordinalAttributes.forEach(function(ordinalAttribute, index) {
-        ordinalComponentString += '<li class="ordinalComponentContainer clearfix">';
+        if(!rankedSelection.ordinalAttributeIDs.includes(ordinalAttribute.id.toString())) {
+            ordinalComponentString += '<li class="ordinalComponentContainer clearfix">';
 
-        ordinalComponentString +=    '<span class="componentNameOrdinalComponent' + (ordinalAttribute.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (ordinalAttribute.ordinal_component.display_name != '' ? ( ordinalAttribute.ordinal_component.display_name) :  ordinalAttribute.ordinal_component.name) + '</span>';
-        ordinalComponentString +=    '<span class="attributeNameOrdinalAttribute pull-right ' + (ordinalAttribute.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (ordinalAttribute.display_name != '' ? ordinalAttribute.display_name : ordinalAttribute.name) + '</span>';
+            ordinalComponentString +=    '<span class="componentNameOrdinalComponent' + (ordinalAttribute.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (ordinalAttribute.ordinal_component.display_name != '' ? ( ordinalAttribute.ordinal_component.display_name) :  ordinalAttribute.ordinal_component.name) + '</span>';
+            ordinalComponentString +=    '<span class="attributeNameOrdinalAttribute pull-right ' + (ordinalAttribute.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (ordinalAttribute.display_name != '' ? ordinalAttribute.display_name : ordinalAttribute.name) + '</span>';
 
-        ordinalComponentString += '</li>';
+            ordinalComponentString += '</li>';
+        }
     });
     return ordinalComponentString;
 }
