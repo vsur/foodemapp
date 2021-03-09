@@ -69,7 +69,7 @@ rsync -r cake/src/Template/OrdinalComponents deploy/src/Template/
 if [ ! -d "deploy/src/Template/Pages" ]; then
   mkdir deploy/src/Template/Pages
 fi
-# Aktuell keine Pages aktiv
+# Aktuell keine Pages aktiv 
 # rsync -r cake/src/Template/Pages deploy/src/Template/
 rsync -r cake/src/Template/RequestEvaluations deploy/src/Template/
 rsync -r cake/src/Template/Ypois deploy/src/Template/
