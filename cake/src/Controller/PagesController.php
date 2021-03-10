@@ -37,6 +37,7 @@ class PagesController extends AppController
      */
     public function display()
     {
+        $this->viewBuilder()->layout('fmappbeta'); 
         $path = func_get_args();
 
         $count = count($path);

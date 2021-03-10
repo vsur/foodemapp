@@ -58,6 +58,10 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+
+        // Check if Browser is IE
+		$isIE = $this->detectIEBrowser();
+		$this->set('isIE', $isIE);
     }
 
     protected $actionKey = "doStuff";
@@ -68,4 +72,14 @@ class AppController extends Controller
             return $this->redirect(['controller' => 'Ypois', 'action' => 'setScenario']);
         }
     }
+
+    public function detectIEBrowser()
+	{
+		$isIE = false;
+		$ua = htmlentities($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8');
+		if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0; rv:11.0') !== false) || (strpos($ua, 'Edge') !== false)) {
+			$isIE = true;
+		}
+		return $isIE;
+	}
 }

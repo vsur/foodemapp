@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 use Cake\I18n\Time;
 use Cake\Filesystem\File;
 
@@ -20,7 +21,19 @@ class YpoisController extends AppController
         $this->loadComponent('PoisNComponents');
     }
 
-   
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
+        // Check IE
+        $isIE = $this->detectIEBrowser();
+        if($isIE) {
+            return $this->redirect([
+                'controller' => 'pages',
+                'action' => 'noie',
+            ]);
+        }
+    }
+    
     /**
      * Index method
      *
@@ -38,6 +51,7 @@ class YpoisController extends AppController
     public function setScenario()
     {
         $this->viewBuilder()->layout('fmappbeta');
+
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
