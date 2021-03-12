@@ -426,7 +426,7 @@ var fmApp = {
             this.alertMessage("Fehler bei der Datenzuordnung Ihrer Auswahl", "alert-danger");
             console.log("Matching-Error \nAuswahl: " + criterionNames[selectedCriterion.index][0] + "\n" + "Zuordnung: " + criteria[selectedCriterion.index].display_name + "\nAus Input kommend: " + inputValue + "\n" + "Index: " + selectedCriterion.index + "\n" + "Typ: " + selectedCriterion.type + "\n" + "Model-ID: " + selectedCriterion.id);
         }
-        // Reset input-fied
+        // Reset input-field
         $("#criteriaInput").val("").attr('placeholder', '').toggleClass("chosen");
         setTimeout(function() {
             $("#criteriaInput").attr('placeholder', 'Weitere wählen').toggleClass("chosen");
@@ -451,7 +451,7 @@ var fmApp = {
             $(".areaLabel").show();
             $("#showAction").show();
             var criteriaListIdentifier = "criteriaList" + this.componentModelTypePrefix + chosenComponent.modelType + this.componentIdPrefix + chosenComponent.id;
-            // Prepend choosen component
+            // Prepend chosen component
             this.currentComponent = '<p id="' + criteriaListIdentifier + '">' + chosenComponent.display_name + ' <a title="Diese Kategorie löschen" class="throwComponent"><span class="glyphicon glyphicon-minus-sign text-danger" aria-hidden="true"></span></a></p>';
             $("#criteriaChoice").append(this.currentComponent);
             this.currentComponent = null;
@@ -482,10 +482,12 @@ var fmApp = {
                 this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
             }
             if (chosenComponent.modelType == 'NominalComponents') {
-                chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
+                chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, chosenComponent.nominal_attributes[0].id);
+                this.sets.nominalChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), chosenComponent.nominal_attributes[0].id);
             }
             if (chosenComponent.modelType == 'OrdinalComponents') {
-                chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, ocAttrId);
+                chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, chosenComponent.ordinal_attributes[0].id);
+                this.sets.ordinalChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), chosenComponent.ordinal_attributes[0].id);
             }
 
             chosenComponentToPaste += '</div>';
