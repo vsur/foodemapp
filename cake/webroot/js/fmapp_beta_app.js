@@ -575,7 +575,7 @@ var fmApp = {
         jqxhr.always(function() {
             setTimeout(function(){
                 history.pushState({'setHistoryWithParams' : true}, document.title, paramString);
-                $("#loadingSpinnerContainer").hide();
+                $("#loadingSpinnerContainer").hide("slow");
                 window.location = url + paramString;
             }, 500);
         });
