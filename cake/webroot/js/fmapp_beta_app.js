@@ -268,13 +268,13 @@ var fmApp = {
                 ordinalAttributes += '<option id="ordinalAttribute' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '" value="' + ordinalAttribute.meter + '" name="' + ordinalAttribute.display_name + '">';
             });
             ordinalAttributes += '</datalist>';
-            ordinalAttributes += '<table id="attributesList' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" class="table table-hover">';
+            ordinalAttributes += '<table id="attributesList' + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id + '" class="table" title="Bitte nutzen Sie den Slider zum Einstellen">';
             ordinalAttributes += '<tr>';
             ordinalAttributes += '<th>#</th>';
             ordinalAttributes += '<th>Label</th>';
             ordinalAttributes += '</tr>';
             chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
-                ordinalAttributes += '<tr>';
+                ordinalAttributes += '<tr id="ordinalAttributeTableRow' + fmApp.ordinalAttributeIdPrefix + ordinalAttribute.id + '">';
                 ordinalAttributes += '<td>' + ordinalAttribute.meter + '</td>';
                 ordinalAttributes += '<td>' + ordinalAttribute.display_name + '</td>';
                 ordinalAttributes += '</tr>';
@@ -318,6 +318,12 @@ var fmApp = {
             // Get display_name to selected meter
             var displayNameToShow = fmApp.finds.displayNameOfChoosenOrdinalAttribute(cssSelector, currentMeter);
             $("#criteriaAttributes" + cssSelector + "> p.ordinalAttributeChoice").html(displayNameToShow);
+        },
+        current_ordinalAttributeChoice_TableRow: function(attributesList, ordinalAttributeTableRow) {
+            $("table#" + attributesList + " tr").each(function(index){
+                $(this).removeClass("success");
+            });
+            $("tr#" + ordinalAttributeTableRow).addClass("success");
         },
         nominalChoice: function(indexOfChosenSelection, newNominalAttributeId) {
             var componentToSetNominalAttributeChoice = fmApp.chosenSelection[indexOfChosenSelection];
@@ -504,6 +510,7 @@ var fmApp = {
             // Set ordinal attribute choice string initialy
             if (chosenComponent.modelType == 'OrdinalComponents') {
                 this.sets.current_ordinalAttributeChoice_String(chosenComponent.modelType, chosenComponent.id);
+                this.sets.current_ordinalAttributeChoice_TableRow("attributesList" + fmApp.componentModelTypePrefix + chosenComponent.modelType + fmApp.componentIdPrefix + chosenComponent.id, "ordinalAttributeTableRow" + fmApp.ordinalAttributeIdPrefix + chosenComponent.ordinal_attributes[0].id);
             }
         }
     },
@@ -723,6 +730,9 @@ $(document).ready(function() {
         var recentOrdinalAttributeId = fmApp.finds.idOfChoosenOrdinalAttribute(cssSelector, recentOrdinalAttributeMeter);
         // Set ordinal attribute choice string on update
         fmApp.sets.current_ordinalAttributeChoice_String(componentModelType, componentId);
+        // Set ordinal attribute choice table row highlight
+        fmApp.sets.current_ordinalAttributeChoice_TableRow("attributesList" + cssSelector, "ordinalAttributeTableRow" + fmApp.ordinalAttributeIdPrefix + recentOrdinalAttributeId);
+
         // Set ordinal attribute choice in Selection on update
         fmApp.sets.ordinalChoice(indexInSelection, recentOrdinalAttributeId);
     });

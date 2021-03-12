@@ -129,6 +129,11 @@ body {
 .ordinalAttributesContainer > input {
   margin-bottom: 1em;
 }
+.ordinalAttributesContainer > table {
+  background: #ccc;
+  cursor: help;
+}
+
 .components.choose {
   padding-bottom: 2em;
 }
