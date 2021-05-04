@@ -12,10 +12,10 @@ var pulsingIcon = L.icon.pulse({
     heartbeat: 3,
 });
 var connectionLineProps = {
-    // color: '#7d003c', // UR
-    // lineIconPath: 'img/chevron-up-ur.svg' // UR
-    color: '#31A3DD', // ISAC
-    lineIconPath: 'img/chevron-up-isac.svg' // ISAC
+    color: '#7d003c', // UR
+    lineIconPath: 'img/chevron-up-ur.svg' // UR
+    // color: '#31A3DD', // ISAC
+    // lineIconPath: 'img/chevron-up-isac.svg' // ISAC
 };
 
 // Initalize LMap

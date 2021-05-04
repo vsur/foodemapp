@@ -7227,10 +7227,10 @@ input:checked + .slider:before {
  * Some Colors
  */
 .textURcolor {
-  color: #31A3DD; }
+  color: #7d003c; }
 
 .textURcolorSuperLight {
-  color: #e2f2fa !important; }
+  color: #ff4da2 !important; }
 
 /*
  * Main Stuff
@@ -7239,8 +7239,8 @@ body {
   padding-top: 74px; }
 
 .navbar-default {
-  background: #31A3DD;
-  border-color: #6cbde7; }
+  background: #7d003c;
+  border-color: #c2005d; }
   .navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {
     color: #fff; }
 
@@ -7260,7 +7260,7 @@ body {
   width: 100%;
   height: 100%;
   z-index: 500;
-  background: rgba(49, 163, 221, 0.75); }
+  background: rgba(125, 0, 60, 0.75); }
 
 #loadingSpinnerContainer > h1 {
   color: #fff;
@@ -7332,9 +7332,9 @@ body {
 
 .nominalAttributesContainer > .nominalAttribute > input ~ label:hover > figure,
 .nominalAttributesContainer > .nominalAttribute > input ~ label:hover > figcaption {
-  color: #31A3DD;
-  -webkit-filter: drop-shadow(0px 0px 5px #31A3DD);
-  filter: drop-shadow(0px 0px 5px #31A3DD); }
+  color: #7d003c;
+  -webkit-filter: drop-shadow(0px 0px 5px #7d003c);
+  filter: drop-shadow(0px 0px 5px #7d003c); }
 
 .nominalAttributesContainer > .nominalAttribute > input:checked ~ label > figure,
 .nominalAttributesContainer > .nominalAttribute > input:checked ~ label > figcaption {
@@ -7436,7 +7436,7 @@ a#filter, button#componentWheel {
   width: 100%;
   height: 100%;
   z-index: 500;
-  background: rgba(49, 163, 221, 0.75); }
+  background: rgba(125, 0, 60, 0.75); }
 
 #wheelBlock {
   position: absolute;
@@ -7479,8 +7479,8 @@ a#filter, button#componentWheel {
 .viewLinkBlock a .thumbnail,
 .viewLinkBlock a:visited .thumbnail {
   text-decoration: none;
-  color: #31A3DD;
-  border-color: #31A3DD; }
+  color: #7d003c;
+  border-color: #7d003c; }
 
 .viewLinkBlock a:active,
 .viewLinkBlock a:hover,
@@ -7492,8 +7492,8 @@ a#filter, button#componentWheel {
 .viewLinkBlock a:hover .thumbnail,
 .viewLinkBlock a:focus .thumbnail {
   text-decoration: none;
-  color: #6cbde7;
-  border-color: #6cbde7; }
+  color: #c2005d;
+  border-color: #c2005d; }
 
 #listView .panel-heading {
   cursor: pointer; }
@@ -7652,8 +7652,8 @@ path.chord {
   min-height: 35px; }
 
 #mapNavbar.navbar-default {
-  background: #6cbde7;
-  border-color: #a7d8f1; }
+  background: #c2005d;
+  border-color: #ff087e; }
   #mapNavbar.navbar-default .navbar-toggle {
     margin-top: 0px;
     margin-bottom: 0px; }
@@ -7702,7 +7702,7 @@ path.chord {
   cursor: -webkit-move; }
 
 .infoPopup > div.leaflet-popup-content-wrapper {
-  background: rgba(49, 163, 221, 0.75); }
+  background: rgba(125, 0, 60, 0.75); }
 
 .popUpComponentList {
   padding-bottom: 0px; }
@@ -7749,7 +7749,7 @@ path.chord {
     width: 80px;
     text-align: right; }
   .popUpComponentList .nominalNameCombo {
-    color: #e2f2fa !important; }
+    color: #ff4da2 !important; }
   .popUpComponentList .componentNameOrdinalComponent {
     color: white; }
   .popUpComponentList .nominalComponentContainer .choosenStarAgregation {
