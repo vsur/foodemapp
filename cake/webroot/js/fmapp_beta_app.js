@@ -19,7 +19,8 @@ var fmApp = {
     standardRating: 3, // Out of 5
     geoLocation: {
         latLong: [49.01, 8.40806],
-        accuracy: 50
+        accuracy: 50, 
+        useNavigator: false
     },
 
     
@@ -79,28 +80,34 @@ var fmApp = {
             return machtingCorrect;
         },
         usersPosition: function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(fmApp.sets.usersPosition, (error) => {
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                          console.log("User denied the request for Geolocation. Maybe cause your are using no SSL connection?");
-                          break;
-                        case error.POSITION_UNAVAILABLE:
-                          console.log("Location information is unavailable.");
-                          break;
-                        case error.TIMEOUT:
-                          console.log("The request to get user location timed out.");
-                          break;
-                        case error.UNKNOWN_ERROR:
-                          console.log("An unknown error occurred.");
-                          break;
-                      }
-                    // Set manualy by init
+            if (fmApp.geoLocation.useNavigator) {
+                console.log("App wants to use Geolocator");
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(fmApp.sets.usersPosition, (error) => {
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                            console.log("User denied the request for Geolocation. Maybe cause your are using no SSL connection?");
+                            break;
+                            case error.POSITION_UNAVAILABLE:
+                            console.log("Location information is unavailable.");
+                            break;
+                            case error.TIMEOUT:
+                            console.log("The request to get user location timed out.");
+                            break;
+                            case error.UNKNOWN_ERROR:
+                            console.log("An unknown error occurred.");
+                            break;
+                        }
+                        // Set manualy by init
+                        fmApp.gets.staticUserPosition();
+                        
+                    });
+                } else {
+                    console.log("No Geolocator available");
                     fmApp.gets.staticUserPosition();
-                    
-                });
+                }
             } else {
-                console.log("No Geolocator available");
+                console.log("App Geolocator is deactivated by init");
                 fmApp.gets.staticUserPosition();
             }
             return;
@@ -345,6 +352,42 @@ var fmApp = {
             fmApp.geoLocation.accuracy = position.coords.accuracy;
             console.log(fmApp.geoLocation);
         },
+        sessionGeo: function(url, paramString) {
+
+            var jqxhr = $.ajax({
+                method: "POST",
+                url: storeUserPositionInSessionURL,
+                data: {
+                    latitude: $("#latitude").val(),
+                    longitude: $("#longitude").val(),
+                    accuracy: $("#accuracy").val()
+                },
+                beforeSend: function(){
+                    fmApp.checks.usersPosition();
+                    $("#loadingSpinnerContainer").fadeIn(500, function(event) {
+                        // Set values in Input fields
+                        $("#latitude").val( fmApp.geoLocation.latLong[0] );
+                        $("#longitude").val( fmApp.geoLocation.latLong[1] );
+                        $("#accuracy").val( fmApp.geoLocation.accuracy );
+                    });
+                }
+            })
+            .done(function() {
+                console.log( "Data Sent to API" );
+            })
+            .fail(function() {
+                alert( "An error occured results will not be sorted by distance" );
+            });
+            
+            // Set another completion function for the request above
+            jqxhr.always(function() {
+                setTimeout(function(){
+                    history.pushState({'setHistoryWithParams' : true}, document.title, paramString);
+                    $("#loadingSpinnerContainer").hide("slow");
+                    window.location = url + paramString;
+                }, 500);
+            });
+        }
     },
     slices: {
         binaryStateOffStringAsBoolean: function(findBinaryStateIn) {
@@ -554,40 +597,7 @@ var fmApp = {
             paramString += index < (fmApp.chosenSelection.length - 1) ? "&" : "";
         });
         
-        
-        var jqxhr = $.ajax({
-            method: "POST",
-            url: storeUserPositionInSessionURL,
-            data: {
-                latitude: $("#latitude").val(),
-                longitude: $("#longitude").val(),
-                accuracy: $("#accuracy").val()
-            },
-            beforeSend: function(){
-                fmApp.checks.usersPosition();
-                $("#loadingSpinnerContainer").fadeIn(500, function(event) {
-                    // Set values in Input fields
-                    $("#latitude").val( fmApp.geoLocation.latLong[0] );
-                    $("#longitude").val( fmApp.geoLocation.latLong[1] );
-                    $("#accuracy").val( fmApp.geoLocation.accuracy );
-                });
-            }
-        })
-        .done(function() {
-            console.log( "Data Sent to API" );
-        })
-        .fail(function() {
-            alert( "An error occured results will not be sorted by distance" );
-        });
-        
-        // Set another completion function for the request above
-        jqxhr.always(function() {
-            setTimeout(function(){
-                history.pushState({'setHistoryWithParams' : true}, document.title, paramString);
-                $("#loadingSpinnerContainer").hide("slow");
-                window.location = url + paramString;
-            }, 500);
-        });
+        fmApp.sets.sessionGeo(url, paramString);
         
     },
     deleteComponent: function(delName) {

@@ -62,6 +62,10 @@ class AppController extends Controller
         // Check if Browser is IE
 		$isIE = $this->detectIEBrowser();
 		$this->set('isIE', $isIE);
+        
+        // Check App Mode
+        $evalAppMode = $this->getEvalAppMode();
+		$this->set('evalAppMode', $evalAppMode);
     }
 
     protected $actionKey = "doStuff";
@@ -81,5 +85,11 @@ class AppController extends Controller
 			$isIE = true;
 		}
 		return $isIE;
+	}
+
+    public function getEvalAppMode()
+	{
+		$evalAppMode = false;
+		return $evalAppMode;
 	}
 }

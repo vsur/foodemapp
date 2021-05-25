@@ -51,7 +51,7 @@ class YpoisController extends AppController
     public function setScenario()
     {
         $this->viewBuilder()->layout('fmappbeta');
-
+        
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
@@ -83,6 +83,7 @@ class YpoisController extends AppController
     public function findMatches($displayVariant = null)
     {
         $this->viewBuilder()->layout('fmappbeta');
+
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
@@ -232,6 +233,37 @@ class YpoisController extends AppController
             'componentTypesComponentsCount'
         ));
     }
+
+    public function presetGeo($displayVariant = null) {
+        $this->viewBuilder()->layout('fmappbeta');
+        // Get all BinaryComponents
+        $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
+
+        // Get all $nominalComponents with associated Attributes
+        $nominalComponents = $this->Ypois->NominalAttributes->NominalComponents->getAllEntriesWithUnifiedDisplayNamesAndIconsPaths($withNominalAttr = true);
+
+        // Get all OrdinalAttributes
+        $ordinalComponents = $this->Ypois->OrdinalAttributes->OrdinalComponents->getAllEntriesWithUnifiedDisplayNames($withNominalAttr = true);
+
+        // Wrap up all criteria
+        $criteria = $this->combineAllComponetsToOneCriteriaArray($binaryComponents, $nominalComponents, $ordinalComponents);
+
+         // Set combined criterion names for autocompletion and differentiation
+         $criterionNames = $this->setCombinedCriterionNames($criteria);
+
+        // Store filter tokens from URL
+        $configuredSelection = NULL;
+
+        if (!empty($this->request->query)) {
+            $configuredSelection = $this->request->query;
+        }
+        $this->set(compact(
+            'criteria', 
+            'criterionNames', 
+            'configuredSelection'
+        ));
+    }
+
 
     public function setGeoInSession() {
         $this->autoRender = false;

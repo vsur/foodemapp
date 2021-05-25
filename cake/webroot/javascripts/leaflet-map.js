@@ -3,7 +3,7 @@
 // Static user position 
 // console.log("Coming from MAP: ");
 // console.log(fmApp.geoLocation);
-var staticUserPosition =  L.latLng(49.01, 8.40806);
+var staticUserPosition =  L.latLng(fmApp.geoLocation.latLong[0], fmApp.geoLocation.latLong[1]);
 var userPositionLayer = L.layerGroup();
 var pulsingIcon = L.icon.pulse({
     iconSize: [18,18],
@@ -95,8 +95,8 @@ mymap.on('zoomstart', (e) => connectionLines.clearLayers() );
 function onLocationFound(e) {
     var radius = e.accuracy / 2;
     console.log("User position detected by device", e);
-    // showUserPosition(e.latLng, radius); // For evaluation the position musst be set by static properties
-    showUserPosition(staticUserPosition, 50);
+    showUserPosition(e.latLng, radius); // For evaluation the position musst be set by static properties
+
 }
 
 function onLocationError(e) {
@@ -107,7 +107,11 @@ function onLocationError(e) {
 mymap.on('locationfound', onLocationFound);
 mymap.on('locationerror', onLocationError);
 
-mymap.locate({setView: false, maxZoom: 16});
+if(fmApp.geoLocation.useNavigator) {
+    mymap.locate({setView: false, maxZoom: 16});
+} else {
+    showUserPosition(staticUserPosition, 50);
+}
 
 mymap.addLayer(userPositionLayer);
 
