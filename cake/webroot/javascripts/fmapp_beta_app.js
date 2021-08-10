@@ -531,12 +531,24 @@ var fmApp = {
                 this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
             }
             if (chosenComponent.modelType == 'NominalComponents') {
-                chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, chosenComponent.nominal_attributes[0].id);
-                this.sets.nominalChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), chosenComponent.nominal_attributes[0].id);
+                // Check if component is chosen from URL, so prepending is not necessary 
+                if(componentDataFromURL) {
+                    chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
+                } else {
+                    // Prepend chosen component
+                    chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, chosenComponent.nominal_attributes[0].id);
+                    this.sets.nominalChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), chosenComponent.nominal_attributes[0].id);
+                }
             }
             if (chosenComponent.modelType == 'OrdinalComponents') {
-                chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, chosenComponent.ordinal_attributes[0].id);
-                this.sets.ordinalChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), chosenComponent.ordinal_attributes[0].id);
+                // Check if component is chosen from URL, so prepending is not necessary 
+                if(componentDataFromURL) {
+                    chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, ocAttrId);
+                } else {
+                    // Prepend chosen component
+                    chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, chosenComponent.ordinal_attributes[0].id);
+                    this.sets.ordinalChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), chosenComponent.ordinal_attributes[0].id);
+                }
             }
 
             chosenComponentToPaste += '</div>';
