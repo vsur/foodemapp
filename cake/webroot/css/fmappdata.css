@@ -7797,6 +7797,18 @@ path.chord {
 .leaflet-popup-tip-container {
   display: none; }
 
+#heatmapContainer {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  height: 100%;
+  left: 0px; }
+
+#heatmap {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
 /*
  * Styling for Query Evaluation
  */
