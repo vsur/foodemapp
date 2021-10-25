@@ -22,8 +22,25 @@ var fmApp = {
         accuracy: 50, 
         useNavigator: false
     },
+    mouseData: {
+        mMove: {
+            showMap: false,
+            data: []
+        },
+        mClick: {
+            showMap: false,
+            data: []
+        },
+        aoiMove: {
+            showMap: false,
+            data: []
+        },
+        aoiClick: {
+            showMap: false,
+            data: []
+        }
+    },
 
-    
     // Main Controls
     checks: {
         input: function() {
@@ -639,8 +656,49 @@ var fmApp = {
             $("#criteriaInput").toggleClass("noChoice");
         }, 2000);
     },
-
+    heatmap: {
+        init: function() {
+            console.log("Init Heatmap");
+            heatmap = h337.create({
+                container: document.getElementById('heatmap'),
+                radius: 50,
+                maxOpacity: 0.5,
+                minOpacity: 0,
+                blur: 0.75,
+                // gradient: {
+                //   // enter n keys between 0 and 1 here
+                //   // for gradient color customization
+                //   '0.5': 'blue',
+                //   '0.8': 'red',
+                //   '0.95': 'white'
+                // }
+            });
+        },
+        setHideAllMaps: function() {
+            for (const trackingType in fmApp.mouseData) {
+                if (Object.hasOwnProperty.call(fmApp.mouseData, trackingType)) {
+                    fmApp.mouseData[trackingType].showMap = false;
+                }
+            }
+        },
+        debugShow: {
+            mMove: function() {
+                let mMoveState = fmApp.mouseData.mMove.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.mouseData.mMove.showMap = !mMoveState;
+                let heatMapData = {
+                    max: 10,
+                    min: 0,
+                    data: fmApp.mouseData.mMove.showMap ? fmApp.mouseData.mMove.data : []
+                };
+                console.log();
+                heatmap.setData(heatMapData);
+            }
+        }
+    }
 };
+
+var heatmap;
 
 $(document).ready(function() {
 
@@ -803,4 +861,22 @@ $(document).ready(function() {
         $("#usageAlert").slideUp(500);
     });
 
+    // Init Heatmap
+    fmApp.heatmap.init();
+
+    // Listener for all mouse movements
+    $('.container').mousemove(function (mouseEvent) {
+        // mouseEvent.preventDefault();
+        let dataPoint = {
+            x: mouseEvent.pageX,
+            y: mouseEvent.pageY,
+            value: 1
+        };
+        fmApp.mouseData.mMove.data.push(dataPoint);
+    });
+
+    $("#filter").click(function(mouseEvent) {
+        mouseEvent.preventDefault();
+        fmApp.heatmap.debugShow.mMove();
+    });
 });
