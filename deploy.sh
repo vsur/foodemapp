@@ -1,6 +1,6 @@
 # Deploy Script
 
-# Delete all old fils 
+# Delete all old files 
 rm -R deploy/*
 
 # Copies Files one in deploy Folder 
