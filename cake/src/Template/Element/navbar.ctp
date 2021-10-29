@@ -26,7 +26,7 @@
                     ["controller" => "ypois", "action" => "findMatches", "selectViz", "?" => $this->request->query],
                     [
                       'class' => 'btn btn-default navbar-btn', 
-                      'id' => 'filter',
+                      'id' => 'changeView',
                       'aria-label' => 'Passen Sie die Ansicht an', 
                       'escape' => false
                     ]

@@ -19,7 +19,7 @@ var fmApp = {
     standardRating: 3, // Out of 5
     geoLocation: {
         latLong: [49.01, 8.40806],
-        accuracy: 50, 
+        accuracy: 50,
         useNavigator: false
     },
     mouseData: {
@@ -57,8 +57,8 @@ var fmApp = {
             let componentType = fmApp.gets.componentTypeByIdentifier(selectedCriterion.type);
 
             fmApp.chosenSelection.forEach(function(componentInSelection) {
-                if(componentType == componentInSelection.componentType) {
-                    if(selectedCriterion.id == componentInSelection.componentId ) {
+                if (componentType == componentInSelection.componentType) {
+                    if (selectedCriterion.id == componentInSelection.componentId)  {
                         componentChoosenState = true;
                     }
                 }
@@ -101,23 +101,23 @@ var fmApp = {
                 console.log("App wants to use Geolocator");
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(fmApp.sets.usersPosition, (error) => {
-                        switch(error.code) {
+                        switch (error.code) {
                             case error.PERMISSION_DENIED:
-                            console.log("User denied the request for Geolocation. Maybe cause your are using no SSL connection?");
-                            break;
+                                console.log("User denied the request for Geolocation. Maybe cause your are using no SSL connection?");
+                                break;
                             case error.POSITION_UNAVAILABLE:
-                            console.log("Location information is unavailable.");
-                            break;
+                                console.log("Location information is unavailable.");
+                                break;
                             case error.TIMEOUT:
-                            console.log("The request to get user location timed out.");
-                            break;
+                                console.log("The request to get user location timed out.");
+                                break;
                             case error.UNKNOWN_ERROR:
-                            console.log("An unknown error occurred.");
-                            break;
+                                console.log("An unknown error occurred.");
+                                break;
                         }
                         // Set manualy by init
                         fmApp.gets.staticUserPosition();
-                        
+
                     });
                 } else {
                     console.log("No Geolocator available");
@@ -198,7 +198,7 @@ var fmApp = {
                     componentType = "OrdinalComponents";
                     break;
             }
-            return componentType; 
+            return componentType;
         },
         rating: function(modelType, id) {
             var selectionIndex;
@@ -250,7 +250,7 @@ var fmApp = {
             switchString += '<span class="componentNameBinarySlider">' + chosenComponent.display_name + '</span>';
             // Switch an simple HTML checkbox: https://www.w3schools.com/howto/howto_css_switch.asp
             switchString += '<label class="switch">';
-            switchString += '<input type="checkbox" ' + ( stateToSet ? 'checked' : '') + '>';
+            switchString += '<input type="checkbox" ' + (stateToSet ? 'checked' : '') + '>';
             switchString += '<span class="slider round"></span>';
             switchString += '</label>';
             switchString += '</p>';
@@ -276,7 +276,7 @@ var fmApp = {
             var meterMax = chosenComponent.ordinal_attributes.slice(-1)[0].meter;
             var rangeSteps = meterMax / chosenComponent.ordinal_attributes.length;
             var valueToSet = null;
-            if(attributeToSet) {
+            if (attributeToSet)  {
                 chosenComponent.ordinal_attributes.forEach(function(ordinalAttribute, index) {
                     if (ordinalAttribute.id == attributeToSet) {
                         valueToSet = ordinalAttribute.meter;
@@ -344,7 +344,7 @@ var fmApp = {
             $("#criteriaAttributes" + cssSelector + "> p.ordinalAttributeChoice").html(displayNameToShow);
         },
         current_ordinalAttributeChoice_TableRow: function(attributesList, ordinalAttributeTableRow) {
-            $("table#" + attributesList + " tr").each(function(index){
+            $("table#" + attributesList + " tr").each(function(index) {
                 $(this).removeClass("success");
             });
             $("tr#" + ordinalAttributeTableRow).addClass("success");
@@ -362,9 +362,9 @@ var fmApp = {
             componentToSetRating.rating = newRating;
         },
         usersPosition: function(position) {
-           fmApp.geoLocation.latLong = [ 
-               position.coords.latitude, 
-               position.coords.longitude 
+            fmApp.geoLocation.latLong = [
+                position.coords.latitude,
+                position.coords.longitude
             ];
             fmApp.geoLocation.accuracy = position.coords.accuracy;
             console.log(fmApp.geoLocation);
@@ -372,34 +372,34 @@ var fmApp = {
         sessionGeo: function(url, paramString) {
 
             var jqxhr = $.ajax({
-                method: "POST",
-                url: storeUserPositionInSessionURL,
-                data: {
-                    latitude: $("#latitude").val(),
-                    longitude: $("#longitude").val(),
-                    accuracy: $("#accuracy").val()
-                },
-                beforeSend: function(){
-                    fmApp.checks.usersPosition();
-                    $("#loadingSpinnerContainer").fadeIn(500, function(event) {
-                        // Set values in Input fields
-                        $("#latitude").val( fmApp.geoLocation.latLong[0] );
-                        $("#longitude").val( fmApp.geoLocation.latLong[1] );
-                        $("#accuracy").val( fmApp.geoLocation.accuracy );
-                    });
-                }
-            })
-            .done(function() {
-                console.log( "Data Sent to API" );
-            })
-            .fail(function() {
-                alert( "An error occured results will not be sorted by distance" );
-            });
-            
+                    method: "POST",
+                    url: storeUserPositionInSessionURL,
+                    data: {
+                        latitude: $("#latitude").val(),
+                        longitude: $("#longitude").val(),
+                        accuracy: $("#accuracy").val()
+                    },
+                    beforeSend: function() {
+                        fmApp.checks.usersPosition();
+                        $("#loadingSpinnerContainer").fadeIn(500, function(event) {
+                            // Set values in Input fields
+                            $("#latitude").val(fmApp.geoLocation.latLong[0]);
+                            $("#longitude").val(fmApp.geoLocation.latLong[1]);
+                            $("#accuracy").val(fmApp.geoLocation.accuracy);
+                        });
+                    }
+                })
+                .done(function() {
+                    console.log("Data Sent to API");
+                })
+                .fail(function() {
+                    alert("An error occured results will not be sorted by distance");
+                });
+
             // Set another completion function for the request above
             jqxhr.always(function() {
-                setTimeout(function(){
-                    history.pushState({'setHistoryWithParams' : true}, document.title, paramString);
+                setTimeout(function() {
+                    history.pushState({ 'setHistoryWithParams': true }, document.title, paramString);
                     $("#loadingSpinnerContainer").hide("slow");
                     window.location = url + paramString;
                 }, 500);
@@ -431,11 +431,11 @@ var fmApp = {
             var foundOrdinalAttributeId = findOrdinalAttributeIdIn.slice(findOrdinalAttributeIdIn.indexOf(fmApp.ordinalAttributeIdPrefix) + fmApp.ordinalAttributeIdPrefix.length);
             return parseInt(foundOrdinalAttributeId);
         },
-        criteriaListOffString: function(findCriteriaListIn) {
+        criteriaListOffString: function(findCriteriaListIn)  {
             var slicedIdentifier = findCriteriaListIn.slice(13);
             return slicedIdentifier;
         },
-        allCriteriaListOffString: function(findAllCriteriaListIn) {
+        allCriteriaListOffString: function(findAllCriteriaListIn)  {
             var slicedIdentifier = findAllCriteriaListIn.slice(16);
             return slicedIdentifier;
         },
@@ -500,8 +500,8 @@ var fmApp = {
 
         // Check if selected component is not already chosen
         var componentAlreadyChoosen = fmApp.checks.isComponentAlreadyChoosen(selectedCriterion);
-        if(componentAlreadyChoosen) {
-            fmApp.alertMessage("Die Kategorie <strong>" + chosenComponent.display_name + "</strong> wurde bereitsausgewählt.<br> Sie können diese Komponente nicht erneut auswählen.", "alert-danger"); 
+        if (componentAlreadyChoosen) {
+            fmApp.alertMessage("Die Kategorie <strong>" + chosenComponent.display_name + "</strong> wurde bereitsausgewählt.<br> Sie können diese Komponente nicht erneut auswählen.", "alert-danger");
         } else {
             // Add Component to selection
             this.chosenSelection.push({
@@ -549,7 +549,7 @@ var fmApp = {
             }
             if (chosenComponent.modelType == 'NominalComponents') {
                 // Check if component is chosen from URL, so prepending is not necessary 
-                if(componentDataFromURL) {
+                if (componentDataFromURL) {
                     chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
                 } else {
                     // Prepend chosen component
@@ -559,7 +559,7 @@ var fmApp = {
             }
             if (chosenComponent.modelType == 'OrdinalComponents') {
                 // Check if component is chosen from URL, so prepending is not necessary 
-                if(componentDataFromURL) {
+                if (componentDataFromURL) {
                     chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, ocAttrId);
                 } else {
                     // Prepend chosen component
@@ -588,9 +588,9 @@ var fmApp = {
     },
     alertMessage: function(alertText, alertState) {
         /*
-        * There are three different alert state by Bootstrap
-        * sucess | info | warning | danger
-        */
+         * There are three different alert state by Bootstrap
+         * sucess | info | warning | danger
+         */
         if (alertState === undefined) {
             alertState = "alert-info";
         }
@@ -625,17 +625,17 @@ var fmApp = {
             }
             paramString += index < (fmApp.chosenSelection.length - 1) ? "&" : "";
         });
-        
+
         fmApp.sets.sessionGeo(url, paramString);
-        
+
     },
     deleteComponent: function(delName) {
         // Delete entry from criteria list
-        $("#" + delName).remove(); 
+        $("#" + delName).remove();
         // Slice Information 
         var cleanedIdentifier = fmApp.slices.criteriaListOffString(delName);
         var deletionDOMID = "#criteriaOptions_" + cleanedIdentifier;
-        var deletionComponentType = fmApp.slices.componentModelTypeOffString(cleanedIdentifier); 
+        var deletionComponentType = fmApp.slices.componentModelTypeOffString(cleanedIdentifier);
         var deletionComponentId = fmApp.slices.componentIdOffString(cleanedIdentifier);
 
         // Delete DOM elem from selection area
@@ -643,7 +643,7 @@ var fmApp = {
         // Find elem in choosenSelction object
         var deletionChosenSelectionIndexconsole = fmApp.finds.indexOfChosenComponent(deletionComponentType, deletionComponentId);
         // Delette JS object elem
-        
+
         fmApp.chosenSelection.splice(deletionChosenSelectionIndexconsole, 1);
 
         // Update params for future routing
@@ -657,7 +657,7 @@ var fmApp = {
         }, 2000);
     },
     heatmap: {
-        init: function() {
+        init: function()  {
             console.log("Init Heatmap");
             heatmap = h337.create({
                 container: document.getElementById('heatmap'),
@@ -682,7 +682,7 @@ var fmApp = {
             }
         },
         debugShow: {
-            mMove: function() {
+            mMove: function()  {
                 let mMoveState = fmApp.mouseData.mMove.showMap;
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.mouseData.mMove.showMap = !mMoveState;
@@ -691,7 +691,17 @@ var fmApp = {
                     min: 0,
                     data: fmApp.mouseData.mMove.showMap ? fmApp.mouseData.mMove.data : []
                 };
-                console.log();
+                heatmap.setData(heatMapData);
+            },
+            mClick: function()  {
+                let mClickState = fmApp.mouseData.mClick.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.mouseData.mClick.showMap = !mClickState;
+                let heatMapData = {
+                    max: 10,
+                    min: 0,
+                    data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
+                };
                 heatmap.setData(heatMapData);
             }
         }
@@ -707,10 +717,10 @@ $(document).ready(function() {
         $("#criteriaOutput").fadeOut(250);
         $("#loadingSpinnerContainer").fadeIn(500, function(event) {
             for (var configuredComponentKey in configuredSelection) {
-                var componentDataFromURL = {identifierString : configuredComponentKey, rating : configuredSelection[configuredComponentKey] };
+                var componentDataFromURL = { identifierString: configuredComponentKey, rating: configuredSelection[configuredComponentKey] };
                 fmApp.addComponent(componentDataFromURL);
             }
-            setTimeout(function(){
+            setTimeout(function() {
                 $("#criteriaChoice").fadeIn(250);
                 $("#criteriaOutput").fadeIn(250, function(event) {
                     $("#loadingSpinnerContainer").fadeOut(500);
@@ -738,7 +748,7 @@ $(document).ready(function() {
     $(".addFromList").click(function() {
         event.preventDefault();
         var criterionListID = $(this).attr('id');
-        var criteronToken = fmApp.slices.allCriteriaListOffString( criterionListID );
+        var criteronToken = fmApp.slices.allCriteriaListOffString(criterionListID);
         // var componentDataLikeFromURL = {"identifierString": fmApp.slices.allCriteriaListOffString(criteronToken), "rating": "3"};
         fmApp.addComponent(null, criteronToken);
     });
@@ -847,7 +857,7 @@ $(document).ready(function() {
     $("#componentWheel").click(function() {
         var compnentWheelContainer = $("#compnentWheelContainer");
         compnentWheelContainer.toggleClass("showComponentWheel");
-        if( compnentWheelContainer.hasClass("showComponentWheel") ) {
+        if (compnentWheelContainer.hasClass("showComponentWheel")) {
             compnentWheelContainer.fadeIn(function(event) {
                 drawCompnentWheel();
             });
@@ -857,7 +867,7 @@ $(document).ready(function() {
     });
 
     // Handle hints 
-    $("#usageAlert").fadeTo(10000, 500).slideUp(500, function(){
+    $("#usageAlert").fadeTo(10000, 500).slideUp(500, function() {
         $("#usageAlert").slideUp(500);
     });
 
@@ -865,7 +875,7 @@ $(document).ready(function() {
     fmApp.heatmap.init();
 
     // Listener for all mouse movements
-    $('.container').mousemove(function (mouseEvent) {
+    $('.container').mousemove(function(mouseEvent) {
         // mouseEvent.preventDefault();
         let dataPoint = {
             x: mouseEvent.pageX,
@@ -874,9 +884,24 @@ $(document).ready(function() {
         };
         fmApp.mouseData.mMove.data.push(dataPoint);
     });
+    // Listener for all mouse clicks
+    $('.container').click(function(mouseEvent) {
+        let dataPoint = {
+            x: mouseEvent.pageX,
+            y: mouseEvent.pageY,
+            value: 10
+        };
+        fmApp.mouseData.mClick.data.push(dataPoint);
+    });
 
+    // Debug Show for Heatmap
     $("#filter").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mMove();
+    });
+
+    $("#changeView").click(function(mouseEvent) {
+        mouseEvent.preventDefault();
+        fmApp.heatmap.debugShow.mClick();
     });
 });
