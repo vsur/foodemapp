@@ -2,9 +2,9 @@
     <div class="col-md-12">
     <?php foreach ($ypois as $nr => $ypoi): ?>
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading aoi-move">
                 <h3 class="panel-title clearfix">
-                    <strong>
+                    <strong class="aoi-move">
                         <?= $this->Number->format($nr + 1) . '.' ?> <?= h($ypoi->name) ?>
                     </strong> 
                     <?php 
@@ -14,7 +14,7 @@
                             echo $this->Number->format($ypoi->distance) . " km ";
                         }
                     ?>
-                    <div class="listMoreInfo pull-right">
+                    <div class="listMoreInfo pull-right aoi-move">
                         Mehr Infos anzeigen <span class="caret"></span>
                     </div>
                 </h3>

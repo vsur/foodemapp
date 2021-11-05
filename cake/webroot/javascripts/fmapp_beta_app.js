@@ -681,6 +681,18 @@ var fmApp = {
                 }
             }
         },
+        getCenteredCoordinates: function(item, ev) {
+            let elementCenters = {};
+        
+            let bodyRect = document.body.getBoundingClientRect(),
+                elemRect = item.getBoundingClientRect();
+            elementCenters.centerX = Math.round(elemRect.left + item.offsetWidth / 2);
+            elementCenters.centerY = Math.round(elemRect.top + item.offsetHeight / 2);
+            if (ev == "click") console.log("elem " + elemRect.top + " / body " + bodyRect.top + " / item.offsetHeight " + item.offsetHeight + " / itemH/2 " + item.offsetHeight / 2);
+            if (ev == "click") console.log("eCenter " + elementCenters.centerY);
+        
+            return elementCenters;
+        },
         debugShow: {
             mMove: function()  {
                 let mMoveState = fmApp.mouseData.mMove.showMap;
@@ -703,7 +715,19 @@ var fmApp = {
                     data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
                 };
                 heatmap.setData(heatMapData);
+            },
+            aoiMove: function() {
+                let aoiMoveState = fmApp.mouseData.aoiMove.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.mouseData.aoiMove.showMap = !aoiMoveState;
+                let heatMapData = {
+                    max: 10,
+                    min: 0,
+                    data: fmApp.mouseData.aoiMove.showMap ? fmApp.mouseData.aoiMove.data : []
+                };
+                heatmap.setData(heatMapData);
             }
+        
         }
     }
 };
@@ -893,8 +917,26 @@ $(document).ready(function() {
         };
         fmApp.mouseData.mClick.data.push(dataPoint);
     });
+    // Listener for AOI mouse moves
+    $('.aoi-move').each(function( index ) {
+        $(this).mousemove(function(mouseEvent) {
+            // mouseEvent.preventDefault();
+            
+            let elemToCenter = fmApp.heatmap.getCenteredCoordinates($(this).get(0));
+            // console.log(item);
+            let dataPoint = {
+                x: elemToCenter.centerX,
+                y: elemToCenter.centerY,
+                value: 1
+            };
+            fmApp.mouseData.aoiMove.data.push(dataPoint);
+            console.log(dataPoint);
+        });
+    });
 
-    // Debug Show for Heatmap
+    /*****************************
+     * // DEBUG SHOW FOR HEATMAP *
+     *****************************/
     $("#filter").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mMove();
@@ -903,5 +945,10 @@ $(document).ready(function() {
     $("#changeView").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mClick();
+    });
+
+    $("#componentWheel").click(function(mouseEvent) {
+        mouseEvent.preventDefault();
+        fmApp.heatmap.debugShow.aoiMove();
     });
 });
