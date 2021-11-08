@@ -56,7 +56,7 @@
                 ["controller" => "RequestEvaluations", "action" => "new", $this->request->pass[0], "?" => $this->request->query],
                 [
                   'class' => 'btn btn-default navbar-btn', 
-                  'id' => 'filter',
+                  'id' => 'requestEval',
                   'aria-label' => 'Bewerten Sie die aktuelle Suchanfrage', 
                   'escape' => false
                 ]

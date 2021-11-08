@@ -681,6 +681,12 @@ var fmApp = {
                 }
             }
         },
+        showFront: function() {
+            $("#heatmapContainer").css("z-index", "1010");
+        },
+        hideBack: function() {
+            $("#heatmapContainer").css("z-index", "0");
+        },
         getCenteredCoordinates: function(item, ev) {
             let elementCenters = {};
         
@@ -704,6 +710,8 @@ var fmApp = {
                     data: fmApp.mouseData.mMove.showMap ? fmApp.mouseData.mMove.data : []
                 };
                 heatmap.setData(heatMapData);
+                if(fmApp.mouseData.mMove.showMap) fmApp.heatmap.showFront(); 
+                else fmApp.heatmap.hideBack(); 
             },
             mClick: function()  {
                 let mClickState = fmApp.mouseData.mClick.showMap;
@@ -715,6 +723,8 @@ var fmApp = {
                     data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
                 };
                 heatmap.setData(heatMapData);
+                if(fmApp.mouseData.mClick.showMap) fmApp.heatmap.showFront();
+                else fmApp.heatmap.hideBack();
             },
             aoiMove: function() {
                 let aoiMoveState = fmApp.mouseData.aoiMove.showMap;
@@ -726,8 +736,22 @@ var fmApp = {
                     data: fmApp.mouseData.aoiMove.showMap ? fmApp.mouseData.aoiMove.data : []
                 };
                 heatmap.setData(heatMapData);
+                if(fmApp.mouseData.aoiMove.showMap) fmApp.heatmap.showFront();
+                else fmApp.heatmap.hideBack();
+            },
+            aoiClick: function() {
+                let aoiClickState = fmApp.mouseData.aoiClick.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.mouseData.aoiClick.showMap = !aoiClickState;
+                let heatMapData = {
+                    max: 10,
+                    min: 0,
+                    data: fmApp.mouseData.aoiClick.showMap ? fmApp.mouseData.aoiClick.data : []
+                };
+                heatmap.setData(heatMapData);
+                if(fmApp.mouseData.aoiClick.showMap) fmApp.heatmap.showFront();
+                else fmApp.heatmap.hideBack();
             }
-        
         }
     }
 };
@@ -913,7 +937,7 @@ $(document).ready(function() {
         let dataPoint = {
             x: mouseEvent.pageX,
             y: mouseEvent.pageY,
-            value: 10
+            value: 1
         };
         fmApp.mouseData.mClick.data.push(dataPoint);
     });
@@ -934,6 +958,22 @@ $(document).ready(function() {
         });
     });
 
+    // Listener for AOI mouse clicks
+    $('.aoi-click').each(function( index ) {
+        $(this).click(function(mouseEvent) {
+            // mouseEvent.preventDefault();
+
+            let elemToCenter = fmApp.heatmap.getCenteredCoordinates($(this).get(0), "click");
+
+            let dataPoint = {
+                x: elemToCenter.centerX,
+                y: elemToCenter.centerY,
+                value: 1
+            };
+            fmApp.mouseData.aoiClick.data.push(dataPoint);
+        });
+    });
+
     /*****************************
      * // DEBUG SHOW FOR HEATMAP *
      *****************************/
@@ -950,5 +990,10 @@ $(document).ready(function() {
     $("#componentWheel").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.aoiMove();
+    });
+
+    $("#requestEval").click(function(mouseEvent) {
+        mouseEvent.preventDefault();
+        fmApp.heatmap.debugShow.aoiClick();
     });
 });

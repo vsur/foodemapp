@@ -7411,13 +7411,15 @@ input#criteriaInput.chosen:-ms-input-placeholder {
  */
 a#filter,
 a#changeView,
-button#componentWheel {
+button#componentWheel,
+a#requestEval {
   margin-right: 15px;
   float: left; }
   @media screen and (max-width: 767px) {
     a#filter,
     a#changeView,
-    button#componentWheel {
+    button#componentWheel,
+    a#requestEval {
       float: right; } }
 
 #poiCount {

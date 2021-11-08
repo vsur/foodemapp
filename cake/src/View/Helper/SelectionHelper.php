@@ -55,12 +55,12 @@ class SelectionHelper extends Helper {
         foreach ($ratedComponents->binaryComponents as $rankedBinary) {
             $ratingString .= '<li class="binaryComponentContainer clearfix">';
 
-            $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
+            $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left aoi-move aoi-click" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
             $ratingString .=    '<span class="binaryComponentInfo">';
-            $ratingString .=    '   <span>';
+            $ratingString .=    '   <span class="aoi-move aoi-click">';
             $ratingString .=    '       ' . $rankedBinary->display_name != '' ? $rankedBinary->display_name : $rankedBinary->name;
             $ratingString .=    '   </span>';
-            $ratingString .=    '   <span class="pull-right">';
+            $ratingString .=    '   <span class="pull-right aoi-move aoi-click">';
             $ratingString .=    '       <span class="glyphicon ' . ( $rankedBinary->binaryComponentState ? 'glyphicon-ok text-success' : 'glyphicon-remove text-danger' ) . '" aria-hidden="true"></span>';
             $ratingString .=    '   </span>';
             $ratingString .=    '</span>';
@@ -72,9 +72,9 @@ class SelectionHelper extends Helper {
         foreach($ratedComponents->nominalAttributes as $rankedNominal) {
             $ratingString .= '<li class="nominalComponentContainer clearfix">';
 
-            $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
-            $ratingString .=    '<div class="nominalAttribute pull-right"><figure class="attrIcons ' . ($rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder') . '"></figure></div>';
-            $ratingString .=    '<div class="nominalComponentInfo">';
+            $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left aoi-move aoi-click" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
+            $ratingString .=    '<div class="nominalAttribute pull-right aoi-move aoi-click"><figure class="attrIcons ' . ($rankedNominal->icon_path != '' ? $rankedNominal->icon_path : 'iconPlaceholder') . '"></figure></div>';
+            $ratingString .=    '<div class="nominalComponentInfo aoi-move aoi-click">';
             $ratingString .=    '<span class="componentNameNominalComponent' . ($rankedNominal->nominal_component->display_name != '' ? '' : ' text-muted') . '">' . ($rankedNominal->nominal_component->display_name != '' ? ($rankedNominal->nominal_component->display_name) : $rankedNominal->nominal_component->name) . '</span> <span class="attributeNameNominalAttribute ' . ($rankedNominal->display_name != '' ? 'textURcolor' : 'text-muted') . '">' . ($rankedNominal->display_name != '' ? $rankedNominal->display_name : $rankedNominal->name) . '</span>';
             $ratingString .=    '</div>';
 
@@ -85,10 +85,10 @@ class SelectionHelper extends Helper {
         foreach($ratedComponents->ordinalAttributes as $rankedOrdinal) {
             $ratingString .= '<li class="ordinalComponentContainer clearfix">';
             
-            $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
+            $ratingString .=    '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left aoi-move aoi-click" aria-hidden="true"><span class="choosenStarAgregationNumber">' . $N_StarRating . '</span></span>';
             $ratingString .=    '<div class="ordinalComponentInfo">';
-            $ratingString .=        '<span class="componentNameOrdinalComponent' . ($rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted') . '">' . ($rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name) . '</span>'; 
-            $ratingString .=        '<span class="attributeNameOrdinalAttribute pull-right ' . ($rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted') . '">' . ($rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name) . '</span> <br>';
+            $ratingString .=        '<span class="aoi-move aoi-click componentNameOrdinalComponent' . ($rankedOrdinal->ordinal_component->display_name != '' ? '' : ' text-muted') . '">' . ($rankedOrdinal->ordinal_component->display_name != '' ? ( $rankedOrdinal->ordinal_component->display_name) :  $rankedOrdinal->ordinal_component->name) . '</span>'; 
+            $ratingString .=        '<span class="aoi-move aoi-click attributeNameOrdinalAttribute pull-right ' . ($rankedOrdinal->display_name != '' ? 'textURcolor' : 'text-muted') . '">' . ($rankedOrdinal->display_name != '' ? $rankedOrdinal->display_name : $rankedOrdinal->name) . '</span> <br>';
             $ratingString .=    '</div>';
 
             $ratingString .= '</li>';
