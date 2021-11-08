@@ -974,25 +974,29 @@ $(document).ready(function() {
         });
     });
 
+    $("#heatmapBar").hover(function (mouseEvent){
+        $(this).toggleClass("showHeatmapBar");
+    });
+
     /*****************************
      * // DEBUG SHOW FOR HEATMAP *
      *****************************/
-    $("#filter").click(function(mouseEvent) {
+    $("#heatmapShow-mMove").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mMove();
     });
 
-    $("#changeView").click(function(mouseEvent) {
+    $("#heatmapShow-mClick").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mClick();
     });
 
-    $("#componentWheel").click(function(mouseEvent) {
+    $("#heatmapShow-aoiMove").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.aoiMove();
     });
 
-    $("#requestEval").click(function(mouseEvent) {
+    $("#heatmapShow-aoiClick").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.aoiClick();
     });

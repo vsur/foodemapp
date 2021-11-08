@@ -13,3 +13,31 @@
     width: 100%;
     height: 100%;
 }
+#heatmapBar {
+    position: fixed;
+    left: -15px;
+    top: 150px;
+    z-index: 1040;
+    border-radius: 15px;
+    padding: 15px 0 15px 15px; /* Remove padding */
+    background: lighten($urcd-color, 13.5%);
+    border-color: lighten($urcd-color, 27%);
+    opacity: 0.25;
+    transition: all 0.25s ease;
+    
+    ul {
+        list-style-type: none; /* Remove bullets */
+        padding: 0 15px 0 15px; /* Remove padding */
+        margin: 0; /* Remove margins */
+
+        li {
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+        }
+    }
+}
+
+#heatmapBar.showHeatmapBar {
+    opacity: 1;
+}

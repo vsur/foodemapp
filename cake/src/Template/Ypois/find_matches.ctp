@@ -83,6 +83,26 @@
     }
 ?>
 
+<aside id="heatmapBar">
+    <nav>
+        <ul>
+            <li id="heatmapShow-mMove">
+                <span class="glyphicon glyphicon-move" aria-hidden="true"></span> All
+            </li>
+            <li id="heatmapShow-mClick">
+                <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> All
+            </li>
+            <li id="heatmapShow-aoiMove">
+                <span class="glyphicon glyphicon-move" aria-hidden="true"></span> AOI
+            </li>
+            <li id="heatmapShow-aoiClick">
+                <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> AOI
+            </li>
+        </ul>
+    
+    </nav>
+</aside>
+
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Criteria Block for JS ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
