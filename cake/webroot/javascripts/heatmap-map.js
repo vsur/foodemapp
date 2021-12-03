@@ -7,7 +7,8 @@ var heatmap;
 
 
 var testData = {
-    max: 8,
+    max: 10,
+    min: 0,
     data: [{
         lat: 49.11, 
         lng: 8.40706,
@@ -65,8 +66,36 @@ var heatmapLayerCfg = {
 var heatmapLayer = new HeatmapOverlay(heatmapLayerCfg);
 
 $(document).ready(function () {
-    mymap.addLayer(heatmapLayer);
-    setTimeout(function () {
-        heatmapLayer.setData(testData);
-    }, 3000);
+    // setTimeout(function () {
+    //     mymap.addLayer(heatmapLayer);
+    //     heatmapLayer.setData(testData);
+    // }, 3000);
+
+    // Listener for all mouse clicks
+    // $('.container').click(function (mouseEvent) {
+    //     let dataPoint = {
+    //         x: mouseEvent.pageX,
+    //         y: mouseEvent.pageY,
+    //         value: 1
+    //     };
+    //     fmApp.mouseData.mClick.data.push(dataPoint);
+    // });
+
+     $("#heatmapBar").hover(function (mouseEvent) {
+        $(this).toggleClass("showHeatmapBar");
+    });
+
+    /*****************************
+     * // DEBUG SHOW FOR HEATMAP *
+     *****************************/
+    // Test hide heatmapLayer
+    $("#heatmapShow-mMove").click(function (mouseEvent) {
+        mouseEvent.preventDefault();
+        fmApp.heatmap.debugShow.mMoveMap();
+    });
+
+    $("#heatmapShow-mClick").click(function (mouseEvent) {
+        mouseEvent.preventDefault();
+        fmApp.heatmap.debugShow.mClickMap();
+    });
 });
