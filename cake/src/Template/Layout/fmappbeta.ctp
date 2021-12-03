@@ -73,6 +73,8 @@ $cakeDescription = 'Food_M_App';
   <!-- Placed at the end of the document so the pages load faster -->
   <?= $this->Html->script('bootstrap.js') ?>
   <?= $this->Html->script('heatmap.min.js') ?>
+  <!-- Block for post heatmap init -->
+  <?= $this->fetch('scriptAfterHeatmap'); ?>
   <?= $this->Html->script('fmapp_beta_app.js') ?>
 
   <!-- Block for post fmApp init -->

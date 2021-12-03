@@ -45,7 +45,7 @@ module.exports = function(grunt) {
 			},
 
 			// when this task is run, lint the Gruntfile and all js files in src
-			all: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'javascripts/fmapp_beta_app.js', 'javascripts/filterwheelsunburst.js']
+			all: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'javascripts/fmapp_beta_app.js', 'javascripts/filterwheelsunburst.js', 'javascripts/heatmap-std.js', 'javascripts/heatmap-map.js']
 		},
 
 		concat: {
@@ -72,6 +72,14 @@ module.exports = function(grunt) {
 			leafletMap: {
 				src: ['javascripts/leaflet-map.js'],
 				dest: 'js/leaflet-map.js',
+			},
+			heatmap: {
+				src: ['javascripts/heatmap-std.js'],
+				dest: 'js/heatmap-std.js',
+			},
+			heatmapMap: {
+				src: ['javascripts/heatmap-map.js'],
+				dest: 'js/heatmap-map.js',
 			}
 
 		},
@@ -81,7 +89,7 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['javascripts/*.js'],
-				tasks: ['jshint', 'concat:noBootBeta', 'concat:componentWheel', 'concat:chord', 'concat:leafletMap'],
+				tasks: ['jshint', 'concat:noBootBeta', 'concat:componentWheel', 'concat:chord', 'concat:leafletMap', 'concat:heatmap', 'concat:heatmapMap'],
 				options: {
 					spawn: false
 				},
