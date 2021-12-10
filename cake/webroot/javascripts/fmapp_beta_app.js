@@ -720,45 +720,8 @@ var fmApp = {
                 let heatMapData = {
                     max: 10,
                     min: 0,
-                    data: [{
-                        lat: 49.115, 
-                        lng: 8.40706,
-                        count: 8
-                    }, {
-                        lat: 49.21, 
-                        lng: 8.40806,
-                        count: 7
-                    }, {
-                        lat: 49.015, 
-                        lng: 8.40706,
-                        count: 5
-                    }, {
-                        lat: 49.02, 
-                        lng: 8.40856,
-                        count: 4
-                    }, {
-                        lat: 49.03, 
-                        lng: 8.40676,
-                        count: 3
-                    }, {
-                        lat: 49.016, 
-                        lng: 8.4045,
-                        count: 2
-                    }, {
-                        lat: 49.024, 
-                        lng: 8.40808,
-                        count: 1
-                    }, {
-                        lat: 49.017, 
-                        lng: 8.40809,
-                        count: 2
-                    }]
-                };  
-                // let heatMapData = {
-                //     max: 10,
-                //     min: 0,
-                //     data: fmApp.mouseData.mMove.showMap ? fmApp.mouseData.mMove.data : []
-                // };
+                    data: fmApp.mouseData.mMove.showMap ? fmApp.mouseData.mMove.data : []
+                };
                 if(fmApp.mouseData.mMove.showMap)  mymap.addLayer(heatmapLayer);
                 else mymap.removeLayer(heatmapLayer);
                 heatmapLayer.setData(heatMapData); 
@@ -768,7 +731,7 @@ var fmApp = {
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.mouseData.mClick.showMap = !mClickState;
                 let heatMapData = {
-                    max: 10,
+                    max: 1,
                     min: 0,
                     data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
                 };
@@ -781,47 +744,10 @@ var fmApp = {
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.mouseData.mClick.showMap = !mClickState;
                 let heatMapData = {
-                    max: 10,
+                    max: 1,
                     min: 0,
-                    data: [{
-                        lat: 49.11, 
-                        lng: 8.40706,
-                        count: 1
-                    }, {
-                        lat: 49.21, 
-                        lng: 8.40806,
-                        count: 2
-                    }, {
-                        lat: 49.013, 
-                        lng: 8.40706,
-                        count: 3
-                    }, {
-                        lat: 49.015, 
-                        lng: 8.40856,
-                        count: 4
-                    }, {
-                        lat: 49.025, 
-                        lng: 8.40676,
-                        count: 5
-                    }, {
-                        lat: 49.011, 
-                        lng: 8.4045,
-                        count: 6
-                    }, {
-                        lat: 49.0195, 
-                        lng: 8.40808,
-                        count: 7
-                    }, {
-                        lat: 49.011, 
-                        lng: 8.40809,
-                        count: 8
-                    }]
-                };  
-                // let heatMapData = {
-                //     max: 10,
-                //     min: 0,
-                //     data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
-                // };
+                    data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
+                };
                 if(fmApp.mouseData.mClick.showMap)  mymap.addLayer(heatmapLayer);
                 else mymap.removeLayer(heatmapLayer);
                 heatmapLayer.setData(heatMapData);

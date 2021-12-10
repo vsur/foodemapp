@@ -5,45 +5,6 @@
 
 var heatmap;
 
-
-var testData = {
-    max: 10,
-    min: 0,
-    data: [{
-        lat: 49.11, 
-        lng: 8.40706,
-        count: 1
-    }, {
-        lat: 49.21, 
-        lng: 8.40806,
-        count: 2
-    }, {
-        lat: 49.013, 
-        lng: 8.40706,
-        count: 3
-    }, {
-        lat: 49.015, 
-        lng: 8.40856,
-        count: 4
-    }, {
-        lat: 49.025, 
-        lng: 8.40676,
-        count: 5
-    }, {
-        lat: 49.011, 
-        lng: 8.4045,
-        count: 6
-    }, {
-        lat: 49.0195, 
-        lng: 8.40808,
-        count: 7
-    }, {
-        lat: 49.011, 
-        lng: 8.40809,
-        count: 8
-    }]
-};
-
 var heatmapLayerCfg = {
     // radius should be small ONLY if scaleRadius is true (or small radius is intended)
     // if scaleRadius is false it will be the constant radius used in pixels
@@ -56,20 +17,42 @@ var heatmapLayerCfg = {
     //   (there will always be a red spot with useLocalExtremas true)
     "useLocalExtrema": false,
     // which field name in your data represents the latitude - default "lat"
-    latField: 'lat',
+    latField: 'x',
     // which field name in your data represents the longitude - default "lng"
-    lngField: 'lng',
+    lngField: 'y',
     // which field name in your data represents the data value - default "value"
-    valueField: 'count'
+    valueField: 'value'
 };
 
 var heatmapLayer = new HeatmapOverlay(heatmapLayerCfg);
+
+var mouseLat, mouseLng;
+
+mymap.addEventListener('mousemove', function(e) {
+   mouseLat = e.latlng.lat;
+   mouseLng = e.latlng.lng;
+   let dataPoint = {
+            x: mouseLat,
+            y: mouseLng,
+            value: 1
+        };
+    fmApp.mouseData.mMove.data.push(dataPoint);
+});
 
 $(document).ready(function () {
     // setTimeout(function () {
     //     mymap.addLayer(heatmapLayer);
     //     heatmapLayer.setData(testData);
     // }, 3000);
+    $("#ypoisMap").on('click', function(mouseEvent) {
+        let dataPoint = {
+            x: mouseLat,
+            y: mouseLng,
+            value: 1
+        };
+        fmApp.mouseData.mClick.data.push(dataPoint);
+    });
+
 
     // Listener for all mouse clicks
     // $('.container').click(function (mouseEvent) {
