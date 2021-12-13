@@ -1,16 +1,20 @@
-<?php 
-  echo $this->element('navbar',
-  [
-    "step" => "Anzeige der Ergebnisse",
-    "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
-  ]);
-  if($displayVariant == 'map' ) {
-      echo $this->element('mapnavbar',
-      [
+<?php
+echo $this->element(
+    'navbar',
+    [
         "step" => "Anzeige der Ergebnisse",
         "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
-      ]);
-    }
+    ]
+);
+if ($displayVariant == 'map') {
+    echo $this->element(
+        'mapnavbar',
+        [
+            "step" => "Anzeige der Ergebnisse",
+            "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
+        ]
+    );
+}
 ?>
 
 <!-- ↑↑↑↑↑↑↑↑↑
@@ -20,21 +24,21 @@
 <?= $this->Flash->render() ?>
 
 <?php
-    if($displayVariant == 'debug') {
+if ($displayVariant == 'debug') {
 
-        if ($configuredSelection) {
-            debug("Configured Selection from URL");
-            debug($configuredSelection);
-        }
-        if ($filterSelection) {
-            debug("Build Filter Array");
-            debug($filterSelection);
-        }
-        if ($rankedSelection) {
-            debug("Ranked Filter Object");
-            debug($rankedSelection);
-        }
+    if ($configuredSelection) {
+        debug("Configured Selection from URL");
+        debug($configuredSelection);
     }
+    if ($filterSelection) {
+        debug("Build Filter Array");
+        debug($filterSelection);
+    }
+    if ($rankedSelection) {
+        debug("Ranked Filter Object");
+        debug($rankedSelection);
+    }
+}
 ?>
 
 <div id="compnentWheelContainer">
@@ -52,64 +56,62 @@
     </div>
 </div>
 
-<?php if($displayVariant != 'map' ) : ?>
-<div class="row">
-  <div class="col-md-12">
-    <?= 
-        // $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
-        $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
-    ?>
-  </div>
-</div>
+<?php if ($displayVariant != 'map') : ?>
+    <div class="row">
+        <div class="col-md-12">
+            <?=
+            // $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
+            $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
+            ?>
+        </div>
+    </div>
 <?php endif; ?>
 
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
 
 <?php
-    if($displayVariant == 'debug' || is_null($displayVariant) ) {
-        echo $this->element('findMatches/debug');
-    }
-    if($displayVariant == 'selectViz' ) {
-        echo $this->element('findMatches/select_viz');
-    }
-    if($displayVariant == 'list' ) {
-        echo $this->element('findMatches/list');
-    }
-    if($displayVariant == 'map' ) {
-        echo $this->element('findMatches/map');
-    }
-    if($displayVariant == 'chord' ) {
-        echo $this->element('findMatches/chord');
-    }
+if ($displayVariant == 'debug' || is_null($displayVariant)) {
+    echo $this->element('findMatches/debug');
+}
+if ($displayVariant == 'selectViz') {
+    echo $this->element('findMatches/select_viz');
+}
+if ($displayVariant == 'list') {
+    echo $this->element('findMatches/list');
+    echo $this->element(
+        'findMatches/heatmapbar',
+        [
+            "displayVariant" => $displayVariant
+        ]
+    );
+}
+if ($displayVariant == 'map') {
+    echo $this->element('findMatches/map');
+    echo $this->element(
+        'findMatches/heatmapbar',
+        [
+            "displayVariant" => $displayVariant
+        ]
+    );
+}
+if ($displayVariant == 'chord') {
+    echo $this->element('findMatches/chord');
+    echo $this->element(
+        'findMatches/heatmapbar',
+        [
+            "displayVariant" => $displayVariant
+        ]
+    );
+}
+
+
 ?>
-
-<aside id="heatmapBar">
-    <nav>
-        <ul>
-            <li id="heatmapShow-mMove">
-                <span class="glyphicon glyphicon-move" aria-hidden="true"></span> All
-            </li>
-            <li id="heatmapShow-mClick">
-                <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> All
-            </li>
-            <li id="heatmapShow-aoiMove">
-                <span class="glyphicon glyphicon-move" aria-hidden="true"></span> AOI
-            </li>
-            <li id="heatmapShow-aoiClick">
-                <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> AOI
-            </li>
-        </ul>
-    
-    </nav>
-</aside>
-
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Criteria Block for JS ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
 <script type="text/javascript">
     var criteria = <?= json_encode($criteria) ?>;
     var configuredSelection = <?= json_encode($configuredSelection) ?>;
-    
 </script>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Criteria Block for JS ↑↑↑↑

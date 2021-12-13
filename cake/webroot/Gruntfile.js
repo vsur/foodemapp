@@ -45,7 +45,18 @@ module.exports = function(grunt) {
 			},
 
 			// when this task is run, lint the Gruntfile and all js files in src
-			all: ['Gruntfile.js', '!javascripts/bootstrap*.js', 'javascripts/fmapp_app.js', 'javascripts/fmapp_beta_app.js', 'javascripts/filterwheelsunburst.js', 'javascripts/heatmap-std.js', 'javascripts/heatmap-map.js']
+			all: [
+				'Gruntfile.js', 
+				'!javascripts/bootstrap*.js', 
+				'javascripts/fmapp_app.js', 
+				'javascripts/fmapp_beta_app.js', 
+				'javascripts/filterwheelsunburst.js', 
+				'javascripts/heatmap-std.js', 
+				'javascripts/heatmap-map.js',
+				'javascripts/aoi-list.js',
+				'javascripts/aoi-chord.js',
+				'javascripts/aoi-map.js'
+			]
 		},
 
 		concat: {
@@ -80,6 +91,18 @@ module.exports = function(grunt) {
 			heatmapMap: {
 				src: ['javascripts/heatmap-map.js'],
 				dest: 'js/heatmap-map.js',
+			},
+			aoiList: {
+				src: ['javascripts/aoi-list.js'],
+				dest: 'js/aoi-list.js',
+			},
+			aoiChord: {
+				src: ['javascripts/aoi-chord.js'],
+				dest: 'js/aoi-chord.js',
+			},
+			aoiMap: {
+				src: ['javascripts/aoi-map.js'],
+				dest: 'js/aoi-map.js',
 			}
 
 		},
@@ -89,7 +112,18 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['javascripts/*.js'],
-				tasks: ['jshint', 'concat:noBootBeta', 'concat:componentWheel', 'concat:chord', 'concat:leafletMap', 'concat:heatmap', 'concat:heatmapMap'],
+				tasks: [
+					'jshint', 
+					'concat:noBootBeta', 
+					'concat:componentWheel', 
+					'concat:chord', 
+					'concat:leafletMap', 
+					'concat:heatmap', 
+					'concat:heatmapMap',
+					'concat:aoiList',
+					'concat:aoiChord',
+					'concat:aoiMap'
+				],
 				options: {
 					spawn: false
 				},

@@ -64,10 +64,6 @@ $(document).ready(function () {
     //     fmApp.mouseData.mClick.data.push(dataPoint);
     // });
 
-     $("#heatmapBar").hover(function (mouseEvent) {
-        $(this).toggleClass("showHeatmapBar");
-    });
-
     /*****************************
      * // DEBUG SHOW FOR HEATMAP *
      *****************************/

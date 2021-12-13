@@ -16,3 +16,4 @@ echo $this->Html->script('leaflet.bezier', ['block' => true]);
 <?= $this->Html->script('leaflet-heatmap.js', ['block' => 'scriptAfterHeatmap']) ?>
 <?= $this->Html->script('leaflet-map.js', ['block' => 'scriptAfterfmApp']) ?>
 <?= $this->Html->script('heatmap-map.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('aoi-map.js', ['block' => 'scriptAfterfmApp']) ?>

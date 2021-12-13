@@ -14,3 +14,4 @@
 <?= $this->Html->script('chord-diagram.js') ?>
 
 <?= $this->Html->script('heatmap-std.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('aoi-chord.js', ['block' => 'scriptAfterfmApp']) ?>

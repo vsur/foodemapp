@@ -29,43 +29,7 @@ $(document).ready(function () {
         };
         fmApp.mouseData.mClick.data.push(dataPoint);
     });
-    // Listener for AOI mouse moves
-    $('.aoi-move').each(function (index) {
-        $(this).mousemove(function (mouseEvent) {
-            // mouseEvent.preventDefault();
-
-            let elemToCenter = fmApp.heatmap.getCenteredCoordinates($(this).get(0));
-            // console.log(item);
-            let dataPoint = {
-                x: elemToCenter.centerX,
-                y: elemToCenter.centerY,
-                value: 1
-            };
-            fmApp.mouseData.aoiMove.data.push(dataPoint);
-            console.log(dataPoint);
-        });
-    });
-
-    // Listener for AOI mouse clicks
-    $('.aoi-click').each(function (index) {
-        $(this).click(function (mouseEvent) {
-            // mouseEvent.preventDefault();
-
-            let elemToCenter = fmApp.heatmap.getCenteredCoordinates($(this).get(0), "click");
-
-            let dataPoint = {
-                x: elemToCenter.centerX,
-                y: elemToCenter.centerY,
-                value: 1
-            };
-            fmApp.mouseData.aoiClick.data.push(dataPoint);
-        });
-    });
-
-    $("#heatmapBar").hover(function (mouseEvent) {
-        $(this).toggleClass("showHeatmapBar");
-    });
-
+    
     /*****************************
      * // DEBUG SHOW FOR HEATMAP *
      *****************************/
@@ -77,16 +41,6 @@ $(document).ready(function () {
     $("#heatmapShow-mClick").click(function (mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mClick();
-    });
-
-    $("#heatmapShow-aoiMove").click(function (mouseEvent) {
-        mouseEvent.preventDefault();
-        fmApp.heatmap.debugShow.aoiMove();
-    });
-
-    $("#heatmapShow-aoiClick").click(function (mouseEvent) {
-        mouseEvent.preventDefault();
-        fmApp.heatmap.debugShow.aoiClick();
     });
 
 });

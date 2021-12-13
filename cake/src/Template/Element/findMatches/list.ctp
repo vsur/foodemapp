@@ -1,10 +1,27 @@
 <div class="row" id="listView">
     <div class="col-md-12">
         <?php foreach ($ypois as $nr => $ypoi) : ?>
+            <?php
+            $mouseTrackId = "";
+            switch ($ypoi->id) {
+                case 559:
+                    $mouseTrackId = "mouseTrackListZwiebel";
+                    break;
+                case 525:
+                    $mouseTrackId = "mouseTrackListVapiano";
+                    break;
+                case 635:
+                    $mouseTrackId = "mouseTrackListOishii";
+                    break;
+                case 431:
+                    $mouseTrackId = "mouseTrackListDiner";
+                    break;
+            }
+            ?>
             <div class="panel panel-default">
-                <div class="panel-heading aoi-move aoi-click">
+                <div id="<?= $mouseTrackId ?>" class="panel-heading">
                     <h3 class="panel-title clearfix">
-                        <strong class="aoi-move aoi-click">
+                        <strong>
                             <?= $this->Number->format($nr + 1) . '.' ?> <?= h($ypoi->name) ?>
                         </strong>
                         <?php
@@ -14,7 +31,7 @@
                             echo $this->Number->format($ypoi->distance) . " km ";
                         }
                         ?>
-                        <div class="listMoreInfo pull-right aoi-move aoi-click">
+                        <div class="listMoreInfo pull-right">
                             Mehr Infos anzeigen <span class="caret"></span>
                         </div>
                     </h3>
@@ -27,12 +44,12 @@
                     </div>
                     <div class="row componentOverview">
                         <div class="col-sm-6 choosenSelection">
-                            <h4><span class="label label-primary aoi-move aoi-click">Gewählte</span></h4>
+                            <h4><span class="label label-primary">Gewählte</span></h4>
                             <?= $rankedSelection ? $this->Selection->createRankedSelectionList($rankedSelection) : '<div class="alert alert-danger" role="alert"><strong>Keine Filerauswahl getroffen</strong></div>' ?>
                         </div>
                         <div class="col-sm-6 otherComponents">
                             <h4>
-                                <span class="label label-default aoi-move aoi-click">
+                                <span class="label label-default">
                                     Übrige
                                 </span>
                             </h4>
@@ -41,10 +58,10 @@
                                     <?php if (!in_array($binaryComponent->id, $rankedSelection->binaryComponentIDs)) : ?>
                                         <li class="binaryComponentContainer componentNameBinarySlider clearfix">
                                             <span class="binaryComponentInfo">
-                                                <span class="aoi-move aoi-click">
+                                                <span class="">
                                                     <?= $binaryComponent->display_name != '' ? $binaryComponent->display_name : $binaryComponent->name; ?>
                                                 </span>
-                                                <span class="pull-right aoi-move aoi-click">
+                                                <span class="pull-right">
                                                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                 </span>
                                             </span>
@@ -55,10 +72,10 @@
                                 <?php foreach ($ypoi->nominal_attributes as $nomnialAttribute) : ?>
                                     <?php if (!in_array($nomnialAttribute->id, $rankedSelection->nominalAttributeIDs)) : ?>
                                         <li class="nominalComponentContainer clearfix">
-                                            <div class="nominalAttribute pull-right aoi-move aoi-click">
+                                            <div class="nominalAttribute pull-right">
                                                 <figure class="attrIcons <?= $nomnialAttribute->icon_path != '' ? $nomnialAttribute->icon_path : 'iconPlaceholder' ?>"></figure>
                                             </div>
-                                            <div class="nominalComponentInfo aoi-move aoi-click">
+                                            <div class="nominalComponentInfo">
                                                 <span class="componentNameNominalComponent<?= $nomnialAttribute->nominal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $nomnialAttribute->nominal_component->display_name != '' ? ($nomnialAttribute->nominal_component->display_name) : $nomnialAttribute->nominal_component->name ?></span> <span class="attributeNameNominalAttribute <?= $nomnialAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?>"><?= $nomnialAttribute->display_name != '' ? $nomnialAttribute->display_name : $nomnialAttribute->name ?></span>
                                             </div>
                                         </li>
@@ -69,7 +86,7 @@
                                     <?php if (!in_array($ordinalAttribute->id, $rankedSelection->ordinalAttributeIDs)) : ?>
                                         <li class="ordianalComponentContainer">
                                             <div class="ordianalComponentInfo">
-                                                <span class="aoi-move aoi-click componentNameOrdinalComponent<?= $ordinalAttribute->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $ordinalAttribute->ordinal_component->display_name != '' ? ($ordinalAttribute->ordinal_component->display_name) :  $ordinalAttribute->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $ordinalAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?> pull-right aoi-move aoi-click"><?= $ordinalAttribute->display_name != '' ? $ordinalAttribute->display_name : $ordinalAttribute->name ?></span> <br>
+                                                <span class=" componentNameOrdinalComponent<?= $ordinalAttribute->ordinal_component->display_name != '' ? '' : ' text-muted' ?>"><?= $ordinalAttribute->ordinal_component->display_name != '' ? ($ordinalAttribute->ordinal_component->display_name) :  $ordinalAttribute->ordinal_component->name ?></span> <span class="attributeNameOrdinalAttribute <?= $ordinalAttribute->display_name != '' ? 'textURcolor' : 'text-muted' ?> pull-right"><?= $ordinalAttribute->display_name != '' ? $ordinalAttribute->display_name : $ordinalAttribute->name ?></span> <br>
                                             </div>
                                         </li>
                                     <?php endif; ?>
@@ -85,3 +102,4 @@
 </div>
 
 <?= $this->Html->script('heatmap-std.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('aoi-list.js', ['block' => 'scriptAfterfmApp']) ?>

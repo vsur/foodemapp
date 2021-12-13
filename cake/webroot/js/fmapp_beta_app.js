@@ -38,6 +38,14 @@ var fmApp = {
         aoiClick: {
             showMap: false,
             data: []
+        },
+        aoi: {
+            list: {
+                zwiebel: [],
+                vapiano: [],
+                oishii: [],
+                diner: []
+            }
         }
     },
 
@@ -752,31 +760,23 @@ var fmApp = {
                 else mymap.removeLayer(heatmapLayer);
                 heatmapLayer.setData(heatMapData);
             },
-            aoiMove: function() {
-                let aoiMoveState = fmApp.mouseData.aoiMove.showMap;
-                fmApp.heatmap.setHideAllMaps();
-                fmApp.mouseData.aoiMove.showMap = !aoiMoveState;
-                let heatMapData = {
-                    max: 10,
-                    min: 0,
-                    data: fmApp.mouseData.aoiMove.showMap ? fmApp.mouseData.aoiMove.data : []
-                };
-                heatmap.setData(heatMapData);
-                if(fmApp.mouseData.aoiMove.showMap) fmApp.heatmap.showFront();
-                else fmApp.heatmap.hideBack();
+            aoiList: function() {
+                /********************
+                 * TODO NICE OUTPUT *
+                 ********************/
+                console.log(fmApp.mouseData.aoi.list);
             },
-            aoiClick: function() {
-                let aoiClickState = fmApp.mouseData.aoiClick.showMap;
-                fmApp.heatmap.setHideAllMaps();
-                fmApp.mouseData.aoiClick.showMap = !aoiClickState;
-                let heatMapData = {
-                    max: 10,
-                    min: 0,
-                    data: fmApp.mouseData.aoiClick.showMap ? fmApp.mouseData.aoiClick.data : []
-                };
-                heatmap.setData(heatMapData);
-                if(fmApp.mouseData.aoiClick.showMap) fmApp.heatmap.showFront();
-                else fmApp.heatmap.hideBack();
+            aoiChord: function() {
+                /********************
+                 * TODO NICE OUTPUT *
+                 ********************/
+                alert("Muss noch gebaut werden");
+            },
+            aoiMap: function() {
+                /********************
+                 * TODO NICE OUTPUT *
+                 ********************/
+                alert("Muss noch gebaut werden");
             }
         }
     }
