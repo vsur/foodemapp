@@ -40,6 +40,7 @@ var fmApp = {
             data: []
         },
         aoi: {
+            showData: false,
             list: {
                 zwiebel: [],
                 vapiano: [],
@@ -707,10 +708,25 @@ var fmApp = {
         
             return elementCenters;
         },
+        showAoiData: function() {
+            fmApp.heatmap.setHideAllMaps();
+            let heatMapData = {
+                    max: 1,
+                    min: 0,
+                    data: []
+                };
+            heatmap.setData(heatMapData);
+            $("#aoiInfoContainer").addClass("show");
+        },
+        hideAoiData: function() {
+            $("#aoiInfoContainer").removeClass("show");  
+        },
         debugShow: {
             mMove: function()  {
                 let mMoveState = fmApp.mouseData.mMove.showMap;
                 fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
                 fmApp.mouseData.mMove.showMap = !mMoveState;
                 let heatMapData = {
                     max: 10,
@@ -724,6 +740,8 @@ var fmApp = {
             mMoveMap: function()  {
                 let mMoveState = fmApp.mouseData.mMove.showMap;
                 fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
                 fmApp.mouseData.mMove.showMap = !mMoveState;
                 let heatMapData = {
                     max: 10,
@@ -737,6 +755,8 @@ var fmApp = {
             mClick: function()  {
                 let mClickState = fmApp.mouseData.mClick.showMap;
                 fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
                 fmApp.mouseData.mClick.showMap = !mClickState;
                 let heatMapData = {
                     max: 1,
@@ -750,6 +770,8 @@ var fmApp = {
             mClickMap: function()  {
                 let mClickState = fmApp.mouseData.mClick.showMap;
                 fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
                 fmApp.mouseData.mClick.showMap = !mClickState;
                 let heatMapData = {
                     max: 1,
@@ -764,6 +786,13 @@ var fmApp = {
                 /********************
                  * TODO NICE OUTPUT *
                  ********************/
+                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                let aoiModalState = fmApp.mouseData.aoi.showData;
+                if(aoiModalState) {
+                    fmApp.heatmap.showAoiData();
+                } else {
+                    fmApp.heatmap.hideAoiData();
+                }
                 console.log(fmApp.mouseData.aoi.list);
             },
             aoiChord: function() {

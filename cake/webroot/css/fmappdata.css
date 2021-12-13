@@ -7857,6 +7857,17 @@ path.chord {
 #heatmapBar.showHeatmapBar {
   opacity: 1; }
 
+#aoiInfoContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 25%;
+  background-color: #ffffffcc;
+  z-index: 1035;
+  display: none; }
+  #aoiInfoContainer .show {
+    display: block; }
+
 /*
  * Styling for Query Evaluation
  */

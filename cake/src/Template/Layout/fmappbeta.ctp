@@ -63,6 +63,7 @@ $cakeDescription = 'Food_M_App';
   <div id="heatmapContainer">
     <div id="heatmap"></div>
   </div>
+  <?= $this->element('aoimodal'); ?>
   <div class="container" role="main">
     <?= $this->fetch('content') ?>
   </div> <!-- /.container -->
