@@ -708,7 +708,7 @@ var fmApp = {
         
             return elementCenters;
         },
-        showAoiData: function() {
+        showAoiData: function(displayVariant) {
             fmApp.heatmap.setHideAllMaps();
             let heatMapData = {
                     max: 1,
@@ -716,6 +716,16 @@ var fmApp = {
                     data: []
                 };
             heatmap.setData(heatMapData);
+            switch (displayVariant) {
+                case "list":
+                    $("#aoiChordTables").hide();
+                    $("#aoiMapTables").hide();
+                    $("#aoiListTables").show();
+                    break;
+            
+                default:
+                    break;
+            }
             $("#aoiInfoContainer").addClass("show");
         },
         hideAoiData: function() {
@@ -783,17 +793,38 @@ var fmApp = {
                 heatmapLayer.setData(heatMapData);
             },
             aoiList: function() {
-                /********************
-                 * TODO NICE OUTPUT *
-                 ********************/
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 let aoiModalState = fmApp.mouseData.aoi.showData;
                 if(aoiModalState) {
+                    $("#aoiListValue-zwiebel > span").html( fmApp.mouseData.aoi.list.zwiebel.length );
+                    $("#aoiListValue-vapiano > span").html( fmApp.mouseData.aoi.list.vapiano.length );
+                    $("#aoiListValue-oishii > span").html( fmApp.mouseData.aoi.list.oishii.length );
+                    $("#aoiListValue-diner > span").html( fmApp.mouseData.aoi.list.diner.length );
+                    let allListEvents = [];
+                    Object.entries(fmApp.mouseData.aoi.list).forEach( poi => {
+                        const [key, value] = poi;
+                        value.forEach( 
+                            dataPoint => {
+                            allListEvents.push(dataPoint);
+                        });
+                    });
+                    $("#allListEventsTableBody").html("");
+                    let newTableRows = "";
+                    allListEvents.forEach(event => {
+                        newTableRows += `
+                            <tr>
+                                <td>${event.poi}</td>
+                                <td>${new Date(event.time).toLocaleString()}</td>
+                                <td>${event.value}</td>
+                            </tr>
+                        `;
+                            
+                        });
+                    $("#allListEventsTableBody").html(newTableRows);
                     fmApp.heatmap.showAoiData();
                 } else {
                     fmApp.heatmap.hideAoiData();
                 }
-                console.log(fmApp.mouseData.aoi.list);
             },
             aoiChord: function() {
                 /********************
