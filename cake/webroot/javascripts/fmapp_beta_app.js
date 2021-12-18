@@ -727,6 +727,12 @@ var fmApp = {
                     $("#aoiMapTables").hide();
                     $("#aoiListTables").show();
                     break;
+
+                case "chord":
+                    $("#aoiListTables").hide();
+                    $("#aoiMapTables").hide();
+                    $("#aoiChordTables").show();
+                    break;
             
                 default:
                     break;
@@ -816,27 +822,69 @@ var fmApp = {
                     $("#allListEventsTableBody").html("");
                     let newTableRows = "";
                     allListEvents.forEach(event => {
-                        newTableRows += `
+                        newTableRows += 
+                        `
                             <tr>
                                 <td>${event.poi}</td>
                                 <td>${new Date(event.time).toLocaleString()}</td>
                                 <td>${event.value}</td>
                             </tr>
                         `;
-                            
-                        });
+                    });
                     $("#allListEventsTableBody").html(newTableRows);
-                    fmApp.heatmap.showAoiData();
+                    fmApp.heatmap.showAoiData("list");
                 } else {
                     fmApp.heatmap.hideAoiData();
                 }
             },
             aoiChord: function() {
-                /********************
-                 * TODO NICE OUTPUT *
-                 ********************/
-                console.log("ChordLogs", fmApp.mouseData.aoi.chord);
-                // alert("Muss noch gebaut werden");
+                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                let aoiModalState = fmApp.mouseData.aoi.showData;
+                if(aoiModalState) {
+                    $("#aoiChordValue-pois > span").html( fmApp.mouseData.aoi.chord.pois.length );
+                    $("#aoiChordValue-choosenComponents > span").html( fmApp.mouseData.aoi.chord.choosenComponents.length );
+                    $("#aoiChordValue-otherComponents > span").html( fmApp.mouseData.aoi.chord.otherComponents.length );
+                    let allChordEvents = [];
+                     Object.entries(fmApp.mouseData.aoi.chord).forEach( arcType => {
+                        const [key, value] = arcType;
+                        value.forEach( 
+                            dataPoint => {
+                            allChordEvents.push(dataPoint);
+                        });
+                    });
+                    $("#allChordEventsTableBody").html("");
+                    let newTableRows = "";
+                    allChordEvents.forEach(event => {
+                        let namePrefix = "";
+
+                        switch (event.arc) {
+                            case "poi":
+                                namePrefix = "P";
+                                break;
+                            case "choosenComponent":
+                                namePrefix = "\u2605";
+                                break;
+                            case "otherComponent":
+                                namePrefix = "O";
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                        
+                        newTableRows += `
+                            <tr>
+                                <td>${event.name}</td>
+                                <td>${namePrefix} ${new Date(event.time).toLocaleString()}</td>
+                                <td>${event.value}</td>
+                            </tr>
+                        `;
+                    });
+                    $("#allChordEventsTableBody").html(newTableRows);
+                    fmApp.heatmap.showAoiData("chord");
+                } else {
+                    fmApp.heatmap.hideAoiData();
+                }
             },
             aoiMap: function() {
                 /********************
