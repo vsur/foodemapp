@@ -11,6 +11,22 @@ var matrix_original = matrix;
 
 console.log("chordDiagramMatrixData", chordDiagramMatrixData);
 
+const aoiTracking = {
+    poiHeaders: [
+        "Oval ➔ 0,55 km", 
+        "Scruffy's Irish Pub ➔ 0,97 km",
+        "Allvitalis Cocktailbar ➔ 1,05 km",
+        "DOM - Grill Kitchen Bar ➔ 1,12 km",
+        "Zur Alten Hackerei ➔ 1,62 km"
+    ],
+    choosenComponentsHeaders: [
+        "Sportbar",
+        "Für Rollstuhlfahrer",
+        "Live",
+        "Nachtleben"
+    ]
+};
+
 ////////////////////////////////////////////////////////////
 //////////////// Skalierung der Bereiche ///////////////////
 ////////////////////////////////////////////////////////////
@@ -292,7 +308,18 @@ g.append("path")
         d.pullOutSize = pullOutSize * (d.startAngle + 1 > Math.PI ? -1 : 1);
         return "translate(" + d.pullOutSize + ',' + 0 + ")";
     })
-    .attr("class", "aoi-move aoi-click");
+    .attr("class", function(d, i){
+        if (aoiTracking.poiHeaders.includes(header[i])) {
+            return "aoi-poi"
+        } else if (aoiTracking.choosenComponentsHeaders.includes(header[i])) {
+            return "aoi-choosenComponent";
+        } else {
+            if (header[i] != "") return "aoi-otherComponent";
+        }
+    })
+    .attr("data-name", function(d, i){
+        if (header[i] != "") return header[i];
+    });
 
 ////////////////////////////////////////////////////////////
 //////////////// Beschreibungen anzeigen ///////////////////

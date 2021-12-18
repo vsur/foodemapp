@@ -46,6 +46,11 @@ var fmApp = {
                 vapiano: [],
                 oishii: [],
                 diner: []
+            },
+            chord: {
+                pois: [],
+                choosenComponents: [],
+                otherComponents: []
             }
         }
     },
@@ -830,7 +835,8 @@ var fmApp = {
                 /********************
                  * TODO NICE OUTPUT *
                  ********************/
-                alert("Muss noch gebaut werden");
+                console.log("ChordLogs", fmApp.mouseData.aoi.chord);
+                // alert("Muss noch gebaut werden");
             },
             aoiMap: function() {
                 /********************

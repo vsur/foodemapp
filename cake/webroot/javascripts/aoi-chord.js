@@ -1,52 +1,41 @@
 // Listener for AOI mouse moves
 $(document).ready(function () {
     
-/********************************
- * TODO MOVES FÜR CHORD TRACKEN *
- ********************************/
+    $('.aoi-poi').on('mouseover', function (mouseEvent) {
+        let dataPoint = {
+            time: Date.now(),
+            name: $(this).attr("data-name"),
+            arc: "poi",
+            x: mouseEvent.pageX,
+            y: mouseEvent.pageY,
+            value: 1
+        };
+        fmApp.mouseData.aoi.chord.pois.push(dataPoint);
+    });
 
-    // $('#mouseTrackListZwiebel').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Zwiebel: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.zwiebel.push(dataPoint);
-    // });
-    
-    // $('#mouseTrackListVapiano').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Vapiano: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.vapiano.push(dataPoint);
-    // });
-    
-    // $('#mouseTrackListOishii').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Oishii: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.oishii.push(dataPoint);
-    // });
-    // $('#mouseTrackListDiner').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Diner: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.diner.push(dataPoint);
-    // });
+    $('.aoi-choosenComponent').on('mouseover', function (mouseEvent) {
+        let dataPoint = {
+            time: Date.now(),
+            name: $(this).attr("data-name"),
+            arc: "choosenComponent",
+            x: mouseEvent.pageX,
+            y: mouseEvent.pageY,
+            value: 1
+        };
+        fmApp.mouseData.aoi.chord.choosenComponents.push(dataPoint);
+    });
+
+    $('.aoi-otherComponent').on('mouseover', function (mouseEvent) {
+        let dataPoint = {
+            time: Date.now(),
+            name: $(this).attr("data-name"),
+            arc: "otherComponent",
+            x: mouseEvent.pageX,
+            y: mouseEvent.pageY,
+            value: 1
+        };
+        fmApp.mouseData.aoi.chord.otherComponents.push(dataPoint);
+    });
     
      $("#dataShow-aoiChord").click(function (mouseEvent) {
         mouseEvent.preventDefault();
