@@ -91,5 +91,48 @@
                 </table>
             </div>
         </div>
+
+        <div id="aoiMapTables">
+            <h3>Übersicht</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Art</th>
+                            <th>Komopnenten Ansicht gewechselt</th>
+                            <th>tba</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Events auf der Karte</th>
+                            <td id="aoiMapValue-mapComponentsChoice"><span class="badge">SetWithJS</span></td>
+                            <td id="aoiChordValue-tba"><span class="badge">SetWithJS</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Ablauf</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Art</th>
+                            <th>Zeit</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allMapEventsTableBody">
+                        <tr>
+                            <td>Keine Mouse-Over-Interaktionen</td>
+                            <td>01.01.70 00:00:00</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>

@@ -51,6 +51,13 @@ var fmApp = {
                 pois: [],
                 choosenComponents: [],
                 otherComponents: []
+            },
+            map: {
+                mapComponentsChoice: [],
+                pois: [],
+                dragMap: [],
+                dragPopup: [],
+                zoomMap: [],
             }
         }
     },
@@ -703,23 +710,23 @@ var fmApp = {
         },
         getCenteredCoordinates: function(item, ev) {
             let elementCenters = {};
-        
+
             let bodyRect = document.body.getBoundingClientRect(),
                 elemRect = item.getBoundingClientRect();
             elementCenters.centerX = Math.round(elemRect.left + item.offsetWidth / 2);
             elementCenters.centerY = Math.round(elemRect.top + item.offsetHeight / 2);
             if (ev == "click") console.log("elem " + elemRect.top + " / body " + bodyRect.top + " / item.offsetHeight " + item.offsetHeight + " / itemH/2 " + item.offsetHeight / 2);
             if (ev == "click") console.log("eCenter " + elementCenters.centerY);
-        
+
             return elementCenters;
         },
         showAoiData: function(displayVariant) {
             fmApp.heatmap.setHideAllMaps();
             let heatMapData = {
-                    max: 1,
-                    min: 0,
-                    data: []
-                };
+                max: 1,
+                min: 0,
+                data: []
+            };
             heatmap.setData(heatMapData);
             switch (displayVariant) {
                 case "list":
@@ -733,21 +740,27 @@ var fmApp = {
                     $("#aoiMapTables").hide();
                     $("#aoiChordTables").show();
                     break;
-            
+
+                case "map":
+                    $("#aoiListTables").hide();
+                    $("#aoiChordTables").hide();
+                    $("#aoiMapTables").show();
+                    break;
+
                 default:
                     break;
             }
             $("#aoiInfoContainer").addClass("show");
         },
         hideAoiData: function() {
-            $("#aoiInfoContainer").removeClass("show");  
+            $("#aoiInfoContainer").removeClass("show");
         },
         debugShow: {
             mMove: function()  {
                 let mMoveState = fmApp.mouseData.mMove.showMap;
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.heatmap.hideAoiData();
-                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 fmApp.mouseData.mMove.showMap = !mMoveState;
                 let heatMapData = {
                     max: 10,
@@ -755,29 +768,29 @@ var fmApp = {
                     data: fmApp.mouseData.mMove.showMap ? fmApp.mouseData.mMove.data : []
                 };
                 heatmap.setData(heatMapData);
-                if(fmApp.mouseData.mMove.showMap) fmApp.heatmap.showFront(); 
-                else fmApp.heatmap.hideBack(); 
+                if (fmApp.mouseData.mMove.showMap) fmApp.heatmap.showFront();
+                else fmApp.heatmap.hideBack();
             },
             mMoveMap: function()  {
                 let mMoveState = fmApp.mouseData.mMove.showMap;
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.heatmap.hideAoiData();
-                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 fmApp.mouseData.mMove.showMap = !mMoveState;
                 let heatMapData = {
                     max: 10,
                     min: 0,
                     data: fmApp.mouseData.mMove.showMap ? fmApp.mouseData.mMove.data : []
                 };
-                if(fmApp.mouseData.mMove.showMap)  mymap.addLayer(heatmapLayer);
+                if (fmApp.mouseData.mMove.showMap) mymap.addLayer(heatmapLayer);
                 else mymap.removeLayer(heatmapLayer);
-                heatmapLayer.setData(heatMapData); 
+                heatmapLayer.setData(heatMapData);
             },
             mClick: function()  {
                 let mClickState = fmApp.mouseData.mClick.showMap;
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.heatmap.hideAoiData();
-                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 fmApp.mouseData.mClick.showMap = !mClickState;
                 let heatMapData = {
                     max: 1,
@@ -785,45 +798,45 @@ var fmApp = {
                     data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
                 };
                 heatmap.setData(heatMapData);
-                if(fmApp.mouseData.mClick.showMap) fmApp.heatmap.showFront();
+                if (fmApp.mouseData.mClick.showMap) fmApp.heatmap.showFront();
                 else fmApp.heatmap.hideBack();
             },
             mClickMap: function()  {
                 let mClickState = fmApp.mouseData.mClick.showMap;
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.heatmap.hideAoiData();
-                if(fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData; 
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 fmApp.mouseData.mClick.showMap = !mClickState;
                 let heatMapData = {
                     max: 1,
                     min: 0,
                     data: fmApp.mouseData.mClick.showMap ? fmApp.mouseData.mClick.data : []
                 };
-                if(fmApp.mouseData.mClick.showMap)  mymap.addLayer(heatmapLayer);
+                if (fmApp.mouseData.mClick.showMap) mymap.addLayer(heatmapLayer);
                 else mymap.removeLayer(heatmapLayer);
                 heatmapLayer.setData(heatMapData);
             },
             aoiList: function() {
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 let aoiModalState = fmApp.mouseData.aoi.showData;
-                if(aoiModalState) {
-                    $("#aoiListValue-zwiebel > span").html( fmApp.mouseData.aoi.list.zwiebel.length );
-                    $("#aoiListValue-vapiano > span").html( fmApp.mouseData.aoi.list.vapiano.length );
-                    $("#aoiListValue-oishii > span").html( fmApp.mouseData.aoi.list.oishii.length );
-                    $("#aoiListValue-diner > span").html( fmApp.mouseData.aoi.list.diner.length );
+                if (aoiModalState) {
+                    $("#aoiListValue-zwiebel > span").html(fmApp.mouseData.aoi.list.zwiebel.length);
+                    $("#aoiListValue-vapiano > span").html(fmApp.mouseData.aoi.list.vapiano.length);
+                    $("#aoiListValue-oishii > span").html(fmApp.mouseData.aoi.list.oishii.length);
+                    $("#aoiListValue-diner > span").html(fmApp.mouseData.aoi.list.diner.length);
                     let allListEvents = [];
-                    Object.entries(fmApp.mouseData.aoi.list).forEach( poi => {
+                    Object.entries(fmApp.mouseData.aoi.list).forEach(poi => {
                         const [key, value] = poi;
-                        value.forEach( 
+                        value.forEach(
                             dataPoint => {
-                            allListEvents.push(dataPoint);
-                        });
+                                allListEvents.push(dataPoint);
+                            });
                     });
                     $("#allListEventsTableBody").html("");
                     let newTableRows = "";
                     allListEvents.forEach(event => {
-                        newTableRows += 
-                        `
+                        newTableRows +=
+                            `
                             <tr>
                                 <td>${event.poi}</td>
                                 <td>${new Date(event.time).toLocaleString()}</td>
@@ -840,17 +853,17 @@ var fmApp = {
             aoiChord: function() {
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 let aoiModalState = fmApp.mouseData.aoi.showData;
-                if(aoiModalState) {
-                    $("#aoiChordValue-pois > span").html( fmApp.mouseData.aoi.chord.pois.length );
-                    $("#aoiChordValue-choosenComponents > span").html( fmApp.mouseData.aoi.chord.choosenComponents.length );
-                    $("#aoiChordValue-otherComponents > span").html( fmApp.mouseData.aoi.chord.otherComponents.length );
+                if (aoiModalState) {
+                    $("#aoiChordValue-pois > span").html(fmApp.mouseData.aoi.chord.pois.length);
+                    $("#aoiChordValue-choosenComponents > span").html(fmApp.mouseData.aoi.chord.choosenComponents.length);
+                    $("#aoiChordValue-otherComponents > span").html(fmApp.mouseData.aoi.chord.otherComponents.length);
                     let allChordEvents = [];
-                     Object.entries(fmApp.mouseData.aoi.chord).forEach( arcType => {
+                    Object.entries(fmApp.mouseData.aoi.chord).forEach(arcType => {
                         const [key, value] = arcType;
-                        value.forEach( 
+                        value.forEach(
                             dataPoint => {
-                            allChordEvents.push(dataPoint);
-                        });
+                                allChordEvents.push(dataPoint);
+                            });
                     });
                     $("#allChordEventsTableBody").html("");
                     let newTableRows = "";
@@ -867,11 +880,11 @@ var fmApp = {
                             case "otherComponent":
                                 namePrefix = "O";
                                 break;
-                        
+
                             default:
                                 break;
                         }
-                        
+
                         newTableRows += `
                             <tr>
                                 <td>${event.name}</td>
@@ -887,10 +900,17 @@ var fmApp = {
                 }
             },
             aoiMap: function() {
-                /********************
-                 * TODO NICE OUTPUT *
-                 ********************/
-                alert("Muss noch gebaut werden");
+                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                let aoiModalState = fmApp.mouseData.aoi.showData;
+                if (aoiModalState) {
+                    /*****************************************
+                     * TODO HIDE MAP MACHT FEHLER! ANSCHAUEN *
+                     *****************************************/
+                    // fmApp.heatmap.showAoiData("map");
+                    console.log(fmApp.mouseData.aoi.map);
+                } else {
+                    fmApp.heatmap.hideAoiData();
+                }
             }
         }
     }
