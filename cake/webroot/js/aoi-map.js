@@ -1,14 +1,13 @@
 // Listener for AOI mouse moves
 
-var zoomType;
-var zoomEventType;
+var zoomType = "zoomIn";
+var zoomEventType = "startZoom";
 
 $(document).ready(function() {
 
     $("#mapComponentsChoice a").click(function(mouseEvent) {
         var componentType = $(this).attr('data-component-presentation');
         fmApp.mouseData.aoi.map.mapComponentsChoice.push(addMapComponentsChoiceEvent(componentType, mouseEvent));
-        console.log(componentType);
     });
 
     markers.on('click', function(mouseEvent) {
@@ -21,7 +20,7 @@ $(document).ready(function() {
         };
         fmApp.mouseData.aoi.map.pois.push(dataPoint);
     });
-
+    
     L.DomEvent.on(mymap.getContainer(), 'mousewheel', function(event) {
         zoomEventType = "mouseWheel";
         if (event.deltaY < 0) {
@@ -30,74 +29,40 @@ $(document).ready(function() {
             zoomType = "zoomIn";
         }
     });
-
-    // TODO ZOOM Type ETC Set By Controls +/-
-
-    // TODO ZOOM Type ETC Set By Double Click
-
-    mymap.on('zoomend', function(event) {
-        console.log("zoomEventType", zoomEventType);
-        console.log("zoomType", zoomType);
-
-        // TODO ADD To Track Array
-
+    
+    $(".leaflet-control-zoom-in").click(function(mouseEvent) {
+        zoomEventType = "mapControl";
+        zoomType = "zoomIn";
+    });
+    
+    $(".leaflet-control-zoom-out").click(function(mouseEvent) {
+        zoomEventType = "mapControl";
+        zoomType = "zoomOut";
+    });
+    
+    mymap.on('zoomend', function(mouseEvent) {
+        let dataPoint = {
+            time: Date.now(),
+            event: zoomEventType,
+            zoom: zoomType,
+            x: mouseLat,
+            y: mouseLng,
+            value: 1
+        };
+        fmApp.mouseData.aoi.map.zoomMap.push(dataPoint);
         zoomType = undefined;
         zoomEventType = undefined;
     });
-
-    // $('.leaflet-marker-icon').click(function(mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         poi: $(this).children("div").children("span").html(),
-    //         // x: mouseEvent.pageX,
-    //         // y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     fmApp.mouseData.aoi.map.pois.push(dataPoint);
-
-    // });
-    // $('#mouseTrackListZwiebel').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Zwiebel: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.zwiebel.push(dataPoint);
-    // });
-
-    // $('#mouseTrackListVapiano').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Vapiano: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.vapiano.push(dataPoint);
-    // });
-
-    // $('#mouseTrackListOishii').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Oishii: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.oishii.push(dataPoint);
-    // });
-    // $('#mouseTrackListDiner').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         time: Date.now(),
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     console.log("Diner: ", dataPoint);
-    //     fmApp.mouseData.aoi.list.diner.push(dataPoint);
-    // });
+    
+    // TODO Move Map Tracken
+    mymap.on('movestart', function(mouseEvent) {
+        fmApp.mouseData.aoi.map.dragMap.push(addMapMoveEvent(mouseEvent));
+    });
+    mymap.on('moveend', function(mouseEvent) {
+        fmApp.mouseData.aoi.map.dragMap.push(addMapMoveEvent(mouseEvent));
+    });
+    
+    // Popup Drag Tracken
 
     $("#dataShow-aoiMap").click(function(mouseEvent) {
         mouseEvent.preventDefault();
@@ -115,3 +80,30 @@ function addMapComponentsChoiceEvent(componentType, mouseEvent)  {
     };
     return dataPoint;
 }
+
+function addMapMoveEvent(mouseEvent){
+    let dataPoint = {
+        time: Date.now(),
+        event: mouseEvent.type,
+        x: mymap.getCenter().lat,
+        y: mymap.getCenter().lng,
+        value: 1
+    };
+    return dataPoint;
+}
+
+
+function aoiMapTrackPopupDragEvent(mouseEvent, popupSourceName) {
+    let eventLatLng = mymap.layerPointToLatLng(L.point(mouseEvent.sourceTarget._startPoint.x, mouseEvent.sourceTarget._startPoint.y));
+    let dataPoint = {
+        time: Date.now(),
+        event: mouseEvent.type,
+        poi: popupSourceName,
+        distance: mouseEvent.distance ? mouseEvent.distance : undefined,
+        x: eventLatLng.lat,
+        y: eventLatLng.lng,
+        value: 1
+    };
+    fmApp.mouseData.aoi.map.dragPopup.push(dataPoint);
+}
+

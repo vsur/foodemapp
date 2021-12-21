@@ -24,6 +24,9 @@ var mymap = L.map('ypoisMap');
 var markers = L.markerClusterGroup();
 var connectionLines = L.layerGroup();
 
+// Deactivate dbClick Zoom for later mouse tracking
+mymap.doubleClickZoom.disable(); 
+
 L.tileLayer.provider('OpenStreetMap.HOT').addTo(mymap);
 
 ypois.forEach(function(ypoi, i) {
@@ -217,10 +220,12 @@ function makePopupDraggable(popup) {
     L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
     var draggable = new L.Draggable(popup._container, popup._wrapper);
     draggable.enable();
-    draggable.on('dragstart', function() {
+    draggable.on('dragstart', function(e) {
+        aoiMapTrackPopupDragEvent(e, popup._source.options.poiName);
         deleteDrawnLine(popup);
     });
-    draggable.on('dragend', function() {
+    draggable.on('dragend', function(e) {
+        aoiMapTrackPopupDragEvent(e, popup._source.options.poiName);
         let pixelXYValueOfMarkerCenter = mymap.latLngToLayerPoint(popup._source._latlng);
 
         // Standard-Offset -2 < X < 2 | 32 < Y < 34 
