@@ -92,6 +92,8 @@
             </div>
         </div>
 
+
+
         <div id="aoiMapTables">
             <h3>Übersicht</h3>
             <div class="table-responsive">
@@ -100,14 +102,20 @@
                         <tr>
                             <th>Art</th>
                             <th>Komopnenten Ansicht gewechselt</th>
-                            <th>tba</th>
+                            <th>Pois angeklickt</th>
+                            <th>Map verschoben</th>
+                            <th>Popup verschoben</th>
+                            <th>Map gezoomt</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <th scope="row">Events auf der Karte</th>
                             <td id="aoiMapValue-mapComponentsChoice"><span class="badge">SetWithJS</span></td>
-                            <td id="aoiChordValue-tba"><span class="badge">SetWithJS</span></td>
+                            <td id="aoiMapValue-pois"><span class="badge">SetWithJS</span></td>
+                            <td id="aoiMapValue-dragMap"><span class="badge">SetWithJS</span></td>
+                            <td id="aoiMapValue-dragPopup"><span class="badge">SetWithJS</span></td>
+                            <td id="aoiMapValue-zoomMap"><span class="badge">SetWithJS</span></td>
                         </tr>
                     </tbody>
                 </table>

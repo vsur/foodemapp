@@ -722,7 +722,6 @@ var fmApp = {
         },
         showAoiData: function(displayVariant) {
             fmApp.heatmap.setHideAllMaps();
-            console.log("hideMaps from", displayVariant);
             let heatMapData = {
                 max: 1,
                 min: 0,
@@ -838,6 +837,9 @@ var fmApp = {
                     });
                     $("#allListEventsTableBody").html("");
                     let newTableRows = "";
+                    allListEvents.sort(function(x, y) {
+                        return x.time - y.time;
+                    });
                     allListEvents.forEach(event => {
                         newTableRows +=
                             `
@@ -871,6 +873,9 @@ var fmApp = {
                     });
                     $("#allChordEventsTableBody").html("");
                     let newTableRows = "";
+                    allChordEvents.sort(function(x, y) {
+                        return x.time - y.time;
+                    });
                     allChordEvents.forEach(event => {
                         let namePrefix = "";
 
@@ -907,6 +912,59 @@ var fmApp = {
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 let aoiModalState = fmApp.mouseData.aoi.showData;
                 if (aoiModalState) {
+                    $("#aoiMapValue-mapComponentsChoice > span").html(fmApp.mouseData.aoi.map.mapComponentsChoice.length);
+                    $("#aoiMapValue-pois > span").html(fmApp.mouseData.aoi.map.pois.length);
+                    $("#aoiMapValue-dragMap > span").html(fmApp.mouseData.aoi.map.dragMap.length);
+                    $("#aoiMapValue-dragPopup > span").html(fmApp.mouseData.aoi.map.dragPopup.length);
+                    let normalizedZoomValue = fmApp.mouseData.aoi.map.zoomMap.length > 0 ? ((fmApp.mouseData.aoi.map.zoomMap.length - 2) / 2) : fmApp.mouseData.aoi.map.zoomMap.length;
+                    $("#aoiMapValue-zoomMap > span").html(normalizedZoomValue);
+                    let allMapEvents = [];
+                    Object.entries(fmApp.mouseData.aoi.map).forEach(mapEvent => {
+                        const [key, value] = mapEvent;
+                        value.forEach(
+                            dataPoint => {
+                                dataPoint.mapEvent = key;
+                                allMapEvents.push(dataPoint);
+                            });
+                    });
+                    $("#allMapEventsTableBody").html("");
+                    let newTableRows = "";
+                    allMapEvents.sort(function(x, y) {
+                        return x.time - y.time;
+                    });
+                    allMapEvents.forEach(event => {
+                        let name = event.mapEvent;
+
+                        switch (event.mapEvent) {
+                            case "dragMap":
+                                name += " " + event.event;
+                                break;
+                            case "dragPopup":
+                                name += " " + event.poi + " " + event.event;
+                                break;
+                            case "mapComponentsChoice":
+                                name += " " + event.componentType;
+                                break;
+                            case "pois":
+                                name += " " + event.poi;
+                                break;
+                            case "zoomMap":
+                                name += " " + event.event + " " + event.zoom;
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        newTableRows += `
+                            <tr>
+                                <td>${name}</td>
+                                <td>${new Date(event.time).toLocaleString()}</td>
+                                <td>${event.value}</td>
+                            </tr>
+                        `;
+                    });
+                    $("#allMapEventsTableBody").html(newTableRows);
                     /*****************************************
                      * TODO HIDE MAP MACHT FEHLER! ANSCHAUEN *
                      *****************************************/
