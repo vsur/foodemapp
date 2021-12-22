@@ -20,7 +20,7 @@ $(document).ready(function() {
         };
         fmApp.mouseData.aoi.map.pois.push(dataPoint);
     });
-    
+
     L.DomEvent.on(mymap.getContainer(), 'mousewheel', function(event) {
         zoomEventType = "mouseWheel";
         if (event.deltaY < 0) {
@@ -29,17 +29,17 @@ $(document).ready(function() {
             zoomType = "zoomIn";
         }
     });
-    
+
     $(".leaflet-control-zoom-in").click(function(mouseEvent) {
         zoomEventType = "mapControl";
         zoomType = "zoomIn";
     });
-    
+
     $(".leaflet-control-zoom-out").click(function(mouseEvent) {
         zoomEventType = "mapControl";
         zoomType = "zoomOut";
     });
-    
+
     mymap.on('zoomend', function(mouseEvent) {
         let dataPoint = {
             time: Date.now(),
@@ -53,16 +53,13 @@ $(document).ready(function() {
         zoomType = undefined;
         zoomEventType = undefined;
     });
-    
-    // TODO Move Map Tracken
+
     mymap.on('movestart', function(mouseEvent) {
         fmApp.mouseData.aoi.map.dragMap.push(addMapMoveEvent(mouseEvent));
     });
     mymap.on('moveend', function(mouseEvent) {
         fmApp.mouseData.aoi.map.dragMap.push(addMapMoveEvent(mouseEvent));
     });
-    
-    // Popup Drag Tracken
 
     $("#dataShow-aoiMap").click(function(mouseEvent) {
         mouseEvent.preventDefault();
@@ -81,7 +78,7 @@ function addMapComponentsChoiceEvent(componentType, mouseEvent)  {
     return dataPoint;
 }
 
-function addMapMoveEvent(mouseEvent){
+function addMapMoveEvent(mouseEvent) {
     let dataPoint = {
         time: Date.now(),
         event: mouseEvent.type,
@@ -106,4 +103,3 @@ function aoiMapTrackPopupDragEvent(mouseEvent, popupSourceName) {
     };
     fmApp.mouseData.aoi.map.dragPopup.push(dataPoint);
 }
-

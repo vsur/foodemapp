@@ -722,26 +722,30 @@ var fmApp = {
         },
         showAoiData: function(displayVariant) {
             fmApp.heatmap.setHideAllMaps();
+            console.log("hideMaps from", displayVariant);
             let heatMapData = {
                 max: 1,
                 min: 0,
                 data: []
             };
-            heatmap.setData(heatMapData);
             switch (displayVariant) {
                 case "list":
+                    heatmap.setData(heatMapData);
                     $("#aoiChordTables").hide();
                     $("#aoiMapTables").hide();
                     $("#aoiListTables").show();
                     break;
 
                 case "chord":
+                    heatmap.setData(heatMapData);
                     $("#aoiListTables").hide();
                     $("#aoiMapTables").hide();
                     $("#aoiChordTables").show();
                     break;
 
                 case "map":
+                    mymap.removeLayer(heatmapLayer);
+                    heatmapLayer.setData(heatMapData);
                     $("#aoiListTables").hide();
                     $("#aoiChordTables").hide();
                     $("#aoiMapTables").show();
@@ -906,7 +910,7 @@ var fmApp = {
                     /*****************************************
                      * TODO HIDE MAP MACHT FEHLER! ANSCHAUEN *
                      *****************************************/
-                    // fmApp.heatmap.showAoiData("map");
+                    fmApp.heatmap.showAoiData("map");
                     console.log(fmApp.mouseData.aoi.map);
                 } else {
                     fmApp.heatmap.hideAoiData();

@@ -29,21 +29,17 @@ var heatmapLayer = new HeatmapOverlay(heatmapLayerCfg);
 var mouseLat, mouseLng;
 
 mymap.addEventListener('mousemove', function(e) {
-   mouseLat = e.latlng.lat;
-   mouseLng = e.latlng.lng;
-   let dataPoint = {
-            x: mouseLat,
-            y: mouseLng,
-            value: 1
-        };
+    mouseLat = e.latlng.lat;
+    mouseLng = e.latlng.lng;
+    let dataPoint = {
+        x: mouseLat,
+        y: mouseLng,
+        value: 1
+    };
     fmApp.mouseData.mMove.data.push(dataPoint);
 });
 
-$(document).ready(function () {
-    // setTimeout(function () {
-    //     mymap.addLayer(heatmapLayer);
-    //     heatmapLayer.setData(testData);
-    // }, 3000);
+$(document).ready(function() {
     $("#ypoisMap").on('click', function(mouseEvent) {
         let dataPoint = {
             x: mouseLat,
@@ -53,27 +49,12 @@ $(document).ready(function () {
         fmApp.mouseData.mClick.data.push(dataPoint);
     });
 
-
-    // Listener for all mouse clicks
-    // $('.container').click(function (mouseEvent) {
-    //     let dataPoint = {
-    //         x: mouseEvent.pageX,
-    //         y: mouseEvent.pageY,
-    //         value: 1
-    //     };
-    //     fmApp.mouseData.mClick.data.push(dataPoint);
-    // });
-
-    /*****************************
-     * // DEBUG SHOW FOR HEATMAP *
-     *****************************/
-    // Test hide heatmapLayer
-    $("#heatmapShow-mMove").click(function (mouseEvent) {
+    $("#heatmapShow-mMove").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mMoveMap();
     });
 
-    $("#heatmapShow-mClick").click(function (mouseEvent) {
+    $("#heatmapShow-mClick").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mClickMap();
     });
