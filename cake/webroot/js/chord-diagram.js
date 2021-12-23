@@ -11,22 +11,6 @@ var matrix_original = matrix;
 
 console.log("chordDiagramMatrixData", chordDiagramMatrixData);
 
-const aoiTracking = {
-    poiHeaders: [
-        "Oval ➔ 0,55 km", 
-        "Scruffy's Irish Pub ➔ 0,97 km",
-        "Allvitalis Cocktailbar ➔ 1,05 km",
-        "DOM - Grill Kitchen Bar ➔ 1,12 km",
-        "Zur Alten Hackerei ➔ 1,62 km"
-    ],
-    choosenComponentsHeaders: [
-        "Sportbar",
-        "Für Rollstuhlfahrer",
-        "Live",
-        "Nachtleben"
-    ]
-};
-
 ////////////////////////////////////////////////////////////
 //////////////// Skalierung der Bereiche ///////////////////
 ////////////////////////////////////////////////////////////
@@ -308,16 +292,16 @@ g.append("path")
         d.pullOutSize = pullOutSize * (d.startAngle + 1 > Math.PI ? -1 : 1);
         return "translate(" + d.pullOutSize + ',' + 0 + ")";
     })
-    .attr("class", function(d, i){
-        if (aoiTracking.poiHeaders.includes(header[i])) {
+    .attr("class", function(d, i) {
+        if (i < obj["pois"].length) {
             return "aoi-poi"
-        } else if (aoiTracking.choosenComponentsHeaders.includes(header[i])) {
+        } else if (i >= obj["pois"].length - 1 + 2 && i < obj["pois"].length - 1 + 2 + obj["rankedComponents"].length) {
             return "aoi-choosenComponent";
         } else {
             if (header[i] != "") return "aoi-otherComponent";
         }
     })
-    .attr("data-name", function(d, i){
+    .attr("data-name", function(d, i) {
         if (header[i] != "") return header[i];
     });
 

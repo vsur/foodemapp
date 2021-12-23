@@ -860,6 +860,7 @@ var fmApp = {
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 let aoiModalState = fmApp.mouseData.aoi.showData;
                 if (aoiModalState) {
+                    console.log(fmApp.mouseData.aoi);
                     $("#aoiChordValue-pois > span").html(fmApp.mouseData.aoi.chord.pois.length);
                     $("#aoiChordValue-choosenComponents > span").html(fmApp.mouseData.aoi.chord.choosenComponents.length);
                     $("#aoiChordValue-otherComponents > span").html(fmApp.mouseData.aoi.chord.otherComponents.length);
