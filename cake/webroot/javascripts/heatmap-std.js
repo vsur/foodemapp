@@ -5,13 +5,13 @@
 
 var heatmap;
 
-$(document).ready(function () {
+$(document).ready(function() {
 
     // Init Heatmap
     fmApp.heatmap.init();
 
     // Listener for all mouse movements
-    $('.container').mousemove(function (mouseEvent) {
+    $('.container').mousemove(function(mouseEvent) {
         // mouseEvent.preventDefault();
         let dataPoint = {
             x: mouseEvent.pageX,
@@ -21,7 +21,7 @@ $(document).ready(function () {
         fmApp.mouseData.mMove.data.push(dataPoint);
     });
     // Listener for all mouse clicks
-    $('.container').click(function (mouseEvent) {
+    $('.container').click(function(mouseEvent) {
         let dataPoint = {
             x: mouseEvent.pageX,
             y: mouseEvent.pageY,
@@ -29,16 +29,13 @@ $(document).ready(function () {
         };
         fmApp.mouseData.mClick.data.push(dataPoint);
     });
-    
-    /*****************************
-     * // DEBUG SHOW FOR HEATMAP *
-     *****************************/
-    $("#heatmapShow-mMove").click(function (mouseEvent) {
+
+    $("#heatmapShow-mMove").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mMove();
     });
 
-    $("#heatmapShow-mClick").click(function (mouseEvent) {
+    $("#heatmapShow-mClick").click(function(mouseEvent) {
         mouseEvent.preventDefault();
         fmApp.heatmap.debugShow.mClick();
     });

@@ -965,9 +965,6 @@ var fmApp = {
                         `;
                     });
                     $("#allMapEventsTableBody").html(newTableRows);
-                    /*****************************************
-                     * TODO HIDE MAP MACHT FEHLER! ANSCHAUEN *
-                     *****************************************/
                     fmApp.heatmap.showAoiData("map");
                     console.log(fmApp.mouseData.aoi.map);
                 } else {
