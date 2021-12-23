@@ -18,6 +18,12 @@ $mute-color: #ccc;
  * Main Stuff
  */
 
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     padding-top: 74px;
 }
