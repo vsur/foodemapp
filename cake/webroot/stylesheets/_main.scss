@@ -20,11 +20,17 @@ $mute-color: #ccc;
 
 html,
 body {
+    position: relative;
     width: 100%;
+    // height: 100%;
+    margin: 0;
+    overflow: auto;
+}
+html {
     height: 100%;
 }
-
 body {
+    min-height: 100%;
     padding-top: 74px;
 }
 
