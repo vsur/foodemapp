@@ -7,9 +7,6 @@ var heatmap;
 
 $(document).ready(function() {
 
-    // Init Heatmap
-    fmApp.heatmap.init();
-
     // Listener for all mouse movements
     $('.container').mousemove(function(mouseEvent) {
         // mouseEvent.preventDefault();
