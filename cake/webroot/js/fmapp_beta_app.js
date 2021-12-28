@@ -678,22 +678,29 @@ var fmApp = {
         }, 2000);
     },
     heatmap: {
+        config: {
+            container: document.getElementById('heatmap'),
+            radius: 50,
+            maxOpacity: 0.5,
+            minOpacity: 0,
+            blur: 0.75,
+            // gradient: {
+            //   // enter n keys between 0 and 1 here
+            //   // for gradient color customization
+            //   '0.5': 'blue',
+            //   '0.8': 'red',
+            //   '0.95': 'white'
+            // }
+        },
         init: function()  {
             console.log("Init Heatmap");
-            heatmap = h337.create({
-                container: document.getElementById('heatmap'),
-                radius: 50,
-                maxOpacity: 0.5,
-                minOpacity: 0,
-                blur: 0.75,
-                // gradient: {
-                //   // enter n keys between 0 and 1 here
-                //   // for gradient color customization
-                //   '0.5': 'blue',
-                //   '0.8': 'red',
-                //   '0.95': 'white'
-                // }
-            });
+            heatmap = h337.create(fmApp.heatmap.config);
+        },
+        reinit: function() {
+            heatmap = undefined;
+            document.getElementById('heatmap').innerHTML = "";
+            heatmap = h337.create(fmApp.heatmap.config);
+            console.log("Heatmap re-initialized");
         },
         setHideAllMaps: function() {
             for (const trackingType in fmApp.mouseData) {
@@ -1116,8 +1123,10 @@ $(document).ready(function() {
 
     // Click handler for list view "Mehr anzeigen …" on panel heading
     $("#listView").on("click", ".panel-heading", function() {
-        // NEXT Find Specific Area to Toogle
-        $(this).parent().find(".componentOverview").slideToggle();
+        // NEXT Find Specific Area to Toggle
+        $(this).parent().find(".componentOverview").slideToggle("slow", function(event){
+            fmApp.heatmap.reinit();
+        });
         $(this).find(".listMoreInfo").toggleClass("showMore");
     });
 
