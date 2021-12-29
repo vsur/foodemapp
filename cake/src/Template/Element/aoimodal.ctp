@@ -15,7 +15,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">Klicks zum Öffnen</th>
+                            <th scope="row">Klicks zum Auf- und Zuklappen</th>
                             <td id="aoiListValue-zwiebel"><span class="badge">SetWithJS</span></td>
                             <td id="aoiListValue-vapiano"><span class="badge">SetWithJS</span></td>
                             <td id="aoiListValue-oishii"><span class="badge">SetWithJS</span></td>

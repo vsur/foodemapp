@@ -1,25 +1,8 @@
 <div class="row" id="listView">
     <div class="col-md-12">
         <?php foreach ($ypois as $nr => $ypoi) : ?>
-            <?php
-            $mouseTrackId = "";
-            switch ($ypoi->id) {
-                case 559:
-                    $mouseTrackId = "mouseTrackListZwiebel";
-                    break;
-                case 525:
-                    $mouseTrackId = "mouseTrackListVapiano";
-                    break;
-                case 635:
-                    $mouseTrackId = "mouseTrackListOishii";
-                    break;
-                case 431:
-                    $mouseTrackId = "mouseTrackListDiner";
-                    break;
-            }
-            ?>
             <div class="panel panel-default">
-                <div id="<?= $mouseTrackId ?>" class="panel-heading">
+                <div class="panel-heading mouseTrackList" data-name="<?= h($ypoi->name) ?>">
                     <h3 class="panel-title clearfix">
                         <strong>
                             <?= $this->Number->format($nr + 1) . '.' ?> <?= h($ypoi->name) ?>

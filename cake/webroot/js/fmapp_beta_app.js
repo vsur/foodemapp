@@ -42,10 +42,7 @@ var fmApp = {
         aoi: {
             showData: false,
             list: {
-                zwiebel: [],
-                vapiano: [],
-                oishii: [],
-                diner: []
+                pois: []
             },
             chord: {
                 pois: [],
@@ -830,18 +827,32 @@ var fmApp = {
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 let aoiModalState = fmApp.mouseData.aoi.showData;
                 if (aoiModalState) {
-                    $("#aoiListValue-zwiebel > span").html(fmApp.mouseData.aoi.list.zwiebel.length);
-                    $("#aoiListValue-vapiano > span").html(fmApp.mouseData.aoi.list.vapiano.length);
-                    $("#aoiListValue-oishii > span").html(fmApp.mouseData.aoi.list.oishii.length);
-                    $("#aoiListValue-diner > span").html(fmApp.mouseData.aoi.list.diner.length);
-                    let allListEvents = [];
-                    Object.entries(fmApp.mouseData.aoi.list).forEach(poi => {
-                        const [key, value] = poi;
-                        value.forEach(
-                            dataPoint => {
-                                allListEvents.push(dataPoint);
-                            });
+                    let zwiebel = 0, vapiano = 0, oishii = 0, diner = 0;
+                    console.log(zwiebel, vapiano, oishii, diner);
+                    fmApp.mouseData.aoi.list.pois.forEach(poi => {
+                        switch (poi.poi) {
+                            case "Die Zwiebel":
+                                zwiebel++;
+                                break;
+                            case "Vapiano":
+                                vapiano++;
+                                break;
+                            case "Oishii":
+                                oishii++;
+                                break;
+                            case "American Diner Durlach":
+                                diner++;
+                                break;
+                            
+                            default:
+                                break;
+                        }
                     });
+                    $("#aoiListValue-zwiebel > span").html(zwiebel);
+                    $("#aoiListValue-vapiano > span").html(vapiano);
+                    $("#aoiListValue-oishii > span").html(oishii);
+                    $("#aoiListValue-diner > span").html(diner);
+                    let allListEvents = fmApp.mouseData.aoi.list.pois;
                     $("#allListEventsTableBody").html("");
                     let newTableRows = "";
                     allListEvents.sort(function(x, y) {
