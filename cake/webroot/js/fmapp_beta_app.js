@@ -566,7 +566,7 @@ var fmApp = {
                 this.sets.binaryChoice(this.finds.indexOfChosenComponent(chosenComponent.modelType, chosenComponent.id), bcState);
             }
             if (chosenComponent.modelType == 'NominalComponents') {
-                // Check if component is chosen from URL, so prepending is not necessary 
+                // Check if component is chosen from URL, so prepending is not necessary
                 if (componentDataFromURL) {
                     chosenComponentToPaste += this.pastes.nominalAttributes(chosenComponent, ncAttrId);
                 } else {
@@ -576,7 +576,7 @@ var fmApp = {
                 }
             }
             if (chosenComponent.modelType == 'OrdinalComponents') {
-                // Check if component is chosen from URL, so prepending is not necessary 
+                // Check if component is chosen from URL, so prepending is not necessary
                 if (componentDataFromURL) {
                     chosenComponentToPaste += this.pastes.ordinalAttributes(chosenComponent, ocAttrId);
                 } else {
@@ -650,7 +650,7 @@ var fmApp = {
     deleteComponent: function(delName) {
         // Delete entry from criteria list
         $("#" + delName).remove();
-        // Slice Information 
+        // Slice Information
         var cleanedIdentifier = fmApp.slices.criteriaListOffString(delName);
         var deletionDOMID = "#criteriaOptions_" + cleanedIdentifier;
         var deletionComponentType = fmApp.slices.componentModelTypeOffString(cleanedIdentifier);
@@ -843,7 +843,7 @@ var fmApp = {
                             case "American Diner Durlach":
                                 diner++;
                                 break;
-                            
+
                             default:
                                 break;
                         }
@@ -935,8 +935,7 @@ var fmApp = {
                     $("#aoiMapValue-pois > span").html(fmApp.mouseData.aoi.map.pois.length);
                     $("#aoiMapValue-dragMap > span").html(fmApp.mouseData.aoi.map.dragMap.length);
                     $("#aoiMapValue-dragPopup > span").html(fmApp.mouseData.aoi.map.dragPopup.length);
-                    let normalizedZoomValue = fmApp.mouseData.aoi.map.zoomMap.length > 0 ? ((fmApp.mouseData.aoi.map.zoomMap.length - 2) / 2) : fmApp.mouseData.aoi.map.zoomMap.length;
-                    $("#aoiMapValue-zoomMap > span").html(normalizedZoomValue);
+                    $("#aoiMapValue-zoomMap > span").html(fmApp.mouseData.aoi.map.zoomMap.length);
                     let allMapEvents = [];
                     Object.entries(fmApp.mouseData.aoi.map).forEach(mapEvent => {
                         const [key, value] = mapEvent;
@@ -1154,7 +1153,7 @@ $(document).ready(function() {
         }
     });
 
-    // Handle hints 
+    // Handle hints
     $("#usageAlert").fadeTo(10000, 500).slideUp(500, function() {
         $("#usageAlert").slideUp(500);
     });
