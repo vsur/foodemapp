@@ -1,23 +1,21 @@
-
-
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Hint Area ↓↓↓
 ↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
-<?php 
-  $session = $this->request->session();
+<?php
+$session = $this->request->session();
 ?>
 
 <?php if (!$session->check('Config.hasSeenMatchesHint')) : ?>
-<div class="row">
-  <div class="col-md-12">
-    <?php
-      echo $this->element('hints/findMatches/selectViz');
-      $session->write([
-        'Config.hasSeenMatchesHint' => true
-      ]);
-    ?>
-  </div>
-</div>
+    <div class="row">
+        <div class="col-md-12">
+            <?php
+            echo $this->element('hints/findMatches/selectViz');
+            $session->write([
+                'Config.hasSeenMatchesHint' => true
+            ]);
+            ?>
+        </div>
+    </div>
 <?php endif; ?>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑ Hint Area ↑↑↑
@@ -27,7 +25,7 @@
 <div class="row">
     <div class="col-md-4">
         <h3>
-            
+
             <span id="poiCount" class="badge <?= (count($ypois) == 0) ? 'danger' : 'success' ?>">
                 Gefundene Orte <br>
                 <span class="actualPoiNumber"><?= count($ypois) ?></span>
@@ -58,7 +56,7 @@
                 </tr>
                 <tr>
                     <td>Summe übriger Kategorien</td>
-                    <td><?= (count($ypois) == 0) ? 0 : ( $overallComponentCount - count($configuredSelection) ) ?></td>
+                    <td><?= (count($ypois) == 0) ? 0 : ($overallComponentCount - count($configuredSelection)) ?></td>
                 </tr>
                 <tr>
                     <td>5 ★ Auswahl</td>
@@ -92,54 +90,57 @@
                     <td>Alle Ordinalen Kategorien</td>
                     <td><?= $componentTypesComponentsCount->ordinalCount ?></td>
                 </tr>
-                </tbody>
+            </tbody>
         </table>
     </div>
 </div>
-<?php if(count($ypois) > 0) : ?>
+<?php if (count($ypois) > 0) : ?>
     <div class="row">
         <div class="col-md-4 viewLinkBlock">
-            <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "list", "?" => $this->request->query]);?>">
+            <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "list", "?" => $this->request->query]); ?>">
                 <h2>Listenanzeige</h2>
                 <!-- UR List Image -->
-                <?php // echo $this->Html->image('list-view-ur.png', ['alt' => 'Ihre Ergebnisse als Listenansicht', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <?php echo $this->Html->image('list-view-ur.png', ['alt' => 'Ihre Ergebnisse als Listenansicht', 'class' => 'thumbnail img-rounded img-responsive']); ?>
                 <!-- ISAC List Image -->
-                <?php echo $this->Html->image('list-view-isac.png', ['alt' => 'Ihre Ergebnisse als Listenansicht', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <?php // echo $this->Html->image('list-view-isac.png', ['alt' => 'Ihre Ergebnisse als Listenansicht', 'class' => 'thumbnail img-rounded img-responsive']);
+                ?>
             </a>
         </div>
         <div class="col-md-4 viewLinkBlock">
-            <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "chord", "?" => $this->request->query]);?>">
+            <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "chord", "?" => $this->request->query]); ?>">
                 <h2>Chord-Diagram</h2>
                 <!-- UR Chord Image -->
-                <?php //  echo $this->Html->image('chord-view-ur.png', ['alt' => 'Ihre Ergebnisse als Chord-Diagramm', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <?php echo $this->Html->image('chord-view-ur.png', ['alt' => 'Ihre Ergebnisse als Chord-Diagramm', 'class' => 'thumbnail img-rounded img-responsive']); ?>
                 <!-- ISAC Chord Image -->
-                <?php echo $this->Html->image('chord-view-isac.png', ['alt' => 'Ihre Ergebnisse als Chord-Diagramm', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <?php // echo $this->Html->image('chord-view-isac.png', ['alt' => 'Ihre Ergebnisse als Chord-Diagramm', 'class' => 'thumbnail img-rounded img-responsive']);
+                ?>
             </a>
         </div>
         <div class="col-md-4 viewLinkBlock">
-            <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "map", "?" => $this->request->query]);?>">
+            <a href="<?= $this->Url->build(["controller" => "ypois", "action" => "findMatches", "map", "?" => $this->request->query]); ?>">
                 <h2>Kartendarstellung</h2>
                 <!-- UR Map Image -->
-                <?php // echo $this->Html->image('map-view-ur.png', ['alt' => 'Ihre Ergebnisse als Kartendarstellung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <?php echo $this->Html->image('map-view-ur.png', ['alt' => 'Ihre Ergebnisse als Kartendarstellung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
                 <!-- ISAC Map Image -->
-                <?php echo $this->Html->image('map-view-isac.png', ['alt' => 'Ihre Ergebnisse als Kartendarstellung', 'class' => 'thumbnail img-rounded img-responsive']); ?>
+                <?php // echo $this->Html->image('map-view-isac.png', ['alt' => 'Ihre Ergebnisse als Kartendarstellung', 'class' => 'thumbnail img-rounded img-responsive']);
+                ?>
             </a>
         </div>
     </div>
-    <?php else : ?>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+<?php else : ?>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
             <?= $this->Html->link(
                 'Bitte passen Sie Ihr Auswahl an, damit Sie auch Ergebnisse erhalten <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>',
                 ["controller" => "ypois", "action" => "setScenario", "?" => $this->request->query],
                 [
-                  'class' => 'btn btn-warning navbar-btn', 
-                  'id' => 'noResultButton',
-                  'aria-label' => 'Passen Sie ihre Auswahl an', 
-                  'escape' => false
+                    'class' => 'btn btn-warning navbar-btn',
+                    'id' => 'noResultButton',
+                    'aria-label' => 'Passen Sie ihre Auswahl an',
+                    'escape' => false
                 ]
             ); ?>
-            </div>
         </div>
+    </div>
 
 <?php endif; ?>

@@ -2,16 +2,16 @@
  * Put here stuff for Map  *
  ***************************/
 
- // SetUp Vars 
-//  $iconPath : "../img/leaflet/marker-food-dark-with-shadow.png"; 
- $iconPath : "../img/leaflet/marker-isac-dark-with-shadow.png";
-//  $iconPath : "../img/leaflet/marker-food-light-with-shadow.png"; 
+ // SetUp Vars
+ $iconPath : "../img/leaflet/marker-food-dark-with-shadow.png";
+//  $iconPath : "../img/leaflet/marker-isac-dark-with-shadow.png";
+//  $iconPath : "../img/leaflet/marker-food-light-with-shadow.png";
 //  $iconPath : "../img/leaflet/marker-isac-light-with-shadow.png";
 
 #mapNavbar {
   top: 64px;
 }
-#mapNavbar.navbar { 
+#mapNavbar.navbar {
   min-height: 35px;
 }
 #mapNavbar.navbar-default {
@@ -68,7 +68,7 @@
 }
 .infoPopup {
   cursor: move;
-  cursor: -webkit-move; 
+  cursor: -webkit-move;
 }
 .infoPopup > div.leaflet-popup-content-wrapper {
   background: adjust-color($urcd-color, $alpha: -0.25);
@@ -132,7 +132,7 @@
     }
     .nominalNameCombo {
       color: lighten($urcd-color, 40.5%) !important;
-    } 
+    }
     .componentNameOrdinalComponent {
       color: white;
     }
@@ -166,7 +166,7 @@
       -webkit-transform: translateX(12px);
       -ms-transform: translateX(12px);
       transform: translateX(12px);
-    } 
+    }
     li.nominalComponentContainer > div.nominalAttribute > figure.attrIcons {
         width: 20px;
         height: 20px;
