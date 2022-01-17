@@ -1,6 +1,6 @@
 // Put here Stuff for Leaflet
 
-// Static user position 
+// Static user position
 // console.log("Coming from MAP: ");
 // console.log(fmApp.geoLocation);
 var staticUserPosition = L.latLng(fmApp.geoLocation.latLong[0], fmApp.geoLocation.latLong[1]);
@@ -25,7 +25,7 @@ var markers = L.markerClusterGroup();
 var connectionLines = L.layerGroup();
 
 // Deactivate dbClick Zoom for later mouse tracking
-mymap.doubleClickZoom.disable(); 
+mymap.doubleClickZoom.disable();
 
 L.tileLayer.provider('OpenStreetMap.HOT').addTo(mymap);
 
@@ -228,7 +228,7 @@ function makePopupDraggable(popup) {
         aoiMapTrackPopupDragEvent(e, popup._source.options.poiName);
         let pixelXYValueOfMarkerCenter = mymap.latLngToLayerPoint(popup._source._latlng);
 
-        // Standard-Offset -2 < X < 2 | 32 < Y < 34 
+        // Standard-Offset -2 < X < 2 | 32 < Y < 34
         let xPosCorrection = 0; // Popup-X-Mitte
         let yPosCorrection = 0; // Popup-Y-Unten
 
@@ -326,7 +326,7 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
 
         ratingString += '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
         ratingString += '<span class="binaryComponentInfo">'
-        ratingString += '    <span>' + (rankedBinary.display_name != '' ? rankedBinary.display_name : rankedBinary.name) + '</span>'
+        ratingString += '    <span class="choosen" title="'+ (rankedBinary.display_name != '' ? rankedBinary.display_name : rankedBinary.name) + '">' + (rankedBinary.display_name != '' ? rankedBinary.display_name : rankedBinary.name) + '</span>'
         ratingString += '    <span class="pull-right"><span class="glyphicon ' + (rankedBinary.binaryComponentState ? 'glyphicon-ok' : 'glyphicon-remove') + ' ' + (rankedBinary.binaryComponentState ? 'text-success' : 'text-danger') + '" aria-hidden="true"></span></span>'
         ratingString += '</span>'
 
@@ -339,7 +339,7 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
 
         ratingString += '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
         ratingString += '<div class="nominalAttribute pull-right"><figure class="attrIcons ' + (rankedNominal.icon_path != '' ? rankedNominal.icon_path : 'iconPlaceholder') + '"></figure></div>';
-        ratingString += '<span class="nominalNameCombo"><span class="componentNameNominalComponent' + (rankedNominal.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedNominal.nominal_component.display_name != '' ? (rankedNominal.nominal_component.display_name) : rankedNominal.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (rankedNominal.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (rankedNominal.display_name != '' ? rankedNominal.display_name : rankedNominal.name) + '</span></span>';
+        ratingString += '<span class="nominalNameCombo choosen" title="' + (rankedNominal.nominal_component.display_name != '' ? (rankedNominal.nominal_component.display_name) : rankedNominal.nominal_component.name) + ' ' +  (rankedNominal.display_name != '' ? rankedNominal.display_name : rankedNominal.name) + '"><span class="componentNameNominalComponent' + (rankedNominal.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedNominal.nominal_component.display_name != '' ? (rankedNominal.nominal_component.display_name) : rankedNominal.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (rankedNominal.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (rankedNominal.display_name != '' ? rankedNominal.display_name : rankedNominal.name) + '</span></span>';
 
         ratingString += '</li>';
     });
@@ -349,7 +349,7 @@ function buildNStarRatingListItems(ratedComponents, N_StarRating) {
         ratingString += '<li class="ordinalComponentContainer clearfix">';
 
         ratingString += '<span class="glyphicon glyphicon-star choosenStarAgregation pull-left" aria-hidden="true"><span class="choosenStarAgregationNumber">' + N_StarRating + '</span></span>';
-        ratingString += '<span class="ordinalComponentInfo">';
+        ratingString += '<span class="ordinalComponentInfo" title="' + (rankedOrdinal.ordinal_component.display_name != '' ? (rankedOrdinal.ordinal_component.display_name) : rankedOrdinal.ordinal_component.name) + ' ' +  (rankedOrdinal.display_name != '' ? rankedOrdinal.display_name : rankedOrdinal.name) + '">';
         ratingString += '<span class="componentNameOrdinalComponent' + (rankedOrdinal.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (rankedOrdinal.ordinal_component.display_name != '' ? (rankedOrdinal.ordinal_component.display_name) : rankedOrdinal.ordinal_component.name) + '</span>';
         ratingString += '<span class="attributeNameOrdinalAttribute pull-right ' + (rankedOrdinal.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (rankedOrdinal.display_name != '' ? rankedOrdinal.display_name : rankedOrdinal.name) + '</span>';
         ratingString += '</span>'
@@ -397,7 +397,7 @@ function buildBinaryComponents(binaryComponents) {
             binaryComponentString += '<li class="binaryComponentContainer clearfix">';
 
             binaryComponentString += '<span class="binaryComponentInfo">';
-            binaryComponentString += '    <span>' + (binaryComponent.display_name != '' ? binaryComponent.display_name : binaryComponent.name) + '</span>'
+            binaryComponentString += '    <span title="' + (binaryComponent.display_name != '' ? binaryComponent.display_name : binaryComponent.name) + '">' + (binaryComponent.display_name != '' ? binaryComponent.display_name : binaryComponent.name) + '</span>'
             binaryComponentString += '    <span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>';
             binaryComponentString += '</span>';
 
@@ -414,7 +414,9 @@ function buildNominalComponents(nominalAttributes) {
             nominalComponentString += '<li class="nominalComponentContainer clearfix">';
 
             nominalComponentString += '<div class="nominalAttribute pull-right"><figure class="attrIcons ' + (nominalAttribute.icon_path != '' ? nominalAttribute.icon_path : 'iconPlaceholder') + '"></figure></div>';
-            nominalComponentString += '<span class="nominalNameCombo"><span class="componentNameNominalComponent' + (nominalAttribute.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (nominalAttribute.nominal_component.display_name != '' ? (nominalAttribute.nominal_component.display_name) : nominalAttribute.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (nominalAttribute.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (nominalAttribute.display_name != '' ? nominalAttribute.display_name : nominalAttribute.name) + '</span></span>';
+            nominalComponentString += '<span class="nominalNameCombo" title="' + (nominalAttribute.nominal_component.display_name != '' ? (nominalAttribute.nominal_component.display_name) : nominalAttribute.nominal_component.name) + ' ' + (nominalAttribute.display_name != '' ? nominalAttribute.display_name : nominalAttribute.name) + '">';
+            nominalComponentString += '    <span class="componentNameNominalComponent' + (nominalAttribute.nominal_component.display_name != '' ? '' : ' text-muted') + '">' + (nominalAttribute.nominal_component.display_name != '' ? (nominalAttribute.nominal_component.display_name) : nominalAttribute.nominal_component.name) + '</span> <span class="attributeNameNominalAttribute ' + (nominalAttribute.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (nominalAttribute.display_name != '' ? nominalAttribute.display_name : nominalAttribute.name) + '</span>';
+            nominalComponentString += '</span>';
 
             nominalComponentString += '</li>';
         }
@@ -426,7 +428,7 @@ function buildOrdinalComponents(ordinalAttributes) {
     var ordinalComponentString = '';
     ordinalAttributes.forEach(function(ordinalAttribute, index) {
         if (!rankedSelection.ordinalAttributeIDs.includes(ordinalAttribute.id.toString())) {
-            ordinalComponentString += '<li class="ordinalComponentContainer clearfix">';
+            ordinalComponentString += '<li class="ordinalComponentContainer clearfix" title="' + (ordinalAttribute.ordinal_component.display_name != '' ? (ordinalAttribute.ordinal_component.display_name) : ordinalAttribute.ordinal_component.name) + ' ' + (ordinalAttribute.display_name != '' ? ordinalAttribute.display_name : ordinalAttribute.name) + '">';
 
             ordinalComponentString += '<span class="componentNameOrdinalComponent' + (ordinalAttribute.ordinal_component.display_name != '' ? '' : ' text-muted') + '">' + (ordinalAttribute.ordinal_component.display_name != '' ? (ordinalAttribute.ordinal_component.display_name) : ordinalAttribute.ordinal_component.name) + '</span>';
             ordinalComponentString += '<span class="attributeNameOrdinalAttribute pull-right ' + (ordinalAttribute.display_name != '' ? 'textURcolorSuperLight' : 'text-muted') + '">' + (ordinalAttribute.display_name != '' ? ordinalAttribute.display_name : ordinalAttribute.name) + '</span>';

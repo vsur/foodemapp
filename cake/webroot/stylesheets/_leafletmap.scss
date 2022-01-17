@@ -100,12 +100,24 @@
       font-size: 18px;
     }
     .binaryComponentInfo>span:first-child, .nominalNameCombo, .componentNameOrdinalComponent {
-      width: 85px;
+      //   width: 85px;
       display: inline-block;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
       cursor: help;
+    }
+    .binaryComponentInfo>span.choosen:first-child {
+        width: 100px;
+    }
+    .binaryComponentInfo>span:first-child {
+        width: 125px;
+    }
+    .nominalNameCombo.choosen {
+        width: 95px;
+    }
+    .nominalNameCombo {
+        width: 120px;
     }
     .componentNameOrdinalComponent,
     .attributeNameOrdinalAttribute {

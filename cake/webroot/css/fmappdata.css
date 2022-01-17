@@ -7757,12 +7757,19 @@ path.chord {
   .popUpComponentList .binaryComponentInfo span.glyphicon {
     font-size: 18px; }
   .popUpComponentList .binaryComponentInfo > span:first-child, .popUpComponentList .nominalNameCombo, .popUpComponentList .componentNameOrdinalComponent {
-    width: 85px;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     cursor: help; }
+  .popUpComponentList .binaryComponentInfo > span.choosen:first-child {
+    width: 100px; }
+  .popUpComponentList .binaryComponentInfo > span:first-child {
+    width: 125px; }
+  .popUpComponentList .nominalNameCombo.choosen {
+    width: 95px; }
+  .popUpComponentList .nominalNameCombo {
+    width: 120px; }
   .popUpComponentList .componentNameOrdinalComponent,
   .popUpComponentList .attributeNameOrdinalAttribute {
     display: inline-block;
