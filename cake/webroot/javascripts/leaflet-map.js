@@ -19,7 +19,11 @@ var connectionLineProps = {
 };
 
 // Initalize LMap
-var mymap = L.map('ypoisMap');
+var mymap = L.map('ypoisMap', {
+        minZoom: 3,
+        maxZoom: 18
+    }
+);
 // var markers = L.layerGroup([]);
 var markers = L.markerClusterGroup();
 var connectionLines = L.layerGroup();
