@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		},
 
 		// Config sass
-		sass: {                             
+		sass: {
 			options: { implementation: sass, sourceMap: true },
 			dist: {
 				files: [{
@@ -46,16 +46,17 @@ module.exports = function(grunt) {
 
 			// when this task is run, lint the Gruntfile and all js files in src
 			all: [
-				'Gruntfile.js', 
-				'!javascripts/bootstrap*.js', 
-				'javascripts/fmapp_app.js', 
-				'javascripts/fmapp_beta_app.js', 
-				'javascripts/filterwheelsunburst.js', 
-				'javascripts/heatmap-std.js', 
+				'Gruntfile.js',
+				'!javascripts/bootstrap*.js',
+				'javascripts/fmapp_app.js',
+				'javascripts/fmapp_beta_app.js',
+				'javascripts/filterwheelsunburst.js',
+				'javascripts/heatmap-std.js',
 				'javascripts/heatmap-map.js',
 				'javascripts/aoi-list.js',
 				'javascripts/aoi-chord.js',
-				'javascripts/aoi-map.js'
+				'javascripts/aoi-map.js',
+				'javascripts/eval-helper.js'
 			]
 		},
 
@@ -101,9 +102,13 @@ module.exports = function(grunt) {
 				dest: 'js/aoi-chord.js',
 			},
 			aoiMap: {
-				src: ['javascripts/aoi-map.js'],
-				dest: 'js/aoi-map.js',
-			}
+                src: ['javascripts/aoi-map.js'],
+                dest: 'js/aoi-map.js',
+            },
+            evalHelper: {
+                src: ['javascripts/eval-helper.js'],
+                dest: 'js/eval-helper.js',
+            } 
 
 		},
 
@@ -113,16 +118,17 @@ module.exports = function(grunt) {
 			scripts: {
 				files: ['javascripts/*.js'],
 				tasks: [
-					'jshint', 
-					'concat:noBootBeta', 
-					'concat:componentWheel', 
-					'concat:chord', 
-					'concat:leafletMap', 
-					'concat:heatmap', 
+					'jshint',
+					'concat:noBootBeta',
+					'concat:componentWheel',
+					'concat:chord',
+					'concat:leafletMap',
+					'concat:heatmap',
 					'concat:heatmapMap',
 					'concat:aoiList',
 					'concat:aoiChord',
-					'concat:aoiMap'
+					'concat:aoiMap',
+					'concat:evalHelper'
 				],
 				options: {
 					spawn: false
@@ -150,7 +156,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-html');
 	grunt.loadNpmTasks('grunt-sass');
-	
+
 	// Default task(s).
 	grunt.registerTask('default', ['sass']);
 	grunt.registerTask('doJS', ['jshint', 'concat:noBoot']);
