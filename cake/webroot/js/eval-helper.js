@@ -1,6 +1,6 @@
-$( document ).ready(function() {
+$(document).ready(function() {
     // Restart survey
-    $("#javatbd612158X2X4AO01 .button-item").click(function(event){
+    $("#javatbd612158X2X4AO01 .button-item").click(function(event) {
         let currentUrl = window.location.href;
         let hasParams = false;
         let goToUrl = "";
@@ -14,19 +14,25 @@ $( document ).ready(function() {
     });
 
     // List
-    $("#answer612158X5X16").on('change', function(event){
+    $("#answer612158X5X16").on('change', function(event) {
         saveQuantityData(event);
     });
 
     // Chord
-    $("#answer612158X16X23").on('change', function(event){
+    $("#answer612158X16X23").on('change', function(event) {
         saveQuantityData(event);
     });
 
     // Map
-    $("#answer612158X17X26").on('change', function(event){
+    $("#answer612158X17X26").on('change', function(event) {
         saveQuantityData(event);
     });
+
+    // Test Site
+    $("#testGet").on('click', function(event) {
+        saveQuantityData(event);
+    });
+
 });
 
 function saveQuantityData(event) {
