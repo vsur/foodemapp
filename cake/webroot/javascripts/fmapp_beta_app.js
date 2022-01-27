@@ -31,14 +31,6 @@ var fmApp = {
             showMap: false,
             data: []
         },
-        aoiMove: {
-            showMap: false,
-            data: []
-        },
-        aoiClick: {
-            showMap: false,
-            data: []
-        },
         aoi: {
             showData: false,
             list: {
@@ -827,7 +819,10 @@ var fmApp = {
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 let aoiModalState = fmApp.mouseData.aoi.showData;
                 if (aoiModalState) {
-                    let zwiebel = 0, vapiano = 0, oishii = 0, diner = 0;
+                    let zwiebel = 0,
+                        vapiano = 0,
+                        oishii = 0,
+                        diner = 0;
                     console.log(zwiebel, vapiano, oishii, diner);
                     fmApp.mouseData.aoi.list.pois.forEach(poi => {
                         switch (poi.poi) {
@@ -1134,7 +1129,7 @@ $(document).ready(function() {
     // Click handler for list view "Mehr anzeigen …" on panel heading
     $("#listView").on("click", ".panel-heading", function() {
         // NEXT Find Specific Area to Toggle
-        $(this).parent().find(".componentOverview").slideToggle("slow", function(event){
+        $(this).parent().find(".componentOverview").slideToggle("slow", function(event) {
             fmApp.heatmap.reinit();
         });
         $(this).find(".listMoreInfo").toggleClass("showMore");
