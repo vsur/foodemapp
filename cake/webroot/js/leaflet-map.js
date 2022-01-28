@@ -457,6 +457,7 @@ function updateShownComponents(componentsToPresent, clickedAncher) {
 
 $(document).ready(function() {
     $("#mapComponentsChoice a").click(function(event) {
+        event.preventDefault();
         var componentsToPresent = $(this).attr('data-component-presentation');
         $("#mapComponentsChoice li").removeClass('active');
         updateShownComponents(componentsToPresent, this);
