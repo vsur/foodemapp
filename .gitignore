@@ -19,3 +19,4 @@ node_modules
 
 deploy
 bak_wordcloud.png
+cake/webroot/eval/*
