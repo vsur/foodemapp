@@ -40,7 +40,7 @@ function saveQuantityData(event, view) {
             $("#answer612158X5X93").val(JSON.stringify(mouseData.mMove.data));
             // mClick Data Textarea ID: answer612158X5X94
             $("#answer612158X5X94").val(JSON.stringify(mouseData.mClick.data));
-            // aoi.list.pois Data Textarea ID: answer612158X5X93
+            // aoi.list.pois Data Textarea ID: answer612158X5X95
             $("#answer612158X5X95").val(JSON.stringify(mouseData.aoi.list.pois));
             break;
 
@@ -53,7 +53,7 @@ function saveQuantityData(event, view) {
             $("#answer612158X16X98").val(JSON.stringify(mouseData.aoi.chord.pois));
             // aoi.chord.choosenComponents Data Textarea ID: answer612158X16X99
             $("#answer612158X16X99").val(JSON.stringify(mouseData.aoi.chord.choosenComponents));
-            // aoi.chord.otherComponents Data Data Textarea ID: answer612158X16X100
+            // aoi.chord.otherComponents Data Textarea ID: answer612158X16X100
             $("#answer612158X16X100").val(JSON.stringify(mouseData.aoi.chord.otherComponents));
             break;
 
