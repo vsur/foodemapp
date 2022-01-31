@@ -199,10 +199,12 @@ var offset = (2 * Math.PI) * (emptyStroke / (respondents + emptyStroke)) / 4;
 
 var screenWidth = $(window).width(),
     mobileScreen = (screenWidth > 400 ? false : true);
-
-var margin = { left: 50, top: 10, right: 50, bottom: 10 },
-    width = Math.min(screenWidth, 1200) - margin.left - margin.right,
-    height = (mobileScreen ? 300 : Math.min(screenWidth, 1200) * 5 / 6) - margin.top - margin.bottom;
+var containerWidth = document.querySelector('#ypoisChord').getBoundingClientRect();
+var margin = { left: 50, top: 0, right: 50, bottom: 0 },
+// width = Math.min(screenWidth, 1200) - margin.left - margin.right,
+width = containerWidth.width - margin.left - margin.right,
+// height = (mobileScreen ? 300 : Math.min(screenWidth, 1200) * 5 / 6) - margin.top - margin.bottom;
+height = window.innerHeight - margin.top - margin.bottom;
 
 var svg = d3.select("#ypoisChord").append("svg")
     .attr("width", (width + margin.left + margin.right))
@@ -313,14 +315,14 @@ g.append("path")
 // And also rotated with the offset in the clockwise direction
 g.append("text")
     .each(function(d) { d.angle = ((d.startAngle + d.endAngle) / 2) + offset; })
-    .attr("dy", ".35em")
+    .attr("dy", ".15em")
     .attr("class", "titles")
     .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
     .attr("transform", function(d, i) {
         var c = arc.centroid(d);
         return "translate(" + (c[0] + d.pullOutSize) + "," + c[1] + ")" +
             "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" +
-            "translate(" + 70 + ",0)" +
+            "translate(" + 40 + ",0)" +
             (d.angle > Math.PI ? "rotate(180)" : "")
     })
     .text(function(d, i) {
@@ -496,7 +498,7 @@ for (var i = 0; i < groups.length; i++) {
                 return ((width / 4) - (__g.title.length * 3.25))
             }
         })
-        .attr("dy", 20);
+        .attr("dy", 12);
 
     text.append("textPath")
         .attr('fill', '#fff')
