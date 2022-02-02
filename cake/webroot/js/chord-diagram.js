@@ -201,10 +201,10 @@ var screenWidth = $(window).width(),
     mobileScreen = (screenWidth > 400 ? false : true);
 var containerWidth = document.querySelector('#ypoisChord').getBoundingClientRect();
 var margin = { left: 50, top: 0, right: 50, bottom: 0 },
-// width = Math.min(screenWidth, 1200) - margin.left - margin.right,
-width = containerWidth.width - margin.left - margin.right,
-// height = (mobileScreen ? 300 : Math.min(screenWidth, 1200) * 5 / 6) - margin.top - margin.bottom;
-height = window.innerHeight - margin.top - margin.bottom;
+    // width = Math.min(screenWidth, 1200) - margin.left - margin.right,
+    width = containerWidth.width - margin.left - margin.right,
+    // height = (mobileScreen ? 300 : Math.min(screenWidth, 1200) * 5 / 6) - margin.top - margin.bottom;
+    height = window.innerHeight - margin.top - margin.bottom;
 
 var svg = d3.select("#ypoisChord").append("svg")
     .attr("width", (width + margin.left + margin.right))
@@ -222,8 +222,10 @@ var outerRadius = Math.min(width, height) / 2 - (mobileScreen ? 80 : 100),
 // http://paletton.com/#uid=32a0u0kw0w0jyC+oRxVy4oIDfjr
 var colors = {
     "poi": "#2196f3",
-    "rankedComponents": "#7d003c",
-    "otherComponents": "#4CAF50"
+    "rankedComponents": "#7d003c", // Original Grün
+    // "otherComponents": "#4CAF50" // Original Grün
+    // "otherComponents": "#00FF04" // Max Contrast (ranked) 7,9:1
+    "otherComponents": "#00D900" // Mid Contrast (ranked) 5,68:1
 };
 
 var colors_dark = {
