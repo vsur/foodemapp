@@ -1,4 +1,4 @@
-Problem mit der Datenlage gelöst!
+Problem mit der Datenlage gelöst! 
 
 Nächster Schritt die Components Choose anpassen, bzw. neue View bauen.
 
