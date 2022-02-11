@@ -11,9 +11,39 @@ var matrix_original = matrix;
 
 console.log("chordDiagramMatrixData", chordDiagramMatrixData);
 
+var execInIframe = isInIframe();
+console.log("is iFrame", execInIframe);
+
+var screenWidth = $(window).width(),
+    mobileScreen = (screenWidth > 400 ? false : true);
+var containerWidth = document.querySelector('#ypoisChord').getBoundingClientRect();
+var sizingGround = Math.min(containerWidth.width, window.innerHeight)
+  
 ////////////////////////////////////////////////////////////
 //////////////// Skalierung der Bereiche ///////////////////
 ////////////////////////////////////////////////////////////
+ 
+var maxWidthSize = 1140;
+var sizingFactor = containerWidth.width / maxWidthSize;
+
+/* 
+ * Hilfsfunktion zum Erkennen 
+* der Ausführung innerhlalb des iFframes
+* Wichtig für Größenangaben
+*/
+function isInIframe() {
+    if ( window.location !== window.parent.location )
+    {
+      
+        // The page is in an iFrames
+        return true;
+    } 
+    else {
+        
+        // The page is not in an iFrame
+        return false;
+    }
+}
 
 /*
  * Hilfsfunktion zum Berechnen der Summe
@@ -197,9 +227,6 @@ var offset = (2 * Math.PI) * (emptyStroke / (respondents + emptyStroke)) / 4;
 //////////////////////// Set-up ////////////////////////////
 ////////////////////////////////////////////////////////////
 
-var screenWidth = $(window).width(),
-    mobileScreen = (screenWidth > 400 ? false : true);
-var containerWidth = document.querySelector('#ypoisChord').getBoundingClientRect();
 var margin = { left: 50, top: 0, right: 50, bottom: 0 },
     // width = Math.min(screenWidth, 1200) - margin.left - margin.right,
     width = containerWidth.width - margin.left - margin.right,
@@ -317,14 +344,14 @@ g.append("path")
 // And also rotated with the offset in the clockwise direction
 g.append("text")
     .each(function(d) { d.angle = ((d.startAngle + d.endAngle) / 2) + offset; })
-    .attr("dy", ".15em")
+    .attr("dy", "0." + (35 * sizingFactor) + "em")
     .attr("class", "titles")
     .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
     .attr("transform", function(d, i) {
         var c = arc.centroid(d);
         return "translate(" + (c[0] + d.pullOutSize) + "," + c[1] + ")" +
             "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" +
-            "translate(" + 40 + ",0)" +
+            "translate(" + ( ( execInIframe ? 40 : (80 * sizingFactor) ) ) + ",0)" +
             (d.angle > Math.PI ? "rotate(180)" : "")
     })
     .text(function(d, i) {
@@ -490,17 +517,31 @@ for (var i = 0; i < groups.length; i++) {
         .attr("transform",
             "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")")
         .attr("class", "aoi-move aoi-click");
-
+    
     // Add a text label.
     var text = svg.append("text")
         .attr("x", function(d) {
             if (__g.title === 'Gefundene Orte') {
-                return ((width / 2) - (__g.title.length * 4))
+                if (execInIframe) {
+                    return 253;
+                } else {
+                    return ( height/2 * sizingFactor )
+                }
             } else {
-                return ((width / 4) - (__g.title.length * 3.25))
+                if (execInIframe) {
+                    return 85;
+                } else {
+                    return ( ( (width / 4) * sizingFactor ) - (__g.title.length * 3.25) )
+                }
             }
         })
-        .attr("dy", 12);
+        .attr("dy", function(d) {
+            if (execInIframe) {
+                return 13;
+            } else {
+                return 20 * sizingFactor;
+            }
+        });
 
     text.append("textPath")
         .attr('fill', '#fff')
