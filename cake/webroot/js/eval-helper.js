@@ -28,12 +28,32 @@ $(document).ready(function() {
         saveQuantityData(event, "map");
     });
 
+    // Submit Button
+    $("#answer612158X17X26").on('change', function(event) {
+        event.preventDefault();
+        // if (validateAnswers(event, "list")) {
+        //     if (saveQuantityData(event, "list")) {
+        //         console.log("Form Should Submit");
+        //         document.limesurvey.submit();
+        //     } else {
+        //         alert("Fehler bei der Datenübernahme. Bitte probieren Sie es erneut.");
+        //     }
+        // }
+        document.limesurvey.submit();
+        // $('#ls-button-submit').trigger('click');
+    });
+
 });
+
+var errorText = `<div class="ls-question-mandatory ls-question-mandatory-initial text-danger " role="alert">
+    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+    Diese Frage muss beantwortet werden.
+</div>`;
 
 function saveQuantityData(event, view) {
     let iFrameContext = document.getElementById('fmAppFrame').contentWindow;
     let mouseData = iFrameContext.fmApp.mouseData;
-    console.log(mouseData);
+    let pasteAccomplished = false;
     switch (view) {
         case "list":
             // mMove Data Textarea ID: answer612158X5X93
@@ -42,6 +62,7 @@ function saveQuantityData(event, view) {
             $("#answer612158X5X94").val(JSON.stringify(mouseData.mClick.data));
             // aoi.list.pois Data Textarea ID: answer612158X5X95
             $("#answer612158X5X95").val(JSON.stringify(mouseData.aoi.list.pois));
+            pasteAccomplished = true;
             break;
 
         case "chord":
@@ -55,6 +76,7 @@ function saveQuantityData(event, view) {
             $("#answer612158X16X99").val(JSON.stringify(mouseData.aoi.chord.choosenComponents));
             // aoi.chord.otherComponents Data Textarea ID: answer612158X16X100
             $("#answer612158X16X100").val(JSON.stringify(mouseData.aoi.chord.otherComponents));
+            pasteAccomplished = true;
             break;
 
         case "map":
@@ -72,10 +94,145 @@ function saveQuantityData(event, view) {
             $("#answer612158X17X106").val(JSON.stringify(mouseData.aoi.map.dragPopup));
             // aoi.map.zoomMap Data Textarea ID: answer612158X17X107
             $("#answer612158X17X107").val(JSON.stringify(mouseData.aoi.map.zoomMap));
+            pasteAccomplished = true;
             break;
 
         default:
             break;
     }
     console.log("Data pasted");
+    return pasteAccomplished;
+}
+
+function validateAnswers(event, view)  {
+    let validation = {
+        dropDown: false,
+        decisionEasiness: false,
+        decisionAccuracy: false
+    };
+    switch (view) {
+        case "list":
+            validation.dropDown = checkDropDownInput("list");
+            validation.decisionEasiness = checkDecisionEasiness("list");
+            validation.decisionAccuracy = checkDecisionAccuracy("list");
+            if (
+                validation.dropDown &&
+                validation.decisionEasiness &&
+                validation.decisionAccuracy
+            ) {
+                return true;
+            } else {
+                console.log("Answer validation failed!");
+                return false;
+            }
+            break;
+
+        case "chord":
+            break;
+
+        case "map":
+            break;
+
+        default:
+            break;
+    }
+}
+
+function checkDropDownInput(view) {
+    let dropDownId = "";
+    let questionID = "";
+    switch (view) {
+        case "list":
+            dropDownId = "answer612158X5X16";
+            questionID = "question16";
+            break;
+
+        case "chord":
+            break;
+
+        case "map":
+            break;
+
+        default:
+            break;
+    }
+
+    let selectedDropDownOption = $('#' + dropDownId + ' option:selected').val();
+    if (selectedDropDownOption == "") {
+        if (!$("#" + questionID).hasClass("input-error")) {
+            // Highlight Box
+            $("#" + questionID).addClass("input-error");
+            // Add Error Text
+            $("#" + questionID + " > div.question-valid-container.text-info.col-xs-12").append(errorText);
+        }
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function checkDecisionEasiness(view) {
+    let radioId = "";
+    let questionID = "";
+    switch (view) {
+        case "list":
+            radioId = "612158X5X17";
+            questionID = "question17";
+            break;
+
+        case "chord":
+            break;
+
+        case "map":
+            break;
+
+        default:
+            break;
+    }
+
+    let selectedRadioOption = $("input[type='radio'][name='" + radioId + "']:checked").val();
+    if (selectedRadioOption == undefined) {
+        if (!$("#" + questionID).hasClass("input-error")) {
+            // Highlight Box
+            $("#" + questionID).addClass("input-error");
+            // Add Error Text
+            $("#" + questionID + " > div.question-valid-container.text-info.col-xs-12").append(errorText);
+        }
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function checkDecisionAccuracy(view) {
+    let radioId = "";
+    let questionID = "";
+    switch (view) {
+        case "list":
+            radioId = "612158X5X18";
+            questionID = "question18";
+            break;
+
+        case "chord":
+            break;
+
+        case "map":
+            break;
+
+        default:
+            break;
+    }
+
+    let selectedRadioOption = $("input[type='radio'][name='" + radioId + "']:checked").val();
+    if (selectedRadioOption == undefined) {
+        if (!$("#" + questionID).hasClass("input-error")) {
+            // Highlight Box
+            $("#" + questionID).addClass("input-error");
+            // Add Error Text
+            $("#" + questionID + " > div.question-valid-container.text-info.col-xs-12").append(errorText);
+        }
+        return false;
+    } else {
+        return true;
+    }
 }
