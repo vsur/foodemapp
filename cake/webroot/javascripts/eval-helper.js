@@ -29,18 +29,17 @@ $(document).ready(function() {
     });
 
     // Submit Button
-    $("#answer612158X17X26").on('change', function(event) {
-        event.preventDefault();
-        // if (validateAnswers(event, "list")) {
-        //     if (saveQuantityData(event, "list")) {
-        //         console.log("Form Should Submit");
-        //         document.limesurvey.submit();
-        //     } else {
-        //         alert("Fehler bei der Datenübernahme. Bitte probieren Sie es erneut.");
-        //     }
-        // }
-        document.limesurvey.submit();
-        // $('#ls-button-submit').trigger('click');
+    $("#ls-button-submit").on('click', function(event) {
+        if (validateAnswers(event, "list")) {
+            if (saveQuantityData(event, "list")) {
+                console.log("Form Should Submit");
+            } else {
+                alert("Fehler bei der Datenübernahme. Bitte probieren Sie es erneut.");
+            }
+        } else {
+            event.preventDefault();
+            console.log("Form could not been sent, cause of missing answers.");
+        }
     });
 
 });
