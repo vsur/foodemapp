@@ -12,7 +12,7 @@ $(document).ready(function() {
         }
         window.location.href = goToUrl;
     });
-
+    /*
     // List
     $("#answer612158X5X16").on('change', function(event) {
         saveQuantityData(event, "list");
@@ -27,11 +27,27 @@ $(document).ready(function() {
     $("#answer612158X17X26").on('change', function(event) {
         saveQuantityData(event, "map");
     });
-
+    */
     // Submit Button
     $("#ls-button-submit").on('click', function(event) {
-        if (validateAnswers(event, "list")) {
-            if (saveQuantityData(event, "list")) {
+        // Check Group-ID and set view var 
+        // list || chord || map
+        let view = "";
+        let listGroupID = document.getElementById("taskTypeList");
+        let chordGroupID = document.getElementById("taskTypeChord");
+        let mapGroupID = document.getElementById("taskTypeMap");
+        if(listGroupID) {
+            view = "list";
+        }
+        if(chordGroupID) {
+            view = "chord";
+        }
+        if(mapGroupID) {
+            view = "map";
+        }
+        console.log("View detected: ", listGroupID);
+        if (validateAnswers(event, view)) {
+            if (saveQuantityData(event, view)) {
                 console.log("Form Should Submit");
             } else {
                 alert("Fehler bei der Datenübernahme. Bitte probieren Sie es erneut.");
@@ -127,13 +143,16 @@ function validateAnswers(event, view)  {
             break;
 
         case "chord":
-            break;
+            return true;
+            // break;
 
         case "map":
-            break;
+            return true;
+            // break;
 
         default:
-            break;
+            return false;
+            // break;
     }
 }
 
