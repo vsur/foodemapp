@@ -125,34 +125,18 @@ function validateAnswers(event, view)  {
         decisionEasiness: false,
         decisionAccuracy: false
     };
-    switch (view) {
-        case "list":
-            validation.dropDown = checkDropDownInput("list");
-            validation.decisionEasiness = checkDecisionEasiness("list");
-            validation.decisionAccuracy = checkDecisionAccuracy("list");
-            if (
-                validation.dropDown &&
-                validation.decisionEasiness &&
-                validation.decisionAccuracy
-            ) {
-                return true;
-            } else {
-                console.log("Answer validation failed!");
-                return false;
-            }
-            break;
-
-        case "chord":
-            return true;
-            // break;
-
-        case "map":
-            return true;
-            // break;
-
-        default:
-            return false;
-            // break;
+    validation.dropDown = checkDropDownInput(view);
+    validation.decisionEasiness = checkDecisionEasiness(view);
+    validation.decisionAccuracy = checkDecisionAccuracy(view);
+    if (
+        validation.dropDown &&
+        validation.decisionEasiness &&
+        validation.decisionAccuracy
+    ) {
+        return true;
+    } else {
+        console.log("Answer validation failed!");
+        return false;
     }
 }
 
@@ -166,9 +150,13 @@ function checkDropDownInput(view) {
             break;
 
         case "chord":
+            dropDownId = "answer612158X16X23";
+            questionID = "question23";
             break;
-
-        case "map":
+            
+            case "map":
+            dropDownId = "answer612158X17X26";
+            questionID = "question26";
             break;
 
         default:
@@ -197,11 +185,15 @@ function checkDecisionEasiness(view) {
             radioId = "612158X5X17";
             questionID = "question17";
             break;
-
-        case "chord":
+            
+            case "chord":
+            radioId = "612158X16X24";
+            questionID = "question24";
             break;
-
-        case "map":
+            
+            case "map":
+            radioId = "612158X17X27";
+            questionID = "question27";
             break;
 
         default:
@@ -230,11 +222,15 @@ function checkDecisionAccuracy(view) {
             radioId = "612158X5X18";
             questionID = "question18";
             break;
-
-        case "chord":
+            
+            case "chord":
+            radioId = "612158X16X25";
+            questionID = "question25";
             break;
-
-        case "map":
+            
+            case "map":
+            radioId = "612158X17X28";
+            questionID = "question28";
             break;
 
         default:
