@@ -1,5 +1,5 @@
 <!-- Fixed navbar -->
-<nav id="mapNavbar" class="navbar navbar-default navbar-fixed-top">
+<nav id="mapNavbar" class="navbar navbar-default navbar-fixed-top<?php if($eval) echo " evalPos" ?>">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-mapComponentsChoice" aria-expanded="false">

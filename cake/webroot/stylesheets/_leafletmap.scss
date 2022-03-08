@@ -10,7 +10,11 @@
 
 #mapNavbar {
   top: 64px;
+  &.evalPos {
+    top: 0px;
+  }
 }
+
 #mapNavbar.navbar {
   min-height: 35px;
 }
@@ -41,6 +45,9 @@
   left: 0;
   right: 0;
   bottom: 0;
+  &.evalPos {
+    top: 35px;
+  }
 }
 
 .ypoiIcon {

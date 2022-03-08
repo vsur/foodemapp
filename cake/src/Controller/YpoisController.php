@@ -80,9 +80,13 @@ class YpoisController extends AppController
         $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
     }
 
-    public function findMatches($displayVariant = null)
+    public function findMatches($displayVariant = null, $eval = null)
     {
-        $this->viewBuilder()->layout('fmappbeta');
+        if($eval) {
+            $this->viewBuilder()->layout('fmappbetaeval');
+        } else {
+            $this->viewBuilder()->layout('fmappbeta');
+        }
 
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
@@ -218,7 +222,7 @@ class YpoisController extends AppController
                 '?' => $this->request->query
             ]);
         }
-        
+
         $this->set(compact(
             'ypois',
             'criteria', 
@@ -230,7 +234,8 @@ class YpoisController extends AppController
             'componentWheelJSONData', 
             'chordDiagramMatrixData', 
             'overallComponentCount',
-            'componentTypesComponentsCount'
+            'componentTypesComponentsCount',
+            'eval'
         ));
     }
 

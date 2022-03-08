@@ -5,7 +5,7 @@ echo $this->Html->script('snap.svg-min', ['block' => true]);
 echo $this->Html->script('leaflet.bezier', ['block' => true]);
 ?>
 
-<div id="ypoisMap"></div>
+<div id="ypoisMap" <?php if($eval) echo 'class="evalPos"' ?>></div>
 
 <script type="text/javascript">
     var ypois = <?= json_encode($ypois) ?>;

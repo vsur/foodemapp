@@ -59,7 +59,7 @@ $cakeDescription = 'Food_M_App';
   <?= $this->fetch('script') ?>
 </head>
 
-<body class="navPad" role="document">
+<body role="document">
   <div id="heatmapContainer">
     <div id="heatmap"></div>
   </div>

@@ -1,17 +1,21 @@
 <?php
-echo $this->element(
-    'navbar',
-    [
-        "step" => "Anzeige der Ergebnisse",
-        "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
-    ]
-);
+if(!$eval) {
+    echo $this->element(
+        'navbar',
+        [
+            "step" => "Anzeige der Ergebnisse",
+            "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
+        ]
+    );
+
+}
 if ($displayVariant == 'map') {
     echo $this->element(
         'mapnavbar',
         [
             "step" => "Anzeige der Ergebnisse",
-            "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
+            "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>",
+            "eval" => $eval
         ]
     );
 }
@@ -41,11 +45,12 @@ if ($displayVariant == 'debug') {
 }
 ?>
 
-<div id="compnentWheelContainer">
-    <div id="wheelBlock">
-        <script type="text/javascript">
-            var componentWheelJSONData = <?= $componentWheelJSONData ?>;
-        </script>
+<?php if(!$eval) : ?>
+    <div id="compnentWheelContainer">
+        <div id="wheelBlock">
+            <script type="text/javascript">
+                var componentWheelJSONData = <?= $componentWheelJSONData ?>;
+                </script>
         <?= $this->Html->script('sunburst-translations') ?>
         <?= $this->Html->script('componentwheelsunburst') ?>
     </div>
@@ -55,16 +60,19 @@ if ($displayVariant == 'debug') {
         </div>
     </div>
 </div>
+<?php endif; ?>
 
-<?php if ($displayVariant != 'map') : ?>
-    <div class="row">
-        <div class="col-md-12">
-            <?=
-            // $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
-            $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
-            ?>
+<?php if (!$eval) : ?>
+    <?php if ($displayVariant != 'map') : ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?=
+                // $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
+                $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
+                ?>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 <?php endif; ?>
 
 <?php $this->assign('title', 'Vergleichen Sie Ihre Auswahl'); ?>
@@ -78,30 +86,36 @@ if ($displayVariant == 'selectViz') {
 }
 if ($displayVariant == 'list') {
     echo $this->element('findMatches/list');
-    echo $this->element(
-        'findMatches/heatmapbar',
-        [
-            "displayVariant" => $displayVariant
-        ]
-    );
+    if(!$eval) {
+        echo $this->element(
+            'findMatches/heatmapbar',
+            [
+                "displayVariant" => $displayVariant
+            ]
+        );
+    }
 }
 if ($displayVariant == 'map') {
     echo $this->element('findMatches/map');
-    echo $this->element(
-        'findMatches/heatmapbar',
-        [
-            "displayVariant" => $displayVariant
-        ]
-    );
+    if(!$eval) {
+        echo $this->element(
+            'findMatches/heatmapbar',
+            [
+                "displayVariant" => $displayVariant
+            ]
+        );
+    }
 }
 if ($displayVariant == 'chord') {
     echo $this->element('findMatches/chord');
-    echo $this->element(
-        'findMatches/heatmapbar',
-        [
-            "displayVariant" => $displayVariant
-        ]
-    );
+    if(!$eval) {
+        echo $this->element(
+            'findMatches/heatmapbar',
+            [
+                "displayVariant" => $displayVariant
+            ]
+        );
+    }
 }
 
 

@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-md-12">
+    <?php if(!$eval) : ?>
     <h1 class="text-center">Chorddiagrammvisualisierung</h1>
+    <?php endif; ?>
     <div id="ypoisChord">
     </div>
   </div>

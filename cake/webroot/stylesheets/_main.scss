@@ -30,7 +30,10 @@ html {
 }
 body {
     min-height: 100%;
-    padding-top: 74px;
+    .navPad {
+        padding-top: 174px;
+    }
+
 }
 
 .navbar-default {

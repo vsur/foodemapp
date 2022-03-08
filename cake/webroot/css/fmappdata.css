@@ -9040,7 +9040,9 @@ html {
 
 body {
   min-height: 100%;
-  padding-top: 74px;
+}
+body .navPad {
+  padding-top: 174px;
 }
 
 .navbar-default {
@@ -9568,6 +9570,9 @@ path.chord {
 #mapNavbar {
   top: 64px;
 }
+#mapNavbar.evalPos {
+  top: 0px;
+}
 
 #mapNavbar.navbar {
   min-height: 35px;
@@ -9600,6 +9605,9 @@ path.chord {
   left: 0;
   right: 0;
   bottom: 0;
+}
+#ypoisMap.evalPos {
+  top: 35px;
 }
 
 .ypoiIcon {
