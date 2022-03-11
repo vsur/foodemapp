@@ -235,7 +235,7 @@ var margin = { left: 50, top: 0, right: 50, bottom: 0 },
 
 var svg = d3.select("#ypoisChord").append("svg")
     .attr("width", (width + margin.left + margin.right))
-    .attr("height", (height + margin.top + margin.bottom));
+    .attr("height", (height + margin.top + margin.bottom)-8); // -8 Offset correction, for no-scroll, no clue why.
 
 var wrapper = svg.append("g").attr("class", "chordWrapper")
     .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");;
