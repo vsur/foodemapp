@@ -58,7 +58,7 @@
     $("#longitude").val(fmApp.geoLocation.latLong[1]);
     $("#accuracy").val(fmApp.geoLocation.accuracy);
 
-    fmApp.sets.sessionGeo('<?= $this->Url->build(["controller" => "Ypois", "action" => "findMatches"]) ?>/<?=  $this->request->pass[0] ?>', window.location.search);
+    fmApp.sets.sessionGeo('<?= $this->Url->build(["controller" => "Ypois", "action" => "findMatches"]) ?>/<?=  implode("/",$this->request->pass) ?>', window.location.search);
 });
 
 </script>
