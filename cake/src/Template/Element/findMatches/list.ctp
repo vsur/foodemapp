@@ -1,4 +1,4 @@
-<div class="row" id="listView">
+<div class="row <?php if ($eval) echo ' padForEval'; ?>" id="listView">
     <div class="col-md-12">
         <?php foreach ($ypois as $nr => $ypoi) : ?>
             <div class="panel panel-default">

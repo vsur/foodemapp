@@ -30,8 +30,8 @@ html {
 }
 body {
     min-height: 100%;
-    .navPad {
-        padding-top: 174px;
+    &.navPad {
+        padding-top: 74px;
     }
 
 }
@@ -368,6 +368,12 @@ a#requestEval {
     color: lighten($urcd-color, 13.5%);
     border-color: lighten($urcd-color, 13.5%);
 }
+
+#listView {
+    &.padForEval {
+        margin-top: 25px;
+    }
+} 
 
 #listView .panel-heading {
     cursor: pointer;

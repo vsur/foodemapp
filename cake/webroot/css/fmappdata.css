@@ -9041,8 +9041,8 @@ html {
 body {
   min-height: 100%;
 }
-body .navPad {
-  padding-top: 174px;
+body.navPad {
+  padding-top: 74px;
 }
 
 .navbar-default {
@@ -9380,7 +9380,11 @@ a#requestEval {
   border-color: #c2005d;
 }
 
-#listView .panel-heading {
+#listView.padForEval {
+  margin-top: 25px;
+}
+
+  #listView .panel-heading {
   cursor: pointer;
 }
 
