@@ -36,7 +36,7 @@ if ($displayVariant == 'list') {
         echo $this->element(
             'findMatches/heatmapbar',
             [
-                "displayVariant" => $displayVariant
+                "displayVariant" => $displayVariant 
             ]
         );
     }
