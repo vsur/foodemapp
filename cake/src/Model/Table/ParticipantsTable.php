@@ -267,6 +267,43 @@ class ParticipantsTable extends Table
             ->allowEmptyString('612158X18X15');
 
         $validator
+            ->scalar('612158X5X262')
+            ->allowEmptyString('612158X5X262');
+
+        $validator
+            ->scalar('612158X5X16')
+            ->maxLength('612158X5X16', 5)
+            ->allowEmptyString('612158X5X16');
+
+        $validator
+            ->scalar('612158X5X93')
+            ->maxLength('612158X5X93', 4294967295)
+            ->allowEmptyString('612158X5X93');
+
+        $validator
+            ->scalar('612158X5X94')
+            ->allowEmptyString('612158X5X94');
+
+        $validator
+            ->scalar('612158X5X95')
+            ->maxLength('612158X5X95', 16777215)
+            ->allowEmptyString('612158X5X95');
+
+        $validator
+            ->scalar('612158X5X17')
+            ->maxLength('612158X5X17', 5)
+            ->allowEmptyString('612158X5X17');
+
+        $validator
+            ->scalar('612158X5X18')
+            ->maxLength('612158X5X18', 5)
+            ->allowEmptyString('612158X5X18');
+
+        $validator
+            ->scalar('612158X16X263')
+            ->allowEmptyString('612158X16X263');
+
+        $validator
             ->scalar('612158X16X23')
             ->maxLength('612158X16X23', 5)
             ->allowEmptyString('612158X16X23');
@@ -306,33 +343,8 @@ class ParticipantsTable extends Table
             ->allowEmptyString('612158X16X25');
 
         $validator
-            ->scalar('612158X5X16')
-            ->maxLength('612158X5X16', 5)
-            ->allowEmptyString('612158X5X16');
-
-        $validator
-            ->scalar('612158X5X93')
-            ->maxLength('612158X5X93', 4294967295)
-            ->allowEmptyString('612158X5X93');
-
-        $validator
-            ->scalar('612158X5X94')
-            ->allowEmptyString('612158X5X94');
-
-        $validator
-            ->scalar('612158X5X95')
-            ->maxLength('612158X5X95', 16777215)
-            ->allowEmptyString('612158X5X95');
-
-        $validator
-            ->scalar('612158X5X17')
-            ->maxLength('612158X5X17', 5)
-            ->allowEmptyString('612158X5X17');
-
-        $validator
-            ->scalar('612158X5X18')
-            ->maxLength('612158X5X18', 5)
-            ->allowEmptyString('612158X5X18');
+            ->scalar('612158X17X264')
+            ->allowEmptyString('612158X17X264');
 
         $validator
             ->scalar('612158X17X26')
