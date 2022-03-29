@@ -9847,4 +9847,10 @@ label[for=view-to-evaluate-map] {
   margin-right: 25px;
 }
 
+.form-group select.nav-select {
+  padding: 0.35em;
+  padding-right: 15px;
+  border-radius: 3px;
+}
+
 /*# sourceMappingURL=fmappdata.css.map */

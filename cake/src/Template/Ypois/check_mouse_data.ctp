@@ -3,7 +3,8 @@
         'participantchoicebar',
         [
             "step" => "Auswahl der Teilnehmer:in",
-            "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>"
+            "allParticipants" => $allParticipants->toArray(),
+            "participantData" => $participantData
         ]
     );
 

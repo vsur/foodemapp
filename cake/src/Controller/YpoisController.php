@@ -241,6 +241,15 @@ class YpoisController extends AppController
 
     public function checkMouseData($displayVariant = null, $participantId = null)
     {
+        // Handle Choice of Participant Drop Down
+        if(!empty($this->request->data)) {
+            return $this->redirect([
+                'action' => 'checkMouseData',
+                $displayVariant,
+                $this->request->data['participants'],
+                '?' => $this->request->query
+            ]);
+        }
         $this->viewBuilder()->layout('fmappbeta');
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
@@ -378,7 +387,12 @@ class YpoisController extends AppController
         }
 
         $this->loadModel('Participants');
-        $participantData = $this->Participants->get($participantId);
+        $allParticipants = $this->Participants->find('all');
+        if($participantId) {
+            $participantData = $this->Participants->get($participantId);
+        } else {
+            $participantData = null;
+        }
 
         $this->set(compact(
             'ypois',
@@ -392,7 +406,8 @@ class YpoisController extends AppController
             'chordDiagramMatrixData', 
             'overallComponentCount',
             'componentTypesComponentsCount',
-            'participantData'
+            'participantData',
+            'allParticipants',
         ));
     }
 
