@@ -9853,4 +9853,15 @@ label[for=view-to-evaluate-map] {
   border-radius: 3px;
 }
 
+/***************
+ * CORD STYLES *
+ ***************/
+#analyzeContainer {
+  position: relative;
+  background-color: aquamarine;
+  width: 1080px;
+  height: 620px;
+  margin: auto;
+}
+
 /*# sourceMappingURL=fmappdata.css.map */

@@ -32,10 +32,10 @@ if ($displayVariant == 'map') {
 <?php
 
 if ($displayVariant == 'list') {
-    echo $this->element('findMatches/list');
+    echo $this->element('findMatches/listanalyze');
     if(!$eval) {
         echo $this->element(
-            'findMatches/heatmapbar',
+            'findMatches/heatmapanalyzebar',
             [
                 "displayVariant" => $displayVariant 
             ]
@@ -43,10 +43,10 @@ if ($displayVariant == 'list') {
     }
 }
 if ($displayVariant == 'map') {
-    echo $this->element('findMatches/map');
+    echo $this->element('findMatches/mapanalyze');
     if(!$eval) {
         echo $this->element(
-            'findMatches/heatmapbar',
+            'findMatches/heatmapanalyzebar',
             [
                 "displayVariant" => $displayVariant
             ]
@@ -54,10 +54,10 @@ if ($displayVariant == 'map') {
     }
 }
 if ($displayVariant == 'chord') {
-    echo $this->element('findMatches/chord');
+    echo $this->element('findMatches/chordanalyze');
     if(!$eval) {
         echo $this->element(
-            'findMatches/heatmapbar',
+            'findMatches/heatmapanalyzebar',
             [
                 "displayVariant" => $displayVariant
             ]
@@ -72,6 +72,7 @@ if ($displayVariant == 'chord') {
 <script type="text/javascript">
     var criteria = <?= json_encode($criteria) ?>;
     var configuredSelection = <?= json_encode($configuredSelection) ?>;
+    var participantData = <?= $participantData ?>;
 </script>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Criteria Block for JS ↑↑↑↑
