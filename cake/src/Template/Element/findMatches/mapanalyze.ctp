@@ -4,8 +4,9 @@ echo $this->Html->script('leaflet.markercluster', ['block' => true]);
 echo $this->Html->script('snap.svg-min', ['block' => true]);
 echo $this->Html->script('leaflet.bezier', ['block' => true]);
 ?>
-
-<div id="ypoisMap" <?php if($eval) echo 'class="evalPos"' ?>></div>
+<div id="analyzeContainer">
+    <div id="ypoisMap" <?php if($eval) echo 'class="evalPos"' ?>></div>
+</div>
 
 <script type="text/javascript">
     var ypois = <?= json_encode($ypois) ?>;

@@ -33,14 +33,12 @@ if ($displayVariant == 'map') {
 
 if ($displayVariant == 'list') {
     echo $this->element('findMatches/listanalyze');
-    if(!$eval) {
-        echo $this->element(
-            'findMatches/heatmapanalyzebar',
-            [
-                "displayVariant" => $displayVariant 
-            ]
-        );
-    }
+    echo $this->element(
+        'findMatches/heatmapanalyzebar',
+        [
+            "displayVariant" => $displayVariant 
+        ]
+    );
 }
 if ($displayVariant == 'map') {
     echo $this->element('findMatches/mapanalyze');

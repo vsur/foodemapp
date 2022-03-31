@@ -9860,8 +9860,12 @@ label[for=view-to-evaluate-map] {
   position: relative;
   background-color: aquamarine;
   width: 1080px;
-  height: 620px;
+  min-height: 620px;
   margin: auto;
+}
+
+#analyzeContainer > .container {
+  width: 1080px !important;
 }
 
 /*# sourceMappingURL=fmappdata.css.map */

@@ -251,7 +251,7 @@ class YpoisController extends AppController
             ]);
         }
         // $this->viewBuilder()->layout('fmappbetaanlyze');
-        $this->viewBuilder()->layout('fmappbetaanlyzeeval');
+        $this->viewBuilder()->layout('fmappbetaanlyze');
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
