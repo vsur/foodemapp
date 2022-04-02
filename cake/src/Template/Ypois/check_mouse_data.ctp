@@ -62,7 +62,7 @@ if ($displayVariant == 'chord') {
         );
     }
 }
-
+debug(!empty($participantData) ? $participantData : "LEER"   );
 ?>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Criteria Block for JS ↓↓↓
@@ -70,7 +70,7 @@ if ($displayVariant == 'chord') {
 <script type="text/javascript">
     var criteria = <?= json_encode($criteria) ?>;
     var configuredSelection = <?= json_encode($configuredSelection) ?>;
-    var participantData = <?= $participantData ?>;
+    var participantData = <?= ( !empty($participantData) ? $participantData : json_encode([]) ) ?>;
 </script>
 <!-- ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 ↑↑↑↑ Criteria Block for JS ↑↑↑↑
