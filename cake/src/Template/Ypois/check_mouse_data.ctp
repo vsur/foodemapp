@@ -62,7 +62,6 @@ if ($displayVariant == 'chord') {
         );
     }
 }
-debug(!empty($participantData) ? $participantData : "LEER"   );
 ?>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 ↓↓↓ Criteria Block for JS ↓↓↓
