@@ -95,8 +95,8 @@
     </div>
 <!-- </div> -->
 
-<?= $this->Html->script('heatmap-std.js', ['block' => 'scriptAfterfmApp']) ?>
-<?= $this->Html->script('aoi-list.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('heatmap-std-analyze.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('aoi-list-analyze.js', ['block' => 'scriptAfterfmApp']) ?>
 <script>
     $(document).ready(function () {
         // Init Heatmap

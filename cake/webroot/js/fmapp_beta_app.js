@@ -984,6 +984,92 @@ var fmApp = {
                     fmApp.heatmap.hideAoiData();
                 }
             }
+        }, 
+        analyzeShow: {
+            mMove: function()  {
+                let mMoveState = fmApp.mouseData.mMove.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                fmApp.mouseData.mMove.showMap = !mMoveState;
+                let heatMapData = {
+                    max: 10,
+                    min: 0,
+                    data: fmApp.mouseData.mMove.showMap ? JSON.parse(participantData['612158X5X93']) : []
+                };
+                heatmap.setData(heatMapData);
+                if (fmApp.mouseData.mMove.showMap) fmApp.heatmap.showFront();
+                else fmApp.heatmap.hideBack();
+            },
+            mClick: function()  {
+                let mClickState = fmApp.mouseData.mClick.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                fmApp.mouseData.mClick.showMap = !mClickState;
+                let heatMapData = {
+                    max: 1,
+                    min: 0,
+                    data: fmApp.mouseData.mClick.showMap ? JSON.parse(participantData['612158X5X94']) : []
+                };
+                heatmap.setData(heatMapData);
+                if (fmApp.mouseData.mClick.showMap) fmApp.heatmap.showFront();
+                else fmApp.heatmap.hideBack();
+            },
+            aoiList: function() {
+                fmApp.mouseData.aoi.list.pois = JSON.parse(participantData['612158X5X95']);
+                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                let aoiModalState = fmApp.mouseData.aoi.showData;
+                if (aoiModalState) {
+                    let zwiebel = 0,
+                        vapiano = 0,
+                        oishii = 0,
+                        diner = 0;
+                    fmApp.mouseData.aoi.list.pois.forEach(poi => {
+                        switch (poi.poi) {
+                            case "Die Zwiebel":
+                                zwiebel++;
+                                break;
+                            case "Vapiano":
+                                vapiano++;
+                                break;
+                            case "Oishii":
+                                oishii++;
+                                break;
+                            case "American Diner Durlach":
+                                diner++;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    });
+                    $("#aoiListValue-zwiebel > span").html(zwiebel);
+                    $("#aoiListValue-vapiano > span").html(vapiano);
+                    $("#aoiListValue-oishii > span").html(oishii);
+                    $("#aoiListValue-diner > span").html(diner);
+                    let allListEvents = fmApp.mouseData.aoi.list.pois;
+                    $("#allListEventsTableBody").html("");
+                    let newTableRows = "";
+                    allListEvents.sort(function(x, y) {
+                        return x.time - y.time;
+                    });
+                    allListEvents.forEach(event => {
+                        newTableRows +=
+                            `
+                            <tr>
+                                <td>${event.poi}</td>
+                                <td>${new Date(event.time).toLocaleString()}</td>
+                                <td>${event.value}</td>
+                            </tr>
+                        `;
+                    });
+                    $("#allListEventsTableBody").html(newTableRows);
+                    fmApp.heatmap.showAoiData("list");
+                } else {
+                    fmApp.heatmap.hideAoiData();
+                }
+            }
         }
     }
 };

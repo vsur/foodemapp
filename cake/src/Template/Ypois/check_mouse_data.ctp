@@ -34,7 +34,7 @@ if ($displayVariant == 'map') {
 if ($displayVariant == 'list') {
     echo $this->element('findMatches/listanalyze');
     echo $this->element(
-        'findMatches/heatmapanalyzebar',
+        'findMatches/heatmapbar',
         [
             "displayVariant" => $displayVariant 
         ]
@@ -44,7 +44,7 @@ if ($displayVariant == 'map') {
     echo $this->element('findMatches/mapanalyze');
     if(!$eval) {
         echo $this->element(
-            'findMatches/heatmapanalyzebar',
+            'findMatches/heatmapbar',
             [
                 "displayVariant" => $displayVariant
             ]
@@ -55,7 +55,7 @@ if ($displayVariant == 'chord') {
     echo $this->element('findMatches/chordanalyze');
     if(!$eval) {
         echo $this->element(
-            'findMatches/heatmapanalyzebar',
+            'findMatches/heatmapbar',
             [
                 "displayVariant" => $displayVariant
             ]

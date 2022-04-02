@@ -60,11 +60,12 @@ $cakeDescription = 'Food_M_App';
 </head>
 
 <body class="navPad" role="document">
-  <div id="heatmapContainer">
-    <div id="heatmap"></div>
-  </div>
+
   <?= $this->element('aoimodal'); ?>
   <div id="analyzeContainer">
+    <div id="heatmapContainer">
+      <div id="heatmap"></div>
+    </div>
     <div class="container" role="main">
       <?= $this->fetch('content') ?>
     </div> <!-- /.container -->

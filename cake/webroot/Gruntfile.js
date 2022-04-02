@@ -52,8 +52,10 @@ module.exports = function(grunt) {
 				'javascripts/fmapp_beta_app.js',
 				'javascripts/filterwheelsunburst.js',
 				'javascripts/heatmap-std.js',
+				'javascripts/heatmap-std-analyze.js',
 				'javascripts/heatmap-map.js',
 				'javascripts/aoi-list.js',
+				'javascripts/aoi-list-analyze.js',
 				'javascripts/aoi-chord.js',
 				'javascripts/aoi-map.js',
 				'javascripts/eval-helper.js'
@@ -89,6 +91,10 @@ module.exports = function(grunt) {
 				src: ['javascripts/heatmap-std.js'],
 				dest: 'js/heatmap-std.js',
 			},
+			heatmapAnalyze: {
+				src: ['javascripts/heatmap-std-analyze.js'],
+				dest: 'js/heatmap-std-analyze.js',
+			},
 			heatmapMap: {
 				src: ['javascripts/heatmap-map.js'],
 				dest: 'js/heatmap-map.js',
@@ -96,6 +102,10 @@ module.exports = function(grunt) {
 			aoiList: {
 				src: ['javascripts/aoi-list.js'],
 				dest: 'js/aoi-list.js',
+			},
+			aoiListAnalyze: {
+				src: ['javascripts/aoi-list-analyze.js'],
+				dest: 'js/aoi-list-analyze.js',
 			},
 			aoiChord: {
 				src: ['javascripts/aoi-chord.js'],
@@ -124,8 +134,10 @@ module.exports = function(grunt) {
 					'concat:chord',
 					'concat:leafletMap',
 					'concat:heatmap',
+					'concat:heatmapAnalyze',
 					'concat:heatmapMap',
 					'concat:aoiList',
+					'concat:aoiListAnalyze',
 					'concat:aoiChord',
 					'concat:aoiMap',
 					'concat:evalHelper'
