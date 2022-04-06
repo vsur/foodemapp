@@ -12,8 +12,11 @@
                         <?php
                           foreach ($allParticipants as $key => $participant) {
                             $start = $this->Time->format($participant->startdate);
-                            $duration = $participant->submitdate->diff($participant->startdate)->format('%H:%i:%s h');
-                            $optionLabel = "ID: " .  $participant->id . " Am: " . $start . " Dauer: " . $duration;
+                            $duration = " Nicht abgeschlossen";
+                            if(!empty($participant->submitdate)) {
+                                $duration = " Dauer: " . $participant->submitdate->diff($participant->startdate)->format('%H:%i:%s h');
+                            }
+                            $optionLabel = "ID: " .  $participant->id . " Am: " . $start . ";" . $duration;
                             $preselect = false;
                             if( $participantData->id == $participant->id) {
                               $preselect = true;
