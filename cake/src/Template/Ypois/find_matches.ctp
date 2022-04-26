@@ -25,6 +25,10 @@ if ($displayVariant == 'map') {
 ↑↑↑ Navbar ↑↑↑
 ↑↑↑↑↑↑↑↑↑↑ -->
 
+<script type="text/javascript">
+    var evalMode = false;
+</script>
+
 <?= $this->Flash->render() ?>
 
 <?php

@@ -9544,6 +9544,15 @@ abbr.otherAgregation {
 /*
  * Styling for chord diagram
  */
+#ypoisChord.evalMode {
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#ypoisChord.evalMode svg {
+  margin-left: -2px;
+}
+
 line {
   stroke: #000;
   stroke-width: 1px;

@@ -1,7 +1,7 @@
 <!-- <div id="analyzeContainer"> -->
   <div class="row">
     <div class="col-md-12">
-      <div id="ypoisChord">
+      <div id="ypoisChord" class="evalMode">
         </div>
       </div>
     </div> <!-- /.row -->

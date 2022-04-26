@@ -14,6 +14,10 @@ console.log("chordDiagramMatrixData", chordDiagramMatrixData);
 var execInIframe = isInIframe();
 console.log("is iFrame", execInIframe);
 
+if(evalMode) {
+    console.log("is running in Debug Mode", evalMode);
+} 
+
 var screenWidth = $(window).width(),
     mobileScreen = (screenWidth > 400 ? false : true);
 var containerWidth = document.querySelector('#ypoisChord').getBoundingClientRect();
@@ -232,13 +236,21 @@ var margin = { left: 50, top: 0, right: 50, bottom: 0 },
     width = containerWidth.width - margin.left - margin.right,
     // height = (mobileScreen ? 300 : Math.min(screenWidth, 1200) * 5 / 6) - margin.top - margin.bottom;
     height = window.innerHeight - margin.top - margin.bottom;
-
+    console.log("Used containerWidth.width: ", containerWidth.width);
+    console.log("Used Widht: ", width);
+    console.log("Used Widht: ", height);
+    if(evalMode) {
+        width = 940 - margin.left - margin.right,
+        height = 615 - margin.top - margin.bottom + 1; // Calc Correction
+}
+console.log("Set Widht: ", width);
+console.log("Set Widht: ", height);
 var svg = d3.select("#ypoisChord").append("svg")
     .attr("width", (width + margin.left + margin.right))
     .attr("height", (height + margin.top + margin.bottom)-8); // -8 Offset correction, for no-scroll, no clue why.
 
 var wrapper = svg.append("g").attr("class", "chordWrapper")
-    .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");;
+    .attr("transform", "translate(" + (width / 2 + margin.left) + "," + (height / 2 + margin.top) + ")");
 
 var outerRadius = Math.min(width, height) / 2 - (mobileScreen ? 80 : 100),
     innerRadius = outerRadius * 0.92,
@@ -351,7 +363,7 @@ g.append("text")
         var c = arc.centroid(d);
         return "translate(" + (c[0] + d.pullOutSize) + "," + c[1] + ")" +
             "rotate(" + (d.angle * 180 / Math.PI - 90) + ")" +
-            "translate(" + ( ( execInIframe ? 40 : (80 * sizingFactor) ) ) + ",0)" +
+            "translate(" + ( ( execInIframe||evalMode ? 40 : (80 * sizingFactor) ) ) + ",0)" +
             (d.angle > Math.PI ? "rotate(180)" : "")
     })
     .text(function(d, i) {
@@ -522,13 +534,13 @@ for (var i = 0; i < groups.length; i++) {
     var text = svg.append("text")
         .attr("x", function(d) {
             if (__g.title === 'Gefundene Orte') {
-                if (execInIframe) {
+                if (execInIframe||evalMode) {
                     return 253;
                 } else {
                     return ( height/2 * sizingFactor )
                 }
             } else {
-                if (execInIframe) {
+                if (execInIframe||evalMode) {
                     return 85;
                 } else {
                     return ( ( (width / 4) * sizingFactor ) - (__g.title.length * 3.25) )
@@ -536,7 +548,7 @@ for (var i = 0; i < groups.length; i++) {
             }
         })
         .attr("dy", function(d) {
-            if (execInIframe) {
+            if (execInIframe||evalMode) {
                 return 13;
             } else {
                 return 20 * sizingFactor;

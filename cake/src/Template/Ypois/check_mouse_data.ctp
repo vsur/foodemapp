@@ -24,6 +24,10 @@ if ($displayVariant == 'map') {
 ↑↑↑ Navbar ↑↑↑
 ↑↑↑↑↑↑↑↑↑↑ -->
 
+<script type="text/javascript">
+    var evalMode = true;
+</script>
+
 <?= $this->Flash->render() ?>
 
 
@@ -42,25 +46,21 @@ if ($displayVariant == 'list') {
 }
 if ($displayVariant == 'map') {
     echo $this->element('findMatches/mapanalyze');
-    if(!$eval) {
-        echo $this->element(
-            'findMatches/heatmapbar',
-            [
-                "displayVariant" => $displayVariant
-            ]
-        );
-    }
+    echo $this->element(
+        'findMatches/heatmapbar',
+        [
+            "displayVariant" => $displayVariant
+        ]
+    );
 }
 if ($displayVariant == 'chord') {
     echo $this->element('findMatches/chordanalyze');
-    if(!$eval) {
-        echo $this->element(
-            'findMatches/heatmapbar',
-            [
-                "displayVariant" => $displayVariant
-            ]
-        );
-    }
+    echo $this->element(
+        'findMatches/heatmapbar',
+        [
+            "displayVariant" => $displayVariant
+        ]
+    );
 }
 ?>
 <!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
