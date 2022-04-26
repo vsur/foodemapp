@@ -274,23 +274,22 @@ class YpoisController extends AppController
         // Store filter component sorte by ranking for filter group assignment
         $rankedSelection = NULL;
 
-        // Use geoloction for sorting
-        $sortByGeo = false;
-        $distanceSelectQueryString = '';
-
-        // Check if geolocation is set
-        $session = $this->request->session();
-        // $session->destroy();  // Uncoment for Debug Purposes 
-        if ($session->check('Config.geolocation')) {
-            $sortByGeo = true;
-            $distanceSelectQueryString = '6371 * acos (
-                cos ( radians(' . $session->read("Config.geolocation.latitude") . ') )
-                * cos( radians( lat ) )
-                * cos( radians( lng ) - radians(' . $session->read("Config.geolocation.longitude") . ') )
-                + sin ( radians(' .  $session->read("Config.geolocation.latitude") . ') )
-                * sin( radians( lat ) )
-              )';
-        }
+        /**********************************************************
+         *  FOR DEBUGGING GEO LOCATION IS NOT SET BY JS VALUES,   *
+         *                 BUT IS HARDCODED HERE.                 *
+         *      IN STANDARD MODE VALUES WOULD BE SET BY JS,       *
+         * AS THERE IS THE OPTION TO LET SET THE VALUES BY DEVICE *
+         **********************************************************/
+        
+         // Use geoloction for sorting
+        $sortByGeo = true;
+        $distanceSelectQueryString = '6371 * acos (
+            cos ( radians( 49.01 ) )
+            * cos( radians( lat ) )
+            * cos( radians( lng ) - radians( 8.40806 ) )
+            + sin ( radians( 49.01 ) )
+            * sin( radians( lat ) )
+          )';
 
         if (!empty($this->request->query)) {
             $configuredSelection = $this->request->query;
