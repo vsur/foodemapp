@@ -14,7 +14,7 @@
 <?= $this->Html->script('d3.layout.chord.sort.js') ?>
 <?= $this->Html->script('chord-diagram.js') ?>
 
-<?= $this->Html->script('heatmap-std.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('heatmap-std-analyze.js', ['block' => 'scriptAfterfmApp']) ?>
 <?= $this->Html->script('aoi-chord.js', ['block' => 'scriptAfterfmApp']) ?>
 
 <script>

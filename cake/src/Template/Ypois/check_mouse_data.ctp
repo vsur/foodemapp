@@ -26,6 +26,7 @@ if ($displayVariant == 'map') {
 
 <script type="text/javascript">
     var evalMode = true;
+    var displayVariant = "<?php echo $displayVariant; ?>";
 </script>
 
 <?= $this->Flash->render() ?>

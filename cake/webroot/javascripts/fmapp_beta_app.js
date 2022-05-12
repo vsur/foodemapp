@@ -992,6 +992,8 @@ var fmApp = {
                 fmApp.heatmap.hideAoiData();
                 if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
                 fmApp.mouseData.mMove.showMap = !mMoveState;
+                console.log("Daten", participantData);
+                console.log("Display", displayVariant);
                 let heatMapData = {
                     max: 10,
                     min: 0,

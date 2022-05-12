@@ -9,12 +9,12 @@ $(document).ready(function() {
 
     $("#heatmapShow-mMove").click(function(mouseEvent) {
         mouseEvent.preventDefault();
-        fmApp.heatmap.analyzeShow.mMove();
+        fmApp.heatmap.analyzeShow.mMove(displayVariant);
     });
 
     $("#heatmapShow-mClick").click(function(mouseEvent) {
         mouseEvent.preventDefault();
-        fmApp.heatmap.analyzeShow.mClick();
+        fmApp.heatmap.analyzeShow.mClick(displayVariant);
     });
 
 });
