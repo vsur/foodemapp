@@ -57,7 +57,9 @@ module.exports = function(grunt) {
 				'javascripts/aoi-list.js',
 				'javascripts/aoi-list-analyze.js',
 				'javascripts/aoi-chord.js',
+				'javascripts/aoi-chord-analyze.js',
 				'javascripts/aoi-map.js',
+				'javascripts/aoi-map-analyze.js',
 				'javascripts/eval-helper.js'
 			]
 		},
@@ -111,9 +113,17 @@ module.exports = function(grunt) {
 				src: ['javascripts/aoi-chord.js'],
 				dest: 'js/aoi-chord.js',
 			},
+			aoiChordAnalyze: {
+				src: ['javascripts/aoi-chord-analyze.js'],
+				dest: 'js/aoi-chord-analyze.js',
+			},
 			aoiMap: {
                 src: ['javascripts/aoi-map.js'],
                 dest: 'js/aoi-map.js',
+            },
+			aoiMapAnalyze: {
+                src: ['javascripts/aoi-map-analyze.js'],
+                dest: 'js/aoi-map-analyze.js',
             },
             evalHelper: {
                 src: ['javascripts/eval-helper.js'],
@@ -139,7 +149,9 @@ module.exports = function(grunt) {
 					'concat:aoiList',
 					'concat:aoiListAnalyze',
 					'concat:aoiChord',
+					'concat:aoiChordAnalyze',
 					'concat:aoiMap',
+					'concat:aoiMapAnalyze',
 					'concat:evalHelper'
 				],
 				options: {
