@@ -5,7 +5,6 @@ echo $this->Html->script('snap.svg-min', ['block' => true]);
 echo $this->Html->script('leaflet.bezier', ['block' => true]);
 ?>
 
-
 <div id="ypoisMap" class="evalPos"></div>
 
 <script type="text/javascript">
@@ -16,5 +15,5 @@ echo $this->Html->script('leaflet.bezier', ['block' => true]);
 <?= $this->Html->script('L.Icon.Pulse.js') ?>
 <?= $this->Html->script('leaflet-heatmap.js', ['block' => 'scriptAfterHeatmap']) ?>
 <?= $this->Html->script('leaflet-map.js', ['block' => 'scriptAfterfmApp']) ?>
-<?= $this->Html->script('heatmap-map.js', ['block' => 'scriptAfterfmApp']) ?>
-<?= $this->Html->script('aoi-map.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('heatmap-map-analyze.js', ['block' => 'scriptAfterfmApp']) ?>
+<?= $this->Html->script('aoi-map-analyze.js', ['block' => 'scriptAfterfmApp']) ?>

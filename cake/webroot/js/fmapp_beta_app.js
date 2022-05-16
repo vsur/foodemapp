@@ -934,64 +934,6 @@ var fmApp = {
                 }
             }
         },
-        aoiBuild: {
-            list: function(dataType) {
-                // Get data from participant
-                if (dataType == 'participant') fmApp.mouseData.aoi.list.pois = JSON.parse(participantData['612158X5X95']);
-                // Otherwise just get the live data of the user
-                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
-                let aoiModalState = fmApp.mouseData.aoi.showData;
-                if (aoiModalState) {
-                    let zwiebel = 0,
-                        vapiano = 0,
-                        oishii = 0,
-                        diner = 0;
-                    fmApp.mouseData.aoi.list.pois.forEach(poi => {
-                        switch (poi.poi) {
-                            case "Die Zwiebel":
-                                zwiebel++;
-                                break;
-                            case "Vapiano":
-                                vapiano++;
-                                break;
-                            case "Oishii":
-                                oishii++;
-                                break;
-                            case "American Diner Durlach":
-                                diner++;
-                                break;
-
-                            default:
-                                break;
-                        }
-                    });
-                    $("#aoiListValue-zwiebel > span").html(zwiebel);
-                    $("#aoiListValue-vapiano > span").html(vapiano);
-                    $("#aoiListValue-oishii > span").html(oishii);
-                    $("#aoiListValue-diner > span").html(diner);
-                    let allListEvents = fmApp.mouseData.aoi.list.pois;
-                    $("#allListEventsTableBody").html("");
-                    let newTableRows = "";
-                    allListEvents.sort(function(x, y) {
-                        return x.time - y.time;
-                    });
-                    allListEvents.forEach(event => {
-                        newTableRows +=
-                            `
-                            <tr>
-                                <td>${event.poi}</td>
-                                <td>${new Date(event.time).toLocaleString()}</td>
-                                <td>${event.value}</td>
-                            </tr>
-                        `;
-                    });
-                    $("#allListEventsTableBody").html(newTableRows);
-                    fmApp.heatmap.showAoiData("list");
-                } else {
-                    fmApp.heatmap.hideAoiData();
-                } 
-            }
-        }, 
         analyzeShow: {
             mMove: function(displayVariant)  {
                 let mMoveState = fmApp.mouseData.mMove.showMap;
@@ -1018,6 +960,21 @@ var fmApp = {
                 if (fmApp.mouseData.mMove.showMap) fmApp.heatmap.showFront();
                 else fmApp.heatmap.hideBack();
             },
+            mMoveMap: function()  {
+                let mMoveState = fmApp.mouseData.mMove.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                fmApp.mouseData.mMove.showMap = !mMoveState;
+                let heatMapData = {
+                    max: 10,
+                    min: 0,
+                    data: fmApp.mouseData.mMove.showMap ? JSON.parse(participantData['612158X17X101']) : []
+                };
+                if (fmApp.mouseData.mMove.showMap) mymap.addLayer(heatmapLayer);
+                else mymap.removeLayer(heatmapLayer);
+                heatmapLayer.setData(heatMapData);
+            },
             mClick: function(displayVariant)  {
                 let mClickState = fmApp.mouseData.mClick.showMap;
                 fmApp.heatmap.setHideAllMaps();
@@ -1042,6 +999,22 @@ var fmApp = {
                 heatmap.setData(heatMapData);
                 if (fmApp.mouseData.mClick.showMap) fmApp.heatmap.showFront();
                 else fmApp.heatmap.hideBack();
+            },
+            mClickMap: function()  {
+                alert("Yes Yes Yes  Click");
+                let mClickState = fmApp.mouseData.mClick.showMap;
+                fmApp.heatmap.setHideAllMaps();
+                fmApp.heatmap.hideAoiData();
+                if (fmApp.mouseData.aoi.showData) fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                fmApp.mouseData.mClick.showMap = !mClickState;
+                let heatMapData = {
+                    max: 1,
+                    min: 0,
+                    data: fmApp.mouseData.mClick.showMap ? JSON.parse(participantData['612158X17X102']) : []
+                };
+                if (fmApp.mouseData.mClick.showMap) mymap.addLayer(heatmapLayer);
+                else mymap.removeLayer(heatmapLayer);
+                heatmapLayer.setData(heatMapData);
             },
             aoiList: function() {
                 fmApp.heatmap.aoiBuild.list("participant");
@@ -1102,6 +1075,64 @@ var fmApp = {
                     fmApp.heatmap.hideAoiData();
                 }
             },
+        },
+        aoiBuild: {
+            list: function(dataType) {
+                // Get data from participant
+                if (dataType == 'participant') fmApp.mouseData.aoi.list.pois = JSON.parse(participantData['612158X5X95']);
+                // Otherwise just get the live data of the user
+                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                let aoiModalState = fmApp.mouseData.aoi.showData;
+                if (aoiModalState) {
+                    let zwiebel = 0,
+                        vapiano = 0,
+                        oishii = 0,
+                        diner = 0;
+                    fmApp.mouseData.aoi.list.pois.forEach(poi => {
+                        switch (poi.poi) {
+                            case "Die Zwiebel":
+                                zwiebel++;
+                                break;
+                            case "Vapiano":
+                                vapiano++;
+                                break;
+                            case "Oishii":
+                                oishii++;
+                                break;
+                            case "American Diner Durlach":
+                                diner++;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    });
+                    $("#aoiListValue-zwiebel > span").html(zwiebel);
+                    $("#aoiListValue-vapiano > span").html(vapiano);
+                    $("#aoiListValue-oishii > span").html(oishii);
+                    $("#aoiListValue-diner > span").html(diner);
+                    let allListEvents = fmApp.mouseData.aoi.list.pois;
+                    $("#allListEventsTableBody").html("");
+                    let newTableRows = "";
+                    allListEvents.sort(function(x, y) {
+                        return x.time - y.time;
+                    });
+                    allListEvents.forEach(event => {
+                        newTableRows +=
+                            `
+                            <tr>
+                                <td>${event.poi}</td>
+                                <td>${new Date(event.time).toLocaleString()}</td>
+                                <td>${event.value}</td>
+                            </tr>
+                        `;
+                    });
+                    $("#allListEventsTableBody").html(newTableRows);
+                    fmApp.heatmap.showAoiData("list");
+                } else {
+                    fmApp.heatmap.hideAoiData();
+                } 
+            }
         }
     }
 };
