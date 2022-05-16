@@ -59,7 +59,7 @@ $cakeDescription = 'Food_M_App';
   <?= $this->fetch('script') ?>
 </head>
 
-<body class="navPad" role="document">
+<body class="navPad<?php echo ($displayVariant == 'map' ? 'Map' : '');?>" role="document">
 
   <?= $this->element('aoimodal'); ?>
   <div id="analyzeContainer">

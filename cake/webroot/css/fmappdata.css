@@ -9044,6 +9044,9 @@ body {
 body.navPad {
   padding-top: 74px;
 }
+body.navPadMap {
+  padding-top: 64px;
+}
 
 .navbar-default {
   background: #7d003c;

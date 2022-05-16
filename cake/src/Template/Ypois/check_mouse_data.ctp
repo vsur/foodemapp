@@ -14,7 +14,7 @@ if ($displayVariant == 'map') {
         [
             "step" => "Anzeige der Ergebnisse",
             "vizElement" => "<li class=\"active\"><a href=\"#\">Möglichkeiten</a></li>",
-            "eval" => $eval
+            "eval" => false
         ]
     );
 }
