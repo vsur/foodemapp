@@ -819,57 +819,7 @@ var fmApp = {
                 fmApp.heatmap.aoiBuild.list("user");
             },
             aoiChord: function() {
-                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
-                let aoiModalState = fmApp.mouseData.aoi.showData;
-                if (aoiModalState) {
-                    console.log(fmApp.mouseData.aoi);
-                    $("#aoiChordValue-pois > span").html(fmApp.mouseData.aoi.chord.pois.length);
-                    $("#aoiChordValue-choosenComponents > span").html(fmApp.mouseData.aoi.chord.choosenComponents.length);
-                    $("#aoiChordValue-otherComponents > span").html(fmApp.mouseData.aoi.chord.otherComponents.length);
-                    let allChordEvents = [];
-                    Object.entries(fmApp.mouseData.aoi.chord).forEach(arcType => {
-                        const [key, value] = arcType;
-                        value.forEach(
-                            dataPoint => {
-                                allChordEvents.push(dataPoint);
-                            });
-                    });
-                    $("#allChordEventsTableBody").html("");
-                    let newTableRows = "";
-                    allChordEvents.sort(function(x, y) {
-                        return x.time - y.time;
-                    });
-                    allChordEvents.forEach(event => {
-                        let namePrefix = "";
-
-                        switch (event.arc) {
-                            case "poi":
-                                namePrefix = "P";
-                                break;
-                            case "choosenComponent":
-                                namePrefix = "\u2605";
-                                break;
-                            case "otherComponent":
-                                namePrefix = "O";
-                                break;
-
-                            default:
-                                break;
-                        }
-
-                        newTableRows += `
-                            <tr>
-                                <td>${event.name}</td>
-                                <td>${namePrefix} ${new Date(event.time).toLocaleString()}</td>
-                                <td>${event.value}</td>
-                            </tr>
-                        `;
-                    });
-                    $("#allChordEventsTableBody").html(newTableRows);
-                    fmApp.heatmap.showAoiData("chord");
-                } else {
-                    fmApp.heatmap.hideAoiData();
-                }
+                fmApp.heatmap.aoiBuild.chord("user");
             },
             aoiMap: function() {
                 fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
@@ -1020,60 +970,7 @@ var fmApp = {
                 fmApp.heatmap.aoiBuild.list("participant");
             },
             aoiChord: function() {
-                fmApp.mouseData.aoi.chord.pois = JSON.parse(participantData['612158X16X98']);
-                fmApp.mouseData.aoi.chord.choosenComponents = JSON.parse(participantData['612158X16X99']);
-                fmApp.mouseData.aoi.chord.otherComponents = JSON.parse(participantData['612158X16X100']);
-
-                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
-                let aoiModalState = fmApp.mouseData.aoi.showData;
-                if (aoiModalState) {
-                    $("#aoiChordValue-pois > span").html(fmApp.mouseData.aoi.chord.pois.length);
-                    $("#aoiChordValue-choosenComponents > span").html(fmApp.mouseData.aoi.chord.choosenComponents.length);
-                    $("#aoiChordValue-otherComponents > span").html(fmApp.mouseData.aoi.chord.otherComponents.length);
-                    let allChordEvents = [];
-                    Object.entries(fmApp.mouseData.aoi.chord).forEach(arcType => {
-                        const [key, value] = arcType;
-                        value.forEach(
-                            dataPoint => {
-                                allChordEvents.push(dataPoint);
-                            });
-                    });
-                    $("#allChordEventsTableBody").html("");
-                    let newTableRows = "";
-                    allChordEvents.sort(function(x, y) {
-                        return x.time - y.time;
-                    });
-                    allChordEvents.forEach(event => {
-                        let namePrefix = "";
-
-                        switch (event.arc) {
-                            case "poi":
-                                namePrefix = "P";
-                                break;
-                            case "choosenComponent":
-                                namePrefix = "\u2605";
-                                break;
-                            case "otherComponent":
-                                namePrefix = "O";
-                                break;
-
-                            default:
-                                break;
-                        }
-
-                        newTableRows += `
-                            <tr>
-                                <td>${event.name}</td>
-                                <td>${namePrefix} ${new Date(event.time).toLocaleString()}</td>
-                                <td>${event.value}</td>
-                            </tr>
-                        `;
-                    });
-                    $("#allChordEventsTableBody").html(newTableRows);
-                    fmApp.heatmap.showAoiData("chord");
-                } else {
-                    fmApp.heatmap.hideAoiData();
-                }
+                fmApp.heatmap.aoiBuild.chord("participant");
             },
         },
         aoiBuild: {
@@ -1132,6 +1029,65 @@ var fmApp = {
                 } else {
                     fmApp.heatmap.hideAoiData();
                 } 
+            },
+            chord: function(dataType) {
+                // Get data from participant
+                if (dataType == 'participant') {
+                    fmApp.mouseData.aoi.chord.pois = JSON.parse(participantData['612158X16X98']);
+                    fmApp.mouseData.aoi.chord.choosenComponents = JSON.parse(participantData['612158X16X99']);
+                    fmApp.mouseData.aoi.chord.otherComponents = JSON.parse(participantData['612158X16X100']);
+                }
+                // Otherwise just get the live data of the user
+                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                let aoiModalState = fmApp.mouseData.aoi.showData;
+                if (aoiModalState) {
+                    $("#aoiChordValue-pois > span").html(fmApp.mouseData.aoi.chord.pois.length);
+                    $("#aoiChordValue-choosenComponents > span").html(fmApp.mouseData.aoi.chord.choosenComponents.length);
+                    $("#aoiChordValue-otherComponents > span").html(fmApp.mouseData.aoi.chord.otherComponents.length);
+                    let allChordEvents = [];
+                    Object.entries(fmApp.mouseData.aoi.chord).forEach(arcType => {
+                        const [key, value] = arcType;
+                        value.forEach(
+                            dataPoint => {
+                                allChordEvents.push(dataPoint);
+                            });
+                    });
+                    $("#allChordEventsTableBody").html("");
+                    let newTableRows = "";
+                    allChordEvents.sort(function(x, y) {
+                        return x.time - y.time;
+                    });
+                    allChordEvents.forEach(event => {
+                        let namePrefix = "";
+
+                        switch (event.arc) {
+                            case "poi":
+                                namePrefix = "P";
+                                break;
+                            case "choosenComponent":
+                                namePrefix = "\u2605";
+                                break;
+                            case "otherComponent":
+                                namePrefix = "O";
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        newTableRows += `
+                            <tr>
+                                <td>${event.name}</td>
+                                <td>${namePrefix} ${new Date(event.time).toLocaleString()}</td>
+                                <td>${event.value}</td>
+                            </tr>
+                        `;
+                    });
+                    $("#allChordEventsTableBody").html(newTableRows);
+                    fmApp.heatmap.showAoiData("chord");
+                } else {
+                    fmApp.heatmap.hideAoiData();
+                }
             }
         }
     }
