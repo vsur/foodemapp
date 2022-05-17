@@ -1,5 +1,5 @@
 <!-- <div id="analyzeContainer"> -->
-    <div class="row padForEval" id="listView">
+    <div class="row positionForAnalyze" id="listView">
         <div class="col-md-12">
             <?php foreach ($ypois as $nr => $ypoi) : ?>
             <div class="panel panel-default">

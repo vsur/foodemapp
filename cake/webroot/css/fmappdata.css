@@ -9386,6 +9386,10 @@ a#requestEval {
 #listView.padForEval {
   margin-top: 25px;
 }
+#listView.positionForAnalyze {
+  width: 970px !important;
+  margin: 27px auto 0 auto;
+}
 
   #listView .panel-heading {
   cursor: pointer;
