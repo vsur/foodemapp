@@ -951,7 +951,6 @@ var fmApp = {
                 else fmApp.heatmap.hideBack();
             },
             mClickMap: function()  {
-                alert("Yes Yes Yes  Click");
                 let mClickState = fmApp.mouseData.mClick.showMap;
                 fmApp.heatmap.setHideAllMaps();
                 fmApp.heatmap.hideAoiData();
@@ -971,6 +970,9 @@ var fmApp = {
             },
             aoiChord: function() {
                 fmApp.heatmap.aoiBuild.chord("participant");
+            },
+            aoiMap: function() {
+                fmApp.heatmap.aoiBuild.map("participant");
             },
         },
         aoiBuild: {
@@ -1085,6 +1087,77 @@ var fmApp = {
                     });
                     $("#allChordEventsTableBody").html(newTableRows);
                     fmApp.heatmap.showAoiData("chord");
+                } else {
+                    fmApp.heatmap.hideAoiData();
+                }
+            },
+            map: function(dataType) {
+                // Get data from participant
+                if (dataType == 'participant') { 
+                    fmApp.mouseData.aoi.map.mapComponentsChoice = JSON.parse(participantData['612158X17X103']);
+                    fmApp.mouseData.aoi.map.pois = JSON.parse(participantData['612158X17X104']);
+                    fmApp.mouseData.aoi.map.dragMap = JSON.parse(participantData['612158X17X105']);
+                    fmApp.mouseData.aoi.map.dragPopup = JSON.parse(participantData['612158X17X106']);
+                    fmApp.mouseData.aoi.map.zoomMap = JSON.parse(participantData['612158X17X107']);
+                }
+                // Otherwise just get the live data of the user
+                fmApp.mouseData.aoi.showData = !fmApp.mouseData.aoi.showData;
+                let aoiModalState = fmApp.mouseData.aoi.showData;
+                if (aoiModalState) {
+                    $("#aoiMapValue-mapComponentsChoice > span").html(fmApp.mouseData.aoi.map.mapComponentsChoice.length);
+                    $("#aoiMapValue-pois > span").html(fmApp.mouseData.aoi.map.pois.length);
+                    $("#aoiMapValue-dragMap > span").html(fmApp.mouseData.aoi.map.dragMap.length);
+                    $("#aoiMapValue-dragPopup > span").html(fmApp.mouseData.aoi.map.dragPopup.length);
+                    $("#aoiMapValue-zoomMap > span").html(fmApp.mouseData.aoi.map.zoomMap.length);
+                    let allMapEvents = [];
+                    Object.entries(fmApp.mouseData.aoi.map).forEach(mapEvent => {
+                        const [key, value] = mapEvent;
+                        value.forEach(
+                            dataPoint => {
+                                dataPoint.mapEvent = key;
+                                allMapEvents.push(dataPoint);
+                            });
+                    });
+                    $("#allMapEventsTableBody").html("");
+                    let newTableRows = "";
+                    allMapEvents.sort(function(x, y) {
+                        return x.time - y.time;
+                    });
+                    allMapEvents.forEach(event => {
+                        let name = event.mapEvent;
+
+                        switch (event.mapEvent) {
+                            case "dragMap":
+                                name += " " + event.event;
+                                break;
+                            case "dragPopup":
+                                name += " " + event.poi + " " + event.event;
+                                break;
+                            case "mapComponentsChoice":
+                                name += " " + event.componentType;
+                                break;
+                            case "pois":
+                                name += " " + event.poi;
+                                break;
+                            case "zoomMap":
+                                name += " " + event.event + " " + event.zoom;
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        newTableRows += `
+                            <tr>
+                                <td>${name}</td>
+                                <td>${new Date(event.time).toLocaleString()}</td>
+                                <td>${event.value}</td>
+                            </tr>
+                        `;
+                    });
+                    $("#allMapEventsTableBody").html(newTableRows);
+                    fmApp.heatmap.showAoiData("map");
+                    console.log(fmApp.mouseData.aoi.map);
                 } else {
                     fmApp.heatmap.hideAoiData();
                 }
