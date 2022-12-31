@@ -12,6 +12,7 @@
 </nav>
 <div class="participants index large-9 medium-8 columns content">
     <h3><?= __('Participants') ?></h3>
+    <div style="overflow-x:auto;">
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -91,76 +92,76 @@
         <tbody>
             <?php foreach ($participants as $participant): ?>
             <tr>
-                <td><?= $this->Number->format($participant->id) ?></td>
-                <td><?= h($participant->token) ?></td>
-                <td><?= h($participant->submitdate) ?></td>
-                <td><?= $this->Number->format($participant->lastpage) ?></td>
-                <td><?= h($participant->startlanguage) ?></td>
-                <td><?= h($participant->seed) ?></td>
-                <td><?= h($participant->startdate) ?></td>
-                <td><?= h($participant->datestamp) ?></td>
-                <td><?= h($participant->612158X1X2) ?></td>
-                <td><?= h($participant->612158X2X4) ?></td>
-                <td><?= $this->Number->format($participant->612158X3X5) ?></td>
-                <td><?= h($participant->612158X3X75) ?></td>
-                <td><?= h($participant->612158X3X7) ?></td>
-                <td><?= h($participant->612158X3X8) ?></td>
-                <td><?= h($participant->612158X6X108SQ007) ?></td>
-                <td><?= h($participant->612158X6X108SQ008) ?></td>
-                <td><?= h($participant->612158X6X108SQ009) ?></td>
-                <td><?= h($participant->612158X6X108SQ010) ?></td>
-                <td><?= h($participant->612158X6X108SQ011) ?></td>
-                <td><?= h($participant->612158X6X108SQ012) ?></td>
-                <td><?= h($participant->612158X6X108SQ013) ?></td>
-                <td><?= h($participant->612158X6X108SQ014) ?></td>
-                <td><?= h($participant->612158X6X108SQ015) ?></td>
-                <td><?= h($participant->612158X6X108SQ016) ?></td>
-                <td><?= h($participant->612158X6X108SQ017) ?></td>
-                <td><?= h($participant->612158X6X108SQ018) ?></td>
-                <td><?= h($participant->612158X6X108SQ019) ?></td>
-                <td><?= h($participant->612158X6X108SQ020) ?></td>
-                <td><?= h($participant->612158X6X108SQ021) ?></td>
-                <td><?= h($participant->612158X6X108SQ022) ?></td>
-                <td><?= h($participant->612158X6X108SQ023) ?></td>
-                <td><?= h($participant->612158X6X108SQ024) ?></td>
-                <td><?= h($participant->612158X6X108SQ026) ?></td>
-                <td><?= h($participant->612158X6X19) ?></td>
-                <td><?= h($participant->612158X6X21) ?></td>
-                <td><?= h($participant->612158X4X9) ?></td>
-                <td><?= h($participant->612158X4X10) ?></td>
-                <td><?= h($participant->612158X4X11) ?></td>
-                <td><?= h($participant->612158X4X12) ?></td>
-                <td><?= h($participant->612158X4X13) ?></td>
-                <td><?= h($participant->612158X4X14) ?></td>
-                <td><?= h($participant->612158X18X15) ?></td>
-                <td><?= h($participant->612158X16X23) ?></td>
-                <td><?= h($participant->612158X16X24) ?></td>
-                <td><?= h($participant->612158X16X25) ?></td>
-                <td><?= h($participant->612158X5X16) ?></td>
-                <td><?= h($participant->612158X5X17) ?></td>
-                <td><?= h($participant->612158X5X18) ?></td>
-                <td><?= h($participant->612158X17X26) ?></td>
-                <td><?= h($participant->612158X17X27) ?></td>
-                <td><?= h($participant->612158X17X28) ?></td>
-                <td><?= h($participant->612158X7X30SQ001) ?></td>
-                <td><?= h($participant->612158X7X30SQ002) ?></td>
-                <td><?= h($participant->612158X7X30SQ003) ?></td>
-                <td><?= h($participant->612158X7X30SQ004) ?></td>
-                <td><?= h($participant->612158X7X30SQ005) ?></td>
-                <td><?= h($participant->612158X7X30SQ006) ?></td>
-                <td><?= h($participant->612158X7X30SQ007) ?></td>
-                <td><?= h($participant->612158X7X30SQ008) ?></td>
-                <td><?= h($participant->612158X7X30SQ009) ?></td>
-                <td><?= h($participant->612158X7X30SQ010) ?></td>
-                <td><?= h($participant->612158X10X41SQ002) ?></td>
-                <td><?= h($participant->612158X10X41SQ003) ?></td>
-                <td><?= h($participant->612158X10X41SQ004) ?></td>
-                <td><?= h($participant->612158X10X41SQ005) ?></td>
-                <td><?= h($participant->612158X10X41SQ006) ?></td>
-                <td><?= h($participant->612158X10X41SQ007) ?></td>
-                <td><?= h($participant->612158X10X70) ?></td>
-                <td><?= h($participant->612158X8X55) ?></td>
-                <td><?= h($participant->612158X9X74) ?></td>
+                <td><?= $this->Number->format($participant['id']) ?></td>
+                <td><?= h($participant['token']) ?></td>
+                <td><?= h($participant['submitdate']) ?></td>
+                <td><?= $this->Number->format($participant['lastpage']) ?></td>
+                <td><?= h($participant['startlanguage']) ?></td>
+                <td><?= h($participant['seed']) ?></td>
+                <td><?= h($participant['startdate']) ?></td>
+                <td><?= h($participant['datestamp']) ?></td>
+                <td><?= h($participant['612158X1X2']) ?></td>
+                <td><?= h($participant['612158X2X4']) ?></td>
+                <td><?= $this->Number->format($participant['612158X3X5']) ?></td>
+                <td><?= h($participant['612158X3X75']) ?></td>
+                <td><?= h($participant['612158X3X7']) ?></td>
+                <td><?= h($participant['612158X3X8']) ?></td>
+                <td><?= h($participant['612158X6X108SQ007']) ?></td>
+                <td><?= h($participant['612158X6X108SQ008']) ?></td>
+                <td><?= h($participant['612158X6X108SQ009']) ?></td>
+                <td><?= h($participant['612158X6X108SQ010']) ?></td>
+                <td><?= h($participant['612158X6X108SQ011']) ?></td>
+                <td><?= h($participant['612158X6X108SQ012']) ?></td>
+                <td><?= h($participant['612158X6X108SQ013']) ?></td>
+                <td><?= h($participant['612158X6X108SQ014']) ?></td>
+                <td><?= h($participant['612158X6X108SQ015']) ?></td>
+                <td><?= h($participant['612158X6X108SQ016']) ?></td>
+                <td><?= h($participant['612158X6X108SQ017']) ?></td>
+                <td><?= h($participant['612158X6X108SQ018']) ?></td>
+                <td><?= h($participant['612158X6X108SQ019']) ?></td>
+                <td><?= h($participant['612158X6X108SQ020']) ?></td>
+                <td><?= h($participant['612158X6X108SQ021']) ?></td>
+                <td><?= h($participant['612158X6X108SQ022']) ?></td>
+                <td><?= h($participant['612158X6X108SQ023']) ?></td>
+                <td><?= h($participant['612158X6X108SQ024']) ?></td>
+                <td><?= h($participant['612158X6X108SQ026']) ?></td>
+                <td><?= h($participant['612158X6X19']) ?></td>
+                <td><?= h($participant['612158X6X21']) ?></td>
+                <td><?= h($participant['612158X4X9']) ?></td>
+                <td><?= h($participant['612158X4X10']) ?></td>
+                <td><?= h($participant['612158X4X11']) ?></td>
+                <td><?= h($participant['612158X4X12']) ?></td>
+                <td><?= h($participant['612158X4X13']) ?></td>
+                <td><?= h($participant['612158X4X14']) ?></td>
+                <td><?= h($participant['612158X18X15']) ?></td>
+                <td><?= h($participant['612158X16X23']) ?></td>
+                <td><?= h($participant['612158X16X24']) ?></td>
+                <td><?= h($participant['612158X16X25']) ?></td>
+                <td><?= h($participant['612158X5X16']) ?></td>
+                <td><?= h($participant['612158X5X17']) ?></td>
+                <td><?= h($participant['612158X5X18']) ?></td>
+                <td><?= h($participant['612158X17X26']) ?></td>
+                <td><?= h($participant['612158X17X27']) ?></td>
+                <td><?= h($participant['612158X17X28']) ?></td>
+                <td><?= h($participant['612158X7X30SQ001']) ?></td>
+                <td><?= h($participant['612158X7X30SQ002']) ?></td>
+                <td><?= h($participant['612158X7X30SQ003']) ?></td>
+                <td><?= h($participant['612158X7X30SQ004']) ?></td>
+                <td><?= h($participant['612158X7X30SQ005']) ?></td>
+                <td><?= h($participant['612158X7X30SQ006']) ?></td>
+                <td><?= h($participant['612158X7X30SQ007']) ?></td>
+                <td><?= h($participant['612158X7X30SQ008']) ?></td>
+                <td><?= h($participant['612158X7X30SQ009']) ?></td>
+                <td><?= h($participant['612158X7X30SQ010']) ?></td>
+                <td><?= h($participant['612158X10X41SQ002']) ?></td>
+                <td><?= h($participant['612158X10X41SQ003']) ?></td>
+                <td><?= h($participant['612158X10X41SQ004']) ?></td>
+                <td><?= h($participant['612158X10X41SQ005']) ?></td>
+                <td><?= h($participant['612158X10X41SQ006']) ?></td>
+                <td><?= h($participant['612158X10X41SQ007']) ?></td>
+                <td><?= h($participant['612158X10X70']) ?></td>
+                <td><?= h($participant['612158X8X55']) ?></td>
+                <td><?= h($participant['612158X9X74']) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $participant->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $participant->id]) ?>
@@ -170,6 +171,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
