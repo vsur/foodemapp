@@ -86,6 +86,38 @@ class ParticipantsController extends AppController
         $this->set(compact('participant', 'codes'));
     }
 
+        /**
+     * Read Through Feeback method
+     *
+     * @param string|null $id Participant id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function readThroughFeedback($id = null)
+    {
+
+        $participants = $this->Participants->find('all', [
+            'contain' => ['Codes'],
+            'order' => 'id', 
+            ])
+            ->where(['submitdate IS NOT NULL']);
+        
+        $idsWhoFinished = $participants->extract('id')->toArray();
+        // debug($idsWhoFinished);
+        if($id == null) {
+            $participant =  $participants->first();
+        } else {
+            $participant = $this->Participants->get($id, [
+                'contain' => ['Codes'],
+            ]);
+        }
+
+        $this->set([
+            'participant' => $participant,
+            'idsWhoFinished' => $idsWhoFinished
+        ]);
+    }
+
     /**
      * Delete method
      *
