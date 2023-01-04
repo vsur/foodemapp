@@ -14,6 +14,8 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Participants'), ['action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('List Codes'), ['controller' => 'Codes', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Code'), ['controller' => 'Codes', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="participants form large-9 medium-8 columns content">
@@ -66,6 +68,14 @@
             echo $this->Form->control('612158X4X13other');
             echo $this->Form->control('612158X4X14');
             echo $this->Form->control('612158X18X15');
+            echo $this->Form->control('612158X5X262');
+            echo $this->Form->control('612158X5X16');
+            echo $this->Form->control('612158X5X93');
+            echo $this->Form->control('612158X5X94');
+            echo $this->Form->control('612158X5X95');
+            echo $this->Form->control('612158X5X17');
+            echo $this->Form->control('612158X5X18');
+            echo $this->Form->control('612158X16X263');
             echo $this->Form->control('612158X16X23');
             echo $this->Form->control('612158X16X96');
             echo $this->Form->control('612158X16X97');
@@ -74,12 +84,7 @@
             echo $this->Form->control('612158X16X100');
             echo $this->Form->control('612158X16X24');
             echo $this->Form->control('612158X16X25');
-            echo $this->Form->control('612158X5X16');
-            echo $this->Form->control('612158X5X93');
-            echo $this->Form->control('612158X5X94');
-            echo $this->Form->control('612158X5X95');
-            echo $this->Form->control('612158X5X17');
-            echo $this->Form->control('612158X5X18');
+            echo $this->Form->control('612158X17X264');
             echo $this->Form->control('612158X17X26');
             echo $this->Form->control('612158X17X101');
             echo $this->Form->control('612158X17X102');
@@ -111,12 +116,14 @@
             echo $this->Form->control('612158X10X52');
             echo $this->Form->control('612158X10X71');
             echo $this->Form->control('612158X10X53');
+            echo $this->Form->control('612158X10X265');
             echo $this->Form->control('612158X8X54');
             echo $this->Form->control('612158X8X55');
             echo $this->Form->control('612158X9X72');
             echo $this->Form->control('612158X9X72other');
             echo $this->Form->control('612158X9X73');
             echo $this->Form->control('612158X9X74');
+            echo $this->Form->control('codes._ids', ['options' => $codes]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

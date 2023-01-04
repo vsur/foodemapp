@@ -100,6 +100,7 @@ use Cake\ORM\Entity;
  * @property string|null $612158X10X52
  * @property string|null $612158X10X71
  * @property string|null $612158X10X53
+ * @property string|null $612158X10X265
  * @property string|null $612158X8X54
  * @property string|null $612158X8X55
  * @property string|null $612158X9X72
@@ -212,6 +213,7 @@ class Participant extends Entity
         '612158X10X52' => true,
         '612158X10X71' => true,
         '612158X10X53' => true,
+        '612158X10X265' => true,
         '612158X8X54' => true,
         '612158X8X55' => true,
         '612158X9X72' => true,

@@ -34,7 +34,7 @@ class ParticipantsController extends AppController
     public function view($id = null)
     {
         $participant = $this->Participants->get($id, [
-            'contain' => [],
+            'contain' => ['Codes'],
         ]);
 
         $this->set('participant', $participant);
@@ -57,7 +57,8 @@ class ParticipantsController extends AppController
             }
             $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
-        $this->set(compact('participant'));
+        $codes = $this->Participants->Codes->find('list', ['limit' => 200]);
+        $this->set(compact('participant', 'codes'));
     }
 
     /**
@@ -70,7 +71,7 @@ class ParticipantsController extends AppController
     public function edit($id = null)
     {
         $participant = $this->Participants->get($id, [
-            'contain' => [],
+            'contain' => ['Codes'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $participant = $this->Participants->patchEntity($participant, $this->request->getData());
@@ -81,7 +82,8 @@ class ParticipantsController extends AppController
             }
             $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
-        $this->set(compact('participant'));
+        $codes = $this->Participants->Codes->find('list', ['limit' => 200]);
+        $this->set(compact('participant', 'codes'));
     }
 
     /**

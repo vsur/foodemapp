@@ -11,6 +11,8 @@
         <li><?= $this->Form->postLink(__('Delete Participant'), ['action' => 'delete', $participant->id], ['confirm' => __('Are you sure you want to delete # {0}?', $participant->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Participants'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Participant'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Codes'), ['controller' => 'Codes', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Code'), ['controller' => 'Codes', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="participants view large-9 medium-8 columns content">
@@ -404,5 +406,36 @@
     <div class="row">
         <h4><?= __('612158X9X73') ?></h4>
         <?= $this->Text->autoParagraph(h($participant['612158X9X73'])); ?>
+    </div>
+    <div class="related">
+        <h4><?= __('Related Codes') ?></h4>
+        <?php if (!empty($participant->codes)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Field Type Id') ?></th>
+                <th scope="col"><?= __('Name') ?></th>
+                <th scope="col"><?= __('Description') ?></th>
+                <th scope="col"><?= __('Created') ?></th>
+                <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($participant->codes as $codes): ?>
+            <tr>
+                <td><?= h($codes->id) ?></td>
+                <td><?= h($codes->field_type_id) ?></td>
+                <td><?= h($codes->name) ?></td>
+                <td><?= h($codes->description) ?></td>
+                <td><?= h($codes->created) ?></td>
+                <td><?= h($codes->modified) ?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Codes', 'action' => 'view', $codes->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Codes', 'action' => 'edit', $codes->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Codes', 'action' => 'delete', $codes->id], ['confirm' => __('Are you sure you want to delete # {0}?', $codes->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
     </div>
 </div>

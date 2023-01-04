@@ -12,7 +12,6 @@
 </nav>
 <div class="participants index large-9 medium-8 columns content">
     <h3><?= __('Participants') ?></h3>
-    <div style="overflow-x:auto;">
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -58,12 +57,12 @@
                 <th scope="col"><?= $this->Paginator->sort('612158X4X13') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X4X14') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X18X15') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('612158X16X23') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('612158X16X24') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('612158X16X25') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X5X16') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X5X17') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X5X18') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('612158X16X23') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('612158X16X24') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('612158X16X25') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X17X26') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X17X27') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X17X28') ?></th>
@@ -84,13 +83,14 @@
                 <th scope="col"><?= $this->Paginator->sort('612158X10X41SQ006') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X10X41SQ007') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X10X70') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('612158X10X265') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X8X55') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('612158X9X74') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($participants as $participant): ?>
+        <?php foreach ($participants as $participant): ?>
             <tr>
                 <td><?= $this->Number->format($participant['id']) ?></td>
                 <td><?= h($participant['token']) ?></td>
@@ -171,7 +171,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    </div>
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>

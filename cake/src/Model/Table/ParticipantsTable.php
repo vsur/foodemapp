@@ -9,6 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Participants Model
  *
+ * @property &\Cake\ORM\Association\BelongsToMany $Codes
+ *
  * @method \App\Model\Entity\Participant get($primaryKey, $options = [])
  * @method \App\Model\Entity\Participant newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Participant[] newEntities(array $data, array $options = [])
@@ -33,6 +35,12 @@ class ParticipantsTable extends Table
         $this->setTable('participants');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->belongsToMany('Codes', [
+            'foreignKey' => 'participant_id',
+            'targetForeignKey' => 'code_id',
+            'joinTable' => 'participants_codes',
+        ]);
     }
 
     /**
@@ -495,6 +503,11 @@ class ParticipantsTable extends Table
         $validator
             ->scalar('612158X10X53')
             ->allowEmptyString('612158X10X53');
+
+        $validator
+            ->scalar('612158X10X265')
+            ->maxLength('612158X10X265', 5)
+            ->allowEmptyString('612158X10X265');
 
         $validator
             ->scalar('612158X8X54')
