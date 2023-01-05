@@ -1,21 +1,21 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\ParticipantsTable;
+use App\Model\Table\TimingsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\ParticipantsTable Test Case
+ * App\Model\Table\TimingsTable Test Case
  */
-class ParticipantsTableTest extends TestCase
+class TimingsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\ParticipantsTable
+     * @var \App\Model\Table\TimingsTable
      */
-    public $Participants;
+    public $Timings;
 
     /**
      * Fixtures
@@ -23,8 +23,8 @@ class ParticipantsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.Timings',
         'app.Participants',
-        'app.Codes',
     ];
 
     /**
@@ -35,8 +35,8 @@ class ParticipantsTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Participants') ? [] : ['className' => ParticipantsTable::class];
-        $this->Participants = TableRegistry::getTableLocator()->get('Participants', $config);
+        $config = TableRegistry::getTableLocator()->exists('Timings') ? [] : ['className' => TimingsTable::class];
+        $this->Timings = TableRegistry::getTableLocator()->get('Timings', $config);
     }
 
     /**
@@ -46,7 +46,7 @@ class ParticipantsTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Participants);
+        unset($this->Timings);
 
         parent::tearDown();
     }

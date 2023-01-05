@@ -7,6 +7,7 @@ use Cake\ORM\Entity;
  * Participant Entity
  *
  * @property int $id
+ * @property int $timing_id
  * @property string|null $token
  * @property \Cake\I18n\Time|null $submitdate
  * @property int|null $lastpage
@@ -107,6 +108,8 @@ use Cake\ORM\Entity;
  * @property string|null $612158X9X72other
  * @property string|null $612158X9X73
  * @property string|null $612158X9X74
+ *
+ * @property \App\Model\Entity\Code[] $codes
  */
 class Participant extends Entity
 {
@@ -120,6 +123,7 @@ class Participant extends Entity
      * @var array
      */
     protected $_accessible = [
+        'timing_id' => true,
         'token' => true,
         'submitdate' => true,
         'lastpage' => true,
@@ -220,6 +224,7 @@ class Participant extends Entity
         '612158X9X72other' => true,
         '612158X9X73' => true,
         '612158X9X74' => true,
+        'codes' => true,
     ];
 
     /**

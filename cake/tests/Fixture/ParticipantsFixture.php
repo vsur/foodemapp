@@ -16,6 +16,7 @@ class ParticipantsFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'timing_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'token' => ['type' => 'string', 'length' => 36, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_bin', 'comment' => '', 'precision' => null, 'fixed' => null],
         'submitdate' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'lastpage' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -138,13 +139,14 @@ class ParticipantsFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
+                'timing_id' => 1,
                 'token' => 'Lorem ipsum dolor sit amet',
-                'submitdate' => '2023-01-04 09:15:01',
+                'submitdate' => '2023-01-05 15:21:53',
                 'lastpage' => 1,
                 'startlanguage' => 'Lorem ipsum dolor ',
                 'seed' => 'Lorem ipsum dolor sit amet',
-                'startdate' => '2023-01-04 09:15:01',
-                'datestamp' => '2023-01-04 09:15:01',
+                'startdate' => '2023-01-05 15:21:53',
+                'datestamp' => '2023-01-05 15:21:53',
                 '612158X1X2' => 'Lor',
                 '612158X2X4' => 'Lor',
                 '612158X3X5' => 1.5,

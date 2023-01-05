@@ -19,6 +19,9 @@ class ParticipantsController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Timings'],
+        ];
         $participants = $this->paginate($this->Participants);
 
         $this->set(compact('participants'));
@@ -34,7 +37,7 @@ class ParticipantsController extends AppController
     public function view($id = null)
     {
         $participant = $this->Participants->get($id, [
-            'contain' => ['Codes'],
+            'contain' => ['Timings', 'Codes'],
         ]);
 
         $this->set('participant', $participant);
@@ -57,8 +60,9 @@ class ParticipantsController extends AppController
             }
             $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
+        $timings = $this->Participants->Timings->find('list', ['limit' => 200]);
         $codes = $this->Participants->Codes->find('list', ['limit' => 200]);
-        $this->set(compact('participant', 'codes'));
+        $this->set(compact('participant', 'timings', 'codes'));
     }
 
     /**
@@ -82,11 +86,12 @@ class ParticipantsController extends AppController
             }
             $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
+        $timings = $this->Participants->Timings->find('list', ['limit' => 200]);
         $codes = $this->Participants->Codes->find('list', ['limit' => 200]);
-        $this->set(compact('participant', 'codes'));
+        $this->set(compact('participant', 'timings', 'codes'));
     }
 
-        /**
+    /**
      * Read Through Feeback method
      *
      * @param string|null $id Participant id.
@@ -97,8 +102,8 @@ class ParticipantsController extends AppController
     {
 
         $participants = $this->Participants->find('all', [
-            'contain' => ['Codes'],
-            'order' => 'id', 
+            'contain' => ['Timings', 'Codes'],
+            'order' => 'Participants.id', 
             ])
             ->where(['submitdate IS NOT NULL']);
         
@@ -108,7 +113,7 @@ class ParticipantsController extends AppController
             $participant =  $participants->first();
         } else {
             $participant = $this->Participants->get($id, [
-                'contain' => ['Codes'],
+                'contain' => ['Timings', 'Codes'],
             ]);
         }
 

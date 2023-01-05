@@ -9,7 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Participants Model
  *
- * @property &\Cake\ORM\Association\BelongsToMany $Codes
+ * @property &\Cake\ORM\Association\BelongsTo $Timings
+ * @property \App\Model\Table\CodesTable&\Cake\ORM\Association\BelongsToMany $Codes
  *
  * @method \App\Model\Entity\Participant get($primaryKey, $options = [])
  * @method \App\Model\Entity\Participant newEntity($data = null, array $options = [])
@@ -36,6 +37,10 @@ class ParticipantsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Timings', [
+            'foreignKey' => 'timing_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsToMany('Codes', [
             'foreignKey' => 'participant_id',
             'targetForeignKey' => 'code_id',
@@ -536,5 +541,19 @@ class ParticipantsTable extends Table
             ->allowEmptyString('612158X9X74');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['timing_id'], 'Timings'));
+
+        return $rules;
     }
 }

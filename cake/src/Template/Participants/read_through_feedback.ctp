@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Participant $participant
  */
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
@@ -17,48 +18,122 @@
 </nav>
 <div class="participants view large-9 medium-8 columns content">
     <h3><?= h("Participant ID: " . $participant->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('ID') ?></th>
-            <td><?= h($participant->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Zeitpunkt') ?></th>
-            <td><?= h($this->Time->format($participant->startdate)) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Dauer') ?></th>
-            <td><?= h($participant->submitdate->diff($participant->startdate)->format('%H:%i:%s h')) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Geschlecht') ?></th>
-            <td>
-                <?php
-                    $sex = $participant['612158X3X75'];
-                    switch ($sex) {
-                        case 'F':
-                            echo "♀";
+    <p>
+        <strong style="color: #1798A5">ID</strong> <?= h($participant->id) ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color: #1798A5">Alter</strong> <?= h($participant['612158X3X5']) ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color: #1798A5">Geschlecht</strong>  <?= h($this->Participants->getSex($participant)) ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color:  #1798A5">Zeitpunkt</strong> <?= h($this->Time->format($participant->startdate)) ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color:  #1798A5">Dauer</strong> <?= h($this->Participants->getShortestInterviewDuration($participant)) ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color:  #1798A5">Video-Dauer</strong> <?= h($this->Participants->getFormatedVideoDuration($participant)) ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color:  #1798A5">Internet-Level</strong> 
+        <?php
+            $iLevel = $participant['612158X6X21'];
+            switch ($iLevel) {
+                case 'AO01':
+                    echo "Beginner";
+                    break;
+                case 'AO02':
+                    echo "Middle";
+                    break;
+                case 'AO03':
+                    echo "Expert";
+                    break;
+            }
+        ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color:  #1798A5">Mood</strong> 
+        <?php
+                    $moodStart = "NOT SET";
+                    switch ($participant['612158X3X8']) {
+                        case 'AO01':
+                            $moodStart = "Schlecht";
                             break;
-                        case 'M':
-                            echo "♂";
+                        case 'AO02':
+                            $moodStart = "Nicht gut";
                             break;
-                        case '':
-                            echo "X";
+                        case 'AO03':
+                            $moodStart = "Neutral";
+                            break;
+                        case 'AO04':
+                            $moodStart = "Gut";
+                            break;
+                        case 'AO05':
+                            $moodStart = "Sehr gut";
                             break;
                     }
+
+                    $moodEnd = "NOT SET";
+                    switch ($participant['612158X8X55']) {
+                        case 'AO01':
+                            $moodEnd = "Schlecht";
+                            break;
+                        case 'AO02':
+                            $moodEnd = "Nicht gut";
+                            break;
+                        case 'AO03':
+                            $moodEnd = "Neutral";
+                            break;
+                        case 'AO04':
+                            $moodEnd = "Gut";
+                            break;
+                        case 'AO05':
+                            $moodEnd = "Sehr gut";
+                            break;
+                    }
+
+                    echo "Start: $moodStart | Ende: $moodEnd";
                 ?>
-            </td>
-        </tr>
-    </table>
+    </p>
+    <p>
+        <strong style="color: #1798A5">Task-Reihenfolge und Dauer</strong> <br> <?= $this->Participants->getOrderedTaskDurations($participant) ?>
+    </p>
     <div class="row">
-        <h4><?= __('612158X3X6') ?></h4>
-        <?= $this->Text->autoParagraph(h($participant['612158X3X6'])); ?>
+        <h4><?= __('Chord und Map besser als Liste:') ?></h4>
+        <?php 
+            switch ($participant['612158X10X70']) {
+                case 'Y':
+                    echo '<h5 style="color:green">&check; Chord und Map besser.</h5>';
+                    break;
+                case 'N':
+                    echo '<h5 style="color:red">&#10060; Liste besser.</h5>';
+                    break;
+            }
+        ?>
+        <?= $this->Text->autoParagraph(h($participant['612158X10X50'])); ?>
+        <h6><?= __('Kodierung') ?></h6>
+        <?= "TBA" ?>
     </div>
+    <hr>
+    <div class="row">
+        <h4><?= __('Listenfeedback') ?></h4>
+        <?= $this->Text->autoParagraph(h($participant['612158X10X53'])); ?>
+        <h6><?= __('Kodierung') ?></h6>
+        <?= "TBA" ?>
+    </div>
+    <hr>
+    <div class="row">
+        <h4><?= __('Chordfeedback') ?></h4>
+        <?= $this->Text->autoParagraph(h($participant['612158X10X52'])); ?>
+        <h6><?= __('Kodierung') ?></h6>
+        <?= "TBA" ?>
+    </div>
+    <hr>
+    <div class="row">
+        <h4><?= __('Mapfeedback') ?></h4>
+        <?= $this->Text->autoParagraph(h($participant['612158X10X71'])); ?>
+        <h6><?= __('Kodierung') ?></h6>
+        <?= "TBA" ?>
+    </div>
+    <hr>
 
 <?php 
     $currentParticipantIdKey = array_search($participant->id, $idsWhoFinished);
-    echo $currentParticipantIdKey-1;
-
 ?>
 
     <div class="paginator" style="text-align: left;">
