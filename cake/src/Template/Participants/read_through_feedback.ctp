@@ -31,104 +31,51 @@
         <span style="padding-left: 1em"></span>
         <strong style="color:  #1798A5">Video-Dauer</strong> <?= h($this->Participants->getFormatedVideoDuration($participant)) ?>
         <span style="padding-left: 1em"></span>
-        <strong style="color:  #1798A5">Internet-Level</strong> 
-        <?php
-            $iLevel = $participant['612158X6X21'];
-            switch ($iLevel) {
-                case 'AO01':
-                    echo "Beginner";
-                    break;
-                case 'AO02':
-                    echo "Middle";
-                    break;
-                case 'AO03':
-                    echo "Expert";
-                    break;
-            }
-        ?>
+        <strong style="color:  #1798A5">Internet-Level</strong> <?= h($this->Participants->getInternetLevel($participant)) ?>
         <span style="padding-left: 1em"></span>
-        <strong style="color:  #1798A5">Mood</strong> 
-        <?php
-                    $moodStart = "NOT SET";
-                    switch ($participant['612158X3X8']) {
-                        case 'AO01':
-                            $moodStart = "Schlecht";
-                            break;
-                        case 'AO02':
-                            $moodStart = "Nicht gut";
-                            break;
-                        case 'AO03':
-                            $moodStart = "Neutral";
-                            break;
-                        case 'AO04':
-                            $moodStart = "Gut";
-                            break;
-                        case 'AO05':
-                            $moodStart = "Sehr gut";
-                            break;
-                    }
-
-                    $moodEnd = "NOT SET";
-                    switch ($participant['612158X8X55']) {
-                        case 'AO01':
-                            $moodEnd = "Schlecht";
-                            break;
-                        case 'AO02':
-                            $moodEnd = "Nicht gut";
-                            break;
-                        case 'AO03':
-                            $moodEnd = "Neutral";
-                            break;
-                        case 'AO04':
-                            $moodEnd = "Gut";
-                            break;
-                        case 'AO05':
-                            $moodEnd = "Sehr gut";
-                            break;
-                    }
-
-                    echo "Start: $moodStart | Ende: $moodEnd";
-                ?>
+        <strong style="color:  #1798A5">Mood</strong> <?= h($this->Participants->getMoods($participant)) ?>
+        <span style="padding-left: 1em"></span>
     </p>
     <p>
-        <strong style="color: #1798A5">Task-Reihenfolge und Dauer</strong> <br> <?= $this->Participants->getOrderedTaskDurations($participant) ?>
+        <strong style="color: #1798A5">Task-Reihenfolge und Dauer</strong> <?= $this->Participants->getOrderedTaskDurations($participant, $inlineFormatet = TRUE) ?>
     </p>
     <div class="row">
         <h4><?= __('Chord und Map besser als Liste:') ?></h4>
-        <?php 
-            switch ($participant['612158X10X70']) {
-                case 'Y':
-                    echo '<h5 style="color:green">&check; Chord und Map besser.</h5>';
-                    break;
-                case 'N':
-                    echo '<h5 style="color:red">&#10060; Liste besser.</h5>';
-                    break;
-            }
-        ?>
+        
+        <?= $this->Participants->getChordMapOverList($participant) ?>
+        
         <?= $this->Text->autoParagraph(h($participant['612158X10X50'])); ?>
+<!--         
         <h6><?= __('Kodierung') ?></h6>
         <?= "TBA" ?>
+         -->
     </div>
     <hr>
     <div class="row">
         <h4><?= __('Listenfeedback') ?></h4>
         <?= $this->Text->autoParagraph(h($participant['612158X10X53'])); ?>
+<!-- 
         <h6><?= __('Kodierung') ?></h6>
         <?= "TBA" ?>
+         -->
     </div>
     <hr>
     <div class="row">
         <h4><?= __('Chordfeedback') ?></h4>
         <?= $this->Text->autoParagraph(h($participant['612158X10X52'])); ?>
+<!-- 
         <h6><?= __('Kodierung') ?></h6>
         <?= "TBA" ?>
+         -->
     </div>
     <hr>
     <div class="row">
         <h4><?= __('Mapfeedback') ?></h4>
         <?= $this->Text->autoParagraph(h($participant['612158X10X71'])); ?>
+<!-- 
         <h6><?= __('Kodierung') ?></h6>
         <?= "TBA" ?>
+         -->
     </div>
     <hr>
 
