@@ -158,6 +158,23 @@ class ParticipantsHelper extends Helper
         return $orderedDurations;
     }
 
+    public function getFavoriteViz($participant) {
+        $favoriteViz = "";
+
+        switch ($participant['612158X10X265']) {
+            case 'AO01':
+                $favoriteViz = "Liste";
+                break;
+            case 'AO02':
+                $favoriteViz = "Chord";
+                break;
+            case 'AO03':
+                $favoriteViz = "Map";
+        }
+
+        return $favoriteViz;
+    }
+
     public function getChordMapOverList($participant) {
         $chordMapOverList = "";
         switch ($participant['612158X10X70']) {
@@ -170,5 +187,7 @@ class ParticipantsHelper extends Helper
         }
         return $chordMapOverList;
     }
+
+
 
 }

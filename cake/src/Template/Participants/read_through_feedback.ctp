@@ -34,11 +34,14 @@
         <strong style="color:  #1798A5">Internet-Level</strong> <?= h($this->Participants->getInternetLevel($participant)) ?>
         <span style="padding-left: 1em"></span>
         <strong style="color:  #1798A5">Mood</strong> <?= h($this->Participants->getMoods($participant)) ?>
-        <span style="padding-left: 1em"></span>
     </p>
     <p>
         <strong style="color: #1798A5">Task-Reihenfolge und Dauer</strong> <?= $this->Participants->getOrderedTaskDurations($participant, $inlineFormatet = TRUE) ?>
+        <span style="padding-left: 1em"></span>
+        <strong style="color: green">Beste Viz: <?=  $this->Participants->getFavoriteViz($participant) ?></strong> 
     </p>
+
+    <!-- 612158X8X54 -->
     <div class="row">
         <h4><?= __('Chord und Map besser als Liste:') ?></h4>
         
@@ -78,6 +81,17 @@
          -->
     </div>
     <hr>
+    <?php if($participant['612158X8X54']): ?>
+    <div class="row">
+        <h4><?= __('Abschlusskommentar') ?></h4>
+        <?= $this->Text->autoParagraph(h($participant['612158X8X54'])); ?>
+<!-- 
+        <h6><?= __('Kodierung') ?></h6>
+        <?= "TBA" ?>
+        -->
+    </div>
+    <hr>
+    <?php endif; ?>
 
 <?php 
     $currentParticipantIdKey = array_search($participant->id, $idsWhoFinished);
