@@ -54,10 +54,13 @@
             <?= $this->Participants->getChordMapOverList($participant) ?>
             
             <?= $this->Text->autoParagraph(h($participant['612158X10X50'])); ?>
-    <!--         
-            <h6><?= __('Kodierung') ?></h6>
-            <?= "TBA" ?>
-            -->
+       
+            <h6><?= __('Codes') ?></h6>
+            
+            <?php
+                echo $this->Form->control('codes.participants_codes', ['options' => $codes]);
+            ?>
+          
         </div>
         <hr>
         <div class="row">
@@ -99,10 +102,7 @@
         <hr>
         <?php endif; ?>
 
-        <?php
-            
-            echo $this->Form->control('codes._ids', ['options' => $codes]);
-        ?>
+       
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>

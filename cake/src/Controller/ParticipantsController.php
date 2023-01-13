@@ -118,7 +118,8 @@ class ParticipantsController extends AppController
         $codes = $this->Participants->Codes->find('all', [
             'contain' => ['FieldTypes']
         ])
-        ->leftJoinWith('FieldTypes')
+        ->matching('FieldTypes')
+        // TODO SORT BY NAME!
         ;
         $idsWhoFinished = $participants->extract('id')->toArray();
 
