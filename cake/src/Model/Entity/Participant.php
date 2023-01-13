@@ -109,6 +109,7 @@ use Cake\ORM\Entity;
  * @property string|null $612158X9X73
  * @property string|null $612158X9X74
  *
+ * @property \App\Model\Entity\Timing $timing
  * @property \App\Model\Entity\Code[] $codes
  */
 class Participant extends Entity
@@ -224,6 +225,7 @@ class Participant extends Entity
         '612158X9X72other' => true,
         '612158X9X73' => true,
         '612158X9X74' => true,
+        'timing' => true,
         'codes' => true,
     ];
 

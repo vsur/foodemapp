@@ -106,4 +106,30 @@
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
+    <?php 
+    $currentParticipantIdKey = array_search($participant->id, $idsWhoFinished);
+?>
+
+    <div class="paginator" style="text-align: left;">
+        <ul class="pagination">
+            <li>
+                <?= $this->Html->link('‹‹ ', ['action' => 'codeAnswers', $idsWhoFinished[0]]) ?>
+            </li>
+            <li>
+                <?= $this->Html->link('‹ ', ['action' => 'codeAnswers', ($currentParticipantIdKey-1 > 0 ? $idsWhoFinished[$currentParticipantIdKey-1] : $idsWhoFinished[0])]) ?>
+            </li>
+            <li>
+                <?= $this->Html->link("Aktuelle ID: $participant->id ", ['action' => 'codeAnswers', $participant->id]) ?>
+            </li>
+            <li>
+                <?= $this->Html->link('› ', ['action' => 'codeAnswers', ($currentParticipantIdKey+1 < array_key_last($idsWhoFinished) ? $idsWhoFinished[$currentParticipantIdKey+1] : $idsWhoFinished[array_key_last($idsWhoFinished)])]) ?>
+            </li>
+            <li>
+            </li>
+            <li>
+                <?= $this->Html->link('›› ', ['action' => 'codeAnswers', $idsWhoFinished[array_key_last($idsWhoFinished)]]) ?>
+            </li>
+        </ul>
+        <p style="text-align: left;"><?= __("Participant " . (intval($currentParticipantIdKey)+1 ) . " von " . count($idsWhoFinished)) ?></p>
+    </div>
 </div>

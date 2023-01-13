@@ -81,7 +81,6 @@ class ParticipantsController extends AppController
             $participant = $this->Participants->patchEntity($participant, $this->request->getData());
             if ($this->Participants->save($participant)) {
                 $this->Flash->success(__('The participant has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The participant could not be saved. Please, try again.'));
@@ -100,23 +99,47 @@ class ParticipantsController extends AppController
      */
     public function codeAnswers($id = null)
     {
-        $participant = $this->Participants->get($id, [
-            'contain' => ['Timings', 'Codes']
-        ]);
-        // debug($participant);
+        // Get all needed Data
+
+        // Get all first, in Case do Id is given
+        $participants = $this->Participants->find('all', [
+            'contain' => ['Timings', 'Codes'],
+            'order' => 'Participants.id', 
+            ])
+            ->where(['submitdate IS NOT NULL']);
+        // Filter if call is made with single ID
+        if($id == null) {
+            $participant =  $participants->first();
+        } else {
+            $participant = $this->Participants->get($id, [
+                'contain' => ['Timings', 'Codes'],
+            ]);
+        }
+        $codes = $this->Participants->Codes->find('all', [
+            'contain' => ['FieldTypes']
+        ])
+        ->leftJoinWith('FieldTypes')
+        ;
+        $idsWhoFinished = $participants->extract('id')->toArray();
+
+        // Data Saving Part
         if ($this->request->is(['patch', 'post', 'put'])) {
             $participant = $this->Participants->patchEntity($participant, $this->request->getData());
-            // debug( $this->request->getData());
             if ($this->Participants->save($participant)) {
                 $this->Flash->success(__('The participant has been saved.'));
+
+                debug( $this->request);
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
-        $timings = $this->Participants->Timings->find('list', ['limit' => 200]);
-        $codes = $this->Participants->Codes->find('list', ['limit' => 200]);
-        $this->set(compact('participant', 'timings', 'codes'));
+
+        $this->set([
+            'participant' => $participant,
+            'codes' => $codes,
+            'idsWhoFinished' => $idsWhoFinished
+        ]);
     }
 
     /**
@@ -136,7 +159,6 @@ class ParticipantsController extends AppController
             ->where(['submitdate IS NOT NULL']);
         
         $idsWhoFinished = $participants->extract('id')->toArray();
-        // debug($idsWhoFinished);
         if($id == null) {
             $participant =  $participants->first();
         } else {

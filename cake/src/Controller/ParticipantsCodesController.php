@@ -52,7 +52,6 @@ class ParticipantsCodesController extends AppController
     {
         $participantsCode = $this->ParticipantsCodes->newEntity();
         if ($this->request->is('post')) {
-            debug($this->request);
             $participantsCode = $this->ParticipantsCodes->patchEntity($participantsCode, $this->request->getData());
             if ($this->ParticipantsCodes->save($participantsCode)) {
                 $this->Flash->success(__('The participants code has been saved.'));

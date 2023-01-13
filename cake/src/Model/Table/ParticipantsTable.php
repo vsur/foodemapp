@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Participants Model
  *
- * @property &\Cake\ORM\Association\BelongsTo $Timings
+ * @property \App\Model\Table\TimingsTable&\Cake\ORM\Association\BelongsTo $Timings
  * @property \App\Model\Table\CodesTable&\Cake\ORM\Association\BelongsToMany $Codes
  *
  * @method \App\Model\Entity\Participant get($primaryKey, $options = [])

@@ -66,13 +66,11 @@ class ParticipantsCodesTable extends Table
         $validator
             ->scalar('vizvar')
             ->maxLength('vizvar', 255)
-            ->requirePresence('vizvar', 'create')
-            ->notEmptyString('vizvar');
+            ->allowEmptyString('vizvar');
 
         $validator
             ->scalar('description')
-            ->requirePresence('description', 'create')
-            ->notEmptyString('description');
+            ->allowEmptyString('description');
 
         return $validator;
     }
