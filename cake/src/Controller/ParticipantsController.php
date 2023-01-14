@@ -104,7 +104,7 @@ class ParticipantsController extends AppController
         // Get all first, in Case do Id is given
         $participants = $this->Participants->find('all', [
             'contain' => ['Timings', 'Codes'],
-            'order' => 'Participants.id', 
+            'order' => ['Participants.id' => 'ASC'], 
             ])
             ->where(['submitdate IS NOT NULL']);
         // Filter if call is made with single ID
@@ -115,25 +115,29 @@ class ParticipantsController extends AppController
                 'contain' => ['Timings', 'Codes'],
             ]);
         }
+        // Get all codes order by FielType name and name itself
         $codes = $this->Participants->Codes->find('all', [
-            'contain' => ['FieldTypes']
-        ])
-        ->matching('FieldTypes')
-        // TODO SORT BY NAME!
-        ;
+            'contain' => ['FieldTypes'],
+            'order' => [
+                'FieldTypes.name' => 'ASC',
+                'Codes.name' => 'ASC'
+            ] 
+        ]);
+
         $idsWhoFinished = $participants->extract('id')->toArray();
 
         // Data Saving Part
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $participant = $this->Participants->patchEntity($participant, $this->request->getData());
-            if ($this->Participants->save($participant)) {
-                $this->Flash->success(__('The participant has been saved.'));
+            debug( $this->request->getData());
+            // $participant = $this->Participants->patchEntity($participant, $this->request->getData());
+            // if ($this->Participants->save($participant)) {
+            //     $this->Flash->success(__('The participant has been saved.'));
 
-                debug( $this->request);
+            //     debug( $this->request);
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The participant could not be saved. Please, try again.'));
+            //     return $this->redirect(['action' => 'index']);
+            // }
+            // $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
 
         $this->set([

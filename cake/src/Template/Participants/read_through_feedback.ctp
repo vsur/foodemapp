@@ -18,26 +18,34 @@
 </nav>
 <div class="participants view large-9 medium-8 columns content">
     <h3><?= h("Participant ID: " . $participant->id) ?></h3>
-    <p>
-        <strong style="color: #1798A5">ID</strong> <?= h($participant->id) ?>
-        <span style="padding-left: 1em"></span>
-        <strong style="color: #1798A5">Alter</strong> <?= h($participant['612158X3X5']) ?>
-        <span style="padding-left: 1em"></span>
-        <strong style="color: #1798A5">Geschlecht</strong>  <?= h($this->Participants->getSex($participant)) ?>
-        <span style="padding-left: 1em"></span>
-        <strong style="color:  #1798A5">Zeitpunkt</strong> <?= h($this->Time->format($participant->startdate)) ?>
-        <span style="padding-left: 1em"></span>
-        <strong style="color:  #1798A5">Dauer</strong> <?= h($this->Participants->getShortestInterviewDuration($participant)) ?>
-        <span style="padding-left: 1em"></span>
-        <strong style="color:  #1798A5">Video-Dauer</strong> <?= h($this->Participants->getFormatedVideoDuration($participant)) ?>
-        <span style="padding-left: 1em"></span>
-        <strong style="color:  #1798A5">Internet-Level</strong> <?= h($this->Participants->getInternetLevel($participant)) ?>
-        <span style="padding-left: 1em"></span>
-        <strong style="color:  #1798A5">Mood</strong> <?= h($this->Participants->getMoods($participant)) ?>
+    <p class="participantsAggregatedInfos">
+        <span>
+            <strong>ID</strong> <?= h($participant->id) ?>
+        </span>
+        <span>
+            <strong>Alter</strong> <?= h($participant['612158X3X5']) ?>
+        </span>
+        <span>
+            <strong>Geschlecht</strong>  <?= h($this->Participants->getSex($participant)) ?>
+        </span>
+        <span>
+            <strong>Zeitpunkt</strong> <?= h($this->Time->format($participant->startdate)) ?>
+        </span>
+        <span>
+            <strong>Dauer</strong> <?= h($this->Participants->getShortestInterviewDuration($participant)) ?>
+        </span>
+        <span>
+            <strong>Video-Dauer</strong> <?= h($this->Participants->getFormatedVideoDuration($participant)) ?>
+        </span>
+        <span>
+            <strong>Internet-Level</strong> <?= h($this->Participants->getInternetLevel($participant)) ?>
+        </span>
+        <span>
+            <strong>Mood</strong> <?= h($this->Participants->getMoods($participant)) ?>
+        </span>
     </p>
-    <p>
-        <strong style="color: #1798A5">Task-Reihenfolge und Dauer</strong> <?= $this->Participants->getOrderedTaskDurations($participant, $inlineFormatet = TRUE) ?>
-        <span style="padding-left: 1em"></span>
+    <p class="participantsAggregatedInfos">
+        <strong>Task-Reihenfolge und Dauer</strong> <?= $this->Participants->getOrderedTaskDurations($participant, $inlineFormatet = TRUE) ?>
         <strong style="color: green">Beste Viz: <?=  $this->Participants->getFavoriteViz($participant) ?></strong> 
     </p>
 
@@ -152,3 +160,5 @@
         <?php endif; ?>
     </div>
 </div>
+
+<?= $this->Html->css('participants-coding'); ?>

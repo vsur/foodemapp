@@ -24,28 +24,36 @@
         <legend><?= __('Code Participant Answer') ?></legend>
         
         <h3><?= h("Participant ID: " . $participant->id) ?></h3>
-        <p>
-            <strong style="color: #1798A5">ID</strong> <?= h($participant->id) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color: #1798A5">Alter</strong> <?= h($participant['612158X3X5']) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color: #1798A5">Geschlecht</strong>  <?= h($this->Participants->getSex($participant)) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color:  #1798A5">Zeitpunkt</strong> <?= h($this->Time->format($participant->startdate)) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color:  #1798A5">Dauer</strong> <?= h($this->Participants->getShortestInterviewDuration($participant)) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color:  #1798A5">Video-Dauer</strong> <?= h($this->Participants->getFormatedVideoDuration($participant)) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color:  #1798A5">Internet-Level</strong> <?= h($this->Participants->getInternetLevel($participant)) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color:  #1798A5">Mood</strong> <?= h($this->Participants->getMoods($participant)) ?>
-        </p>
-        <p>
-            <strong style="color: #1798A5">Task-Reihenfolge und Dauer</strong> <?= $this->Participants->getOrderedTaskDurations($participant, $inlineFormatet = TRUE) ?>
-            <span style="padding-left: 1em"></span>
-            <strong style="color: green">Beste Viz: <?=  $this->Participants->getFavoriteViz($participant) ?></strong> 
-        </p>
+        <p class="participantsAggregatedInfos">
+        <span>
+            <strong>ID</strong> <?= h($participant->id) ?>
+        </span>
+        <span>
+            <strong>Alter</strong> <?= h($participant['612158X3X5']) ?>
+        </span>
+        <span>
+            <strong>Geschlecht</strong>  <?= h($this->Participants->getSex($participant)) ?>
+        </span>
+        <span>
+            <strong>Zeitpunkt</strong> <?= h($this->Time->format($participant->startdate)) ?>
+        </span>
+        <span>
+            <strong>Dauer</strong> <?= h($this->Participants->getShortestInterviewDuration($participant)) ?>
+        </span>
+        <span>
+            <strong>Video-Dauer</strong> <?= h($this->Participants->getFormatedVideoDuration($participant)) ?>
+        </span>
+        <span>
+            <strong>Internet-Level</strong> <?= h($this->Participants->getInternetLevel($participant)) ?>
+        </span>
+        <span>
+            <strong>Mood</strong> <?= h($this->Participants->getMoods($participant)) ?>
+        </span>
+    </p>
+    <p class="participantsAggregatedInfos">
+        <strong>Task-Reihenfolge und Dauer</strong> <?= $this->Participants->getOrderedTaskDurations($participant, $inlineFormatet = TRUE) ?>
+        <strong style="color: green">Beste Viz: <?=  $this->Participants->getFavoriteViz($participant) ?></strong> 
+    </p>
 
         <!-- 612158X8X54 -->
         <div class="row">
@@ -56,10 +64,56 @@
             <?= $this->Text->autoParagraph(h($participant['612158X10X50'])); ?>
        
             <h6><?= __('Codes') ?></h6>
-            
-            <?php
-                echo $this->Form->control('codes.participants_codes', ['options' => $codes]);
-            ?>
+            <div >
+                <ul class="codesList">
+                    <?php
+                        function searchIfCodeIsSet($id, $participantCodes) {
+                            foreach ($participantCodes as $key => $participantCode) {
+                                if ($participantCode->id == $id) {
+                                    return $key;
+                                }
+                            }
+                            return null;
+                        }
+                        foreach ($codes as $code) {
+                            echo "<li>";
+                            $participantCodesId = searchIfCodeIsSet($code->id, $participant->codes);
+                            echo $this->Form->hidden("Code.$code->id.id", ['value' => $code->id]);
+                            if(is_null($participantCodesId)) {
+                                echo $this->Form->checkbox("Code.$code->id.set", ['checked' => 0]);
+                                echo " ";
+                                echo $code->field_type->name;
+                                echo " ";
+                                echo $code->name;
+                                echo " ";
+                                echo $this->Form->hidden("Code.$code->id.ParticipantsCodes.vizvar", [
+                                    'value' => 'chordMapOverList',
+                                    'label' => FALSE,
+                                ]);
+                                echo $this->Form->text("Code.$code->id.ParticipantsCodes.description", [
+                                    'label' => FALSE,
+                                ]);
+                            } else {    
+                                echo $this->Form->checkbox("Code.$code->id.set", ['checked' => 1]);
+                                echo " ";
+                                echo $code->field_type->name;
+                                echo " ";
+                                echo $code->name;
+                                echo " ";
+                                echo $this->Form->hidden("Code.$code->id.ParticipantsCodes.vizvar", [
+                                    'value' => 'chordMapOverList',
+                                    'label' => FALSE,
+                                ]);
+                                echo $this->Form->text("Code.$code->id.ParticipantsCodes.description", [
+                                    'value' => $participant->codes[$participantCodesId]->_joinData->description,
+                                    'label' => FALSE,
+                                ]);
+                            }
+                            echo "</li>";
+                        }
+                    ?>
+                </ul>
+            </div>
           
         </div>
         <hr>
@@ -133,3 +187,5 @@
         <p style="text-align: left;"><?= __("Participant " . (intval($currentParticipantIdKey)+1 ) . " von " . count($idsWhoFinished)) ?></p>
     </div>
 </div>
+
+<?= $this->Html->css('participants-coding'); ?>

@@ -1,0 +1,20 @@
+.participantsAggregatedInfos {
+    strong {
+        color: #1798A5;
+    }
+    span {
+        padding-right: 1em;
+        strong {
+            color: #1798A5;
+        }
+    }
+}
+
+ul.codesList {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    column-count: 2; 
+    column-width: 50%; 
+    break-inside: avoid;
+}
