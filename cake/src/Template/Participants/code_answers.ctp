@@ -64,57 +64,7 @@
             <?= $this->Text->autoParagraph(h($participant['612158X10X50'])); ?>
        
             <h6><?= __('Codes') ?></h6>
-            <div >
-                <ul class="codesList">
-                    <?php
-                        function searchIfCodeIsSet($id, $participantCodes) {
-                            foreach ($participantCodes as $key => $participantCode) {
-                                if ($participantCode->id == $id) {
-                                    return $key;
-                                }
-                            }
-                            return null;
-                        }
-                        foreach ($codes as $code) {
-                            echo "<li>";
-                            $participantCodesId = searchIfCodeIsSet($code->id, $participant->codes);
-                            echo $this->Form->hidden("Code.$code->id.id", ['value' => $code->id]);
-                            if(is_null($participantCodesId)) {
-                                echo $this->Form->checkbox("Code.$code->id.set", ['checked' => 0]);
-                                echo " ";
-                                echo $code->field_type->name;
-                                echo " ";
-                                echo $code->name;
-                                echo " ";
-                                echo $this->Form->hidden("Code.$code->id.ParticipantsCodes.vizvar", [
-                                    'value' => 'chordMapOverList',
-                                    'label' => FALSE,
-                                ]);
-                                echo $this->Form->text("Code.$code->id.ParticipantsCodes.description", [
-                                    'label' => FALSE,
-                                ]);
-                            } else {    
-                                echo $this->Form->checkbox("Code.$code->id.set", ['checked' => 1]);
-                                echo " ";
-                                echo $code->field_type->name;
-                                echo " ";
-                                echo $code->name;
-                                echo " ";
-                                echo $this->Form->hidden("Code.$code->id.ParticipantsCodes.vizvar", [
-                                    'value' => 'chordMapOverList',
-                                    'label' => FALSE,
-                                ]);
-                                echo $this->Form->text("Code.$code->id.ParticipantsCodes.description", [
-                                    'value' => $participant->codes[$participantCodesId]->_joinData->description,
-                                    'label' => FALSE,
-                                ]);
-                            }
-                            echo "</li>";
-                        }
-                    ?>
-                </ul>
-            </div>
-          
+            <?= $this->Participants->generateCodesList($participant, $codes, "chordMapOverList") ?>
         </div>
         <hr>
         <div class="row">

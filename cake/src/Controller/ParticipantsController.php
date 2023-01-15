@@ -126,18 +126,34 @@ class ParticipantsController extends AppController
 
         $idsWhoFinished = $participants->extract('id')->toArray();
 
+        $nextParticipantIdKey = array_search($participant->id, $idsWhoFinished) + 1;
+        
         // Data Saving Part
         if ($this->request->is(['patch', 'post', 'put'])) {
-            debug( $this->request->getData());
-            // $participant = $this->Participants->patchEntity($participant, $this->request->getData());
-            // if ($this->Participants->save($participant)) {
-            //     $this->Flash->success(__('The participant has been saved.'));
+            $dataCodes = $this->request->getData(['Codes']);
+            $setCodes = [];
+            foreach ($dataCodes as $vizvarCodes) {
+                 $setCodes = array_filter($vizvarCodes, function ($vizvarCode) {
+                    return $vizvarCode['set'] == TRUE;
+                });
+            }
+            
+            $newData = [
+                'id' => $participant->id,
+                'codes' => $setCodes
+            ];
+            
+            $participant = $this->Participants->patchEntity($participant, $newData, ['associated' => [
+                'Codes',
+                ]
+            ]);
 
-            //     debug( $this->request);
+            if ($this->Participants->save($participant)) {
+                $this->Flash->success(__('The participant has been saved.'));
 
-            //     return $this->redirect(['action' => 'index']);
-            // }
-            // $this->Flash->error(__('The participant could not be saved. Please, try again.'));
+                return $this->redirect(['action' => 'codeAnswers', $idsWhoFinished[$nextParticipantIdKey]]);
+            }
+            $this->Flash->error(__('The participant could not be saved. Please, try again.'));
         }
 
         $this->set([

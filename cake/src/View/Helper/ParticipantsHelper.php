@@ -17,6 +17,8 @@ class ParticipantsHelper extends Helper
      */
     protected $_defaultConfig = [];
 
+    public $helpers = ['Form'];
+
     public function getShortestInterviewDuration($participant) {
         $shortestTestDuration;
         
@@ -188,6 +190,60 @@ class ParticipantsHelper extends Helper
         return $chordMapOverList;
     }
 
+    public function generateCodesList($participant, $codes, $vizvar) {
+        $codesList = "";
+        $codesList .= '<ul class="codesList">';
+        foreach ($codes as $code) {
+            $codesList .=  '<li>';
+            $participantCodesId = $this->searchIfCodeIsSet($code->id, $participant->codes);
+            $codesList .=  $this->Form->hidden("Codes.chordMapOverList.$code->id.id", ['value' => $code->id]);
+            if(is_null($participantCodesId)) {
+                $codesList .= $this->Form->checkbox("Codes.$vizvar.$code->id.set", ['checked' => 0]);
+                $codesList .= " ";
+                $codesList .= $code->field_type->name;
+                $codesList .= " ";
+                $codesList .= $code->name;
+                $codesList .= " ";
+                $codesList .= $this->Form->hidden("Codes.$vizvar.$code->id._joinData.vizvar", [
+                    'value' => $vizvar,
+                    'label' => FALSE,
+                ]);
+                $codesList .= $this->Form->text("Codes.$vizvar.$code->id._joinData.description", [
+                    'label' => FALSE,
+                ]);
+            } else {    
+                $codesList .= $this->Form->checkbox("Codes.$vizvar.$code->id.set", ['checked' => 1]);
+                $codesList .= " ";
+                $codesList .= $code->field_type->name;
+                $codesList .= " ";
+                $codesList .= $code->name;
+                $codesList .= " ";
+                $codesList .= $this->Form->hidden("Codes.$vizvar.$code->id._joinData.id", [
+                    'value' => $participant->codes[$participantCodesId]->_joinData->id,
+                    'label' => FALSE,
+                ]);
+                $codesList .= $this->Form->hidden("Codes.$vizvar.$code->id._joinData.vizvar", [
+                    'value' => $vizvar,
+                    'label' => FALSE,
+                ]);
+                $codesList .= $this->Form->text("Codes.$vizvar.$code->id._joinData.description", [
+                    'value' => $participant->codes[$participantCodesId]->_joinData->description,
+                    'label' => FALSE,
+                ]);
+            }
+            $codesList .= "</li>";
+        }
+        $codesList .= '</ul>';
+        return $codesList;
+    }
 
+    public function searchIfCodeIsSet($id, $participantCodes) {
+        foreach ($participantCodes as $key => $participantCode) {
+            if ($participantCode->id == $id) {
+                return $key;
+            }
+        }
+        return null;
+    }
 
 }
