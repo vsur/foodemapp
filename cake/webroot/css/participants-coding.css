@@ -8,6 +8,10 @@
   color: #1798A5;
 }
 
+.codeBlockHeading {
+  color: #be140b;
+}
+
 ul.codesList {
   list-style-type: none;
   /* Remove bullets */

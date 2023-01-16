@@ -63,45 +63,37 @@
             
             <?= $this->Text->autoParagraph(h($participant['612158X10X50'])); ?>
        
-            <h6><?= __('Codes') ?></h6>
+            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
             <?= $this->Participants->generateCodesList($participant, $codes, "chordMapOverList") ?>
         </div>
         <hr>
         <div class="row">
             <h4><?= __('Listenfeedback') ?></h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X53'])); ?>
-    <!-- 
-            <h6><?= __('Kodierung') ?></h6>
-            <?= "TBA" ?>
-            -->
+            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
+            <?= $this->Participants->generateCodesList($participant, $codes, "list") ?>
         </div>
         <hr>
         <div class="row">
             <h4><?= __('Chordfeedback') ?></h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X52'])); ?>
-    <!-- 
-            <h6><?= __('Kodierung') ?></h6>
-            <?= "TBA" ?>
-            -->
+            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
+            <?= $this->Participants->generateCodesList($participant, $codes, "chord") ?>
         </div>
         <hr>
         <div class="row">
             <h4><?= __('Mapfeedback') ?></h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X71'])); ?>
-    <!-- 
-            <h6><?= __('Kodierung') ?></h6>
-            <?= "TBA" ?>
-            -->
+            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
+            <?= $this->Participants->generateCodesList($participant, $codes, "map") ?>
         </div>
         <hr>
         <?php if($participant['612158X8X54']): ?>
-        <div class="row">
-            <h4><?= __('Abschlusskommentar') ?></h4>
-            <?= $this->Text->autoParagraph(h($participant['612158X8X54'])); ?>
-    <!-- 
-            <h6><?= __('Kodierung') ?></h6>
-            <?= "TBA" ?>
-            -->
+            <div class="row">
+                <h4><?= __('Abschlusskommentar') ?></h4>
+                <?= $this->Text->autoParagraph(h($participant['612158X8X54'])); ?>
+                <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
+                <?= $this->Participants->generateCodesList($participant, $codes, "finalComment") ?>
         </div>
         <hr>
         <?php endif; ?>

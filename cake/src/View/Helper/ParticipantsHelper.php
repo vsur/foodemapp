@@ -195,8 +195,8 @@ class ParticipantsHelper extends Helper
         $codesList .= '<ul class="codesList">';
         foreach ($codes as $code) {
             $codesList .=  '<li>';
-            $participantCodesId = $this->searchIfCodeIsSet($code->id, $participant->codes);
-            $codesList .=  $this->Form->hidden("Codes.chordMapOverList.$code->id.id", ['value' => $code->id]);
+            $participantCodesId = $this->searchIfCodeIsSet($code->id, $participant->codes, $vizvar);
+            $codesList .=  $this->Form->hidden("Codes.$vizvar.$code->id.id", ['value' => $code->id]);
             if(is_null($participantCodesId)) {
                 $codesList .= $this->Form->checkbox("Codes.$vizvar.$code->id.set", ['checked' => 0]);
                 $codesList .= " ";
@@ -237,11 +237,13 @@ class ParticipantsHelper extends Helper
         return $codesList;
     }
 
-    public function searchIfCodeIsSet($id, $participantCodes) {
+    public function searchIfCodeIsSet($id, $participantCodes, $vizvar) {
         foreach ($participantCodes as $key => $participantCode) {
             if ($participantCode->id == $id) {
-                return $key;
-            }
+                    if ($participantCode->_joinData->vizvar == $vizvar) {
+                        return $key;
+                    }
+                }
         }
         return null;
     }

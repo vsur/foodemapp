@@ -132,10 +132,12 @@ class ParticipantsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $dataCodes = $this->request->getData(['Codes']);
             $setCodes = [];
+            
             foreach ($dataCodes as $vizvarCodes) {
-                 $setCodes = array_filter($vizvarCodes, function ($vizvarCode) {
+                 $setVizvarCodes = array_filter($vizvarCodes, function ($vizvarCode) {
                     return $vizvarCode['set'] == TRUE;
                 });
+                array_push($setCodes, ...$setVizvarCodes);
             }
             
             $newData = [
