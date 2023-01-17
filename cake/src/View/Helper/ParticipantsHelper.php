@@ -190,15 +190,15 @@ class ParticipantsHelper extends Helper
         return $chordMapOverList;
     }
 
-    public function generateCodesList($participant, $codes, $vizvar) {
+    public function generateCodesList($participant, $codes) {
         $codesList = "";
         $codesList .= '<ul class="codesList">';
         foreach ($codes as $code) {
             $codesList .=  '<li>';
-            $participantCodesId = $this->searchIfCodeIsSet($code->id, $participant->codes, $vizvar);
-            $codesList .=  $this->Form->hidden("Codes.$vizvar.$code->id.id", ['value' => $code->id]);
+            $participantCodesId = $this->searchIfCodeIsSet($code->id, $participant->codes);
+            $codesList .=  $this->Form->hidden("Codes.$code->id.id", ['value' => $code->id]);
             if(is_null($participantCodesId)) {
-                $codesList .= $this->Form->checkbox("Codes.$vizvar.$code->id.set", ['checked' => 0]);
+                $codesList .= $this->Form->checkbox("Codes.$code->id.set", ['checked' => 0]);
                 $options = [
                     'chordMapOverList' => 'CMOL', 
                     'list' => 'L',
@@ -206,7 +206,7 @@ class ParticipantsHelper extends Helper
                     'map' => 'M',
                     'finalComment' => 'FCOM',
                 ];
-                $codesList .= $this->Form->select("Codes.$vizvar.$code->id._joinData.vizvar",  $options, ['empty' => true]);
+                $codesList .= $this->Form->select("Codes.$code->id._joinData.vizvar",  $options, ['empty' => true]);
                 $codesList .= " ";
                 $codesList .= $code->field_type->name;
                 $codesList .= " ";
@@ -214,11 +214,11 @@ class ParticipantsHelper extends Helper
                 $codesList .= " ";
                 $codesList .= '<span class="commentSwitch">↓</span>';
                 $codesList .= " ";
-                $codesList .= $this->Form->text("Codes.$vizvar.$code->id._joinData.description", [
+                $codesList .= $this->Form->text("Codes.$code->id._joinData.description", [
                     'label' => FALSE,
                 ]);
             } else {    
-                $codesList .= $this->Form->checkbox("Codes.$vizvar.$code->id.set", ['checked' => 1]);
+                $codesList .= $this->Form->checkbox("Codes.$code->id.set", ['checked' => 1]);
                 $options = [
                     'chordMapOverList' => 'CMOL', 
                     'list' => 'L',
@@ -226,7 +226,7 @@ class ParticipantsHelper extends Helper
                     'map' => 'M',
                     'finalComment' => 'FCOM',
                 ];
-                $codesList .= $this->Form->select("Codes.$vizvar.$code->id._joinData.vizvar",  $options, ['default' => $participant->codes[$participantCodesId]->_joinData->vizvar]);
+                $codesList .= $this->Form->select("Codes.$code->id._joinData.vizvar",  $options, ['default' => $participant->codes[$participantCodesId]->_joinData->vizvar]);
                 $codesList .= " ";
                 $codesList .= $code->field_type->name;
                 $codesList .= " ";
@@ -234,11 +234,11 @@ class ParticipantsHelper extends Helper
                 $codesList .= " ";
                 $codesList .= '<span class="' . ($participant->codes[$participantCodesId]->_joinData->description == '' ? 'commentSwitch' : 'commentSwitch active' ) . '">↓</span>';
                 $codesList .= " ";
-                $codesList .= $this->Form->hidden("Codes.$vizvar.$code->id._joinData.id", [
+                $codesList .= $this->Form->hidden("Codes.$code->id._joinData.id", [
                     'value' => $participant->codes[$participantCodesId]->_joinData->id,
                     'label' => FALSE,
                 ]);
-                $codesList .= $this->Form->text("Codes.$vizvar.$code->id._joinData.description", [
+                $codesList .= $this->Form->text("Codes.$code->id._joinData.description", [
                     'value' => $participant->codes[$participantCodesId]->_joinData->description,
                     'label' => FALSE,
                 ]);
@@ -249,7 +249,7 @@ class ParticipantsHelper extends Helper
         return $codesList;
     }
 
-    public function searchIfCodeIsSet($id, $participantCodes, $vizvar) {
+    public function searchIfCodeIsSet($id, $participantCodes) {
         foreach ($participantCodes as $key => $participantCode) {
             if ($participantCode->id == $id) {
                         return $key;

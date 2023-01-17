@@ -133,12 +133,9 @@ class ParticipantsController extends AppController
             $dataCodes = $this->request->getData(['Codes']);
             $setCodes = [];
             
-            foreach ($dataCodes as $vizvarCodes) {
-                 $setVizvarCodes = array_filter($vizvarCodes, function ($vizvarCode) {
-                    return $vizvarCode['set'] == TRUE;
-                });
-                array_push($setCodes, ...$setVizvarCodes);
-            }
+            $setCodes = array_filter($dataCodes, function ($dataCode) {
+                return $dataCode['set'] == TRUE;
+            });
             
             $newData = [
                 'id' => $participant->id,

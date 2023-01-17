@@ -87,7 +87,7 @@
 
         <div class="row">
             <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
-            <?= $this->Participants->generateCodesList($participant, $codes, "allForOne") ?>
+            <?= $this->Participants->generateCodesList($participant, $codes) ?>
         </div>
        
     </fieldset>
