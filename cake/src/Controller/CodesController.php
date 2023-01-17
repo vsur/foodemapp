@@ -20,7 +20,15 @@ class CodesController extends AppController
     public function index()
     {
         $this->paginate = [
+            'limit' => 40,
             'contain' => ['FieldTypes'],
+            'order' => [
+                'FieldTypes.name' => 'ASC',
+                'Codes.name' => 'ASC'
+            ], 
+            'sortWhitelist' => [
+                'FieldTypes.name', 'Codes.name'
+            ] 
         ];
         $codes = $this->paginate($this->Codes);
 
