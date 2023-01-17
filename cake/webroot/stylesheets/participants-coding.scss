@@ -22,4 +22,35 @@ ul.codesList {
     column-count: 2; 
     column-width: 50%; 
     break-inside: avoid;
+
+    input[type=checkbox] {
+        transform: scale(1.5);
+        margin-left: 5px;
+        top: 5px;
+    }
+
+    input[type=text] {
+        height: 0.5rem;
+        display: none;
+    }
+
+    select {
+        position: relative;
+        top: -0.15rem;
+        height: 1.5rem;
+        width: inherit;
+        font-size: 0.5rem;
+        padding: 0 18px 0 5px;
+    }
+
+    .commentSwitch {
+        padding: 0 5px 0 5px;
+        cursor: pointer;
+        position: relative;
+        top: -2px;
+    }
+    .commentSwitch.active {
+        color: green;
+    }
 }
+

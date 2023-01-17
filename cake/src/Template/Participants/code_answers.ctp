@@ -58,46 +58,37 @@
         <!-- 612158X8X54 -->
         <div class="row">
             <h4><?= __('Chord und Map besser als Liste:') ?></h4>
-            
             <?= $this->Participants->getChordMapOverList($participant) ?>
-            
             <?= $this->Text->autoParagraph(h($participant['612158X10X50'])); ?>
-       
-            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
-            <?= $this->Participants->generateCodesList($participant, $codes, "chordMapOverList") ?>
         </div>
         <hr>
         <div class="row">
             <h4><?= __('Listenfeedback') ?></h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X53'])); ?>
-            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
-            <?= $this->Participants->generateCodesList($participant, $codes, "list") ?>
         </div>
         <hr>
         <div class="row">
             <h4><?= __('Chordfeedback') ?></h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X52'])); ?>
-            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
-            <?= $this->Participants->generateCodesList($participant, $codes, "chord") ?>
         </div>
         <hr>
         <div class="row">
             <h4><?= __('Mapfeedback') ?></h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X71'])); ?>
-            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
-            <?= $this->Participants->generateCodesList($participant, $codes, "map") ?>
         </div>
         <hr>
         <?php if($participant['612158X8X54']): ?>
             <div class="row">
                 <h4><?= __('Abschlusskommentar') ?></h4>
                 <?= $this->Text->autoParagraph(h($participant['612158X8X54'])); ?>
-                <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
-                <?= $this->Participants->generateCodesList($participant, $codes, "finalComment") ?>
-        </div>
-        <hr>
+            </div>
+            <hr>
         <?php endif; ?>
 
+        <div class="row">
+            <h6 class="codeBlockHeading"><?= __('Codes') ?></h6>
+            <?= $this->Participants->generateCodesList($participant, $codes, "allForOne") ?>
+        </div>
        
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
@@ -131,3 +122,9 @@
 </div>
 
 <?= $this->Html->css('participants-coding'); ?>
+<?= $this->Html->script('jquery-2.1.4.min.js') ?>
+<script>
+    $(".commentSwitch").click(function(event){
+        $(this).siblings("input[type=text]").toggle();
+    });
+</script>
