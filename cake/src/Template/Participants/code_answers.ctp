@@ -63,17 +63,86 @@
         </div>
         <hr>
         <div class="row">
-            <h4><?= __('Listenfeedback') ?></h4>
+            <h4>
+                <?= __('Listenfeedback') ?>
+                <?=
+                    $this->Html->link('☰', 
+                        [
+                            'controller' => 'Ypois',
+                            'action' => 'checkMouseData',
+                            'list',
+                            $participant->id,
+                            '?' => [
+                                "BC_C-ID_81_BC-STATE_1"=> 4,
+                                "BC_C-ID_77_BC-STATE_1"=>5,
+                                "BC_C-ID_50_BC-STATE_1"=>5,
+                                "NC_C-ID_3_NCATTR-ID_7"=>5,
+                                "NC_C-ID_7_NCATTR-ID_26"=>4,
+                                "OC_C-ID_1_OCATTR-ID_2"=>3,
+                                "OC_C-ID_3_OCATTR-ID_11"=>5
+                            ]
+                        ], 
+                        [
+                            'target' => '_blank',
+                            'escape' => false
+                        ]
+                    ) 
+                ?>
+            </h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X53'])); ?>
         </div>
         <hr>
         <div class="row">
-            <h4><?= __('Chordfeedback') ?></h4>
+            <h4>
+                <?= __('Chordfeedback') ?>
+                <?=
+                    $this->Html->link('☼', 
+                        [
+                            'controller' => 'Ypois',
+                            'action' => 'checkMouseData',
+                            'chord',
+                            $participant->id,
+                            '?' => [
+                                "BC_C-ID_103_BC-STATE_1"=>5,
+                                "NC_C-ID_6_NCATTR-ID_21"=>4,
+                                "BC_C-ID_75_BC-STATE_1"=>3,
+                                "BC_C-ID_89_BC-STATE_0"=>5
+                            ]
+                        ], 
+                        [
+                            'target' => '_blank',
+                            'escape' => false
+                        ]
+                    ) 
+                ?>
+            </h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X52'])); ?>
         </div>
         <hr>
         <div class="row">
-            <h4><?= __('Mapfeedback') ?></h4>
+            <h4>
+                <?= __('Mapfeedback') ?>
+                <?=
+                    $this->Html->link('⦿', 
+                        [
+                            'controller' => 'Ypois',
+                            'action' => 'checkMouseData',
+                            'map',
+                            $participant->id,
+                            '?' => [
+                                "NC_C-ID_2_NCATTR-ID_4"=>5,
+                                "BC_C-ID_40_BC-STATE_1"=>5,
+                                "BC_C-ID_94_BC-STATE_1"=>4,
+                                "BC_C-ID_77_BC-STATE_1"=>3
+                            ]
+                        ], 
+                        [
+                            'target' => '_blank',
+                            'escape' => false
+                        ]
+                    ) 
+                ?>
+            </h4>
             <?= $this->Text->autoParagraph(h($participant['612158X10X71'])); ?>
         </div>
         <hr>
