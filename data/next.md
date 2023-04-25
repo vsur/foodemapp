@@ -78,4 +78,4 @@ Es sind eigentlich 52 vegiterian in YELP TODO Check why not YPOIS ({'attributes.
 *** Ambience ***
 Hier gibts nur Casual, Hispster, Trendy und romantic = 17 Gesamt. Obwohl 21447 in Yelp Ambience haben, hier noch mal mit Query Builder checken, wie viele auf OR subattr = true stehen.
 
-Bei den Ordinal Componenten und Attributen gibt es überall was
+Bei den Ordinal Componenten und Attributen gibt es überall was 
