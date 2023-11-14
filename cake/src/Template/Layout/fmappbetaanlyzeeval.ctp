@@ -71,8 +71,7 @@ $cakeDescription = 'Food_M_App';
   </div>
   <footer>
   </footer>
-  <!-- No Bootstrap core JavaScript, cause Polymer shall be integrated
-    ================================================== -->
+
   <!-- Placed at the end of the document so the pages load faster -->
   <?= $this->Html->script('bootstrap.js') ?>
   <?= $this->Html->script('heatmap.min.js') ?>

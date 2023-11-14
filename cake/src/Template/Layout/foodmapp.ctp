@@ -82,8 +82,6 @@ $cakeDescription = 'Food_M_App';
   </div> <!-- /.container -->
   <footer>
   </footer>
-  <!-- No Bootstrap core JavaScript, cause Polymer shall be integrated
-    ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <?= $this->Html->script('bootstrap.js') ?>
 

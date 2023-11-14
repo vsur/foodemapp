@@ -116,8 +116,6 @@
 		</div>
 	</div> <!-- /.container -->
 
-	<!-- No Bootstrap core JavaScript, cause Polymer shall be integrated
-    ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="js/bootstrap.js"></script>
