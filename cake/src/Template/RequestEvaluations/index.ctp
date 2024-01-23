@@ -10,9 +10,9 @@
 
 <div class="row">
   <div class="col-md-12">
-    <?= 
-        // echo $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
-        $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']); 
+    <?=
+        // echo $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
+        $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der FoodMAPP Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
     ?>
   </div>
 </div>
@@ -41,7 +41,7 @@
                 <td><?= $this->Number->format($requestEvaluation->choosen_components_count) ?></td>
                 <td><?= $this->Number->format($requestEvaluation->other_components_count) ?></td>
                 <td>
-                    <?php  
+                    <?php
                         $get_string = $requestEvaluation->query_parameters;
                         parse_str($get_string, $get_array);
 
@@ -51,52 +51,52 @@
                                     '<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>',
                                     [
                                         'controller' => 'Ypois',
-                                        'action' => 'findMatches', 
+                                        'action' => 'findMatches',
                                         'list',
                                         '?' => $get_array
                                     ],
                                     ['escape' => false]
-                                ); 
+                                );
                             break;
-                            
+
                             case 'chord':
                                 echo $this->Html->link(
                                     '<span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>',
                                     [
                                         'controller' => 'Ypois',
-                                        'action' => 'findMatches', 
+                                        'action' => 'findMatches',
                                         'chord',
                                         '?' => $get_array
                                     ],
                                     ['escape' => false]
-                                ); 
+                                );
                             break;
-                            
+
                             case 'map':
                                 echo $this->Html->link(
                                     '<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>',
                                     [
                                         'controller' => 'Ypois',
-                                        'action' => 'findMatches', 
+                                        'action' => 'findMatches',
                                         'map',
                                         '?' => $get_array
                                     ],
                                     ['escape' => false]
-                                ); 
+                                );
                                 break;
                         }
-                        h($requestEvaluation->view_to_evaluate) 
+                        h($requestEvaluation->view_to_evaluate)
                     ?>
                 </td>
                 <td><?= h($requestEvaluation->name) ?></td>
                 <td><?= $this->Number->format($requestEvaluation->grade) ?></td>
                 <td class="actions text-center">
-                    <? 
+                    <?
                         echo $this->Html->link(
-                            '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', 
+                            '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>',
                             ['action' => 'view', $requestEvaluation->id, 'doStuff'],
                             ['escape' => false]
-                        ); 
+                        );
                     ?>
                 </td>
             </tr>
