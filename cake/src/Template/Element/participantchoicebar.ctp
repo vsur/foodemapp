@@ -7,6 +7,16 @@
         <div id="navbar" class="navbar-collapse collapse">
             <form method="post" class="navbar-form navbar-right">
                 <div class="form-group">
+                    <?php
+                        $options = [
+                            ['text' => 'Liste', 'value' => 'list'],
+                            ['text' => 'Chord', 'value' => 'chord'],
+                            ['text' => 'Map', 'value' => 'map'],
+                        ];
+                        echo $this->Form->select('display_variant', $options, ['class' => "nav-select", 'id' => "displayVariantChoice"]);
+                    ?>
+                </div>
+                <div class="form-group">
                     <select name="participants" class="nav-select" id="participantChoice" required="required">
                         <option value="">(Bitte auswählen)</option>
                         <?php

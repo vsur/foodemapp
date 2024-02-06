@@ -33,7 +33,7 @@ class YpoisController extends AppController
             ]);
         }
     }
-    
+
     /**
      * Index method
      *
@@ -41,7 +41,7 @@ class YpoisController extends AppController
      */
     public function index($key = null)
     {
-        $this->checkAccess($key);   
+        $this->checkAccess($key);
         $ypois = $this->paginate($this->Ypois);
 
         $this->set(compact('ypois'));
@@ -51,7 +51,7 @@ class YpoisController extends AppController
     public function setScenario()
     {
         $this->viewBuilder()->layout('fmappbeta');
-        
+
         // Get all BinaryComponents
         $binaryComponents = $this->Ypois->BinaryComponents->getAllEntriesWithUnifiedDisplayNames();
 
@@ -71,10 +71,10 @@ class YpoisController extends AppController
         if (!empty($this->request->query)) {
             $configuredSelection = $this->request->query;
         }
-        
+
         // Preparing session for storing geolocation later
         $session = $this->request->session();
-        // $session->destroy();  // Uncoment for Debug Purposes 
+        // $session->destroy();  // Uncoment for Debug Purposes
         $session->write('Config.language', 'de');
 
         $this->set(compact('criteria', 'criterionNames', 'configuredSelection'));
@@ -116,7 +116,7 @@ class YpoisController extends AppController
 
         // Check if geolocation is set
         $session = $this->request->session();
-        // $session->destroy();  // Uncoment for Debug Purposes 
+        // $session->destroy();  // Uncoment for Debug Purposes
         if ($session->check('Config.geolocation')) {
             $sortByGeo = true;
             $distanceSelectQueryString = '6371 * acos (
@@ -137,11 +137,11 @@ class YpoisController extends AppController
         if ($configuredSelection) {
 
             $filterSelection = $this->Ypois->buildFilterObject($configuredSelection);
-           
+
             $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection, $sortByGeo, $distanceSelectQueryString);
 
             $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
-            
+
         } else {
             $ypois = $this->Ypois->find("all")
                 ->contain(
@@ -160,19 +160,19 @@ class YpoisController extends AppController
                     )
                 ->autoFields(true)
                 ->order([
-                    'distance' => 'ASC', 
-                    'name' => 'ASC', 
+                    'distance' => 'ASC',
+                    'name' => 'ASC',
                 ]);
             } else {
                 $ypois->order([
-                    'name' => 'ASC', 
+                    'name' => 'ASC',
                 ]);
             }
 
             $ypois->limit(200); // For Debug only
 
             $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
-            
+
         }
         if($sortByGeo) {
             // Sort manually by distance
@@ -212,40 +212,41 @@ class YpoisController extends AppController
         }
 
         $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
-        
+
         $componentTypesComponentsCount = $this->PoisNComponents->allComponentTypeComponentsCount($ypois);
 
         if($displayVariant != 'selectViz' && count($ypois) == 0) {
             return $this->redirect([
                 'action' => 'findMatches',
-                'selectViz', 
+                'selectViz',
                 '?' => $this->request->query
             ]);
         }
 
         $this->set(compact(
             'ypois',
-            'criteria', 
-            'criterionNames', 
-            'displayVariant', 
-            'configuredSelection', 
-            'filterSelection', 
-            'rankedSelection', 
-            'componentWheelJSONData', 
-            'chordDiagramMatrixData', 
+            'criteria',
+            'criterionNames',
+            'displayVariant',
+            'configuredSelection',
+            'filterSelection',
+            'rankedSelection',
+            'componentWheelJSONData',
+            'chordDiagramMatrixData',
             'overallComponentCount',
             'componentTypesComponentsCount',
             'eval'
         ));
     }
 
-    public function checkMouseData($displayVariant = null, $participantId = null)
+    public function checkMouseData($displayVariant = "list", $participantId = 46)
     {
         // Handle Choice of Participant Drop Down
+        $this->log($this->request->data, "debug");
         if(!empty($this->request->data)) {
             return $this->redirect([
                 'action' => 'checkMouseData',
-                $displayVariant,
+                "chord",
                 $this->request->data['participants'],
                 '?' => $this->request->query
             ]);
@@ -280,7 +281,7 @@ class YpoisController extends AppController
          *      IN STANDARD MODE VALUES WOULD BE SET BY JS,       *
          * AS THERE IS THE OPTION TO LET SET THE VALUES BY DEVICE *
          **********************************************************/
-        
+
          // Use geoloction for sorting
         $sortByGeo = true;
         $distanceSelectQueryString = '6371 * acos (
@@ -300,11 +301,11 @@ class YpoisController extends AppController
         if ($configuredSelection) {
 
             $filterSelection = $this->Ypois->buildFilterObject($configuredSelection);
-           
+
             $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection, $sortByGeo, $distanceSelectQueryString);
 
             $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
-            
+
         } else {
             $ypois = $this->Ypois->find("all")
                 ->contain(
@@ -323,19 +324,19 @@ class YpoisController extends AppController
                     )
                 ->autoFields(true)
                 ->order([
-                    'distance' => 'ASC', 
-                    'name' => 'ASC', 
+                    'distance' => 'ASC',
+                    'name' => 'ASC',
                 ]);
             } else {
                 $ypois->order([
-                    'name' => 'ASC', 
+                    'name' => 'ASC',
                 ]);
             }
 
             $ypois->limit(200); // For Debug only
 
             $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
-            
+
         }
         if($sortByGeo) {
             // Sort manually by distance
@@ -375,16 +376,16 @@ class YpoisController extends AppController
         }
 
         $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
-        
+
         $componentTypesComponentsCount = $this->PoisNComponents->allComponentTypeComponentsCount($ypois);
 
-        if($displayVariant != 'selectViz' && count($ypois) == 0) {
-            return $this->redirect([
-                'action' => 'findMatches',
-                'selectViz', 
-                '?' => $this->request->query
-            ]);
-        }
+        // if($displayVariant != 'selectViz' && count($ypois) == 0) {
+        //     return $this->redirect([
+        //         'action' => 'findMatches',
+        //         'selectViz',
+        //         '?' => $this->request->query
+        //     ]);
+        // }
 
         $this->loadModel('Participants');
         $allParticipants = $this->Participants->find('all');
@@ -396,14 +397,14 @@ class YpoisController extends AppController
 
         $this->set(compact(
             'ypois',
-            'criteria', 
-            'criterionNames', 
-            'displayVariant', 
-            'configuredSelection', 
-            'filterSelection', 
-            'rankedSelection', 
-            'componentWheelJSONData', 
-            'chordDiagramMatrixData', 
+            'criteria',
+            'criterionNames',
+            'displayVariant',
+            'configuredSelection',
+            'filterSelection',
+            'rankedSelection',
+            'componentWheelJSONData',
+            'chordDiagramMatrixData',
             'overallComponentCount',
             'componentTypesComponentsCount',
             'participantData',
@@ -435,8 +436,8 @@ class YpoisController extends AppController
             $configuredSelection = $this->request->query;
         }
         $this->set(compact(
-            'criteria', 
-            'criterionNames', 
+            'criteria',
+            'criterionNames',
             'configuredSelection'
         ));
     }
@@ -447,7 +448,7 @@ class YpoisController extends AppController
 
         if ( $this->request->is('ajax') && $this->request->is('post')) {
             $geoData = json_decode(json_encode($this->request->data), FALSE);
-            
+
             $session = $this->request->session();
             $session->write('Config.geolocation.latitude', $geoData->latitude);
             $session->write('Config.geolocation.longitude', $geoData->longitude);
@@ -456,11 +457,11 @@ class YpoisController extends AppController
                 'message' => 'Data saved to session',
                 'data' => $session->read('Config.geolocation')
             ];
-            echo json_encode($response); 
+            echo json_encode($response);
             return;
         }
-        
-        return; 
+
+        return;
     }
 
     protected function combineAllComponetsToOneCriteriaArray($binaryComponents = null, $nominalComponents = null, $ordinalComponents = null)
@@ -546,7 +547,7 @@ class YpoisController extends AppController
      */
     public function add($key = null)
     {
-        $this->checkAccess($key);   
+        $this->checkAccess($key);
         $ypois = $this->Ypois->newEntity();
         if ($this->request->is('post')) {
             $ypois = $this->Ypois->patchEntity($ypois, $this->request->getData());
@@ -573,7 +574,7 @@ class YpoisController extends AppController
      */
     public function edit($id = null, $key = null)
     {
-        $this->checkAccess($key);   
+        $this->checkAccess($key);
         $ypois = $this->Ypois->get($id, [
             'contain' => ['BinaryComponents', 'NominalAttributes', 'OrdinalAttributes']
         ]);
@@ -602,7 +603,7 @@ class YpoisController extends AppController
      */
     public function delete($id = null, $key = null)
     {
-        $this->checkAccess($key);   
+        $this->checkAccess($key);
         $this->request->allowMethod(['post', 'delete']);
         $ypois = $this->Ypois->get($id);
         if ($this->Ypois->delete($ypois)) {
