@@ -53,16 +53,16 @@ if ($displayVariant == 'debug') {
         <div id="wheelBlock">
             <script type="text/javascript">
                 var componentWheelJSONData = <?= $componentWheelJSONData ?>;
-                </script>
-        <?= $this->Html->script('sunburst-translations') ?>
-        <?= $this->Html->script('componentwheelsunburst') ?>
-    </div>
-    <div id="componentTextContainer">
-        <div id="coponentTextInfo">
-            <span></span>
+            </script>
+            <?= $this->Html->script('sunburst-translations') ?>
+            <?= $this->Html->script('componentwheelsunburst') ?>
+        </div>
+        <div id="componentTextContainer">
+            <div id="coponentTextInfo">
+                <span></span>
+            </div>
         </div>
     </div>
-</div>
 <?php endif; ?>
 
 <?php if (!$eval) : ?>
@@ -71,7 +71,7 @@ if ($displayVariant == 'debug') {
             <div class="col-md-12">
                 <?=
                 // $this->Html->image('isac-header.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
-                $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der ISAC Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
+                $this->Html->image('wordcloud.png', ['alt' => 'Header Bilder der FoodMAPP Anwendung', 'class' => 'thumbnail img-rounded img-responsive']);
                 ?>
             </div>
         </div>
