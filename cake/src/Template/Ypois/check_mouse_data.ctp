@@ -3,6 +3,7 @@
         'participantchoicebar',
         [
             "step" => "Auswahl der Teilnehmer:in",
+            "displayVariant" => $displayVariant,
             "allParticipants" => $allParticipants->toArray(),
             "participantData" => $participantData
         ]
@@ -41,7 +42,7 @@ if ($displayVariant == 'list') {
     echo $this->element(
         'findMatches/heatmapbar',
         [
-            "displayVariant" => $displayVariant 
+            "displayVariant" => $displayVariant
         ]
     );
 }

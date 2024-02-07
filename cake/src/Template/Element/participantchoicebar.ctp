@@ -13,7 +13,7 @@
                             ['text' => 'Chord', 'value' => 'chord'],
                             ['text' => 'Map', 'value' => 'map'],
                         ];
-                        echo $this->Form->select('display_variant', $options, ['class' => "nav-select", 'id' => "displayVariantChoice"]);
+                        echo $this->Form->select('display_variant', $options, ['class' => "nav-select", 'id' => "displayVariantChoice", 'value' => $displayVariant]);
                     ?>
                 </div>
                 <div class="form-group">

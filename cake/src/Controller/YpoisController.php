@@ -241,16 +241,52 @@ class YpoisController extends AppController
 
     public function checkMouseData($displayVariant = "list", $participantId = 46)
     {
+        $queryDataList = [
+            "BC_C-ID_77_BC-STATE_1" => 5,
+            "BC_C-ID_50_BC-STATE_1" => 5,
+            "NC_C-ID_3_NCATTR-ID_7" => 5,
+            "NC_C-ID_7_NCATTR-ID_26" => 4,
+            "OC_C-ID_1_OCATTR-ID_2" => 3,
+            "OC_C-ID_3_OCATTR-ID_11" => 5,
+        ];
+        $queryDataChord = [
+            "BC_C-ID_103_BC-STATE_1" => 5,
+            "NC_C-ID_6_NCATTR-ID_21" => 4,
+            "BC_C-ID_75_BC-STATE_1" => 3,
+            "BC_C-ID_89_BC-STATE_0" => 5,
+        ];
+        $queryDataMap = [
+            "NC_C-ID_2_NCATTR-ID_4" => 5,
+            "BC_C-ID_40_BC-STATE_1" => 5,
+            "BC_C-ID_94_BC-STATE_1" => 4,
+            "BC_C-ID_77_BC-STATE_1" => 3,
+        ];
+        $queryData = [];
+        switch ($displayVariant) {
+            case 'list':
+                $queryData = $queryDataList;
+                break;
+            case 'chord':
+                $queryData = $queryDataChord;
+                break;
+            case 'map':
+                $queryData = $queryDataMap;
+                break;
+        }
         // Handle Choice of Participant Drop Down
-        $this->log($this->request->data, "debug");
+        $this->log($this->request->query, "debug");
         if(!empty($this->request->data)) {
+            $displayVariant = $this->request->data['display_variant'];
+            $participantId = $this->request->data['participants'];
             return $this->redirect([
                 'action' => 'checkMouseData',
-                "chord",
-                $this->request->data['participants'],
-                '?' => $this->request->query
+                $displayVariant,
+                $participantId,
+                // '?' => $this->request->query
+                '?' => $queryData
             ]);
         }
+        ini_set('memory_limit', '512M');
         // $this->viewBuilder()->layout('fmappbetaanlyze');
         $this->viewBuilder()->layout('fmappbetaanlyze');
         // Get all BinaryComponents
@@ -292,9 +328,7 @@ class YpoisController extends AppController
             * sin( radians( lat ) )
           )';
 
-        if (!empty($this->request->query)) {
-            $configuredSelection = $this->request->query;
-        }
+        $configuredSelection = $queryData;
 
         // Get all matching ypois or all
         $ypois = (object)[];
