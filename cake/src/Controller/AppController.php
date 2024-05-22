@@ -62,15 +62,19 @@ class AppController extends Controller
         // Check if Browser is IE
 		$isIE = $this->detectIEBrowser();
 		$this->set('isIE', $isIE);
-        
+
         // Check App Mode
         $evalAppMode = $this->getEvalAppMode();
 		$this->set('evalAppMode', $evalAppMode);
+
+        // Check If App Is Running in Production
+        $prodMode = $this->getEnvironment();
+		$this->set('prodMode', $prodMode);
     }
 
     protected $actionKey = "doStuff";
 
-    public function checkAccess($key) 
+    public function checkAccess($key)
     {
         if($key != $this->actionKey) {
             return $this->redirect(['controller' => 'Ypois', 'action' => 'setScenario']);
@@ -91,5 +95,15 @@ class AppController extends Controller
 	{
 		$evalAppMode = false;
 		return $evalAppMode;
+	}
+
+    public function getEnvironment()
+	{
+		$isProd = false;
+        if( str_contains($_SERVER['REQUEST_URI'], 'forschung') ) {
+            $isProd = true;
+        }
+
+		return $isProd;
 	}
 }
