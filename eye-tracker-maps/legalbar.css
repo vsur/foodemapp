@@ -1,0 +1,30 @@
+#legalBar {
+  position: fixed;
+  left: -15px;
+  bottom: 46px;
+  z-index: 1040;
+  border-radius: 7px;
+  padding: 7px 0 7px 7px;
+  /* Remove padding */
+  background: #c2005d;
+  border-color: #ff087e;
+  opacity: 0.25;
+  transition: all 0.25s ease;
+}
+#legalBar:hover {
+  opacity: 1;
+  filter: drop-shadow(3px 3px 1px #212121);
+}
+#legalBar ul {
+  list-style-type: none;
+  /* Remove bullets */
+  padding: 0 15px 0 15px;
+  /* Remove padding */
+  margin: 0;
+  /* Remove margins */
+}
+#legalBar ul li a {
+  color: white;
+  cursor: pointer;
+  font-size: 0.75em;
+}
