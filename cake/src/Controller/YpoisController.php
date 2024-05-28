@@ -567,6 +567,7 @@ class YpoisController extends AppController
      */
     public function view($id = null)
     {
+        $this->checkAccess($key);
         $ypois = $this->Ypois->get($id, [
             'contain' => ['BinaryComponents', 'NominalAttributes.NominalComponents', 'OrdinalAttributes.OrdinalComponents']
         ]);
@@ -635,9 +636,10 @@ class YpoisController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+
+    /* NO Delete Method for Production
     public function delete($id = null, $key = null)
     {
-        $this->checkAccess($key);
         $this->request->allowMethod(['post', 'delete']);
         $ypois = $this->Ypois->get($id);
         if ($this->Ypois->delete($ypois)) {
@@ -647,5 +649,5 @@ class YpoisController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
+    } */
 }

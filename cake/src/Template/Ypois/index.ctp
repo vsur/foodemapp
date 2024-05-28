@@ -79,7 +79,11 @@
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $ypois->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $ypois->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $ypois->id], ['confirm' => __('Are you sure you want to delete # {0}?', $ypois->id)]) ?>
+
+                    <?php
+                        /* No Detle Method for Production
+                        $this->Form->postLink(__('Delete'), ['action' => 'delete', $ypois->id], ['confirm' => __('Are you sure you want to delete # {0}?', $ypois->id)]) */
+                    ?>
                 </td>
             </tr>
             <?php endforeach; ?>
