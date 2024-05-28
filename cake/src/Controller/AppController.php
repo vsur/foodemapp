@@ -67,9 +67,6 @@ class AppController extends Controller
         $evalAppMode = $this->getEvalAppMode();
 		$this->set('evalAppMode', $evalAppMode);
 
-        // Check If App Is Running in Production
-        $prodMode = $this->getEnvironment();
-		$this->set('prodMode', $prodMode);
     }
 
     protected $actionKey = "doStuff";
@@ -97,13 +94,4 @@ class AppController extends Controller
 		return $evalAppMode;
 	}
 
-    public function getEnvironment()
-	{
-		$isProd = false;
-        if( str_contains($_SERVER['REQUEST_URI'], 'forschung') ) {
-            $isProd = true;
-        }
-
-		return $isProd;
-	}
 }
