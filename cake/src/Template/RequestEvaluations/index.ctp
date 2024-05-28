@@ -91,7 +91,7 @@
                 <td><?= h($requestEvaluation->name) ?></td>
                 <td><?= $this->Number->format($requestEvaluation->grade) ?></td>
                 <td class="actions text-center">
-                    <?
+                    <?php
                         echo $this->Html->link(
                             '<span class="glyphicon glyphicon-search" aria-hidden="true"></span>',
                             ['action' => 'view', $requestEvaluation->id, 'doStuff'],

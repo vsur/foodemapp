@@ -23,8 +23,8 @@ class RequestEvaluationsController extends AppController
      */
     public function index($key = null)
     {
-        $this->checkAccess($key);  
-        $this->viewBuilder()->layout('fmappbeta'); 
+        $this->checkAccess($key);
+        $this->viewBuilder()->layout('fmappbeta');
         $requestEvaluations = $this->paginate($this->RequestEvaluations);
 
         $this->set(compact('requestEvaluations'));
@@ -40,7 +40,7 @@ class RequestEvaluationsController extends AppController
      */
     public function view($id = null, $key = null)
     {
-        $this->checkAccess($key);   
+        $this->checkAccess($key);
         $requestEvaluation = $this->RequestEvaluations->get($id, [
             'contain' => []
         ]);
@@ -49,13 +49,13 @@ class RequestEvaluationsController extends AppController
         $this->set('_serialize', ['requestEvaluation']);
     }
 
-    public function new($commingFromView = null)
+    public function new($key = null, $commingFromView = null)
     {
         $this->viewBuilder()->layout('fmappbeta');
-
+        $this->checkAccess($key);
         // Check if geolocation is set
         $session = $this->request->session();
-        // $session->destroy();  // Uncoment for Debug Purposes 
+        // $session->destroy();  // Uncoment for Debug Purposes
         if ($session->check('Config.geolocation')) {
             $sortByGeo = true;
             $distanceSelectQueryString = '6371 * acos (
@@ -66,14 +66,14 @@ class RequestEvaluationsController extends AppController
                 * sin( radians( lat ) )
               )';
         }
-        
+
         $this->loadModel('Ypois');
         $filterSelection = $this->Ypois->buildFilterObject($this->request->query);
         // $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection, $sortByGeo, $distanceSelectQueryString);
         $ypois = $this->Ypois->findYpoisByConfiguredSelection($filterSelection);
         $ypois = $this->Ypois->getYpoisOrderedByAssocCount($ypois);
         $overallComponentCount = $this->PoisNComponents->allComponentsCount($ypois);
-        
+
         $requestEvaluation = $this->RequestEvaluations->newEntity();
         if ($this->request->is('post')) {
             $requestEvaluation = $this->RequestEvaluations->patchEntity($requestEvaluation, $this->request->getData());
@@ -96,7 +96,7 @@ class RequestEvaluationsController extends AppController
      */
     public function delete($id = null, $key = null)
     {
-        $this->checkAccess($key);   
+        $this->checkAccess($key);
         $this->request->allowMethod(['post', 'delete']);
         $requestEvaluation = $this->RequestEvaluations->get($id);
         if ($this->RequestEvaluations->delete($requestEvaluation)) {
