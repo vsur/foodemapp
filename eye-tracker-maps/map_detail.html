@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Eyetrackertest Detail</title>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+html {
+	height: 100%
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0
+}
+
+#map_canvas {
+	height: 100%
+}
+</style>
+<script type="text/javascript" 
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9JmV9-qAXPJsG1K77xtarCM77qUa488M&sensor=true">
+		</script>
+<script type="text/javascript">
+			function initialize() {
+				var styling = [
+					{
+						featureType: "poi",
+						elementType: "labels",
+							stylers: [
+								{ visibility: "off" }
+							]
+					}
+				];
+
+				var mapOptions = {
+					center: new google.maps.LatLng(49.019104,12.093555),
+					zoom: 19,
+					panControl: true,
+					zoomControl: true,
+					mapTypeControl: true,
+					scaleControl: true,
+					streetViewControl: true,
+					overviewMapControl: true,
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					styles: styling 
+				};
+
+				var map = new google.maps.Map(document.getElementById("map_canvas"),
+						mapOptions);
+
+				var contentStringTino = '<div><h1>Da Tino &ndash; Ristorante, Pizzeria</h1><p>Haidplatz 4<br>93047 Regensburg<br>Telefon: 0941 561335<br> Mail: info@datino-online.de  <br>Internet: <a href="https://www.datino-online.de" title="Webite von Da Tino">www.datino-online.de</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Sonntag: 11:00-00:00 Uhr</p><h2>Gerichte</h2><p>Pizza: &sim; 7 &euro;</p><p>Pasta: &sim; 8&ndash;10 &euro;</p><p>Salat: &sim; 6&ndash;8 &euro;</p><p>Fisch &amp;Fleisch: &sim; 14&ndash;16 &euro;</p><p>Dessert: &sim; 4 &euro;</p><p>Kindergerichte: &sim; 6&ndash;7 &euro;</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://www.datino-online.de/datino/images/index_da_tino1.gif"><img width="100%" alt="Infobild" src="https://www.datino-online.de/datino/images/seite_re.gif"><img width="100%" alt="Au&szlig;enansicht" src="https://www.datino-online.de/images/Slice_1c.jpg"><img width="100%" alt="Innen" src="https://cloud.gastroguide.de/user_galerie/12/11/03/148721/mf1351928502.jpg"></div>';
+				var contentStringLila = '<div><h1>Cafe Lila &ndash; Cafe, Bar</h1><p>Rote Hahnengasse 4<br>93047 Regensburg<br>Telefon: 0941 55552<br> Mail: cafelila@directbox.com  <br>Internet: <a href="https://www.facebook.com/pages/Café-Lila/164478580236692?id=164478580236692&sk=info" title="Facebook von Cafe Lila">Cafe Lila FB Page</a> / <a href="https://plus.google.com/100129685202739933258/about?gl=de&hl=de" title="Google+ von Cafe Lila">Cafe Lila Google+ Page</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Donnerstag: 08:00&ndash;01:00 Uhr<br>Freitag bis Samstag: 08:00&ndash;02:00 Uhr<br>Sonntag 09:00&ndash;00:00 Uhr</p><p>Tags&uuml;ber Caf&eacute; mit gro&szlig;em Fr&uuml;hst&uuml;cksangebot und kleiner st&auml;ndig wechselnder Speisekarte. Abends Bar mit umfangreicher Cocktailkarte und Speisen bis 22:30 Uhr.</p><h2>Gerichte</h2><p>Fr&uml;hstuck</p><p>B&uuml;ffets</p><p>Sandwiches</p><p>Soul Food</p><p>Vegetarisch</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://sphotos-a.ak.fbcdn.net/hphotos-ak-prn1/36181_164478700236680_4433901_n.jpg"><img width="100%" alt="Au&szlig;enansicht" src="https://assets3.restaurant-kritik.de/system/photos/000/052/031/IMG_1309_big.JPG?1305745540"><img width="100%" alt="Au&szlig;en" src="https://www.nachtlotse.de/gfx_d/cafe-lila-regensburg-n_177.jpg"><img width="100%" alt="Innen" src="https://www.nachtlotse.de/gfx_d/cafe-lila-regensburg-n_178.jpg"></div>';
+				var contentStringHinterhaus = '<div><h1>Hinterhaus &ndash; Konzert- und Kulturkneipe</h1><p>Rote-Hahnen-Gasse<br>93047 Regensburg<br>Telefon: 0941 5998134<br> Mail: info@hinterhaus-regensburg.de  <br>Internet: <a href="https://www.hinterhaus-regensburg.de" title="Website von Hinterhaus">www.hinterhaus-regensburg.de</a></p><p><b>&Ouml;ffnungszeiten: </b><br><br>Montag bis Sonntag: 18:00–02:00 Uhr</p><p>Ganze Generationen von (ehemaligen) Studenten kennen und lieben das Hinterhaus als eine der urigsten Studentenlokale in Regensburg. Vor 37 Jahren erstmals geöffnet, führt Erik John die Kultkneipe jetzt seit zehn Jahren. Mittlerweile sind die typischen Studentenkneipen rar geworden–das Hinterhaus steht aber immer noch wie eine Insel inmitten von h&auml;ufig wechselnden Nachtclubs, Bars oder Trendlocations. Bei gelegentlicher Live-Musik und Konzerten bekannter überregionaler Musikacts und einem frisch gezapften Bier können sich nicht nur Uni-geplagte Studenten entspannen, sondern alle, die eine lockere und gemütliche Atmosph&auml;re zum Sinnieren, Diskutieren, Feiern oder Dartspielen sch&auml;tzen.</p><h2>Gerichte</h2><p>Snacks</p><p>Pizza</p><p>Baguette</p><p>Flammkuche: s&uuml;&szlig; oder pikant</p><p>Hauseigener Hinterhaus Engery-Drink</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://www.hinterhaus-regensburg.de/a_layout/images/bg_logo.png"><img width="100%" alt="Au&szlig;enansicht" src="https://www.f1online.de/premid/004170000/4170266.jpg"><img width="100%" alt="Au&szlig;en" src="https://img.fotocommunity.com/photos/10560062.jpg"><img width="100%" alt="Innen" src="https://www.hinterhaus-regensburg.de/a_medien/ambiente/hinterhaus_regensburg_004.jpg"></div>';
+				var contentStringMono = '<div><h1>momo Bar &ndash; Kneipe, Bar</h1><p>Rote-Hahnen-Gasse 2<br>93047 Regensburg<br>Telefon: 0941 5998908 <br>Internet: <a href="https://www.mono-regensburg.de" title="Website von mono Bar">www.mono-regensburg.de/</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Samstag: 12:00–02:00 Uhr<br>Sonntag: 15:00–02:00 Uhr</p><p>Das Mono ist das Zuhause für alle, die alternative Musik sch&auml;tzen, offen sind für neues und unbekanntes.</p><h2>Specials</h2><p>Kostenloser WLAN-Zugnag</p><h3>Specials für Studenten (mit Auswei&szlig;)</h3><p>BIONADE: 2 &euro;</p><p>CLUB MATE: ;2 &euro;</p><p>Kaffee: 1,50 &euro;</p><p>Cappuccino: 1,50 &euro;</p><p>Tee: 1 &euro;</p><p>Espresso: 1 &euro;</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://assets0.qypecdn.net/uploads/photos/0421/6468/mono-logo_xlarge.jpg"><img width="100%" alt="Innen" src="https://www.kult.de/files/smthumbnaildata/big/9/8/3/0/2/6/kultimage.jpg"><img width="100%" alt="Innen" src="https://sphotos-b.xx.fbcdn.net/hphotos-prn1/34993_348251688607929_500798569_n.jpg"></div>';
+				var contentStringThai = '<div><h1>The Thai &ndash; Restaurant</h1><p>Haidplatz 3 / Rote-Hahnen-Gasse<br>93047 Regensburg<br>Telefon: 0941 9467565 <br>Internet: <a href="https://www.thethai.de" title="Website von The Thai">www.thethai.de/</a></p><p><b>&Ouml;ffnungszeiten: </b><br><br>Montag bis Sonntag: 11:00–ca. 00:00 Uhr</p><p>Inspiriert vom New Yorker Asia-Frische-Restaurant Kelly & Ping, und durch eine &uuml;ber 30-j&auml;hrige Thailanderfahrung (Far East Travel), er&uuml;ffnete das Restaurant the Thai im Jahre 2007 in Regensburg</p><h2>Gerichte</h2><p>Suppen: &sim; 5,5 &euro;</p><p>Vorspeisen: &sim; 6 &euro;</p><p>Salat: &sim; 10 &euro;</p><p>Nudeln &amp; Reis: &sim; 11 &euro;</p><p>Curry-Gerichte: &sim; 12 &euro;</p><p>Klassisch Thai: &sim; 13 &euro;</p><p>Vegetarisch: &sim; 11 &euro;</p><p>H&auml;hnchen: &sim; 5,5 &euro;</p><p>Dessert: &sim; 6 &euro;</p><h3>Specials</h3><p>Business & Leisure Lunch <br>Montag &ndash; Samstag 11:30&ndash;17:00 Uhr: <br>Hauptgericht für <br>&sim; 6,50 &euro; / Men&uuml; &sim; 8,80 &euro;</p><p>„Siam smiles“ &ndash; f&uuml;r 2 Personen: <br>Pro Person &sim; 14,80 &euro;</p><h2>Snacks</h2><p>Suppen: &sim; 4 &euro;</p><p>Sticks &amp; Cups: &sim; 6&ndash;8 &euro;</p><p>Rice Rolls: &sim; 6 &euro;</p><p>Noodles: &sim; 7 &euro;</p><p>Currywurst: &sim; 4,50 &euro;</p><p>Kids Food: &sim; 4,50 &euro;</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://www.port01.com/uploads/cities/21/locations/4/2012-08-19_19%3A27%3A32_the_thai.jpg"><img width="100%" alt="Au&szlig;en" src="https://www.pizzeria.de/picts/c4/9a/12/59//c49a1259f88f0582dfe6a701e6ed4e45.jpg"><img width="100%" alt="Innen" src="https://media-cdn.tripadvisor.com/media/photo-s/03/4f/11/ca/the-thai.jpg"><img width="100%" alt="Innen" src="https://www.gutscheinbuch.de/gsbimages/1159/1159698_web976.jpg"></div>';
+				var contentStringZara = '<div><h1>Zara Grill &ndash; D&ouml;ner, Griechischer Imbiss</h1><p>Rote-Hahnen-Gasse 4<br>93047 Regensburg<br>Telefon: 0941 37804786 <br>Internet: <a href="https://www.zara-kebap-haus.de" title="Website von Zara Grill">www.zara-kebap-haus.de</a><br>Facebook: <a href="https://www.facebook.com/ZaraGrill/" title="FB von Zara Grill">Zara Grill FB Page</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Sonntag: 10:00&ndash;02:00 Uhr</p><p>Unsere Backwaren und s&auml;mtliche Zutaten werden t&auml;glich frisch für Sie vorbereitet und gebacken!</p><h2>Gerichte</h2><p>Döner Kebap: &sim; 4 &euro;</p><p>Dürüm: &sim; 3,5 &euro;</p><p>Pizza</p><p>Salate</p><p>Lahmacun</p><p>Pide</p><p>Börek</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://profile.ak.fbcdn.net/hprofile-ak-ash4/s160x160/2801_272662129501156_281680540_a.jpg"><img width="100%" alt="Au&szlig;en" src="https://img.mittelbayerische.de/bdb/1912300/1912321/300x.jpg"><img width="100%" alt="Innen" src="https://www.zara-kebap-haus.de/wpimages/f9a10058ef4.jpg"><img width="100%" alt="Innen" src="https://www.zara-kebap-haus.de/wpimages/2c93f61f7a3.jpg"></div>';
+				var contentStringDiba = '<div><h1>Diba Chocolat &ndash; Schokolade und Kaffee</h1><p>Rote-Hahnen-Gasse 6<br>93047 Regensburg<br>Telefon: 0941 5865864 <br>Google+: <a href="https://plus.google.com/104628680469836008927/about?gl=de&hl=de" title="Google+ von Diba Chocolat">Diba Chocolat Google+ Page</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Sonntag: nicht angegeben</p><p>Hier findet jeder Eisliebhaber unübliche und außergewöhnliche Sorten. Sesam-Krokant oder Mocca-Mascarpone sind nur zwei von vielen Versuchungen. Und für alle Schokofreunde gibt es selbstgemachte Pralinen und verschiedenste Schokoladenvarianten.</p><h2>Gerichte</h2><p>Schokolade</p><p>Eis</p><p>Feinschokolade</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://my3tartlets.files.wordpress.com/2011/08/dsc05765.jpg"><img width="100%" alt="Au&szlig;en" src="https://assets3.qypecdn.net/uploads/photos/0194/9182/-129688630_gallery2.jpg"><img width="100%" alt="Au&szlig;en" src="https://2.bp.blogspot.com/-zudNUbZUSxQ/ToGyjCP4cBI/AAAAAAAALsc/Z2Vb8p9hFtc/s1600/Regensburg-365-Bild-0049.jpg"><img width="100%" alt="Innen" src="https://irs2.4sqi.net/img/general/width960/30326783_hXSHPilS9Z9KLW8RcthF5xjqtGEMl0N178CvamPLoVM.jpg"></div>';
+				var contentStringGraven = '<div><h1>Gravenreuther &ndash; Gastst&auml;tte</h1><p>Hinter der Grieb 10<br>93047 Regensburg<br>Telefon: 0941 - 55050 <br>Mail: info@gravenreuther.de <br>Internet: <a href="https://www.gravenreuther.de" title="Website von Gravenreuther">www.gravenreuther.de</a><br>Facebook: <a href="https://www.facebook.com/zumgravenreuther" title="Facebook von Gravenreuther">Gravenreuther Facebook Page</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Dienstag bis Donnerstag: 11:00&ndash;15:00 Uhr &amp; 17:00 Uhr bis auf\'d Nacht<br>Freitag bis Sonntag: 10:30 bis auf\'d Nacht</p><p>Das Gravenreuther-Team ist fleißig am Ausarbeiten der Sommerkarte. Ab Mai gibt\'s dann wie gewohnt "Bestes aus Bayern" und fürn Biergarten a sch&ouml;ne Brotzeitkarte. Kummt\'s eina! Sommer in der Stadt! Und sobald die Abensberger Ihren Spargel rausr&uuml;cken gibt´s den nat&uuml;rlich auch ...</p><p>Nur durch h&ouml;chste Qualit&auml;t bei den Zutaten in Verbindung mit erfahrenen K&ouml;chen der Region, serviert im gem&uuml;tlichen Ambiente unserer traditionellen Gaststube, k&ouml;nnen wir Ihren kulinarischen W&uuml;nschen gerecht werden!</p><h2>Gerichte</h2><p>Suppen</p><p>Brotzeitkarte</p><p>W&uuml;rstlkarte</p><p>Bayerische Tapas</p><p>Schlemmermen&uuml;</p><p>Salate</p><p>Gravenreuthers Dauerbrenner</p><p>Vegetarisches</p><p>Fischgerichte</p><p>Desserts</p><h3>Preislich</h3><p>&sim; 10&ndash;30 &euro;</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://fbcdn-sphotos-d-a.akamaihd.net/hphotos-ak-ash3/33402_134916893208503_1919070_n.jpg"><img width="100%" alt="Au&szlig;en" src="https://cdn.geolocation.ws/geolocation_media/panoramio/05499/p-054999271.jpg"><img width="100%" alt="Au&szlig;en" src="https://www.gravenreuther.de/uploads_gallery/Gravenreuther/full_k.JPG"><img width="100%" alt="Innen" src="https://www.gravenreuther.de/uploads_gallery/Gravenreuther/full_b%20Kopie.jpg"></div>';
+				var contentStringCentral = '<div><h1>Central &ndash; Billiard &amp; Bar</h1><p> Rote-Hahnen-Gasse 8<br>93047 Regensburg<br>Telefon: 0941 5999807 <br>Mail: billard-central@web.de <br>Internet: <a href="https://www.billard-central.de" title="Website von Central Bar und Billiard">www.billard-central.de</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Sonntag: 17:00&ndash;02:00 Uhr</p><p>Billiard, Pool und Drinks</p><h2>Angebote</h2><p>Montag: Billard/h 3,50 &euro;</p><p>Dienstag: Billard/h 5,50 &euro; für Schüler und Studenten</p><p>Mittwoch: Billard 3h für 10 &euro;</p><p>Donnerstag: Billard/h 5,50 &euro; für Schüler und Studenten</p><p>Freitag: Billard Gratis von 19:00&ndash;21:00 Uhr bei Abnahme von mind. einem Getr&auml;nk</p><p>Samstag: Billard Gratis von 19:00&ndash;21:00 Uhr bei Abnahme von mind. einem Getr&auml;nk</p><p>Sonntag: Billard 3h für 10 &euro; +  Jedes Bier auf der Karte 2 &euro;</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://www.billard-central.de/wpimages/wp3245710e.png"><img width="100%" alt="Innen" src="https://www.billard-central.de/wpimages/wpb0c8db89.png"><img width="100%" alt="Innen" src="https://www.port01.com/uploads/galerie/2010/12/Regensburg/CENTRAL_Billard_Bar/46290/small/0011.jpg"></div>';
+				var contentStringApo = '<div><h1>Apotheke &ndash; Kneipe &amp; Bar</h1><p> Rote-Hahnen-Gasse 8<br>93047 Regensburg<br>Telefon: 0941 - 5843999 <br></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Donnerstag: 10:00&ndash;01:00 Uhr<br>Freitag bis Samstag: 10:00&ndash;02:00 Uhr<br>Sonntag: 18:00&ndash;01:00 Uhr</p><p>Die Apotheke ist eine gemütliche, alternativ angehauchte Studentenkneipe, die zum gem&uuml;tlichen Beisammensein und zu einer Partie Billiard einl&auml;d.</p><h2>Angebote</h2><p>Bier: &sim; 2,50 &euro;</p><h2>Special</h2><p>Wer sich umschaut, wird einen großen Eimer mit Erdnüssen entdecken der jeden Tag durch den Raum gereicht wird. Ein gro&szlig;er Pott f&uuml; alle, ganz gratis.</p><p>Donnerstag bis Samstag legen DJs live auf</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://www.kult.de/files/smthumbnaildata/locationlogo/9/4/1/9/4/kultimage.jpg"><img width="100%" alt="Au&szlig;en" src="https://golocal-media.de/fe2639fb9f61e360401197775222f135/160/49f46757bee27703.JPG"><img width="100%" alt="Au&szlig;en" src="https://www.regensburgerwoche.de/wp-content/uploads/2008/03/15/apotheke.jpg"></div>';
+				var contentStringHahn = '<div><h1>Roter Hahn &ndash; Hotel &amp; Restaurant</h1><p> Rote-Hahnen-Gasse 10<br>93047 Regensburg<br>Telefon: 0941 595 09 – 0 <br>Internet: <a href="https://www.roter-hahn.com/" title="Website von Roter Hahn">www.roter-hahn.com</a><br>Facebook: <a href="https://www.facebook.com/hotelroterhahn" title="Facebook von Roter Hahn">Roter Hahn Facebook Page</a></p><p><b>&Ouml;ffnungszeiten: </b><br>Montag bis Sonntag</p><p>Wir bieten Ihnen individuelle Gerichte der bayerischen, nationalen und internationalen K&uuml;che, zubereitet aus frischen Produkten der Region. Verweilen Sie in der Hotellobby bei einem Glas Champagner oder einem Espresso und genießen Sie bei dezenter Musik.</p><h2>Gerichte </h2><p>Vorspreisen: &sim; 8&ndash;10 &euro;</p><p>Suppen: &sim; 5 &euro;</p><p>Zwischengang: &sim; 12 &euro;</p><p>Sorbet: &sim; 4 &euro;</p><p>Sorbet: &sim; 4 &euro;</p><p>Saltimbocca, H&auml;hnchen oder Rind: &sim; 16&ndash;25 &euro;</p><p>Fisch: &sim; 18&ndash;20 &euro;</p><p>Klassiker, Schnitzel, Haustopf: &sim; 12&ndash;18 &euro;</p><p>Dessert: &sim; 7&ndash;9 &euro;</p><h2>Monatsmenü 4 G&auml;nge</h2><p>Suppe, Vorspreise, Hauptegricht, Nachspeise: &sim; 40 &euro; pro Person</p><h2>Für 2 Personen Chateaubriand</h2><p>Rinderfilet 400 Gramm am Stück gebraten: &sim; 50 &euro;</p><h2>Sonntagsbruch</h2><p>An jedem 1. Sonntag im Monat von 11:00&ndash;16:00 Uhr Brunch im Roten Hahn für nur 25 &euro;</p><hr><h2>Impressionen</h2><img width="100%" alt="Titelbild" src="https://www.port01.com/uploads/cities/21/locations/4/2012-02-14_20%3A17%3A00_roter-hahn.jpg"><img width="100%" alt="Au&szlig;en" src="https://golocal-media.de/fe2639fb9f61e360401197775222f135/160/64fd7c5d2ada616.JPG"><img width="100%" alt="Innen" src="https://www.guat-essen.de/wpblog/wp-content/uploads/2009/04/regensburg-rhahn-innen_4.jpg"><img width="100%" alt="Innen" src="https://www.roter-hahn.com/wp-content/uploads/2011/07/IMG_3790.jpg"></div>';
+
+				var locations = [
+					["Da Tino Pizzeria", 49.019594, 12.092792, contentStringTino],
+					["Cafe Lila", 49.019491, 12.092656, contentStringLila],
+					["Hinterhaus Kulturkneipe", 49.019411, 12.092734, contentStringHinterhaus],
+					["mono BAR", 49.019370, 12.092844, contentStringMono],
+					["The Thai", 49.019308, 12.093097, contentStringThai],
+					["Zara Grill – Döner", 49.019091, 12.093215, contentStringZara],
+					["Diba Chocolat", 49.019061, 12.093238, contentStringDiba],
+					["Gaststätte Gravenreuther", 49.019050, 12.093738, contentStringGraven],
+					["Central Bar & Billiard", 49.018966, 12.093319, contentStringCentral],
+					["Apotheke", 49.019003, 12.093391, contentStringApo],
+					["Roter Hahn", 49.018839, 12.093529, contentStringHahn]
+				];
+
+				for (var i = 0; i < locations.length; i++) {
+					var POI = locations[i];
+					var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(POI[1], POI[2]),
+						icon: "https://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png",
+						map: map,
+						title: POI[0]
+					});
+					attachIndividualMessage(marker, i, locations);
+				}
+
+			}	// End initialize
+			
+			// The markers shall show a individual message when clicked
+			// but that message is not within the marker's instance data
+			function attachIndividualMessage(marker, num, locations) {
+			  var infowindow = new google.maps.InfoWindow({
+			    content: locations[num][3],
+			    maxWidth: 250
+			  });
+			  google.maps.event.addListener(marker, 'click', function() {
+			    infowindow.open(marker.get('map'), marker);
+			  });
+			}
+			
+		</script>
+</head>
+<body onload="initialize()">
+	<div id="map_canvas" style="width: 100%; height: 100%"></div>
+</body>
+</html>

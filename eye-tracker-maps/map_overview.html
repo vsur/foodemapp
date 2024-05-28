@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Eyetrackertest Overview</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+			html { height: 100% }
+			body { height: 100%; margin: 0; padding: 0 }
+			#map_canvas { height: 100% }
+		</style>
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9JmV9-qAXPJsG1K77xtarCM77qUa488M&sensor=true">
+		</script>
+		<script type="text/javascript">
+			function initialize() {
+				var styling = [
+					{
+						featureType: "poi",
+						elementType: "labels",
+							stylers: [
+								{ visibility: "off" }
+							]
+					}
+				];
+
+				var mapOptions = {
+					center: new google.maps.LatLng(49.019104,12.093555),
+					zoom: 19,
+					panControl: true,
+					zoomControl: true,
+					mapTypeControl: true,
+					scaleControl: true,
+					streetViewControl: true,
+					overviewMapControl: true,
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					styles: styling 
+				};
+
+				var map = new google.maps.Map(document.getElementById("map_canvas"),
+						mapOptions);
+
+				var shadow = {
+					url: 'icons/shadow.png',
+					anchor: new google.maps.Point(24, 42)
+				};
+
+				var locations = [
+// 					["Da Tino Pizzeria", 49.019594, 12.092792, "https://maps.google.com/mapfiles/ms/micons/restaurant.png"],
+					["Da Tino Pizzeria", 49.019594, 12.092792, "icons/tino.png"],
+					["Cafe Lila", 49.019491, 12.092656, "icons/lila.png"],
+					["Hinterhaus Kulturkneipe", 49.019411, 12.092734, "icons/hinterhaus.png"],
+					["mono BAR", 49.019370, 12.092844, "icons/mono.png"],
+					["The Thai", 49.019308, 12.093097, "icons/thai.png"],
+					["Zara Grill – Döner", 49.019091, 12.093215, "icons/zara.png"],
+					["Diba Chocolat", 49.019061, 12.093238, "icons/diba.png"],
+					["Gaststätte Gravenreuther", 49.019050, 12.093738, "icons/graven.png"],
+					["Central Bar & Billiard", 49.018966, 12.093319, "icons/central.png"],
+					["Apotheke", 49.019003, 12.093391, "icons/apo.png"],
+					["Roter Hahn", 49.018839, 12.093529, "icons/hahn.png"],
+				];
+				
+
+				for (var i = 0; i < locations.length; i++) {
+					var POI = locations[i];
+					var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(POI[1], POI[2]),
+						map: map,
+						icon: POI[3],
+						shadow: shadow,
+						title: POI[0]
+					});
+				}
+
+			}
+		</script>
+	</head>
+	<body onload="initialize()">
+		<div id="map_canvas" style="width:100%; height:100%"></div>
+	</body>
+</html>
