@@ -18,15 +18,15 @@ fi
 
 rsync -r cake/src/Controller/Component deploy/src/Controller/
 rsync -r cake/src/Controller/AppController.php deploy/src/Controller/
-rsync -r cake/src/Controller/BinaryComponentsController.php deploy/src/Controller/
-rsync -r cake/src/Controller/BinaryComponentsYpoisController.php deploy/src/Controller/
-rsync -r cake/src/Controller/NominalAttributesController.php deploy/src/Controller/
-rsync -r cake/src/Controller/NominalAttributesYpoisController.php deploy/src/Controller/
-rsync -r cake/src/Controller/NominalComponentsController.php deploy/src/Controller/
-rsync -r cake/src/Controller/OrdinalAttributesController.php deploy/src/Controller/
-rsync -r cake/src/Controller/OrdinalAttributesYpoisController.php deploy/src/Controller/
-rsync -r cake/src/Controller/OrdinalComponentsController.php deploy/src/Controller/
-rsync -r cake/src/Controller/RequestEvaluationsController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/BinaryComponentsController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/BinaryComponentsYpoisController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/NominalAttributesController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/NominalAttributesYpoisController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/NominalComponentsController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/OrdinalAttributesController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/OrdinalAttributesYpoisController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/OrdinalComponentsController.php deploy/src/Controller/
+# rsync -r cake/src/Controller/RequestEvaluationsController.php deploy/src/Controller/
 rsync -r cake/src/Controller/PagesController.php deploy/src/Controller/
 rsync -r cake/src/Controller/YpoisController.php deploy/src/Controller/
 
@@ -54,18 +54,18 @@ rsync -r cake/src/Model/Table/YpoisTable.php deploy/src/Model/Table/
 
 rsync -r cake/src/Shell deploy/src
 
-rsync -r cake/src/Template/BinaryComponents deploy/src/Template/
-rsync -r cake/src/Template/BinaryComponentsYpois deploy/src/Template/
+# rsync -r cake/src/Template/BinaryComponents deploy/src/Template/
+# rsync -r cake/src/Template/BinaryComponentsYpois deploy/src/Template/
 rsync -r cake/src/Template/Element deploy/src/Template/
 rsync -r cake/src/Template/Email deploy/src/Template/
 rsync -r cake/src/Template/Error deploy/src/Template/
 rsync -r cake/src/Template/Layout deploy/src/Template/
-rsync -r cake/src/Template/NominalAttributes deploy/src/Template/
-rsync -r cake/src/Template/NominalAttributesYpois deploy/src/Template/
-rsync -r cake/src/Template/NominalComponents deploy/src/Template/
-rsync -r cake/src/Template/OrdinalAttributes deploy/src/Template/
-rsync -r cake/src/Template/OrdinalAttributesYpois deploy/src/Template/
-rsync -r cake/src/Template/OrdinalComponents deploy/src/Template/
+# rsync -r cake/src/Template/NominalAttributes deploy/src/Template/
+# rsync -r cake/src/Template/NominalAttributesYpois deploy/src/Template/
+# rsync -r cake/src/Template/NominalComponents deploy/src/Template/
+# rsync -r cake/src/Template/OrdinalAttributes deploy/src/Template/
+# rsync -r cake/src/Template/OrdinalAttributesYpois deploy/src/Template/
+# rsync -r cake/src/Template/OrdinalComponents deploy/src/Template/
 if [ ! -d "deploy/src/Template/Pages" ]; then
   mkdir deploy/src/Template/Pages
 fi
